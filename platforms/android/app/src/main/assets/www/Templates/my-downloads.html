@@ -1,0 +1,53 @@
+
+<div ng-controller="ProfileDownloadController">
+
+    <div class="bar sub-header no-padding item-input-inset">
+        <!--<a class="button button-clear border-right"><i class="icon icon-filter"></i><span class="hide-md">Filter</span></a>-->
+        <a class="button button-clear" ng-click="ChangeDimension()"><i class="icon icon-filter"></i><span class="hide-md">{{ Dimension }}</span></a>
+        <label class="item-input-wrapper margin-horizontal">
+            <i class="icon icon-search placeholder-icon"></i>
+            <input type="search" placeholder="Search" ng-model="GraphSearchElement" ng-change="GraphSearch()">
+        </label>                    
+        <a class="button button-clear" ng-click="SelectAllContents()"><i class="icon icon-check"></i><span class="hide-md">Select&nbsp;All</span></a>
+    </div>
+
+    <div class="scroll-content has-header has-footer anim">        
+        <div class="full-height white-box scrollable">
+            <div ng-show="ImmediateParentColumn">
+                 <div class="item attribute padding margin-bottom">
+                  <span>Unit</span>
+                  <div class="row responsive-md">
+                    <div class="col">
+                      <select ng-model="Unit" ng-options="item.Name for item in UnitList" ng-change="UnitChangeEvent(Unit)"></select>
+                    </div>
+                  </div>
+                </div>
+                <div class="item attribute padding margin-bottom">
+                  <span>{{FilterDropdown2}}</span>
+                  <div class="row responsive-md">
+                    <div class="col">
+                      <select ng-model="Airline" ng-options="item.Name for item in AirlineList" ng-change="AirlineChangeEvent(Airline)"></select>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="tick-list repeater-container white-box">
+                <div ng-repeat="facility in Selectedfacilitys" class="item" ng-class="{ 'selected': facility.selected, 'downloaded': facility.downloaded }" ng-click="onFacilitylistItemChanged(facility)">
+                    <span class=" text">
+                        {{facility.label}}
+                    </span>
+                    <i class="icon icon-square-o"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="bar bar-footer">
+        <div class="row">
+            <div class="col text-center no-padding no-margin">
+                <a ng-click="DownLoad()" class="button button-block button-clear"><i class="icon icon-cloud-download"></i> {{'Download' | xlat }}</a>
+            </div>
+        </div>        
+    </div>     
+</div>
+

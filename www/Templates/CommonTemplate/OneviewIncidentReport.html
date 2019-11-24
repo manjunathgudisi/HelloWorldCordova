@@ -1,0 +1,168 @@
+<div ng-controller="OneviewIncidentReportController">
+
+    <div class="bar sub-header item-input-inset no-padding">
+        <label class="item-input-wrapper">
+
+        </label>
+        <span class="badge blue hide-sm"><span class="light">{{CompletedRecords}} / {{TotalCount}}</span><span class="badge badge-assertive">{{NCCount}}</span></span>
+
+        <div class="shift-bar">
+            <div dropdown-select="ShiftOptions" dropdown-model="chkShift" dropdown-item-label="text"></div>
+        </div>
+    </div>
+
+
+    <div class="scroll-content has-header padding custom-view" id="ContentId">
+        <div class="full-height scrollable">
+            <!-- DC Form Start -->
+            <div class="row responsive-md no-padding-vertical">
+                <!-- Main Column Start -->
+                <div class="col no-padding no-margin">
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'IncidentDetails' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg" id="Div4">
+                            <div class="field-item" onclick="AutoCompleteStartEvent('AddlIncidentTypeControlId', 'Incident Type', 220, 148)">
+                                <label>
+                                    <span>{{'IncidentType' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.AddlIncidentTypeControlId" attributenodeid="148" controlid="AddlIncidentTypeControlId" />
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End --> 
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <div ng-show="ObservationRow">
+                        <div class="title-bar rounded">{{'Incidents' | xlat}}</div>
+                        <!-- Inner Form Items Responsive Row Start -->
+                        <div class="row observation margin-bottom">
+                            <!-- Inner Form Items Responsive Column Start -->
+                            <div class="col rounded light-bg scrollable">
+                                <tick-list multiple="true" selected-icon="ion-checkmark" class="profileDownloadList">
+                                    <tick-list-item ng-class="selectgetClass(Observation.selected)" ng-repeat="Observation in ObservationList" selected="{{Observation.selected}}" selected-icon="{{Observation.icon}}" model="Observation" on-change="onFacilitylistItemChanged(Observation)">{{Observation.label}}</tick-list-item>
+                                </tick-list>
+                            </div>
+                            <!-- Inner Form Items Responsive Column End -->
+                        </div>
+                        <!-- Inner Form Items Responsive Row End -->
+                    </div>
+
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{'RiskType' | xlat}}</span>
+                                <div class="multiselect-button button-bar">
+                                    <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.chkRiskTypeControlId' options='RiskType' ng-model="NewDCModel.chkRiskTypeControlId" attributenodeid="150" controlid="chkRiskTypeControlId"></buttons-band>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg" id="Column_8306">
+                            <div class="field-item with-icon">
+                                <label>
+                                    <span>{{'IncidentDateTime' | xlat }}</span>
+                                    <input type="datetime-local" ng-model="NewDCModel.DTIncidentDateTimeControlId" attributenodeid="151" controlid="DTIncidentDateTimeControlId" id="DTIncidentDateTimeControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'CustomAction' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row cus-observ margin-bottom">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="row cus-observ margin-bottom">
+                            <!-- Inner Form Items Responsive Column Start -->
+                            <div class="col rounded light-bg">
+                                <div class="custom-list list">
+                                    <div class="item item-button-right" ng-repeat="CustomCorrectiveAction in CustomCorrectiveActionList">
+                                        {{CustomCorrectiveAction.label}}
+                                        <a class="button button-clear " ng-click="DeleteCustomCorrectiveAction(CustomCorrectiveAction)"><i class="icon icon-minus-circle"></i></a>
+                                    </div>
+                                </div>
+                                <div class="field-item">
+                                    <label>
+                                        <div class="item item-button-right">
+                                            <span>{{'CustomAction' | xlat}}</span> <input type="text" ng-model="NewDCModel.txtCustomCorrectiveAction" controlid="txtCustomCorrectiveAction" id="txtCustomCorrectiveAction" />
+                                            <a class="button button-calm" ng-click="AddCustomCorrectiveAction()">{{'ADD' | xlat}}</a>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Inner Form Items Responsive Column End -->
+                        </div>                  
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row margin-bottom">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg" id="Column_126">
+                            <div class="field-item">
+                                <label>
+                                    <span>{{'Comments' | xlat }}</span>
+                                    <input type="text" ng-model="NewDCModel.txtCommentsControlId" controlid="txtCommentsControlId" id="txtCommentsControlId" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                        <div ng-show="PredefinedActionShow">
+                            <div class="title-bar rounded">{{'PredefinedAction' | xlat}}</div>
+                            <!-- Inner Form Items Responsive Row Start -->
+                            <div class="row observation margin-bottom">
+                                <!-- Inner Form Items Responsive Column Start -->
+                                <div class="col rounded light-bg scrollable">
+                                    <tick-list multiple="true" selected-icon="ion-checkmark" class="profileDownloadList">
+                                        <tick-list-item ng-class="selectgetClass(PredefinedAction.selected)" ng-repeat="PredefinedAction in PredefinedActionList" selected="{{PredefinedAction.selected}}" selected-icon="{{PredefinedAction.icon}}" model="PredefinedAction" on-change="OnPredefinedActionChangedEvent(PredefinedAction)">{{PredefinedAction.label}}</tick-list-item>
+                                    </tick-list>
+                                </div>
+                                <!-- Inner Form Items Responsive Column End -->
+                            </div>
+                            <!-- Inner Form Items Responsive Row End -->
+                        </div>
+
+                        <!-- Inner Form Items Responsive Row End -->
+                        <!-- Section Divider / Section Title -->
+                        <div class="title-bar rounded">{{'MultiMediaDetails' | xlat}}</div>
+                        <!-- Inner Form Items Responsive Row Start -->
+                        <div class="row margin-bottom">
+                            <!-- Inner Form Items Responsive Column Start -->
+                            <div class="col rounded light-bg cam-photo">
+                                <div ng-repeat="MultiMediaSubElement in MultiMediaSubElements">
+                                    <a href="{{MultiMediaSubElement.LocalURL}}" class="angularbox" rel="1"><img src="{{MultiMediaSubElement.LocalURL}}" alt="{{MultiMediaSubElement.AlternateName}}"></a>
+                                </div>
+                                <a class="button" ng-click="AttachPicture();"><i class="icon icon-camera"></i>{{'ADD' | xlat}}</a>
+                                <a class="button" ng-click="BrowsePicture();"><i class="icon icon-photo"></i>{{'Browse' | xlat}} </a>
+                            </div>
+                            <!-- Inner Form Items Responsive Column End -->
+                        </div>
+                    </div>
+                <!-- Main Column End -->
+
+            </div>
+            <!-- DC Form End -->
+            <div class="row responsive-sm dc-button-holder margin-top-md">
+                <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block button-calm" ng-click="ViewRecords()"><i class="icon icon-eye"></i> {{'ViewRecords' | xlat }}</a>
+                </div>
+                <div class="col no-padding">
+                    <a href="javascript:void(0)" ng-click="ClearForm()" class="button button-block button-calm"><i class="icon icon-cancel-circle"></i> {{'Clear' | xlat }}</a>
+                </div>
+                <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="AddRecords()" ng-disabled="DisableSave"><i class="icon icon-plus"></i> {{'Add' | xlat }}</a>
+                </div>
+                <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="SubmitRecords()" ng-disabled="DisableSaveSubmit"><i class="icon icon-check-circle"></i> {{'SaveSubmit' | xlat }}</a>
+                </div>
+            </div>
+        </div>
+    </div>

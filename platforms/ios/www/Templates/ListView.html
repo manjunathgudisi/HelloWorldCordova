@@ -1,0 +1,44 @@
+
+<div ng-controller="ListViewController">
+    <div class="bar sub-header no-padding item-input-inset">
+        <a class="button button-clear" ng-click="Back()"><i class="icon icon-chevron-left"></i> <span class="hide-sm">{{'Back' | xlat }}</span></a> 
+        <a class="button button-clear" ng-click="PopCommentBoxShow()"><i class="icon icon-comments"></i> <span class="hide-sm">{{'Remarks' | xlat }}</span></a>  
+        <a class="button button-clear" ng-click="SubHeader = !SubHeader"><i class="icon " ng-class="{'icon-angle-up' : SubHeader,'icon-angle-down' : !SubHeader}"></i> <span class="hide-sm">{{'Info' | xlat }}</span></a> 
+        <label class="item-input-wrapper">
+        </label>    
+        <a class="button button-clear" id="txtTemplateSummary"></a>     
+        <div class="shift-bar" ng-show="DivShift">
+            <div dropdown-select="ShiftOptions" dropdown-model="chkShift" dropdown-item-label="text" dropdown-onchange="SaveShift(selected)"></div>
+        </div>       
+        <a class="button button-clear" ng-click="PopUpExcludedAttributeDetailshow()" ng-show="ShowExcludeAttributeLstBtn">{{'Include Attributes' | xlat }}</a>  
+    </div>
+
+    <div class="scroll-content has-header has-footer anim" id="ContentId">
+      <div class="full-height scrollable" onscroll="new LVScroll().Check(this);">
+          <div ng-show="SubHeader" style="position:absolute; top:0; width: 100%;">
+              <div class="bar sub-header item-input-inset" id="txtAttributeGroupSummary">
+                  
+              </div>
+          </div>
+        <div class="list list-view">
+              <div id="Attributes">
+
+            </div>
+            </div>
+      </div>
+    </div>
+    <div class="bar bar-footer" ng-show="LVFooterPanel">
+        <div class="row">           
+            <div class="col text-center no-padding no-margin" ng-show="DivApproveBtn">
+                <a ng-click="Approve()" class="button button-block button-clear"><i class="icon icon-thumb-up-outline-symbol"></i> {{'Finalize' | xlat }}</a>
+            </div>       
+            <div class="col text-center no-padding no-margin">
+                <a ng-click="Save()" class="button button-block button-clear"><i class="icon icon-plus"></i> {{'Save' | xlat }}</a>
+            </div>  
+            <div class="col text-center no-padding no-margin">
+                <a ng-click="Submit()" class="button button-block button-clear"><i class="icon icon-plus"></i> {{'Save & Submit' | xlat }}</a>
+            </div>        
+        </div>                 
+    </div>
+</div>
+

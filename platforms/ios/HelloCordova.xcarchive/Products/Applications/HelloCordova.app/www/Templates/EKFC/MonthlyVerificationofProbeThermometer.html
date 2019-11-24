@@ -1,0 +1,304 @@
+<div ng-controller="MonthlyVerificationofProbeThermometerController">
+    <div class="bar sub-header item-input-inset no-padding">
+        <a href="javascript:void(0)" class="button button-clear" ng-click="Back()"><i class="icon icon-chevron-left"></i>{{'Back' | xlat}}</a>
+        <a href="javascript:void(0)" class="button button-clear" ng-click="GetProbeStatus()"><i class="icon icon-thermometer"></i>{{Status | xlat }}</a>
+        <label class="item-input-wrapper">
+
+        </label>
+        <span class="badge blue hide-sm"><span class="light">{{CompletedRecords}} / {{TotalCount}}</span><span class="badge badge-assertive">{{NCCount}}</span></span>
+        <!--<span class="border-left">{{ 'Shift' | xlat}}</span>
+        <div class="shift-bar">
+            <buttons-band class="" data-toggle="buttons-band" model='NewDCModel.chkShift' options='ShiftOptions' ng-model="NewDCModel.chkShift" controlid="chkShift"></buttons-band>
+        </div>-->
+
+        <div class="shift-bar">
+            <div dropdown-select="ShiftOptions" dropdown-model="chkShift" dropdown-item-label="text"></div>
+        </div>
+    </div>
+
+    <div class="scroll-content has-header padding custom-view scrollable" id="ContentId">
+        <div>
+            <!-- DC Form Start -->
+
+            <div class="row responsive-md no-padding-vertical">
+                <!-- Main Column Start -->
+                <div class="col no-padding">
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'ThermometerDetails' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg current-attr" id="Column_326">
+                            <div class="field-item" onclick="AutoCompleteStartEvent('AddlDepartmentControlId', 'Unit', 201, 925, true)">
+                                <label>
+                                    <span>{{'Unit' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.AddlDepartmentControlId" controlid="AddlDepartmentControlId" readonly="true" id="AddlDepartmentControlId" ng-change="PostControlEvents(925,'AddlDepartmentControlId');Temperature_NgKeyUp(925,'AddlDepartmentControlId', '',false,'')" />
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg current-attr" id="Column_326">
+                            <div class="field-item" onclick="AutoCompleteStartEvent('AddlDepartment1ControlId', 'Department', 258, 10358, true)">
+                                <label>
+                                    <span>{{'Department' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.AddlDepartment1ControlId" controlid="AddlDepartment1ControlId" readonly="true" id="AddlDepartment1ControlId" ng-change="PostControlEvents(10358,'AddlDepartment1ControlId');Temperature_NgKeyUp(10358,'AddlDepartment1ControlId', '',false,'')" />
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg current-attr" id="Column_326">
+                            <div class="field-item" onclick="AutoCompleteStartEvent('AddlThermometerCodeControlId', 'Thermometer Code', 232, 929, true)">
+                                <label ng-click="PreControlEvents(929,'AddlThermometerCodeControlId',$event)">
+                                    <span>{{'ThermometerCode' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.AddlThermometerCodeControlId" controlid="AddlThermometerCodeControlId" readonly="true" id="AddlThermometerCodeControlId" ng-change="PostControlEvents(929,'AddlThermometerCodeControlId');Temperature_NgKeyUp(929,'AddlThermometerCodeControlId', '',false,'')" />
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg current-attr" id="Column_326">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(930,'txtThermometerSerialNoControlId',$event)">
+                                    <span>{{'ThermometerSerialNumber' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtThermometerSerialNoControlId" controlid="txtThermometerSerialNoControlId" readonly="true" id="txtThermometerSerialNoControlId" ng-change="PostControlEvents(930,'txtThermometerSerialNoControlId');Temperature_NgKeyUp(930,'txtThermometerSerialNoControlId', '',false,'')" />
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                       
+                       
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                </div>
+                <!-- Main Column End -->
+            </div>
+            <div class="row responsive-md no-padding-vertical">
+                <!-- Main Column Start -->
+                <div class="col no-padding">
+                 
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg current-attr" id="Column_326">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(931,'txtThermometerModelNoControlId,$event)">
+                                    <span>{{'ThermometerModelNo' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtThermometerModelNoControlId" controlid="txtThermometerModelNoControlId" readonly="true" id="txtThermometerModelNoControlId" ng-change="PostControlEvents(931,'txtThermometerModelNoControlId');Temperature_NgKeyUp(931,'txtThermometerModelNoControlId', '',false,'')" />
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg current-attr" id="Column_326">
+                            <div class="field-item" >
+                                <label ng-click="PreControlEvents(926,'txtSectionControlId',$event)">
+                                    <span>{{'Section' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtSectionControlId" controlid="txtSectionControlId" readonly="true" id="txtSectionControlId" ng-change="PostControlEvents(926,'txtSectionControlId');Temperature_NgKeyUp(926,'txtSectionControlId', '',false,'')" />
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(927,'txtAllocationControlId',$event)">
+                                    <span>{{'Allocation' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtAllocationControlId" attributenodeid="927" controlid="txtAllocationControlId" readonly="true" id="txtAllocationControlId" ng-change="PostControlEvents(927,'txtAllocationControlId');Temperature_NgKeyUp(927,'txtAllocationControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                         
+                        
+                    </div>
+
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'ThermometerStatus'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkThermometerStatusControlId' options='ThermometerStatuss' ng-model="NewDCModel.ChkThermometerStatusControlId" attributenodeid="10428" controlid="ChkThermometerStatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom" ng-show="OtherhermometerStatusShow">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10429,'txtTOtherThermometerStatusControlId',$event)">
+                                    <span>{{'Other' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtTOtherThermometerStatusControlId" attributenodeid="10429" controlid="txtTOtherThermometerStatusControlId" id="txtTOtherThermometerStatusControlId" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom" id="Column_8473" ng-show="DateOfVerificationShow">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(8473,'DTDDateOfCalibrationControlId',$event)">
+                                    <span>{{ 'DateOfCalibration'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDDateOfCalibrationControlId" ng-change="PostControlEvents(8473,'DTDDateOfCalibrationControlId');Temperature_NgKeyUp(8473,'DTDDateOfCalibrationControlId', '',false)" attributenodeid="8473" controlid="DTDDateOfCalibrationControlId" id="DTDDateOfCalibrationControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End --> 
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row End -->
+                    <div class="row responsive-md no-padding-vertical" ng-show="ICECAPmethodShow">
+                        <!-- Main Column Start -->
+                        <div class="col no-padding">
+                            <!-- Section Divider / Section Title -->
+                            <div class="title-bar rounded">{{'TestCap1' | xlat}}&deg;C</div>
+                            <!-- Inner Form Items Responsive Row Start -->
+                            <div class="row no-padding responsive-sm multi-col">
+                                <!-- Inner Form Items Responsive Column Start -->
+                                <div class="col rounded light-bg margin-bottom">
+                                    <div class="field-item" onclick="AutoCompleteStartEvent('txtTestCap1RefNoControlId', 'Ref No', 262, 933, true)">
+                                        <label ng-click="PreControlEvents(933,'txtTestCap1RefNoControlId',$event)">
+                                            <span>{{'Ref No' | xlat}}</span>
+                                            <input type="text" ng-model="NewDCModel.txtTestCap1RefNoControlId" attributenodeid="933" controlid="txtTestCap1RefNoControlId" id="txtTestCap1RefNoControlId" ng-change="PostControlEvents(933,'txtTestCap1RefNoControlId');Temperature_NgKeyUp(933,'txtTestCap1RefNoControlId', '',false,'')" readonly="true" reset-field>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- Inner Form Items Responsive Column End -->
+                                <!-- Inner Form Items Responsive Column Start -->
+                                <div class="col rounded light-bg margin-bottom">
+                                    <div class="field-item">
+                                        <label ng-click="PreControlEvents(934,'txtTestCap1StandardValueControlId',$event)">
+                                            <span>{{'TestCap1StandardValue' | xlat}}(&deg;C)</span>
+                                            <input type="tel" ng-model="NewDCModel.txtTestCap1StandardValueControlId" attributenodeid="934" controlid="txtTestCap1StandardValueControlId" id="txtTestCap1StandardValueControlId" ng-change="MakeDecimalControl('txtTestCap1StandardValueControlId','#.##');PostControlEvents(934,'txtTestCap1StandardValueControlId');Temperature_NgKeyUp(936,'txtTestCap1DeviationValueControlId', '',false,'')" reset-field>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- Inner Form Items Responsive Column End -->
+                            </div>
+                            <!-- Inner Form Items Responsive Row End -->
+                            <!-- Inner Form Items Responsive Row Start -->
+                            <div class="row no-padding responsive-sm multi-col">
+                                <!-- Inner Form Items Responsive Column Start -->
+                                <div class="col rounded light-bg margin-bottom">
+                                    <div class="field-item">
+                                        <label ng-click="PreControlEvents(935,'txtTestCap1ObservedValueControlId',$event)">
+                                            <span>{{'TestCap1ObservedValue' | xlat}}(&deg;C)</span>
+                                            <input type="tel" ng-model="NewDCModel.txtTestCap1ObservedValueControlId" attributenodeid="935" controlid="txtTestCap1ObservedValueControlId" id="txtTestCap1ObservedValueControlId" ng-change="MakeDecimalControl('txtTestCap1ObservedValueControlId','#.##');PostControlEvents(935,'txtTestCap1ObservedValueControlId');Temperature_NgKeyUp(936,'txtTestCap1DeviationValueControlId', '',false,'')" reset-field>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- Inner Form Items Responsive Column End -->
+                                <!-- Inner Form Items Responsive Column Start -->
+                                <div class="col rounded light-bg margin-bottom">
+                                    <div class="field-item">
+                                        <label ng-click="PreControlEvents(936,'txtTestCap1DeviationValueControlId',$event)">
+                                            <span>{{'TestCap1DeviationValue' | xlat}}(&deg;C)</span>
+                                            <input type="tel" ng-model="NewDCModel.txtTestCap1DeviationValueControlId" attributenodeid="936" controlid="txtTestCap1DeviationValueControlId" readonly="true" id="txtTestCap1DeviationValueControlId" ng-change="MakeDecimalControl('txtTestCap1DeviationValueControlId','#.##');PostControlEvents(936,'txtTestCap1DeviationValueControlId');Temperature_NgKeyUp(936,'txtTestCap1DeviationValueControlId', '',false,'')" reset-field>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- Inner Form Items Responsive Column End -->
+                            </div>
+                            <!-- Inner Form Items Responsive Row End -->
+
+                        </div>
+                        <!-- Main Column End -->
+                    </div>
+
+                    <div class="row responsive-md no-padding-vertical" ng-show="ValidatorMethodShow">
+                        <!-- Main Column Start -->
+                        <div class="col no-padding">
+                            <!-- Section Divider / Section Title -->
+                            <div class="title-bar rounded">{{'Validator Method' | xlat}}</div>
+                            <!-- Inner Form Items Responsive Row Start -->
+                            <div class="row no-padding responsive-sm multi-col">
+                                <!-- Inner Form Items Responsive Column Start -->
+                                <div class="col rounded light-bg margin-bottom">
+                                    <div class="field-item">
+                                        <label ng-click="PreControlEvents(10352,'txtValidationStandardValueControlId',$event)">
+                                            <span>{{'TestCap1StandardValue' | xlat}}(&deg;C)</span>
+                                            <input type="tel" ng-model="NewDCModel.txtValidationStandardValueControlId" attributenodeid="10352" controlid="txtValidationStandardValueControlId" id="txtValidationStandardValueControlId" ng-change="MakeDecimalControl('txtValidationStandardValueControlId','#.##');PostControlEvents(10352,'txtValidationStandardValueControlId');Temperature_NgKeyUp(10352,'txtValidationStandardValueControlId', '',false,'')">
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- Inner Form Items Responsive Column End -->
+                                <!-- Inner Form Items Responsive Column Start -->
+                                <div class="col rounded light-bg margin-bottom">
+                                    <div class="field-item">
+                                        <label ng-click="PreControlEvents(10353,'txtValidationObservedValueControlId',$event)">
+                                            <span>{{'TestCap1ObservedValue' | xlat}}(&deg;C)</span>
+                                            <input type="tel" ng-model="NewDCModel.txtValidationObservedValueControlId" attributenodeid="10353" controlid="txtValidationObservedValueControlId" id="txtValidationObservedValueControlId" ng-change="MakeDecimalControl('txtValidationObservedValueControlId','#.##');PostControlEvents(10353,'txtValidationObservedValueControlId');Temperature_NgKeyUp(10353,'txtValidationObservedValueControlId', '',false,'')" reset-field>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- Inner Form Items Responsive Column End -->
+                                <!-- Inner Form Items Responsive Column Start -->
+                                <div class="col rounded light-bg margin-bottom">
+                                    <div class="field-item">
+                                        <label ng-click="PreControlEvents(10354,'txtValidationDeviationValueControlId',$event)">
+                                            <span>{{'TestCap1DeviationValue' | xlat}}(&deg;C)</span>
+                                            <input type="tel" ng-model="NewDCModel.txtValidationDeviationValueControlId" attributenodeid="10354" controlid="txtValidationDeviationValueControlId" readonly="true" id="txtValidationDeviationValueControlId" ng-change="MakeDecimalControl('txtValidationDeviationValueControlId','#.##');PostControlEvents(10354,'txtValidationDeviationValueControlId');Temperature_NgKeyUp(10354,'txtValidationDeviationValueControlId', '',false,'')" reset-field>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- Inner Form Items Responsive Column End -->
+                            </div>
+                            <!-- Inner Form Items Responsive Row End -->
+
+                        </div>
+                        <!-- Main Column End -->
+                    </div>
+
+                        <div class="row no-padding responsive-sm multi-col">
+                            <!-- Main Column Start -->
+                            <div class="col no-padding">
+                                <!-- Inner Form Items Responsive Row Start -->
+                                <div class="row no-padding responsive-sm multi-col">
+                                    <!-- Inner Form Items Responsive Column Start -->
+                                    <div class="col rounded light-bg margin-bottom">
+                                        <div class="field-item">
+                                            <label ng-click="PreControlEvents(969,'txtCommentsControlId',$event)">
+                                                <span>{{'Comments' | xlat}}</span>
+                                                <input type="text" ng-model="NewDCModel.txtCommentsControlId" attributenodeid="969" controlid="txtCommentsControlId" id="txtCommentsControlId" ng-change="PostControlEvents(969,'txtCommentsControlId');Temperature_NgKeyUp(969,'txtCommentsControlId', '',false,'')" reset-field>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- Inner Form Items Responsive Column End -->
+                                </div>
+                                <!-- Inner Form Items Responsive Row End -->
+                            </div>
+                            <!-- Main Column End -->
+                        </div>
+
+                        <!-- DC Form End -->
+
+
+
+                        <div class="row responsive-sm dc-button-holder margin-top-md">
+                              <div class="col no-padding">
+                                <a href="javascript:void(0)" class="button button-block button-calm" ng-click="ViewRecords()"><i class="icon icon-eye"></i> {{'ViewRecords' | xlat }}</a>
+                              </div>
+                              <div class="col no-padding">
+                                <a href="javascript:void(0)" ng-click="ClearForm()" class="button button-block button-calm"><i class="icon icon-cancel-circle"></i> {{'Clear' | xlat }}</a>
+                              </div>
+                              <div class="col no-padding">
+                                <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="AddRecords()" ng-disabled="DisableSave"><i class="icon icon-plus"></i> {{'Add' | xlat }}</a>
+                              </div>
+                              <div class="col no-padding">
+                                <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="SubmitRecords()" ng-disabled="DisableSaveSubmit"><i class="icon icon-check-circle"></i> {{'SaveSubmit' | xlat }}</a>
+                              </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>

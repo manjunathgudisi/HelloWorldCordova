@@ -1,0 +1,34 @@
+﻿<div class="login-wrap" ng-controller="LoginController">
+    <article class="login-box padding">
+        <div class="logo"><img src="images/logo.png" /></div>
+        <form class="oneview-form-login" ng-submit="Login()">
+            <label class="oneview-u-1">
+                <i class="icon icon-user"></i>
+                <input class="" type="text" id="txtUserName" placeholder="{{'Username' | xlat}}" ng-model="User.UserName" />
+            </label>
+            <label class="oneview-u-1">
+                <i class="icon icon-key"></i>
+                <input class="" type="password" id="txtPassword" placeholder="{{'Password' | xlat}}" ng-model="User.Password" />
+            </label>
+
+            <label class="oneview-u-1">
+                <i class="icon icon-Businessaffiliatenetwork"></i>
+                <input class="" type="text" id="txtOrganizationName" placeholder="{{'OrganizationName' | xlat}}" ng-model="User.OrganizationName" />
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" checked="" ng-model="User.RememberCredentials"> {{'RememberCredentials' | xlat}}
+            </label>
+
+            <button type="submit" class="button button-block button-secondary">{{'SignIn' | xlat}}</button>
+        </form>
+
+        <div style="position: absolute; right: 2px; bottom: 2px;">
+            <!--<button class="button" ng-click="CopyDbAcrossServiceEvent()"><i class="icon icon-database"></i>{{'CopyData' | xlat}}</button>-->
+            <button class="button" ng-click="UploadImagesAndDbAcrossService()"><i class="icon icon-database"></i> {{'Snapshot' | xlat}}</button>
+        </div>
+    </article>
+</div>
+
+
+
+

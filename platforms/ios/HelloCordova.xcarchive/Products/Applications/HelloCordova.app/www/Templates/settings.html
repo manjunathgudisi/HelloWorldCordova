@@ -1,0 +1,346 @@
+<div ng-controller="SettingsControllerNew">
+    <div class="bar sub-header no-padding item-input-inset" ng-show="BackVisible">
+        <a href="javascript:void(0)" class="button button-clear" ng-click="ShowSettings()"><i class="icon icon-chevron-left"></i>{{'Back' | xlat}}</a>
+        <label class="item-input-wrapper">
+
+        </label>
+    </div>
+    <div class="scroll-content anim" ng-show="settingvisible">
+        <div class="full-height scrollable">
+
+            <div class="list settings" ng-hide="Setting_ProbeConfiguration">
+                <div class="item item-divider">
+                    {{'Blue Therm Configuration' | xlat}}
+                </div>
+                <a class="item item-icon-left" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_ProbeConfiguration_TempIndicator',title: 'Live Temperature Indicator Enable', enabled: true,badge: true, icon: 'ion-edit' })" ng-hide="Setting_ProbeConfiguration_TempIndicator">
+                    <i class="icon icon-thermometer"></i>
+                    {{'Live Temperature Indicator Status' | xlat}}
+                    <span class="item-note" id="lblTempIndicator">Enabled</span>
+                </a>
+                <!--<a class="item item-icon-left item-icon-right" ng-click="ProbeConnectListShow()" href="javascript:void(0)">-->
+                <a class="item item-icon-left item-icon-right" ng-click="SettingsOnChange({Id:'Setting_ProbeConfiguration_ProbeSynchronize',title:'probe synchronize',newpage:true,enabled: true,icon:'ion-thermometer'})" href="javascript:void(0)" ng-hide="Setting_ProbeConfiguration_ProbeSynchronize">
+                    <i class="icon icon-bluetooth-audio"></i>
+                    {{'Probe Synchronize' | xlat}}
+                    <span class="badge badge-balanced"></span>
+                    <i class="icon icon-angle-right"></i>
+                </a>
+                <a class="item item-icon-left" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_ProbeConfiguration_TemperatureReading',title: 'Temperature Reading', enabled: true,badge: true,badgetxt: TemperatureAutoMaualBadgetxt, icon: 'ion-edit' })" ng-hide="Setting_ProbeConfiguration_TemperatureReading">
+                    <i class="icon icon-thermometer"></i>
+                    {{'Temperature Reading' | xlat}}
+                    <span class="item-note" id="lblTempReading">Auto</span>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-click="SettingsOnChange({Id:'Setting_ProbeConfiguration_NewProbeSynchronize',title:'probe synchronize',newpage:true,enabled: true,icon:'ion-thermometer'})" href="javascript:void(0)" id="0x7f070077" ng-hide="Setting_ProbeConfiguration_NewProbeSynchronize">
+                    <i class="icon icon-bluetooth-audio"></i>
+                    {{'New Probe Scan' | xlat}}
+                    <span class="badge badge-balanced"></span>
+                    <i class="icon icon-angle-right"></i>
+                </a>
+            </div>        
+            <div class="list settings" ng-hide="Setting_MyDownload">
+                <div class="item item-divider">
+                    <i class="icon icon-file-text-o"></i>{{'My Download' | xlat}}
+                </div>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Download_CleaningView',title:'My Downloads : Cleaning View',enabled: true,badge: true,badgetxt: CleaningProfiledownloadViewConfiguration,icon: 'ion-gear-a'})" ng-hide="Setting_MyDownload_CleaningView">
+                   {{'Cleaning View' | xlat}}
+                    <span class="item-note" id="lblMyDownLoadView"></span>
+                </a>
+            </div>
+            <div class="list settings" ng-hide="Setting_AutoSync">
+                <div class="item item-divider">
+                    {{'Sync Master Data' | xlat}}
+                </div>
+                <!--<a class="item" href="javascript:void(0)" ng-click="ChangePasswordShow()">-->
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_AutoSync_StartSync', title: 'Start Sync', enabled: true, icon: 'ion-gear-a' })" ng-hide="Setting_AutoSync_StartSync">
+                    {{'Auto Sync' | xlat}}
+                    <span class="item-note" id="lblAutoSync">Disable</span>
+                </a>
+            </div>
+            <div class="list settings" ng-hide="Setting_AutoMetadataDownload">
+                <div class="item item-divider">
+                    {{'Auto Master Data Download' | xlat}}
+                </div>
+                <!--<a class="item" href="javascript:void(0)" ng-click="ChangePasswordShow()">-->
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_AutoMasterMetadataDownload', title: 'Start Sync', enabled: true, icon: 'ion-gear-a' })" ng-hide="Setting_AutoMasterMetadataDownload">
+                    {{'Auto Download' | xlat}}
+                    <span class="item-note" id="lblAutoMetadataDownload">Disable</span>
+                </a>
+            </div>
+            <div class="list settings" ng-hide="Setting_Profile">
+                <div class="item item-divider">
+                    {{'My Profile' | xlat}}
+                </div>
+                <!--<a class="item" href="javascript:void(0)" ng-click="ChangePasswordShow()">-->
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Profile_ChangePassword', title: 'Reset Password', enabled: true, icon: 'ion-gear-a' })" ng-hide="Setting_Profile_ChangePassword">
+                    {{'Change Password' | xlat}}
+                </a>
+            </div>
+            <div class="list settings" ng-hide="Setting_Log">
+                <div class="item item-divider">
+                    <i class="icon icon-file-text-o"></i> {{'Log Settings' | xlat}}
+                </div>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Log_EnableLogs',title:'Enable Logs',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Log_Enable">
+                    {{'Enable Log' | xlat}}
+                    <!--<span class="item-note">Disabled</span>-->
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Log_UploadLogs',title:'Upload Logs',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Log_Upload">
+                    {{'Upload Log' | xlat}}
+                </a>
+            </div>
+            <div class="list settings" ng-hide="Setting_DB">
+                <div class="item item-divider">
+                    <i class="icon icon-database"></i> {{'Database Settings' | xlat}}
+                </div>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_DB_CopyDB',title:'Copy DB',enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_DB_CopyDB">
+                    {{'Copy Database' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_DB_UploadDB',title:'Upload DB',enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_DB_UploadDB">
+                    {{'Upload Database' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_DB_UploadImagesAndDbAcrossService',title:'Upload DB',enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_DB_UploadImagesAndDbAcrossService">
+                    {{'Upload Across Service Image and Database' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_DB_RestoreDB',title:'Restore DB',enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_DB_RestoreDB">
+                    {{'Restore Database' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_DB_CleanDB',title:'Clean DB',enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_DB_CleanDB">
+                    {{'Clean Database' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_DB_CleanDCActions',title:'ClearAll DC And Actions',enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_DB_CleanDCAndAction">
+                    {{'ClearAll DC And Actions' | xlat}}
+                </a>
+            </div>
+            <div class="list settings" ng-hide="Setting_Application">
+                <div class="item item-divider">
+                    {{'Application' | xlat}}
+                </div>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Application_CheckUpdates',title:'Check For Updates',newpage: true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Application_CheckForUpdates">
+                    {{'Check For Updates' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Application_Refresh',title:'Refresh',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Application_Refresh">
+                    {{'Refresh' | xlat}}
+                    <!--<span class="item-note">Disabled</span>-->
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Application_RefreshTab',title:'Refresh',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Application_RefreshTab">
+                    {{'Refresh Tab' | xlat}}
+                    <!--<span class="item-note">Disabled</span>-->
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Application_RefreshGlobalization',title:'Refresh Page Globalization',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Application_RefreshPageGlobalization">
+                    {{'Refresh Page Globalization' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Application_RefreshCloudManager',title:'Refresh Configuration',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Application_RefreshCloudManager">
+                    {{'Refresh Cloud Manager' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Application_RefreshMetadataConfiguration',title:'Refresh Configuration',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Application_RefreshMetadataConfiguration">
+                    {{'Refresh Configuration' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Application_RefreshDATEntityTypes',title:'Refresh DATEntity Types',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Application_RefreshDATEntityTypes">
+                    {{'Refresh DATEntity Types' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_Application_RefreshDcCustomHtml',title:'Refresh Configuration',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_Application_RefreshDcCustomHtml">
+                    {{'Refresh DC Custom Html' | xlat}}
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_Application_ConflictResolveMode',title: 'Conflict Resolve Mode', enabled: true,badge: true,badgetxt: ConflictResolveModeConfiguration, icon: 'ion-edit' })" ng-hide="Setting_Application_ConflictResolveMode">
+                    {{'Conflict Resolve Mode' | xlat}}
+                    <span class="item-note" id="lblResolveMode"></span>
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_Application_GlobalOVGuidChecking',title: 'OneView Version Conflict', enabled: true,badge: true,badgetxt: GlobalOVGuidChecking, icon: 'ion-edit' })" ng-hide="Setting_Application_GlobalOVGuidChecking">
+                    {{'OneView Version Conflict' | xlat}}
+                    <span class="item-note" id="lblGlobalOVGuidChecking"></span>
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_Application_AutoUpload',title: 'Auto Upload', enabled: true,badge: true,badgetxt: TemperatureAutoMaualBadgetxt, icon: 'ion-edit' })" ng-hide="Setting_Application_AutoUpload">
+                    {{'Auto Upload' | xlat
+                    }}
+                    <span class="item-note" id="lblAutoUpload">Disable</span>
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_Application_AutoActionFollowupDownload',title: 'Auto Action Followup Download', enabled: true,badge: true,badgetxt: TemperatureAutoMaualBadgetxt, icon: 'ion-edit' })" ng-hide="Setting_Application_AutoActionFollowupDownload">
+                    {{'Auto Action Followup Download' | xlat}}
+                    <span class="item-note" id="lblAutoActionFollowupDownload">Disable</span>
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_Application_GeoLocationValidation',title: 'AutoEnable Geo Location', enabled: true,badge: true,badgetxt: TemperatureAutoMaualBadgetxt, icon: 'ion-edit' })" ng-hide="Setting_Application_GeoLocationValidation">
+                    {{'GeoLocation Validation in landing page' | xlat}}
+                  
+                    <span class="item-note" id="lblEnableGeoLocationValidation">Disable</span>
+                    <span class="item-note" id="lblDistanceSpan"></span>&nbsp;
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_Application_Landingpagedailysync',title: 'AutoEnable Geo Location', enabled: true,badge: true,badgetxt: TemperatureAutoMaualBadgetxt, icon: 'ion-edit' })" ng-hide="Setting_Application_Landingpagedailysync">
+                    {{'Landing page daily sync' | xlat}}
+                    <span class="item-note" id="lblLandingpagedailysync">Disable</span>
+                </a>
+
+            </div>
+
+            <div class="list settings" ng-hide="Setting_Version">
+                <div class="item item-divider">
+                    {{'Version' | xlat}}
+                </div>
+                <a class="item" href="javascript:void(0)" id="lblVersion" ng-hide="Setting_Version_Name">
+
+                </a>
+            </div>
+
+            <div class="list settings" ng-hide="Setting_StateManagement">
+                <div class="item item-divider">
+                    {{'StateManagement' | xlat}}
+                </div>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_StateManagement_NewDc',title: 'New Dc', enabled: true,badge: true, icon: 'ion-edit' })" ng-hide="Setting_StateManagement_NewDc">
+                    {{'NewDc' | xlat}}
+                    <span class="item-note" id="lblNewDcState">Disable</span>
+                </a>
+            </div>
+
+
+            <div class="list settings" ng-hide="Setting_NewDcDateSelectionEnable">
+                <div class="item item-divider">
+                    {{'NewDcDateSelection' | xlat}}
+                </div>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_NewDcDateSelectionEnable_DcStartDate',title: 'New Dc', enabled: true,badge: true, icon: 'ion-edit' })" ng-hide="Setting_NewDcDateSelectionEnable_DcStartDate">
+                    {{'DcStartDateSelection' | xlat}}
+                    <span class="item-note" id="lblNewDcStartDateSelection">{{'Disable' | xlat}}</span>
+                </a>
+            </div>
+
+
+            <div class="list settings" ng-hide="Setting_ShiftSelection">
+                <div class="item item-divider">
+                    {{'Shift Selection' | xlat}}
+                </div>
+                <a class="item item-icon-right" ng-click="SettingsOnChange({Id:'Setting_ShiftSelection',title:'probe synchronize',newpage:true,enabled: true,icon:'ion-thermometer'})" href="javascript:void(0)" ng-hide="Setting_ShiftSelection">
+                    {{'Select Shift' | xlat}}
+                    <span class="badge badge-balanced"></span>
+                    <i class="icon icon-angle-right"></i>
+                </a>
+            </div>
+
+            <div class="list settings" ng-hide="Setting_MobileAutoSync">
+                <div class="item item-divider">
+                    {{'Mobile Auto Sync' | xlat}}
+                </div>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_MobileAutoSync_Sync',title: 'New Dc', enabled: true,badge: true, icon: 'ion-edit' })" ng-hide="Setting_MobileAutoSync_Sync">
+                    {{'Sync' | xlat}}
+                    <span class="item-note" id="lblMobileAutoSync">Disable</span>
+                </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({Id:'Setting_MobileAutoSync_Refresh',title:'Refresh',newpage:true,enabled: true,icon: 'ion-gear-a'})" ng-hide="Setting_MobileAutoSync_Refresh">
+                    {{'Refresh Mobile Auto Sync Metadata' | xlat}}
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <div class="scroll-content has-header anim" ng-show="probevisible">
+        <div class="full-height scrollable">
+            <tick-list multiple="true" selected-icon="icon-check">
+                <div class="item item-divider">
+                    {{'Connect Probe' | xlat}}
+                </div>
+                <tick-list-item-settings ng-repeat="probe in probes" selected="{{probe.selected}}" selected-icon="{{probe.icon}}" model="probe" on-change="OnProbeChange(probe)">{{probe.Name}}<span ng-if="probe.selected" class="badge badge-blue">Connected</span></tick-list-item-settings>
+                <!--<tick-list-item-settings ng-repeat="probe in probes" selected="{{probe.selected}}" selected-icon="{{probe.icon}}" model="probe" on-change="OnProbeChange(probe)"><i class="icon ion-thermometer"></i>{{probe.Name}}<span ng-if="probe.selected" class="badge badge-blue">Connected</span></tick-list-item-settings>-->
+            </tick-list>
+        </div>
+    </div>
+
+    <div class="scroll-content has-header anim" ng-show="NewProbevisible">
+        <div class="full-height scrollable">
+            <tick-list multiple="true" selected-icon="icon-check">
+                <div class="item item-divider">
+                    {{'Connect New Probe' | xlat}}
+                </div>
+              <!--  <tick-list-item-settings ng-repeat="nprobe in NewProbes" selected="{{nprobe.selected}}" selected-icon="{{nprobe.icon}}" model="NewProbes" on-change="OnNewProbeChange(nprobe)">{{nprobe.Name}}<span ng-if="nprobe.selected" class="badge badge-blue">Connected</span></tick-list-item-settings>-->             
+                <tick-list-item-settings ng-repeat="probe in probes" selected="{{probe.selected}}" selected-icon="{{probe.icon}}" model="probe" on-change="OnNewProbeChange(probe)">{{probe.Name}}<span ng-if="probe.selected" class="badge badge-blue">Connected</span></tick-list-item-settings>
+            </tick-list>
+        </div>
+    </div>
+
+    <div class="scroll-content has-header anim" ng-show="ShiftsVisible">
+        <div class="full-height scrollable">
+            <tick-list-shift multiple="true" selected-icon="icon-check">
+                <div class="item item-divider">
+                    {{'Shifts' | xlat}}
+                </div>
+                <tick-list-item-settings-shift ng-repeat="shift in ShiftsData" selected="{{shift.selected}}" selected-icon="{{shift.icon}}" model="shift" on-change="OnShiftChange(shift)">{{shift.Name}}<span ng-if="shift.selected" class="badge badge-blue">Selected</span></tick-list-item-settings-shift>               
+            </tick-list-shift>
+
+            <!--<tick-list multiple="true">
+                <tick-list-item ng-repeat="shift in ShiftsData" selected="{{shift.selected}}" model="shift" on-change="OnShiftChange(shift)">{{shift.Name}}<span ng-if="shift.selected" class="badge badge-blue">True</span></tick-list-item>
+            </tick-list>-->
+        </div>
+    </div>
+
+    <div ng-show="LogsVisible">
+        <!--  <ion-content class="has-header settings">-->
+        <tick-list multiple="true">
+            <tick-list-item ng-repeat="logVariable in LogVariableList" selected="{{logVariable.selected}}" model="logVariable" on-change="OnSelectVariable(logVariable)">{{logVariable.Name}}<span ng-if="logVariable.selected" class="badge badge-blue">True</span></tick-list-item>
+        </tick-list>
+    </div>
+
+    <div ng-show="UpdatePassword">
+        <div class="scroll-content has-header has-footer">
+            <div class="full-height scrollable">
+                <div class="item attribute">
+                    <span>{{'Old Password' | xlat}}</span>
+                    <div class="row responsive-md">
+                        <div class="col">
+                            <label>
+                                <!--<input type="text" ng-model="BlastChiller">-->
+                                <input type="password" ng-model="OldPassword">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="item attribute">
+                    <span>{{'New Password' | xlat}}</span>
+                    <div class="row responsive-md">
+                        <div class="col">
+                            <label>
+                                <!--<input type="text" ng-model="BlastChiller">-->
+                                <input type="password" ng-model="NewPassword">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="item attribute">
+                    <span>{{'Re-enter Password' | xlat}}</span>
+                    <div class="row responsive-md">
+                        <div class="col">
+                            <label>
+                                <!--<input type="text" ng-model="BlastChiller">-->
+                                <input type="password" ng-model="ConfirmPassword">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bar bar-footer">
+            <div class="row">
+                <div class="col text-center no-padding no-margin">
+                    <a href="javascript:void(0)" class="button button-clear" ng-click="ResetPassword()"><i class="icon icon-plus-square-o"></i> {{'Update' | xlat}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="ShowAutoManualValidationPage">
+        <div class="scroll-content has-header has-footer">
+            <div class="full-height scrollable">
+           
+                <div class="item attribute">
+                    <span>{{'Enter Pin' | xlat}}</span>
+                    <div class="row responsive-md">
+                        <div class="col">
+                            <label>                           
+                                <input type="password" ng-model="AutoManualPin">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+        <div class="bar bar-footer">
+            <div class="row">
+                <div class="col text-center no-padding no-margin">
+                    <a href="javascript:void(0)" class="button button-clear" ng-click="SubmitAutoManualPin({ Id:'Setting_ProbeConfiguration_TemperatureReading',title: 'Temperature Reading', enabled: true,badge: true,badgetxt: TemperatureAutoMaualBadgetxt, icon: 'ion-edit' })"><i class="icon icon-plus-square-o"></i> {{'Submit' | xlat}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div ng-controller="PlatformPeriodicsLandingPageController">
+    <div class="bar sub-header item-input-inset no-padding">
+        <i class="icon icon-info28 info-icon"></i><span class="info" id="TaskSyncStatus"></span>
+        <div class="item-input-wrapper dash-sub-head-txt" id="DivPeriodicLandingPageLastSyncDate"></div>
+        <!--<div>
+            
+            <a class="button button-clear" ng-click="Upload()"><i class="icon icon-arrow68"></i> <span class="hide-sm">Upload</span></a>
+        </div>
+        <div>
+            
+            <a class="button button-clear" ng-click="SyncTask()"><i class="icon icon-social13"></i> <span class="hide-sm">Download</span></a>
+        </div>-->
+    </div>
+    <div class="scroll-content dashboard-content fade-in">
+        <div class="scroll-content">
+            <div class="full-height scrollable">
+                <div class="list no-margin" id="MainContainer">
+                </div>
+            </div>
+
+            
+        </div>
+        
+    </div>
+    <div class="backdrop visible active" ng-show="ActionSheet" ng-click="BackgroundVisble()">
+        <div class="actionsheet">
+            <div class="row text-center">
+                <a class="col" ng-click="DownloadDCProfile()">
+                    <i class="icon icon-social13 synced-color"></i>
+                    <div class="btn-txt">{{'Download' | xlat }}</div>
+                </a>
+                <a class="col" ng-click="LoadNewDC()">
+                    <i class="icon icon-edit completed-color"></i>
+                    <div class="btn-txt">{{'New DC' | xlat }}</div>
+                </a>
+                <!--<a class="col" ng-click="LoadViewDC()">
+                    <i class="icon icon-eye completed-color"></i>
+                    <div class="btn-txt">{{'View/Edit' | xlat }}</div>
+                </a>-->
+                <a class="col" ng-click="ApproveDC()">
+                    <i class="icon icon-thumb-up-outline-symbol approved-color" ng-show="EnableApproveIcon"></i>
+                    <i class="icon icon-thumb-up-outline-symbol icon-disabled"  ng-show="DisableApproveIcon"></i>
+                    <div class="btn-txt">{{'Approve' | xlat }}</div>
+                </a>
+                <a class="col" ng-click="UploadDC()">
+                    <i class="icon icon-arrow68 synced-color"></i>
+                    <div class="btn-txt">{{'Upload' | xlat }}</div>
+                </a>
+                <!-- <a class="col" ng-click="ActionSheet = !ActionSheet; PopupShow = !PopupShow">
+                    <i class="icon icon-info"></i>
+                    <div class="btn-txt">More Info</div>
+                </a>-->
+            </div>
+        </div>
+    </div>
+</div>
+  

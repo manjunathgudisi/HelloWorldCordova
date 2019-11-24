@@ -1,0 +1,162 @@
+<div ng-controller="ActionFollowUpDetailsController">
+
+<div class="bar sub-header no-padding item-input-inset">
+    <!--<a href="javascript:void(0)" class="button button-clear" onclick="Back()"><i class="icon icon-chevron-left"></i> {{'Back' | xlat}}</a>-->
+    <a href="javascript:void(0)" class="button button-clear" ng-click="Back()" ng-disabled="DisableBack"><i class="icon icon-chevron-left"></i>{{'Back' | xlat}}</a>
+    <label class="item-input-wrapper">
+    
+    </label>
+    <div id="DivActionDetailsCount"></div>
+    <div class="margin-right">{{CurrentPage}} of {{PageCount}}</div>
+</div>
+
+<div class="scroll-content has-header has-footer no-padding anim">
+  <div class="full-height scrollable follow-up">
+      <!-- <div>
+          <div ng-click="PreviewDC()">
+              <a class="button button-block no-margin">Preview</a>
+          </div>
+      </div> -->
+    <!--<div class="list list-inset no-margin">
+      <label class="item item-input">
+        <i class="icon icon-search placeholder-icon"></i>
+        <input type="search" placeholder="Search">
+      </label>
+    </div> -->
+    <!-- Section Divider / Section Title -->
+    <div class="list">
+        <div class="item item-divider">
+            {{'Action Details' | xlat}}
+            <div style="float:right" ng-click="PreviewDC()" ng-hide="HidePreviewButton"><i class="icon icon-eye"></i> {{'  Preview' | xlat }}</div>
+            <!-- <a class="button button-clear padding-left-5"   ng-click="PreviewDC()"><i class="icon icon-eye"></i> {{'Preview' | xlat }}</a> -->
+        </div>
+
+        <!-- <div class="item" id="DivParentHierarchy"></div> -->
+        <!--<div class="item no-padding">
+            <div class="row">
+                <div class="col col-33 padding stable-bg text-right">Floor / Department: </div>
+                <div class="col padding"><input type="text" ng-model="NewDCModel.AddlDepartmentControlId" attributenodeid="523" controlid="AddlDepartmentControlId" id=""></div>
+            </div>
+        </div>
+        <div class="item no-padding">
+            <div class="row">
+                <div class="col col-33 padding stable-bg text-right">Room: </div>
+                <div class="col padding">2444 - Multi Bay 2 W7</div>
+            </div>
+        </div>
+        <div class="item no-padding">
+            <div class="row">
+                <div class="col col-33 padding stable-bg text-right">Room Type: </div>
+                <div class="col padding">Clinical</div>
+            </div>
+        </div>
+        <div class="item no-padding">
+            <div class="row">
+                <div class="col col-33 padding stable-bg text-right">Zone: </div>
+                <div class="col padding">Zone 2</div>
+            </div>
+        </div>-->
+        <div id="DivDcPlaceNameHierarchy">
+
+        </div>
+        <!--<div class="item no-padding">
+            <div class="row">
+                <div class="col col-33 padding stable-bg text-right">Place Name: </div>
+                <div class="col padding"><input type="text" ng-model="DcPlaceName" controlid="DcPlaceName" id="DcPlaceName" readonly="true" ></div>
+            </div>
+        </div>-->
+        <div class="item no-padding">
+            <div class="row">
+                <div class="col col-33 padding stable-bg border-right text-right">{{'Template' | xlat}} </div>
+                <div class="col padding">{{TemplateNodeName}}</div>
+            </div>
+        </div>
+        <div id="DivDcDetails">
+
+        </div>
+    
+        <div class="item no-padding">
+            <div class="row">
+                <div class="col col-33 padding stable-bg border-right text-right">{{'Action' | xlat}} </div>
+                <div class="col padding">{{ActionName}}</div>
+            </div>
+        </div>        
+         <div class="item no-padding" ng-show="ActionMultiMediaSubElements.length">
+            <div class="row">
+                <div class="col col-33 padding stable-bg border-right text-right">{{'Attachments' | xlat}} </div>
+                <div class="col rounded light-bg cam-photo">
+                    <div ng-repeat="Element in ActionMultiMediaSubElements">      
+                        <a href="{{Element.LocalURL}}" class="angularbox"><img src="{{Element.LocalURL}}" alt="No Image"></a>
+                    </div>             
+                </div>
+            </div>
+        </div>
+        <div class="item no-padding">
+            <div class="row">
+                <div class="col col-33 padding stable-bg border-right text-right">{{'Raised By' | xlat}} </div>
+                <div class="col padding">{{ActionRaisedUserName}}</div>
+            </div>
+        </div>
+        <div class="item no-padding">
+            <div class="row">
+                <div class="col col-33 padding stable-bg border-right text-right">{{'Raised Date' | xlat}} </div>
+                <div class="col padding">{{ActionRaisedDate}}</div>
+            </div>
+        </div>
+        <div class="item no-padding" ng-show="RectificationTime.length">
+            <div class="row">
+                <div class="col col-33 padding stable-bg border-right text-right">{{'Rectification Time' | xlat}} </div>
+                <div class="col padding">{{RectificationTime}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="list">
+        <div class="item item-divider">
+            {{'Resolution Details' | xlat}}
+        </div>
+        <div class="item item-checkbox">
+            <label class="checkbox">
+                <input type="checkbox" id="ActionStatus" >
+            </label>
+            {{'Resolved' | xlat}}
+        </div>
+        <div class="item attribute">
+          <span>{{'Comments' | xlat}}</span>
+          <div class="row responsive-md">
+            <div class="col">
+              <div class="field-item">
+                <label>
+                    <input type="text" id="Comments" ng-model="Comments">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Section Divider / Section Title -->
+        <div class="title-bar rounded">{{'MultiMedia Details' | xlat}}</div>
+        <!-- Inner Form Items Responsive Row Start -->
+        <div class="row margin-bottom">
+            <!-- Inner Form Items Responsive Column Start -->
+            <div class="col rounded light-bg cam-photo">
+                <div ng-repeat="MultiMediaSubElement in MultiMediaSubElements">
+                    <a href="{{MultiMediaSubElement.LocalURL}}" class="angularbox" rel="1"><img src="{{MultiMediaSubElement.LocalURL}}" alt="{{MultiMediaSubElement.AlternateName}}"></a>
+                </div>
+                <a class="button" ng-click="AttachPicture();"><i class="icon icon-camera"></i> {{'Add' | xlat}}</a>
+            </div>
+            <!-- Inner Form Items Responsive Column End -->
+        </div>  
+    </div>
+  </div>
+</div>
+
+<div class="bar bar-footer no-padding">
+    <div class="row">
+        <div class="col"><a href="javascript:void(0)" class="button button-block button-clear" ng-click="PreviousClick()" ng-disabled="DisablePrevious"><i class="icon icon-chevron-left"></i> {{'Previous' | xlat}}</a></div>
+        <!--<div class="col-light"><a href="javascript:void(0)" class="button button-block button-clear" ng-click="SaveClick()">Save</a></div>   -->  
+      <!--<div class="col"><a href="javascript:void(0)" class="button button-block button-clear" ng-click="NextClick()" ng-disabled="DisableNext">Next</a></div>-->
+        <div class="col"><a href="javascript:void(0)" class="button button-block button-clear" ng-click="NextClick()">{{NextButton}} <i class="icon icon-chevron-right"></i></a></div>
+        
+    </div>
+</div> 
+
+</div>

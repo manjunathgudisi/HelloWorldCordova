@@ -1,0 +1,49 @@
+<div ng-controller="ActionPreviewController">
+    <div class="bar sub-header item-input-inset no-padding">
+        <a href="javascript:void(0)" class="button button-clear" ng-click="Back()"><i class="icon icon-chevron-left"></i>{{'Back' | xlat}}</a>
+        <label class="item-input-wrapper">
+
+        </label>
+        <!--<div class="margin-right" id="PageHeaderDivId"></div>-->
+    </div>
+  
+
+    <div class="scroll-content has-header padding-horizontal anim">
+        <div class="full-height scrollable">
+            <div id="PageHeaderDivId">
+
+            </div>   
+
+            <div id="ContentDivId">
+
+            </div>
+        </div>
+    </div>
+    <!--<div class="bar bar-footer no-padding">
+        <div class="row">
+            <div class="col"><a href="javascript:void(0)" class="button button-block button-clear"><i class="icon icon-check"></i>Approve Audit</a></div>
+        </div>
+    </div>-->
+
+
+    <div class="backdrop visible active " ng-show="AttributeInfoDivShow">
+        <div class="side-panel fade-in fast">
+            <div class="bar bar-header bar-positive item-input-inset no-padding">
+                <div class="button-bar">
+                    <span class="page-title padding-horizontal">{{'Attribute Details' | xlat}}</span>
+                </div>
+                <a href="javascript:void(0)" class="button button-icon icon icon-times" ng-click="HideAttributeInfo()"></a>
+            </div>
+            <div class="scroll-content has-header scrollable">
+                <div class="list" id="AttributeSummaryDivId">
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

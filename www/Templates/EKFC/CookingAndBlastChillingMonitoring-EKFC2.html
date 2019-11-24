@@ -1,0 +1,482 @@
+<div ng-controller="CookingAndBlastChillingMonitoringControllerEKFC2">
+    <div class="bar sub-header item-input-inset no-padding">
+        <a href="javascript:void(0)" class="button button-clear" ng-click="Back()" ng-disabled="DisableBack"><i class="icon icon-chevron-left"></i>{{'Back' | xlat}}</a>
+        <a href="javascript:void(0)" class="button button-clear" ng-click="GetProbeStatus()"><i class="icon icon-thermometer"></i>{{Status | xlat }}</a>
+        <a href="javascript:void(0)" class="button button-clear" ng-click="NCClick()" ng-show="BtnNCObservations"><i class="icon"></i>Observations</a>
+        <label class="item-input-wrapper">
+
+        </label>
+        <span class="badge blue hide-sm"><span class="light">{{CompletedRecords}} / {{TotalCount}}</span><span class="badge badge-assertive">{{NCCount}}</span></span>
+        <!--<span class="border-left">{{ 'Shift' | xlat}}</span>
+        <div class="shift-bar">
+            <buttons-band class="" data-toggle="buttons-band" model='NewDCModel.chkShift' options='ShiftOptions' ng-model="NewDCModel.chkShift" controlid="chkShift"></buttons-band>
+        </div>-->
+
+        <div class="shift-bar">
+            <div dropdown-select="ShiftOptions" dropdown-model="chkShift" dropdown-item-label="text"></div>
+        </div>
+    </div>
+
+<div class="scroll-content has-header scrollable padding custom-view" id="ContentId">
+  <div ng-show="DivContent">
+    <!-- DC Form Start -->      
+      <div class="row responsive-md no-padding-vertical">
+            <!-- Main Column Start -->
+			<div class="col no-padding">
+            <!-- Section Divider / Section Title -->
+            <div class="title-bar rounded">{{'ProductDetails' | xlat}}</div>
+            <!-- Inner Form Items Responsive Row Start -->
+            <div class="row no-padding responsive-sm margin-bottom">
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg current-attr" id="Column_326">
+                    <div class="field-item" onclick="AutoCompleteStartEvent('AddlProductControlId', 'Product', 220, 326, true)">
+                      <label>
+                        <span>{{'Product' | xlat}}</span>
+                        <!--<input type="text" onclick="OpenSidePanel()" ng-model="userInput.Product">-->
+                          <input type="text" ng-model="NewDCModel.AddlProductControlId" controlid="AddlProductControlId" readonly="true" id="AddlProductControlId" />
+                      </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+              </div>
+            <!-- Inner Form Items Responsive Row End -->
+            <!-- Inner Form Items Responsive Row Start -->
+            <div class="row no-padding responsive-sm margin-bottom">
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg" id="Column_327">
+                    <div class="field-item" onclick="AutoCompleteStartEvent('AddlProductTypeControlId', 'Product Type', 1, 327, true)">
+                        <label ng-click="PreControlEvents(327,'AddlProductTypeControlId',$event)">
+                            <span>{{'ProductType' | xlat}}</span>
+                            <input type="text" ng-model="NewDCModel.AddlProductTypeControlId" controlid="AddlProductTypeControlId" readonly="true" id="AddlProductTypeControlId" />
+                            <!--  <input type="text" ng-model="userInput.ProductType">-->
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+              </div>
+            <!-- Inner Form Items Responsive Row End -->
+            <!-- Section Divider / Section Title -->
+            <div class="title-bar rounded">{{'Cooking Mode' | xlat }}</div>
+            <!-- Inner Form Items Responsive Row Start -->
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg margin-bottom">
+                    <div class="field-item">
+                      <span>{{'CookedType' | xlat}}</span>
+                      <div class="multiselect-button button-bar">
+                          <button class="button ng-binding rounded" button-toggle="activated" ng-model="NewDCModel.chkP" attributenodeid="328" controlid="chkP" ng-click="CookedTypeClick('P');" ng-change="Temperature_NgKeyUp(328,'chkP', '',false,'')">{{'P' | xlat}}</button>
+                          <button class="button ng-binding rounded" button-toggle="activated" ng-model="NewDCModel.chkG" attributenodeid="329" controlid="chkG" ng-click="CookedTypeClick('G');" ng-change="Temperature_NgKeyUp(329,'chkG', '',false,'')">{{'G' | xlat}}</button>
+                          <button class="button ng-binding rounded" button-toggle="activated" ng-model="NewDCModel.chkR" attributenodeid="330" controlid="chkR" ng-click="CookedTypeClick('R');" ng-change="Temperature_NgKeyUp(330,'chkR', '',false,'')">{{'R' | xlat}}</button>
+                          <button class="button ng-binding rounded" button-toggle="activated" ng-model="NewDCModel.chkS" attributenodeid="331" controlid="chkS" ng-click="CookedTypeClick('S');" ng-change="Temperature_NgKeyUp(331,'chkS', '',false,'')">{{'S' | xlat}}</button>
+                      </div>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->               
+              </div>
+            <!-- Inner Form Items Responsive Row End -->
+            <!-- Section Divider / Section Title -->
+            <div class="title-bar rounded">{{'CustomerDetails' | xlat }}</div>
+            <!-- Inner Form Items Responsive Row Start -->
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg margin-bottom" id="Column_391">
+                    <div class="field-item" onclick="AutoCompleteStartEvent('AddlSectorControlId', 'Sector', 210, 391, true)">
+                        <label ng-click="PreControlEvents(391,'AddlSectorControlId',$event)">
+                            <span>{{'Sector' | xlat}} </span>
+                            <!--<input type="text" ng-model="Airline">-->
+                            <input type="text" ng-model="NewDCModel.AddlSectorControlId" controlid="AddlSectorControlId" readonly="true" id="AddlSectorControlId" />
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg margin-bottom" id="Column_390">
+                    <div class="field-item" onclick="AutoCompleteStartEvent('AddlFlightControlId', 'Airline', 212, 390, true)">
+                        <label ng-click="PreControlEvents(390,'AddlFlightControlId',$event)">
+                            <span>{{'Airline' | xlat}} </span>
+                            <!--<input type="text" ng-model="Airline">-->
+                            <input type="text" ng-model="NewDCModel.AddlFlightControlId" controlid="AddlFlightControlId" readonly="true" id="AddlFlightControlId" />
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->               
+              </div>
+            <!-- Inner Form Items Responsive Row End -->
+            <!-- Inner Form Items Responsive Row Start -->
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg margin-bottom" id="Column_332">
+                    <div class="field-item" onclick="AutoCompleteStartEvent('AddlAirlineControlId', 'Flight', 213, 332, true)">
+                        <label ng-click="PreControlEvents(332,'AddlAirlineControlId',$event)">
+                            <span>{{'Flight' | xlat}} </span>
+                            <!--<input type="text" ng-model="Airline">-->
+                            <input type="text" ng-model="NewDCModel.AddlAirlineControlId" controlid="AddlAirlineControlId" readonly="true" id="AddlAirlineControlId" />
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg margin-bottom" id="Column_392">
+                    <div class="field-item" onclick="AutoCompleteStartEvent('AddlFAndBControlId', 'F&B & Other', 214, 392, true)">
+                        <label ng-click="PreControlEvents(392,'AddlFAndBControlId',$event)">
+                            <span>{{'F&B' | xlat}} </span>
+                            <!--<input type="text" ng-model="Airline">-->
+                            <input type="text" ng-model="NewDCModel.AddlFAndBControlId" controlid="AddlFAndBControlId" readonly="true" id="AddlFAndBControlId" />
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+              </div>
+            <!-- Inner Form Items Responsive Row End -->
+          </div>
+            <!-- Main Column End -->
+            <!-- Main Column Start -->
+			<div class="col no-padding">
+            <!-- Section Divider / Section Title -->
+            <div class="title-bar rounded">{{'CookingDetails' | xlat }}</div>
+            <!-- Inner Form Items Responsive Row Start -->
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg">
+                    <div class="field-item with-icon" id="Column_333" ng-click="SetSelectedTextBoxColor('txtCoreTempControlId');SetAutoTemperatureListener('NewDCModel.txtCoreTempControlId','NewDCModel.DTCookingTimeControlId')">
+                        <label ng-click="PreControlEvents(333,'txtCoreTempControlId',$event)">
+                            <span>{{'CookingTemp' | xlat }}(&deg;C)</span>
+                            <input type="tel" class="{{txtCoreTempControlId}}" ng-readonly="{{txtCoreTempControlId_IsReadOnly}}" ng-model="NewDCModel.txtCoreTempControlId" id="txtCoreTempControlId" attributenodeid="333" controlid="txtCoreTempControlId" ng-change="MakeDecimalControl('txtCoreTempControlId','#.#');Temperature_NgKeyUp(333,'txtCoreTempControlId','DTCookingTimeControlId',true,334);ngChange_setIsManualFlag('txtCoreTempControlId')" />
+                            <i class="icon icon-thermometer"></i>
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg" id="Column_334">
+                    <div class="field-item with-icon">
+                        <label ng-click="PreControlEvents(334,'DTCookingTimeControlId',$event)">
+                            <span>{{'CookingTime' | xlat }}</span>                          
+                            <!--<input type="time" ng-readonly="{{DTCookingTimeControlId_IsReadOnly}}" ng-change="ngChange_setIsManualFlag('DTCookingTimeControlId');ngChange_setDateTime('DTCookingTimeControlId');Temperature_NgKeyUp(334,'DTCookingTimeControlId', '',false,'')" ng-model="NewDCModel.DTCookingTimeControlId" attributenodeid="334" controlid="DTCookingTimeControlId" id="DTCookingTimeControlId">-->
+                            <input type="datetime-local" ng-model="NewDCModel.DTCookingTimeControlId" attributenodeid="334" controlid="DTCookingTimeControlId" id="DTCookingTimeControlId" ng-change="ngChange_setIsManualFlag('DTCookingTimeControlId');Temperature_NgKeyUp(334,'DTCookingTimeControlId', '',false,'')">
+                            <i class="icon icon-clock-o"></i>
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg" id="Column_335">
+                    <div class="field-item">
+                        <label ng-click="PreControlEvents(335,'txtCookedByControlId',$event)">
+                            <span>{{'CookedBy' | xlat }}</span>
+                            <!-- <input type="text" ng-model="CookedBy">-->
+                            <input type="text" ng-model="NewDCModel.txtCookedByControlId" attributenodeid="335" controlid="txtCookedByControlId" id="txtCookedByControlId" ng-keyup="Temperature_NgKeyUp(335,'txtCookedByControlId', '',false,'')" reset-field>
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+              </div>
+            <!-- Inner Form Items Responsive Row End -->
+            <!-- Section Divider / Section Title -->
+            <div class="title-bar rounded">{{'BlastChillerTempInDetails' | xlat }}</div>
+            <!-- Inner Form Items Responsive Row Start -->
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg" id="Column_338">
+                    <div class="field-item with-icon" ng-click="SetSelectedTextBoxColor('ATBlastChillerTempInControlId');SetAutoTemperatureListener('NewDCModel.ATBlastChillerTempInControlId','NewDCModel.DTBlastChillerTimeInControlId')">
+                        <label ng-click="PreControlEvents(338,'ATBlastChillerTempInControlId',$event)">
+                            <span>{{'TempIn' | xlat }}(&deg;C)</span>
+                            <!-- <input type="number" ng-model="PreTempIn">-->
+                            <input type="tel" class="{{ATBlastChillerTempInControlId}}" ng-readonly="{{ATBlastChillerTempInControlId_IsReadOnly}}" ng-change="MakeDecimalControl('ATBlastChillerTempInControlId','#.#');ngChange_setIsManualFlag('ATBlastChillerTempInControlId');Temperature_NgKeyUp(338,'ATBlastChillerTempInControlId','DTBlastChillerTimeInControlId', true,337)" ng-model="NewDCModel.ATBlastChillerTempInControlId" id="ATBlastChillerTempInControlId" attributenodeid="338" controlid="ATBlastChillerTempInControlId" ng-readonly="truefalse">
+                            <i class="icon icon-thermometer"></i>
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg" id="Column_337">
+                    <div class="field-item with-icon">
+                        <label ng-click="PreControlEvents(337,'DTBlastChillerTimeInControlId',$event)">
+                            <span>{{'TimeIn' | xlat }}</span>
+                            <!--<input type="time" ng-model="PreTimeIn">-->
+                            <!--<input type="time" ng-disabled="{{DTBlastChillerTimeInControlId_IsReadOnly}}" ng-model="NewDCModel.DTBlastChillerTimeInControlId" ng-change="ngChange_setIsManualFlag('DTBlastChillerTimeInControlId');ngChange_setDateTime('DTBlastChillerTimeInControlId');Temperature_NgKeyUp(337,'DTBlastChillerTimeInControlId', '',false,'')" attributenodeid="337" controlid="DTBlastChillerTimeInControlId" id="DTBlastChillerTimeInControlId">-->
+                            <input type="datetime-local" ng-disabled="{{DTBlastChillerTimeInControlId_IsReadOnly}}" ng-model="NewDCModel.DTBlastChillerTimeInControlId" ng-change="ngChange_setIsManualFlag('DTBlastChillerTimeInControlId');Temperature_NgKeyUp(337,'DTBlastChillerTimeInControlId', '',false,'')" attributenodeid="337" controlid="DTBlastChillerTimeInControlId" id="DTBlastChillerTimeInControlId">
+                            <i class="icon icon-clock-o"></i>
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+                 <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg" id="Column_336">
+                    <div class="field-item" onclick="AutoCompleteStartEvent('AddlBlastChillerNoControlId', 'Blast Chiller Number', 206, 336, true)">
+                        <label ng-click="PreControlEvents(336,'AddlBlastChillerNoControlId',$event)">
+                            <span>{{'BlastChillerNumber' | xlat }}</span>
+                            <!--<input type="text" ng-model="BlastChiller">-->
+                            <input type="text" ng-model="NewDCModel.AddlBlastChillerNoControlId" controlid="AddlBlastChillerNoControlId" readonly="true" id="AddlBlastChillerNoControlId" />
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->                
+              </div>
+            <!-- Inner Form Items Responsive Row End -->
+            <!-- Section Divider / Section Title -->
+            <div class="title-bar rounded">{{'BlastChillerTempOutDetails' | xlat }}</div>
+            <!-- Inner Form Items Responsive Row Start -->
+            <div class="row no-padding responsive-sm margin-bottom">
+               <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg">
+                    <div class="field-item with-icon" id="Column_340" ng-click="SetSelectedTextBoxColor('ATBlastChillerTempOutControlId');SetAutoTemperatureListener('NewDCModel.ATBlastChillerTempOutControlId','NewDCModel.DTBlastChillerTimeOutControlId')">
+                        <label ng-click="PreControlEvents(340,'ATBlastChillerTempOutControlId',$event)">
+                            <span>{{'TempOut' | xlat }}(&deg;C)</span>
+                            <!-- <input type="number" ng-model="PreTempOut">-->
+                            <input type="tel" class="{{ATBlastChillerTempOutControlId}}" ng-readonly="{{ATBlastChillerTempOutControlId_IsReadOnly}}" ng-model="NewDCModel.ATBlastChillerTempOutControlId" id="ATBlastChillerTempOutControlId" attributenodeid="340" controlid="ATBlastChillerTempOutControlId" ng-change="MakeDecimalControl('ATBlastChillerTempOutControlId','#.#');ngChange_setIsManualFlag('DTBlastChillerTimeOutControlId');PostControlEvents(340,'ATBlastChillerTempOutControlId');Temperature_NgKeyUp(340,'ATBlastChillerTempOutControlId','DTBlastChillerTimeOutControlId',true,339);">
+                            <i class="icon icon-thermometer"></i>
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg" id="Column_339">
+                    <div class="field-item with-icon">
+                        <label ng-click="PreControlEvents(339,'DTBlastChillerTimeOutControlId',$event)">
+                            <span>{{'TimeOut' | xlat }}</span>
+                            <!--  <input type="time" ng-model="PreTimeOut">-->
+                            <!--<input type="time" ng-disabled="{{DTBlastChillerTimeOutControlId_IsReadOnly}}" ng-change="ngChange_setIsManualFlag('DTBlastChillerTimeOutControlId');ngChange_setDateTime('DTBlastChillerTimeOutControlId');PostControlEvents(339,'DTBlastChillerTimeOutControlId');Temperature_NgKeyUp(339,'DTBlastChillerTimeOutControlId', '',false,'');" ng-model="NewDCModel.DTBlastChillerTimeOutControlId" attributenodeid="339" controlid="DTBlastChillerTimeOutControlId" id="DTBlastChillerTimeOutControlId">-->
+                            <input type="datetime-local" ng-disabled="{{DTBlastChillerTimeOutControlId_IsReadOnly}}" ng-model="NewDCModel.DTBlastChillerTimeOutControlId" ng-change="ngChange_setIsManualFlag('DTBlastChillerTimeOutControlId');Temperature_NgKeyUp(339,'DTBlastChillerTimeOutControlId', '',false,'')" attributenodeid="339" controlid="DTBlastChillerTimeOutControlId" id="DTBlastChillerTimeOutControlId">
+                            <i class="icon icon-clock-o"></i>
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+              </div>
+            <!-- Inner Form Items Responsive Row End -->                      
+            <!-- Inner Form Items Responsive Row Start -->
+            <div class="row no-padding responsive-sm">
+                <!-- Inner Form Items Responsive Column Start -->
+                  <div class="col rounded light-bg" id="Column_341">
+                    <div class="field-item">
+                        <label ng-click="PreControlEvents(341,'AddlCommentControlId',$event)">
+                            <span>{{'Comments' | xlat }}</span>
+                            <!--<input type="text" ng-model="BlastChiller">-->
+                            <input type="text" ng-model="NewDCModel.AddlCommentControlId" controlid="AddlCommentControlId" id="AddlCommentControlId" />
+                        </label>
+                    </div>
+                  </div>
+                <!-- Inner Form Items Responsive Column End -->
+              </div>
+            <!-- Inner Form Items Responsive Row End -->
+          </div>
+            <!-- Main Column End -->
+      </div>
+    <!-- DC Form End -->
+    <div class="row responsive-sm dc-button-holder margin-top-md">
+      <div class="col no-padding">
+        <a href="javascript:void(0)" class="button button-block button-calm" ng-click="ViewRecords()"><i class="icon icon-eye"></i> {{'ViewRecords' | xlat }}</a>
+      </div>
+      <div class="col no-padding">
+        <a href="javascript:void(0)" ng-click="ClearForm()" class="button button-block button-calm"><i class="icon icon-cancel-circle"></i> {{'Clear' | xlat }}</a>
+      </div>
+      <div class="col no-padding">
+        <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="AddRecords()" ng-disabled="DisableSave"><i class="icon icon-plus"></i> {{'Add' | xlat }}</a>
+      </div>
+        <div class="col no-padding">
+            <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="SubmitRecords()" ng-disabled="DisableSaveSubmit"><i class="icon icon-check-circle"></i> {{'SaveSubmit' | xlat }}</a>
+        </div>
+    </div>
+  </div>
+  <div ng-show="DivNGForm">
+    <!-- NC Form Start -->
+      <!-- Section Divider / Section Title -->
+      <div class="title-bar rounded">{{'NCProductDetails' | xlat}}</div>
+      <div class="row no-padding responsive-sm multi-col">
+        <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+            <div class="field-item">
+              <label>
+                <span>{{'Product' | xlat}}</span>
+               <input type="text" id="AddlProductControlId" ng-model="NewDCModel.AddlProductControlId" disabled="disabled">
+              </label>
+            </div>
+          </div>
+        <!-- Inner Form Items Responsive Column End -->
+        <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+            <div class="field-item">
+              <label>
+                <span>{{'Airline' | xlat}}</span>
+                <input type="text" id="AddlFlightControlId" ng-model="NewDCModel.AddlFlightControlId" disabled="disabled">
+              </label>
+            </div>
+          </div>
+        <!-- Inner Form Items Responsive Column End -->
+      </div>
+      <div class="row no-padding responsive-sm multi-col">
+        <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+            <div class="field-item with-icon">
+              <label>
+                <span>{{'TempOut' | xlat}}(&deg;C)</span>
+                  <input type="text" id="ATNCChillerTempOutControlId" ng-model="NewDCModel.ATNCChillerTempOutControlId" disabled="disabled">
+                <i class="icon icon-thermometer"></i>
+              </label>
+            </div>
+          </div>
+        <!-- Inner Form Items Responsive Column End -->
+        <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+            <div class="field-item with-icon">
+              <label>
+                <span>{{'TimeOut' | xlat}}</span>
+                  <input type="datetime-local" id="DTNCChillerTimeOutControlId" ng-model="NewDCModel.DTNCChillerTimeOutControlId" disabled="disabled">
+                <i class="icon icon-clock-o"></i>
+              </label>
+            </div>
+          </div>
+        <!-- Inner Form Items Responsive Column End -->
+      </div>
+      <!-- Inner Form Items Responsive Row Start -->
+      <div class="row no-padding responsive-sm multi-col">
+          <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+
+              <div class="field-item" onclick="AutoCompleteStartEvent('ddlDepartmentControlId', 'Department', 202)">
+                  <label>
+                      <span>Department</span>
+                      <input type="text" ng-model="NewDCModel.ddlDepartmentControlId" attributenodeid="117" controlid="ddlDepartmentControlId" readonly="true">
+                  </label>
+              </div>
+
+
+          </div>
+          <!-- Inner Form Items Responsive Column End -->
+          <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+
+              <div class="field-item" onclick="AutoCompleteStartEvent('ddlSectionControlId', 'Section', 203)">
+                  <label>
+                      <span>Section</span>
+                      <input type="text" ng-model="NewDCModel.ddlSectionControlId" attributenodeid="117" controlid="ddlSectionControlId" readonly="true">
+                  </label>
+              </div>
+
+
+          </div>
+          <!-- Inner Form Items Responsive Column End -->
+      </div>
+      <!-- Inner Form Items Responsive Row End -->
+      <!-- Section Divider / Section Title -->
+      <div class="title-bar rounded">{{'NCProductReason' | xlat}}</div>
+      <div class="row no-padding responsive-sm multi-col">
+        <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+            <div class="field-item with-icon">
+              <label>
+                <span>{{'ETD' | xlat}}</span>
+                  <input type="datetime-local" id="ETD" ng-model="NewDCModel.ETD">
+                <i class="icon icon-clock-o"></i>
+              </label>
+            </div>
+          </div>
+        <!-- Inner Form Items Responsive Column End -->
+        <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+            <div class="field-item">
+              <label>
+                <span>{{'TakenBy' | xlat}}</span>
+                <input type="text" id="takenby" ng-model="NewDCModel.TakenBy" >
+              </label>
+            </div>
+          </div>
+        <!-- Inner Form Items Responsive Column End -->
+      </div>
+      <div class="row no-padding responsive-sm multi-col">
+        <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+            <div class="field-item">
+              <label>
+                <span>{{'Reason' | xlat}}</span>
+                 <input type="text" id="reason" ng-model="NewDCModel.Reason">
+              </label>
+            </div>
+          </div>
+        <!-- Inner Form Items Responsive Column End -->
+        <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg">
+            <div class="field-item">
+              <label>
+                <span>{{'Comments' | xlat}}</span>
+                <input type="text" id="Comments" ng-model="NewDCModel.Comments" >
+              </label>
+            </div>
+          </div>
+        <!-- Inner Form Items Responsive Column End -->
+      </div>
+
+      <div class="row no-padding responsive-sm multi-col">
+          <!-- Inner Form Items Responsive Column Start -->
+          <div class="col rounded light-bg signature">
+              <div class="field-item">
+                  <div>
+                      <span>{{'EnterName' | xlat}}</span>
+                      <input type="text" id="lblEnterName">
+                  </div>
+                  <div>
+                      <label>
+                          <span>{{lblSignature}}</span>              
+                      </label>
+                  </div>                
+                      <a href="javascript:void(0)" ng-click="Signature()" class="button button-icon icon icon-pencil"></a>
+                  </div>
+          </div>
+          <!-- Inner Form Items Responsive Column End -->
+      </div>
+
+
+      <!--<div class="row no-padding responsive-sm multi-col">
+          <div class="col rounded light-bg signature">
+            <div class="field-item">
+              <div>
+                <label>
+                  <span>{{lblSignature}}</span>
+                 <input type="text">
+                </label>
+              </div>
+             <a href="javascript:void(0)" ng-click="ShowSignPad();" class="button button-icon icon icon-pencil"></a>
+            </div>
+          </div>
+      </div>-->
+
+       <div class="row responsive-sm dc-button-holder">
+          <div class="col no-padding" ng-hide="HideNcCancelBtn">
+              <a href="javascript:void(0)" ng-click="HideNC()" class="button button-block button-calm"><i class="icon icon-cancel-circle"></i> {{'Cancel' | xlat}}</a>
+          </div>
+          <div class="col no-padding">
+              <a href="javascript:void(0)" ng-click="SaveNCAction()" class="button button-block  button-calm"><i class="icon icon-plus"></i> {{'Save' | xlat}}</a>
+          </div>
+      </div>
+
+      <!--<div class="row responsive-sm dc-button-holder">
+        <div class="col no-padding">
+          <a href="javascript:void(0)" ng-click="Signature()" class="button button-block button-energized">{{'Signature' | xlat}}</a>
+        </div>
+        <div class="col no-padding">
+          <a href="javascript:void(0)" ng-click="SaveNCAction()" class="button button-block  button-balanced">{{'Save' | xlat}}</a>
+        </div>
+      </div>-->
+
+
+    <!-- NC Form End --> 
+  </div>
+  <div class="scroll-content" ng-show="DivSignature">
+	<!-- Signature Pad Start -->
+    <div class="signature-pad" >
+      <div id="SignaturePad" class="m-signature-pad">
+        <div class="m-signature-pad--body">
+          <canvas></canvas>
+        </div>
+        <div class="m-signature-pad--footer">
+          <div class="description">{{'Signabove' | xlat}}</div>
+          <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i> {{'Clear' | xlat}}</button>
+          <button class="button button-calm save" data-action="save" ><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+        </div>
+      </div>
+    </div>
+    <!-- Signature Pad End -->
+  </div>
+</div>
+</div>

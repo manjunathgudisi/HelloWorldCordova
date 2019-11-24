@@ -1,0 +1,340 @@
+
+<div style="height:100%; position: absolute; top:0; width:100%;" ng-controller="DasboardController">
+    <div class="sample-msg-box" ng-show="NoDataAvailable">
+        <div class="sample-msg">
+            <div class="row">
+                <div class="col col-5">
+                    <i class="icon icon-lightbulb-o"></i>
+                </div>
+                <div class="col">
+                    IN-NF-MDB-003 :: {{'No data available' | xlat }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="DataAvailable">
+        <div class="no-padding">
+            <div style="width: 100%;">
+                <div class="bar sub-header item-input-inset no-padding">
+                    <!--<i class="icon icon-info28 info-icon"></i><span class="info">Your profile<span class="balanced"> successfully</span> sync with server.</span>-->
+                    <i class="icon icon-info28 info-icon"></i><span class="info hide-sm">{{'Last Synchronized At' | xlat }}</span><span class="info no-margin" id="TaskSyncStatus"></span>
+                    <div class="item-input-wrapper"></div>
+                    <div ng-hide="DivBulkDownload">
+                        <!--<a ng-click="ClickBulkUpload()" class="button button-icon icon icon-arrow68"></a>-->
+                        <a class="button button-clear" ng-click="BulkDownload()"><i class="icon icon-social13"></i> <span class="hide-sm">{{'Download' | xlat }}</span></a>
+                    </div>
+                    <div>
+                        <!--<a ng-click="ClickBulkUpload()" class="button button-icon icon icon-arrow68"></a>-->
+                        <a class="button button-clear" ng-click="ClickBulkUpload()"><i class="icon icon-arrow68"></i> <span class="hide-sm">{{'Upload' | xlat }}</span></a>
+                    </div>
+                    <div>
+                        <a class="button button-clear" ng-click="SyncTask()"><i class="icon icon-synchronization2"></i> <span class="hide-sm">{{'Sync' | xlat }}</span></a>
+                        <!--<a ng-click="SyncTask()" class="button button-icon icon icon-synchronization2"></a>-->
+                        <!--<a href="javascript:void(0)" class="button button-icon icon icon-social13"></a>-->
+                    </div>
+                    <!--<div>
+                        <a class="button button-clear" ng-click="SyncMaster()"><i class="icon icon-synchronization2"></i> <span class="hide-sm">{{'Sync Master' | xlat }}</span></a>
+                    </div>-->
+                </div>
+            </div>
+            <div style="width: 100%;">
+                <div class="bar sub-header energized item-input-inset no-padding">
+                    <!--<i class="icon icon-sign92 info-icon energized"></i><span class="info">You have<span class="energized"> 2</span> completed audits waiting for Sync.</span>-->
+                    <div class="item-input-wrapper"></div>
+                    <div>
+                        <!--<a href="javascript:void(0)" class="button button-icon icon icon-synchronization2"></a>
+                        <a href="javascript:void(0)" class="button button-icon icon icon-arrow68"></a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-content dashboard-content fade-in">
+            <div class="bar sub-header item-input-inset padding-horizontal">
+                <span style="text-transform: uppercase; margin-right: 50px;" class="hide-sm">{{'Your Task List' | xlat }}</span>
+                <div class="item-input-wrapper">
+                    <!--<buttons-tab class="button-bar my-audit" data-toggle="buttons-radio-Custom" model='IntegrityToggle' options='MyAuditStatus'></buttons-tab>-->
+                    <buttons-radio-custom class="button-bar my-audit" data-toggle="buttons-radio-Custom" model='MyAudit' options='MyAuditTab' "></buttons-radio-custom>
+                </div>
+                <div class="top-header-select">
+                    <span class="icon icon-angle-down"></span>
+                    <select id="ViewDropdown" onchange="PageViewChangeEvent()"></select>
+                </div>
+                <a class="button button-icon icon icon-filter" ng-click="AdvFilterChange()"></a>
+            </div>
+            <label class="item-input-wrapper margin-horizontal no-padding no-margin con-search" style="position: absolute; top:44px; left:0; right:0;">
+                <i class="icon icon-search placeholder-icon" style="padding-left: 5px;"></i>
+                <input type="search" placeholder="{{'Search' | xlat}}" ng-model="GraphSearchElement" ng-change="GraphSearch()">
+                <a class="button button-icon icon icon-times" ng-click="ClearGraphSearchElement()" ng-show="BtnClearGraphSearchElementShow"></a>
+            </label>
+            <div class="scroll-content has-header has-footer" id="ContentId" style="">
+                <div class="full-height scrollable">
+                    <div class="list no-margin" ng-show="TaskContentPast" id="TaskContentPast">
+                    </div>
+                    <div class="list no-margin" ng-show="TaskContentToday" id="TaskContentToday">
+                    </div>
+                    <div class="list no-margin" ng-show="TaskContentFuture" id="TaskContentFuture">
+                    </div>
+                </div>
+            </div>
+            <div class="bar bar-footer no-padding" ng-show="StatusBarOtherDevice">
+                <div class="button-bar">
+                    <button class="button ng-binding active" name="StatusType_Large" id="StatusType1_Large" ng-click="StatusTypeChange(1)"><div class=" stat-count over-all" id="OverallStatus_Large"></div>{{'Overall' | xlat }}</button>
+                    <button class="button ng-binding" name="StatusType_Large" id="StatusType2_Large" ng-click="StatusTypeChange(2)"><div class=" stat-count not-started" id="NotStartedStatus_Large"></div>{{'Not Started' | xlat }}</button>
+                    <button class="button ng-binding" name="StatusType_Large" id="StatusType3_Large" ng-click="StatusTypeChange(3)"><div class="stat-count in-progress" id="InProgressStatus_Large"></div>{{'In Progress' | xlat }}</button>
+                    <button class="button ng-binding" name="StatusType_Large" id="StatusType4_Large" ng-click="StatusTypeChange(4)"><div class="stat-count missed" id="MissedStatus_Large"></div>{{'Missed' | xlat }}</button>
+                    <button class="button ng-binding" name="StatusType_Large" id="StatusType5_Large" ng-click="StatusTypeChange(5)"><div class="stat-count not-synced" id="NotSyncedStatus_Large"></div>{{'Not Synced' | xlat }}</button>
+                    <button class="button ng-binding" name="StatusType_Large" id="StatusType6_Large" ng-click="StatusTypeChange(6)"><div class="stat-count completed" id="CompletedStatus_Large"></div>{{'Completed' | xlat }}</button>
+                    <button class="button ng-binding" name="StatusType_Large" id="StatusType7_Large" ng-click="StatusTypeChange(7)"><div class="stat-count synced" id="SyncedStatus_Large"></div>{{'Synced' | xlat }}</button>
+                    <button class="button ng-binding" name="StatusType_Large" id="StatusType8_Large" ng-click="StatusTypeChange(8)"><div class="stat-count approved" id="ApprovedStatus_Large"></div>{{'Approved' | xlat }}</button>
+                </div>
+            </div>
+        </div>
+        <!--<div class="backdrop visible active" ng-show="ActionSheet" ng-click="BackgroundVisble()">
+            <div class="actionsheet">
+                <div class="row text-center">
+                    <a class="col" ng-click="DownloadDCProfile()" ng-hide="BtnDownloadHide">
+                        <i class="icon icon-social13 synced-color"></i>
+                        <div class="btn-txt">{{'Download' | xlat }}</div>
+                    </a>
+                    <a class="col" ng-click="LoadNewDC()" ng-hide="BtnNewDCHide">
+                        <i class="icon icon-edit completed-color"></i>
+                        <div class="btn-txt">{{'New DC' | xlat }}</div>
+                    </a>
+                    <a class="col" ng-click="LoadViewDC()" ng-hide="BtnViewDCHide">
+                        <i class="icon icon-eye completed-color"></i>
+                        <div class="btn-txt">{{'View/Edit' | xlat }}</div>
+                    </a>
+                    <a class="col" ng-click="ApproveDC()" ng-hide="BtnApproveDCHide">
+                        <i class="icon icon-thumb-up-outline-symbol approved-color"></i>
+                        <div class="btn-txt">{{'Approve' | xlat }}</div>
+                    </a>
+                    <a class="col" ng-click="UploadDC()" ng-hide="BtnUploadDCHide">
+                        <i class="icon icon-arrow68 synced-color"></i>
+                        <div class="btn-txt">{{'Upload' | xlat }}</div>
+                    </a>-->
+                    <!-- <a class="col" ng-click="ActionSheet = !ActionSheet; PopupShow = !PopupShow">
+                        <i class="icon icon-info"></i>
+                        <div class="btn-txt">More Info</div>
+                    </a>-->
+                <!--</div>
+            </div>
+        </div>-->
+        <div class="backdrop visible active" ng-show="ActionSheet" ng-click="BackgroundVisble()">
+            <div class="actionsheet" style="max-height: inherit;" ng-click="DummyEvent($event)">
+                <div class="text-center" style="padding: 20px 0px; font-size: 16px;" id="ActionSheetHeader"></div>
+                <div class="steps-body">
+                    <ul class="steps" id="ActionSheetBody">
+                        <!--<li class="step" ng-click="DownloadDCProfile()" ng-hide="BtnDownloadHide" id="BtnDownload">
+                            <span class="step__icon"></span>
+                            <i class="icon icon-social13"></i>
+                            <span class="step__label">{{'Download' | xlat }}</span>
+                        </li>
+                        <li class="step" ng-click="LoadNewDC()" ng-hide="BtnNewDCHide" id="BtnNewDC">
+                            <span class="step__icon"></span>
+                            <i class="icon icon-edit"></i>
+                            <span class="step__label">{{'New DC' | xlat }}</span>
+                        </li>
+                        <li class="step" ng-click="LoadViewDC()" ng-hide="BtnViewDCHide" id="BtnViewDC">
+                            <span class="step__icon"></span>
+                            <i class="icon icon-eye"></i>
+                            <span class="step__label">{{'View/Edit' | xlat }}</span>
+                        </li>
+                        <li class="step" ng-click="ApproveDC()" ng-hide="BtnApproveDCHide" id="BtnApproveDC">
+                            <span class="step__icon"></span>
+                            <i class="icon icon-thumb-up-outline-symbol"></i>
+                            <span class="step__label">{{'Approve' | xlat }}</span>
+                        </li>
+                        <li class="step" ng-click="UploadDC()" ng-hide="BtnUploadDCHide" id="BtnUploadDC">
+                            <span class="step__icon"></span>
+                            <i class="icon icon-arrow68"></i>
+                            <span class="step__label">{{'Upload' | xlat }}</span>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="backdrop visible active " ng-show="PopupShow">
+            <div class="side-panel fade-in fast">
+                <div class="bar bar-header bar-positive item-input-inset no-padding">
+                    <div class="button-bar">
+                        <span class="page-title padding-horizontal">{{'More Information' | xlat }}</span>
+                    </div>
+                    <a href="javascript:void(0)" class="button button-icon icon icon-times" ng-click="PopupShow = !PopupShow"></a>
+                </div>
+                <div class="scroll-content has-header scrollable">
+                    <!--
+                    <div class="list">
+                      <div class="item item-icon-left">
+                        <i class="icon icon-social13"></i>
+                        Download Sync Status
+                        <span class="item-note synced-color">Synced</span>
+                      </div>
+                      <div class="item item-icon-left">
+                        <i class="icon icon-checkmark"></i>
+                        Completed Status
+                        <span class="item-note in-progress-color">In Progress</span>
+                      </div>
+                      <div class="item item-icon-left">
+                        <i class="icon icon-thumb-up-outline-symbol"></i>
+                        Approval Status
+                        <span class="item-note">Not Approved</span>
+                      </div>
+                      <div class="item item-icon-left">
+                        <i class="icon icon-arrow68"></i>
+                        Upload Sync Status
+                        <span class="item-note">Not Synced</span>
+                      </div>
+                      <div class="item item-divider">Auditor Details</div>
+                      <div class="item">
+                        Auditor Name
+                        <span class="item-note">Tony Castaneda</span>
+                      </div>
+                      <div class="item">
+                        Audit Time
+                        <span class="item-note">29/02/2016 16:17:33 PM</span>
+                      </div>
+                      <div class="item item-divider">Approval Details</div>
+                      <div class="item">
+                        Approver Name
+                        <span class="item-note">Jahaber Sadiq</span>
+                      </div>
+                      <div class="item">
+                        Audit Time
+                        <span class="item-note">---</span>
+                      </div>
+                    </div>
+                    -->
+
+                    <div class="list">
+                        <div class="item item-divider">Profile Details</div>
+                        <div class="item">
+                            Last Synced on <span class="synced-color">29/02/2016 22:48:33 PM</span>
+                            <span class="item-note">Status - Latest</span>
+                        </div>
+                        <div class="item item-divider">Audit</div>
+                        <div class="item">
+                            Template Name 1 - 30/40<span class="in-progress-color"> (In Progress)</span>
+                            <div class="row" style="border-bottom: 1px #F2F4F5 solid; font-size: 12px; margin: 10px 0px 0px 0px;">
+                                <div class="col text-right" style="background: #F8FDFF;">Total Questions</div>
+                                <div class="col">40</div>
+                            </div>
+                            <div class="row no-margin" style="border-bottom: 1px #F2F4F5 solid; font-size: 12px;">
+                                <div class="col text-right" style="background: #F8FDFF;">Questions Completed</div>
+                                <div class="col">30</div>
+                            </div>
+                            <div class="row no-margin" style="border-bottom: 1px #F2F4F5 solid; font-size: 12px;">
+                                <div class="col text-right" style="background: #F8FDFF;">Questions Remaining</div>
+                                <div class="col">10</div>
+                            </div>
+                            <div class="row no-margin" style="border-bottom: 1px #F2F4F5 solid; font-size: 12px;">
+                                <div class="col text-right" style="background: #F8FDFF;">Audit Start Time</div>
+                                <div class="col">29/02/2016 22:08:34 PM</div>
+                            </div>
+                            <div class="row no-margin" style="border-bottom: 1px #F2F4F5 solid; font-size: 12px;">
+                                <div class="col text-right" style="background: #F8FDFF;">Audit Completion Time</div>
+                                <div class="col">29/02/2016 24:08:34 PM</div>
+                            </div>
+                            <div class="row no-margin" style="border-bottom: 1px #F2F4F5 solid; font-size: 12px;">
+                                <div class="col text-right" style="background: #F8FDFF;">Time Taken for Completion</div>
+                                <div class="col">2 hours</div>
+                            </div>
+                            <div class="row no-margin" style="border-bottom: 1px #F2F4F5 solid; font-size: 12px;">
+                                <div class="col text-right" style="background: #F8FDFF;">Audit Score</div>
+                                <div class="col">84%</div>
+                            </div>
+                        </div>
+                        <div class="item item-divider">Approval</div>
+                        <div class="item">
+                            Approver Name - Level 1
+                            <span class="item-note">01/03/2016 10:33:43 AM</span>
+                        </div>
+                        <div class="item">
+                            Approver Name - Level 2
+                            <span class="item-note">02/03/2016 10:33:43 AM</span>
+                        </div>
+                        <div class="item">
+                            Approver Feedback - Level 1
+                            <div style="color: 8C8C8C; font-size: 13px; margin-top: 10px;">Feedback details given by  level1 approver.</div>
+                        </div>
+                        <div class="item item-divider">Actions</div>
+                        <div class="item">
+                            Total Action Raised <span class="missed-color">30</span> - Resolved <span class="approved-color">10</span>
+                            <span class="item-note in-progress-color">20 Pending</span>
+                        </div>
+                        <div class="item item-divider">Upload</div>
+                        <div class="item">
+                            Last Uploaded on 29/02/2016 20:12:34 PM
+                            <span class="item-note synced-color">Synced</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="backdrop visible active " ng-show="MultipleDcApprovalShow">
+            <div class="side-panel fade-in fast">
+                <div class="bar bar-header bar-positive item-input-inset no-padding">
+                    <div class="button-bar">
+                        <span class="page-title padding-horizontal">{{'Approval Details' | xlat }}</span>
+                    </div>
+                    <a href="javascript:void(0)" class="button button-icon icon icon-times" ng-click="CloseMultipleDcApproval()"></a>
+                </div>
+                <div class="scroll-content has-header has-footer scrollable">
+
+                    <div class="list approval-dec no-margin" id="DivDcToApproveId">
+
+                    </div>
+
+                </div>
+                <div class="bar bar-footer no-padding">
+                    <div class="row">
+                        <div class="col"><a href="javascript:void(0)" class="button button-block button-clear" ng-click="ApproveMultipleDCEvent()"><i class="icon icon-check"></i> {{'Approve DC' | xlat }} </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="StatusBarSmallDevice">
+        <ul id="DivSmallDeviceStatusBar" class="mfb-component--br mfb-zoomin" data-mfb-toggle="click" data-mfb-state="close">
+            <li class="mfb-component__wrap">
+                <a id="StatusTypeFloatingBtn" data-mfb-label="" class="mfb-component__button--main badge-over-all" ng-click="ToggleDivSmallDeviceStatusBar()">
+                    <span id="CurrentStatus"></span>
+                </a>
+                <ul class="mfb-component__list">
+                    <li>
+                        <a name="StatusType_Small" id="StatusType1_Small" ng-click="StatusTypeChange(1)" data-mfb-label="Overall" class="mfb-component__button--child over-all">
+                            <span id="OverallStatus_Small"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a name="StatusType_Small" id="StatusType2_Small" ng-click="StatusTypeChange(2)" data-mfb-label="Not Started" class="mfb-component__button--child not-started">
+                            <span id="NotStartedStatus_Small"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a name="StatusType_Small" id="StatusType3_Small" ng-click="StatusTypeChange(3)" data-mfb-label="In Progress" class="mfb-component__button--child in-progress">
+                            <span id="InProgressStatus_Small"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a name="StatusType_Small" id="StatusType5_Small" ng-click="StatusTypeChange(5)" data-mfb-label="Not Synced" class="mfb-component__button--child not-synced">
+                            <span id="NotSyncedStatus_Small"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a name="StatusType_Small" id="StatusType6_Small" ng-click="StatusTypeChange(6)" data-mfb-label="Completed" class="mfb-component__button--child completed">
+                            <span id="CompletedStatus_Small"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a name="StatusType_Small" id="StatusType7_Small" ng-click="StatusTypeChange(7)" data-mfb-label="Synced" class="mfb-component__button--child synced">
+                            <span id="SyncedStatus_Small"></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+</div>

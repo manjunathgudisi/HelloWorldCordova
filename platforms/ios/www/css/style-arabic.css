@@ -1,0 +1,145 @@
+/* Login Page CSS Hack */
+
+.oneview-form-login .checkbox input{
+    margin: 0px 0px 0px 10px;
+}
+
+.oneview-form-login .icon{
+    margin: 0px 10px 0px 0px;
+}
+
+.dashboard-content .item{
+  padding-left: 90px;
+  padding-right: 16px;
+  direction: rtl;
+}
+
+.dashboard-content .item .col-20{
+  text-align: left;
+}
+
+.dashboard-content .item .badge{
+  left: 32px;
+  right: auto;
+}
+
+.dashboard-content .item-icon-right .icon:last-child{
+  right: auto;
+  left: 0;
+  -ms-transform: rotate(180deg); /* IE 9 */
+    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+    transform: rotate(180deg);
+}
+
+.multi-col .col{
+  margin-left: 0px;
+  margin-right: 10px;
+}
+
+.button-bar > .button:first-child{
+  border-radius: 0px 3px 3px 0px;
+  border-left: 0px;
+  margin-left: 3px;
+}
+
+.button-bar > .button:last-child{
+  border-left-width: 0px;
+  border-radius: 3px 0px 0px 3px;
+}
+
+.has-autocomplete .item.green-boder{
+  box-shadow: -7px 0px 0px 0px green inset;
+  -webkit-box-shadow: -7px 0px 0px 0px green inset;
+}
+
+.has-autocomplete .item.red-boder{
+  box-shadow: -7px 0px 0px 0px red inset;
+  -webkit-box-shadow: -7px 0px 0px 0px red inset;
+}
+
+.has-autocomplete .item.amber-boder{
+  box-shadow: -7px 0px 0px 0px orange inset;
+  -webkit-box-shadow: -7px 0px 0px 0px orange inset;
+}
+
+.has-autocomplete .item.dark-boder {
+    box-shadow: -7px 0px 0px 0px #333 inset;
+    -webkit-box-shadow: -7px 0px 0px 0px #333 inset;
+}
+
+.right-panel-content .item-icon-right {
+    padding-left: 54px;
+    padding-right: 16px;
+}
+
+.right-panel-content .item-icon-right .icon{
+  right: auto;
+  left: 0;
+}
+
+.dc-button-holder .col:last-child {
+    margin-right: 10px;
+}
+
+.dc-button-holder .col:first-child{
+  margin-right: 0px;
+}
+
+.with-icon .icon {
+    position: absolute;
+    top: 27px;
+    left: 5px;
+    right: auto;
+    font-size: 22px;
+    color: #7b969c;
+    margin: 0px;
+    padding: 0px;
+}
+
+.item.attribute .col:last-child {
+    padding: 0px 5px 0px 0px;
+}
+
+.list-view .item{
+  padding-left: 35px;
+  padding-right: 16px;
+}
+
+.list-view .item .more-btn{
+  left: -5px;
+  right: auto;
+}
+
+.item-note{
+  float: left;
+}
+
+.list-view .item.attribute{
+  padding-left: 35px;
+  padding-right: 55px;
+}
+
+.item.attribute .item-left-edit {
+    right: 0px;
+    left: auto;
+}
+
+.item.attribute .info{
+  left: 26px;
+  right: auto;
+}
+
+.row.pending {
+  box-shadow: -4px 0px 0px 0px gray inset;
+  -webkit-box-shadow: -4px 0px 0px 0px gray inset;
+}
+
+.row.completed{
+  box-shadow: -4px 0px 0px 0px green inset;
+  -webkit-box-shadow: -4px 0px 0px 0px green inset;
+}
+
+.row.nc{
+  box-shadow: -4px 0px 0px 0px orange inset;
+  -webkit-box-shadow: -4px 0px 0px 0px orange inset;
+}

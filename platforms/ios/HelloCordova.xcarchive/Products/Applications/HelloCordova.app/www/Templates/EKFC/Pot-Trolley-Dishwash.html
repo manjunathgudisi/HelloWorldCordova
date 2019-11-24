@@ -1,0 +1,380 @@
+<div ng-controller="PotTrolleyDishwashController">
+    <div class="bar sub-header item-input-inset no-padding">
+        <a href="javascript:void(0)" class="button button-clear" ng-click="Back()"><i class="icon icon-chevron-left"></i>{{'Back' | xlat}}</a>
+        <a href="javascript:void(0)" class="button button-clear" ng-click="GetProbeStatus()"><i class="icon icon-thermometer"></i>{{Status | xlat }}</a>
+        <label class="item-input-wrapper">
+
+        </label>
+        <span class="badge blue hide-sm"><span class="light">{{CompletedRecords}} / {{TotalCount}}</span><span class="badge badge-assertive">{{NCCount}}</span></span>
+        <!--<span class="border-left">{{ 'Shift' | xlat}}</span>
+        <div class="shift-bar">
+            <buttons-band class="" data-toggle="buttons-band" model='NewDCModel.chkShift' options='ShiftOptions' ng-model="NewDCModel.chkShift" controlid="chkShift"></buttons-band>
+        </div>-->
+        <div class="shift-bar">
+            <div dropdown-select="ShiftOptions" dropdown-model="chkShift" dropdown-item-label="text"></div>
+        </div>
+    </div>
+
+    <div class="scroll-content has-header scrollable padding custom-view" id="ContentId">
+        <div ng-show="DivContent">
+            <!-- DC Form Start -->
+            <div class="row responsive-md no-padding-vertical">
+                <!-- Main Column Start -->
+                <div class="col no-padding">
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WashDetails' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm margin-bottom">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg" id="Column_63">
+                            <div class="field-item with-icon">
+                                <span>{{'WashType' | xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.chkWashType' options='WashType' ng-model="NewDCModel.chkWashType" attributenodeid="" controlid="chkWashType"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm margin-bottom">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg" ng-show="PotMachineReadOnly">
+                            <div class="field-item" onclick="AutoCompleteStartEvent('AddlPotMachineControlId', 'Machine', 208, 538)">
+                                <label ng-click="PreControlEvents(538,'AddlPotMachineControlId',$event)">
+                                    <span>{{'PotMachineNumber' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.AddlPotMachineControlId" controlid="AddlPotMachineControlId" id="AddlPotMachineControlId">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg" ng-show="TrolleyMachineReadOnly">
+                            <div class="field-item" onclick="AutoCompleteStartEvent('AddlTrolleyMachineControlId', 'Machine', 209, 539)">
+                                <label ng-click="PreControlEvents(539,'AddlTrolleyMachineControlId',$event)">
+                                    <span>{{'TrolleyMachineNumber' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.AddlTrolleyMachineControlId" controlid="AddlTrolleyMachineControlId" id="AddlTrolleyMachineControlId">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg" ng-show="DishwashMachineReadOnly">
+                            <div class="field-item" onclick="AutoCompleteStartEvent('AddlDishwashMachineControlId', 'Machine', 207, 540)">
+                                <label ng-click="PreControlEvents(540,'AddlDishwashMachineControlId',$event)">
+                                    <span>{{'DishwashMachineNumber' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.AddlDishwashMachineControlId" controlid="AddlDishwashMachineControlId" id="AddlDishwashMachineControlId">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->                  
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->                       
+                        <div class="col rounded light-bg" id="Column_11" ng-hide="FinalRinseHide">
+                            <div class="field-item with-icon" ng-click="SetSelectedTextBoxColor('txtFinalRinseControlId');SetAutoTemperatureListener('NewDCModel.txtFinalRinseControlId','NewDCModel.DTTimeControlId')">
+                                <label ng-click="PreControlEvents(542,'txtFinalRinseControlId',$event)">
+                                    <span>{{'FinalRinse' | xlat }}(&deg;C)</span>                                   
+                                    <input type="tel" class="{{txtFinalRinseControlId}}" ng-readonly="{{txtCoreTempControlId_IsReadOnly}}" ng-model="NewDCModel.txtFinalRinseControlId" attributenodeid="542" controlid="txtFinalRinseControlId" id="txtFinalRinseControlId" ng-keyup="MakeDecimalControl('txtFinalRinseControlId','#.#');ngChange_setIsManualFlag('txtFinalRinseControlId');Temperature_NgKeyUp(542,'txtFinalRinseControlId', 'DTTimeControlId',false,541)" reset-field>
+                                    <i class="icon icon-thermometer"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg" id="Column_12">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(541,'DTTimeControlId',$event)">
+                                    <span>{{'Time' | xlat }}</span>
+                                    <input type="time" ng-change="ngChange_setIsManualFlag('DTTimeControlId');ngChange_setDateTime('DTTimeControlId');Temperature_NgKeyUp(541,'DTTimeControlId', '',false,'')" ng-model="NewDCModel.DTTimeControlId" attributenodeid="541" controlid="DTTimeControlId" id="DTTimeControlId">
+                                    <i class="icon icon-clock-o"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <div class="title-bar rounded">{{'TestDetails' | xlat }}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg" id="Column_63">
+                            <div class="field-item with-icon">
+                                <span>{{'TestType' | xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.chkTestType' options='TestType' ng-model="NewDCModel.chkTestType" attributenodeid="" controlid="chkTestType"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                        <!-- Inner Form Items Responsive Row Start -->
+                        <div class="row no-padding responsive-sm multi-col" ng-show="ThermoLabelReadOnly">
+                            <!-- Inner Form Items Responsive Column Start -->
+                            <div class="col rounded light-bg" id="Column_63">
+                                <div class="field-item with-icon">
+                                    <span>{{'ThermoLabel' | xlat}}</span>
+                                    <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.chkThermoLabel' options='ThermoLabel' ng-model="NewDCModel.chkThermoLabel" attributenodeid="" controlid="chkThermoLabel"></buttons-band>
+                                </div>
+                            </div>
+                            <!-- Inner Form Items Responsive Column End -->
+                        </div>
+                        <!-- Inner Form Items Responsive Row End -->
+                        <!-- Inner Form Items Responsive Row Start -->
+                        <div class="row no-padding responsive-sm multi-col" ng-show="QuadTestReadOnly">
+                            <!-- Inner Form Items Responsive Column Start -->
+                            <div class="col rounded light-bg" id="Column_11">
+                                <div class="field-item with-icon">
+                                    <label ng-click="PreControlEvents(545,'txtQuadTestControlId',$event)">
+                                        <span>{{'QuadTest' | xlat }}</span>
+                                        <input type="tel" ng-model="NewDCModel.txtQuadTestControlId" id="txtQuadTestControlId" attributenodeid="545" controlid="txtQuadTestControlId" ng-change="MakeDecimalControl('txtQuadTestControlId','#.#');Temperature_NgKeyUp(545,'txtQuadTestControlId','',true,12);" />
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Inner Form Items Responsive Column End -->
+                        </div>
+                        <!-- Inner Form Items Responsive Row End -->
+                        <!-- Inner Form Items Responsive Row Start -->
+                        <div class="row no-padding responsive-sm multi-col" ng-show="ChlorineTestReadOnly">
+                            <!-- Inner Form Items Responsive Column Start -->
+                            <div class="col rounded light-bg" id="Column_11">
+                                <div class="field-item with-icon">
+                                    <label ng-click="PreControlEvents(546,'txtChlorineTestControlId',$event)">
+                                        <span>{{'ChlorineTest' | xlat }}</span>
+                                        <input type="tel" ng-model="NewDCModel.txtChlorineTestControlId" id="txtChlorineTestControlId" attributenodeid="546" controlid="txtChlorineTestControlId" ng-change="MakeDecimalControl('txtChlorineTestControlId','#.#');Temperature_NgKeyUp(546,'txtChlorineTestControlId','',true);" />
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Inner Form Items Responsive Column End -->
+                        </div>
+                        <!-- Inner Form Items Responsive Row End -->
+                        <!-- Inner Form Items Responsive Row Start -->
+                        <div class="row no-padding responsive-sm">
+                            <!-- Inner Form Items Responsive Column Start -->
+                            <div class="col rounded light-bg" id="Column_23">
+                                <div class="field-item">
+                                    <label ng-click="PreControlEvents(547,'AddlCommentControlId',$event)">
+                                        <span>{{'Comments' | xlat }}</span>
+                                        <!--<input type="text" ng-model="BlastChiller">-->
+                                        <input type="text" ng-model="NewDCModel.AddlCommentControlId" controlid="AddlCommentControlId" id="AddlCommentControlId" />
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Inner Form Items Responsive Column End -->
+                        </div>
+                        <!-- Inner Form Items Responsive Row End -->
+                    </div>
+                <!-- Main Column End -->
+
+           
+                <!-- Inner Form Items Responsive Row End -->
+            </div>          
+            <!-- DC Form End -->
+            <div class="row responsive-sm dc-button-holder margin-top-md">
+                  <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block button-calm" ng-click="ViewRecords()"><i class="icon icon-eye"></i> {{'ViewRecords' | xlat }}</a>
+                  </div>
+                  <div class="col no-padding">
+                    <a href="javascript:void(0)" ng-click="ClearForm()" class="button button-block button-calm"><i class="icon icon-cancel-circle"></i> {{'Clear' | xlat }}</a>
+                  </div>
+                  <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="AddRecords()" ng-disabled="DisableSave"><i class="icon icon-plus"></i> {{'Add' | xlat }}</a>
+                  </div>
+                  <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="SubmitRecords()" ng-disabled="DisableSaveSubmit"><i class="icon icon-check-circle"></i> {{'SaveSubmit' | xlat }}</a>
+                  </div>
+            </div>
+        </div>      
+
+        <div ng-show="DivNGForm">
+            <!-- NC Form Start -->
+            <!-- Section Divider / Section Title -->
+            <div class="title-bar rounded">{{'Details' | xlat}}</div>
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg" ng-show="PotMachineReadOnly">
+                    <div class="field-item">
+                        <label>
+                            <span>{{'PotMachineNumber' | xlat}}</span>
+                            <input type="text" id="AddlProductControlId" ng-model="NewDCModel.AddlPotMachineControlId" disabled="disabled">
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg" ng-show="TrolleyMachineReadOnly">
+                    <div class="field-item">
+                        <label>
+                            <span>{{'TrolleyMachineNumber' | xlat}}</span>
+                            <input type="text" id="AddlProductControlId" ng-model="NewDCModel.AddlTrolleyMachineControlId" disabled="disabled">
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg" ng-show="DishwashMachineReadOnly">
+                    <div class="field-item">
+                        <label>
+                            <span>{{'DishwashMachineNumber' | xlat}}</span>
+                            <input type="text" id="AddlProductControlId" ng-model="NewDCModel.AddlDishwashMachineControlId" disabled="disabled">
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+            </div>
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg">
+                    <div class="field-item with-icon">
+                        <label>
+                            <span>{{'Date' | xlat}}</span>
+                            <input type="date" id="DTDcDateControlId" ng-model="NewDCModel.DTDcDateControlId" disabled="disabled">
+                            <i class="icon icon-calendar-o"></i>
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg">
+                    <div class="field-item with-icon">
+                        <label>
+                            <span>{{'Time' | xlat}}</span>
+                            <input type="text" id="DTDcTimeControlId" ng-model="NewDCModel.DTDcTimeControlId" disabled="disabled">
+                            <i class="icon icon-clock-o"></i>
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+            </div>
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg">
+                    <div class="field-item">
+                        <label>
+                            <span>{{'ThermoNCDetails' | xlat}}</span>
+                            <input type="text" id="txtNCDetailsControlId" ng-model="NewDCModel.txtNCDetailsControlId" disabled="disabled">
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+            </div>
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg">
+                    <div class="field-item">
+                        <label>
+                            <span>{{'QuadNCDetails' | xlat}}</span>
+                            <input type="text" id="txtQuadNCDetailsControlId" ng-model="NewDCModel.txtQuadNCDetailsControlId" disabled="disabled">
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+            </div>
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg">
+                    <div class="field-item">
+                        <label>
+                            <span>{{'FinalRinseNCDetails' | xlat}}</span>
+                            <input type="text" id="txtFinalRinseNCDetailsControlId" ng-model="NewDCModel.txtFinalRinseNCDetailsControlId" disabled="disabled">
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+            </div>
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg">
+                    <div class="field-item">
+                        <label>
+                            <span>{{'ChlorineNCDetails' | xlat}}</span>
+                            <input type="text" id="txtChlorineNCDetailsControlId" ng-model="NewDCModel.txtChlorineNCDetailsControlId" disabled="disabled">
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+            </div>
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg">
+                    <div class="field-item">
+                        <label>
+                            <span>{{'Comments' | xlat}}</span>
+                            <input type="text" id="Comments" ng-model="NewDCModel.Comments">
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+            </div>
+            <div class="title-bar rounded">{{'ReceivedBy' | xlat}}</div>
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg signature">
+                    <div class="field-item">
+                        <div>
+                            <span>{{'ReceiverName' | xlat}}</span>
+                            <input type="text" id="txtReceivedByNameControlId" ng-model="NewDCModel.txtReceivedByNameControlId">
+                        </div>
+                        <div>
+                            <label>
+                                <span>{{lblSignature}}</span>
+                            </label>
+                        </div>
+                        <a href="javascript:void(0)" ng-click="Signature()" class="button button-icon icon icon-pencil"></a>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+            </div>
+
+
+            <!--<div class="row no-padding responsive-sm multi-col">
+                <div class="col rounded light-bg signature">
+                  <div class="field-item">
+                    <div>
+                      <label>
+                        <span>{{lblSignature}}</span>
+                       <input type="text">
+                      </label>
+                    </div>
+                   <a href="javascript:void(0)" ng-click="ShowSignPad();" class="button button-icon icon icon-pencil"></a>
+                  </div>
+                </div>
+            </div>-->
+
+            <div class="row responsive-sm dc-button-holder">
+                <div class="col no-padding" ng-hide="HideNcCancelBtn">
+                    <a href="javascript:void(0)" ng-click="HideNC()" class="button button-block button-calm"><i class="icon icon-cancel-circle"></i> {{'Cancel' | xlat}}</a>
+                </div>
+                  <div class="col no-padding">
+                      <a href="javascript:void(0)" ng-click="SaveNCAction()" class="button button-block  button-calm"><i class="icon icon-plus"></i> {{'Save' | xlat}}</a>
+                  </div>
+            </div>
+
+            <!--<div class="row responsive-sm dc-button-holder">
+              <div class="col no-padding">
+                <a href="javascript:void(0)" ng-click="Signature()" class="button button-block button-energized">{{'Signature' | xlat}}</a>
+              </div>
+              <div class="col no-padding">
+                <a href="javascript:void(0)" ng-click="SaveNCAction()" class="button button-block  button-balanced">{{'Save' | xlat}}</a>
+              </div>
+            </div>-->
+            <!-- NC Form End -->
+        </div>
+        <div class="scroll-content" ng-show="DivSignature">
+            <!-- Signature Pad Start -->
+            <div class="signature-pad">
+                <div id="SignaturePad" class="m-signature-pad">
+                    <div class="m-signature-pad--body">
+                        <canvas></canvas>
+                    </div>
+                    <div class="m-signature-pad--footer">
+                        <div class="description">{{'Signabove' | xlat}}</div>
+                        <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i> {{'Clear' | xlat}}</button>
+                        <button class="button button-calm save" data-action="save" ><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Signature Pad End -->
+        </div>
+    </div>
+</div>

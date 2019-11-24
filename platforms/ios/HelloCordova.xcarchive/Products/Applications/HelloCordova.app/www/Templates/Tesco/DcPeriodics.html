@@ -1,0 +1,49 @@
+
+    <div ng-controller="DcPeriodicsController">
+
+
+    
+        <!--new-->
+      
+
+        <div class="bar sub-header no-padding item-input-inset" ng-show="ShowSearchDiv">
+            <!--<div class="button-bar my-audit ng-isolate-scope">
+            <button ng-click="LoadTask('Daily')" id="BtnDaily" class="button ng-binding ng-scope activated">Daily<div id="divDaily" class="badge badge-energized" style="color: #fff; background: #7fab0b; line-height: 6px; left: inherit; top: 17px; margin-left: 3px; padding: 5px; border-radius: 5px; font-size: 11px;"></div></button>
+            <button ng-click="LoadTask('Weekly')" id="BtnWeekly" class="button ng-binding ng-scope">Weekly<div id="divWeekly" class="badge badge-energized" style="color: #fff; background: #7fab0b; line-height: 6px; left: inherit; top: 17px; margin-left: 3px; padding: 5px; border-radius: 5px; font-size: 11px;"></div></button>
+            <button ng-click="LoadTask('Monthly')" id="BtnMonthly" class="button ng-binding ng-scope">Monthly<div id="divMonthly" class="badge badge-energized" style="color: #fff; background: #7fab0b; line-height: 6px; left: inherit; top: 17px; margin-left: 3px; padding: 5px; border-radius: 5px; font-size: 11px;"></div></button>
+
+        </div>-->
+            <label class="item-input-wrapper margin-horizontal">
+                <i class="icon icon-search placeholder-icon"></i>
+                <input type="search" placeholder="Search" ng-model="periodicsGraphSearchElement" ng-change="GraphSearch()">
+            </label>
+        </div>
+
+        <div class="scroll-content anim" id="MainContentDivId">
+            <div class="full-height scrollable">
+                <div class="list list-view">
+
+                    <div id="divAreaList"></div>
+
+                    <div id="divTaskList"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bar bar-footer" ng-show="ShowFooterDiv">
+            <div class="row">
+                <div class="col text-center no-padding no-margin" ng-show="ShowBackDiv">
+                    <a ng-click="Back()" class="button button-block button-clear"><i class="icon icon-chevron-left"></i>Back</a>
+                </div>
+                <div class="col text-center no-padding no-margin" ng-show="ShowSaveDiv">
+                    <a ng-click="Save()" class="button button-block button-clear"><i class="icon icon-plus"></i>Save</a>
+                </div>
+                <div class="col text-center no-padding no-margin" ng-show="ShowSubmitDiv">
+                    <a ng-click="Submit()" class="button button-block button-clear"><i class="icon icon-plus"></i>Submit</a>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>

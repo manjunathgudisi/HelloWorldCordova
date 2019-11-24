@@ -1,0 +1,45 @@
+<div ng-controller="DcApprovalController">
+    <div class="bar sub-header item-input-inset no-padding">
+        <!--<a href="javascript:void(0)" class="button button-clear" onclick=""><i class="icon icon-chevron-left"></i>Back</a>-->  
+        <div id="DivHeader" style="color:white;"></div> 
+            <label class="item-input-wrapper">
+
+
+            </label>
+</div>
+    <div class="scroll-content has-header padding-horizontal has-footer anim">
+        <div class="full-height scrollable" id="DivApproveContent">            
+            <div id="DcSummartyHtmlContainer">   
+                    
+            </div> 
+                             
+            <div id="ApproverDetailsHtmlContainer">
+             
+            </div>        
+        </div>
+        <div class="scroll-content" id="ApproverSignature_DivSignature" style="display :none;">
+            <!-- Signature Pad Start -->
+            <div class="signature-pad">
+                <div id="ApproverSignature_SignaturePad" class="m-signature-pad">
+                    <div class="m-signature-pad--body">
+                        <canvas></canvas>
+                    </div>
+                    <div class="m-signature-pad--footer">
+                        <div class="description">{{'Sign Above' | xlat}}</div>
+                        <button class="button button-assertive clear" data-action="clear"><i class="icon icon-plus"></i>{{'Clear' | xlat}}</button>
+                        <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i>{{'Save' | xlat}}</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Signature Pad End -->
+        </div>
+    </div>
+    <div class="bar bar-footer no-padding" id="DivApproveFooter">
+        <div class="row">
+            <div class="col"><a ng-click="Cancel();" class="button button-block button-clear"><i class="icon icon-cancel-circle"></i> Cancel </a></div>
+            <div class="col"><a ng-click="Approve();" class="button button-block button-clear"><i class="icon icon-check"></i> Approve DC</a></div>
+        </div>
+    </div>
+
+   
+</div>

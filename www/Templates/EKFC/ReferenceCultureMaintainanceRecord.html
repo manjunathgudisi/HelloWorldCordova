@@ -1,0 +1,1347 @@
+<div ng-controller="ReferenceCultureMaintainanceRecordController">
+    <div class="bar sub-header item-input-inset no-padding">
+        <a href="javascript:void(0)" class="button button-clear border-right" ng-click="Back()"><i class="icon icon-chevron-left"></i>{{'Back' | xlat}}</a>
+        <a href="javascript:void(0)" class="button button-clear border-right" ng-click="GetProbeStatus()"><i class="icon icon-thermometer"></i>{{Status | xlat }}</a>
+        <label class="item-input-wrapper">
+
+        </label>
+        <span class="badge blue hide-sm"><span class="light">{{CompletedRecords}} / {{TotalCount}}</span><span class="badge badge-assertive" style="display:none;">{{NCCount}}</span></span>
+        <!--<span class="border-left">{{ 'Shift' | xlat}}</span>
+        <div class="shift-bar">
+            <buttons-band class="" data-toggle="buttons-band" model='NewDCModel.chkShift' options='ShiftOptions' ng-model="NewDCModel.chkShift" controlid="chkShift"></buttons-band>
+        </div>-->
+        <div class="shift-bar">
+            <div dropdown-select="ShiftOptions" dropdown-model="chkShift" dropdown-item-label="text"></div>
+        </div>
+    </div>
+    <div class="scroll-content has-header padding custom-view scrollable" id="ContentId">
+        <div>
+            <!-- DC Form Start -->
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Main Column Start -->
+                <div class="col no-padding">
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'MasterCultureDetails' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item" onclick="AutoCompleteStartEvent('txtNameofMasterCultureControlId', 'Master Culture', 269, 688, true)">
+                                <label ng-click="PreControlEvents( 688,'txtNameofMasterCultureControlId',$event)">
+                                    <span>{{'NameofMasterCulture' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtNameofMasterCultureControlId" attributenodeid="688" controlid="txtNameofMasterCultureControlId" id="txtNameofMasterCultureControlId" readonly="true">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom" >
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(689,'DTDateofMCPControlId',$event)">
+                                    <span>{{ 'DateofMasterCulturepreparation'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofMCPControlId" ng-change="PostControlEvents(689,'DTDateofMCPControlId');Temperature_NgKeyUp(689,'DTDateofMCPControlId', '',false)" attributenodeid="689" controlid="DTDateofMCPControlId" id="DTDateofMCPControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom" >
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(690,'DTDueDateofMCPControlId',$event)">
+                                    <span>{{ 'DueDateforMasterCultureprepared'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofMCPControlId" ng-change="PostControlEvents(690,'DTDueDateofMCPControlId');Temperature_NgKeyUp(690,'DTDueDateofMCPControlId', '',false)" attributenodeid="690" controlid="DTDueDateofMCPControlId" id="DTDueDateofMCPControlId" >
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'StockCultureDetails' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(692,'txtNameofStockCultureControlId',$event)">
+                                    <span>{{'NameofStockCulture' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtNameofStockCultureControlId" attributenodeid="692" controlid="txtNameofStockCultureControlId" id="txtNameofStockCultureControlId" ng-change="PostControlEvents(692,'txtNameofStockCultureControlId');Temperature_NgKeyUp(692,'txtNameofStockCultureControlId', '',false,'')" readonly="true">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(693,'DTDateofSCControlId',$event)">
+                                    <span>{{'DateOfStockCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofSCControlId" ng-change="PostControlEvents(693,'DTDateofSCControlId');Temperature_NgKeyUp(693,'DTDateofSCControlId', '',false)" attributenodeid="693" controlid="DTDateofSCControlId" id="DTDateofSCControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(694,'txtNoofStockPreparedControlId',$event)">
+                                    <span>{{'No.ofStockPrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofStockPreparedControlId" attributenodeid="694" controlid="txtNoofStockPreparedControlId" id="txtNoofStockPreparedControlId" ng-change="MakeDecimalControl('txtNoofStockPreparedControlId','#.##');PostControlEvents(694,'txtNoofStockPreparedControlId');Temperature_NgKeyUp(694,'txtNoofStockPreparedControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom" >
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(695,'DTDueDateofSCControlId',$event)">
+                                    <span>{{'DueDateforStockCultureprepared'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofSCControlId" ng-change="PostControlEvents(695,'DTDueDateofSCControlId');Temperature_NgKeyUp(695,'DTDueDateofSCControlId', '',false)" attributenodeid="695" controlid="DTDueDateofSCControlId" id="DTDueDateofSCControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureDetails' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(697,'txtNameofWorkingCultureControlId',$event)">
+                                    <span>{{'NameofWorkingCulture' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtNameofWorkingCultureControlId" attributenodeid="697" controlid="txtNameofWorkingCultureControlId" id="txtNameofWorkingCultureControlId" ng-change="PostControlEvents(697,'txtNameofWorkingCultureControlId');Temperature_NgKeyUp(697,'txtNameofWorkingCultureControlId', '',false,'')" readonly="true">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->                        
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth1' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(698,'DTDateofWCControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWCControlId" ng-change="PostControlEvents(698,'DTDateofWCControlId');Temperature_NgKeyUp(698,'DTDateofWCControlId', '',false)" attributenodeid="698" controlid="DTDateofWCControlId" id="DTDateofWCControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(699,'txtNoofWorkingCulturePreparedControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePreparedControlId" attributenodeid="699" controlid="txtNoofWorkingCulturePreparedControlId" id="txtNoofWorkingCulturePreparedControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePreparedControlId','#.##');PostControlEvents(699,'txtNoofWorkingCulturePreparedControlId');Temperature_NgKeyUp(699,'txtNoofWorkingCulturePreparedControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom" >
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(700,'DTDueDateofWCControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWCControlId" ng-change="PostControlEvents(700,'DTDueDateofWCControlId');Temperature_NgKeyUp(700,'DTDueDateofWCControlId', '',false)" attributenodeid="700" controlid="DTDueDateofWCControlId" id="DTDueDateofWCControlId" >
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->                   
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month1Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth1StatusControlId' options='WCMonth1Statuss' ng-model="NewDCModel.ChkWCMonth1StatusControlId" attributenodeid="10521" controlid="ChkWCMonth1StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(702,'txtCommentsControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtCommentsControlId" attributenodeid="702" controlid="txtCommentsControlId" id="txtCommentsControlId" ng-change="PostControlEvents(702,'txtCommentsControlId');Temperature_NgKeyUp(702,'txtCommentsControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(1365,'txtNameControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtNameControlId" attributenodeid="1365" controlid="txtNameControlId" id="txtNameControlId" ng-change="PostControlEvents(1365,'txtNameControlId');Temperature_NgKeyUp(1365,'txtNameControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth2' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10433,'DTDateofWC2ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC2ControlId" ng-change="PostControlEvents(10433,'DTDateofWC2ControlId');Temperature_NgKeyUp(10433,'DTDateofWC2ControlId', '',false)" attributenodeid="10433" controlid="DTDateofWC2ControlId" id="DTDateofWC2ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10434,'txtNoofWorkingCulturePrepared2ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared2ControlId" attributenodeid="10434" controlid="txtNoofWorkingCulturePrepared2ControlId" id="txtNoofWorkingCulturePrepared2ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared2ControlId','#.##');PostControlEvents(10434,'txtNoofWorkingCulturePrepared2ControlId');Temperature_NgKeyUp(10434,'txtNoofWorkingCulturePrepared2ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10435,'DTDueDateofWC2ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC2ControlId" ng-change="PostControlEvents(10435,'DTDueDateofWC2ControlId');Temperature_NgKeyUp(10435,'DTDueDateofWC2ControlId', '',false)" attributenodeid="10435" controlid="DTDueDateofWC2ControlId" id="DTDueDateofWC2ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month2Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth2StatusControlId' options='WCMonth2Statuss' ng-model="NewDCModel.ChkWCMonth2StatusControlId" attributenodeid="10426" controlid="ChkWCMonth2StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10436,'txtComments2ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments2ControlId" attributenodeid="10436" controlid="txtComments2ControlId" id="txtComments2ControlId" ng-change="PostControlEvents(10436,'txtComments2ControlId');Temperature_NgKeyUp(10436,'txtComments2ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10438,'txtName2ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName2ControlId" attributenodeid="10438" controlid="txtName2ControlId" id="txtName2ControlId" ng-change="PostControlEvents(10438,'txtName2ControlId');Temperature_NgKeyUp(10438,'txtName2ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature2_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature2')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth3' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10440,'DTDateofWC3ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC3ControlId" ng-change="PostControlEvents(10440,'DTDateofWC3ControlId');Temperature_NgKeyUp(10440,'DTDateofWC3ControlId', '',false)" attributenodeid="10440" controlid="DTDateofWC3ControlId" id="DTDateofWC3ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10441,'txtNoofWorkingCulturePrepared3ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared3ControlId" attributenodeid="10441" controlid="txtNoofWorkingCulturePrepared3ControlId" id="txtNoofWorkingCulturePrepared3ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared3ControlId','#.##');PostControlEvents(10441,'txtNoofWorkingCulturePrepared3ControlId');Temperature_NgKeyUp(10441,'txtNoofWorkingCulturePrepared3ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10442,'DTDueDateofWC3ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC3ControlId" ng-change="PostControlEvents(10442,'DTDueDateofWC3ControlId');Temperature_NgKeyUp(10442,'DTDueDateofWC3ControlId', '',false)" attributenodeid="10442" controlid="DTDueDateofWC3ControlId" id="DTDueDateofWC3ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month3Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth3StatusControlId' options='WCMonth3Statuss' ng-model="NewDCModel.ChkWCMonth3StatusControlId" attributenodeid="10426" controlid="ChkWCMonth3StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10443,'txtComments3ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments3ControlId" attributenodeid="10443" controlid="txtComments3ControlId" id="txtComments3ControlId" ng-change="PostControlEvents(10443,'txtComments3ControlId');Temperature_NgKeyUp(10443,'txtComments3ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10445,'txtName3ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName3ControlId" attributenodeid="10438" controlid="txtName3ControlId" id="txtName3ControlId" ng-change="PostControlEvents(10438,'txtName3ControlId');Temperature_NgKeyUp(10438,'txtName3ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature3_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature3')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth4' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10447,'DTDateofWC4ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC4ControlId" ng-change="PostControlEvents(10447,'DTDateofWC4ControlId');Temperature_NgKeyUp(10447,'DTDateofWC4ControlId', '',false)" attributenodeid="10447" controlid="DTDateofWC4ControlId" id="DTDateofWC4ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10448,'txtNoofWorkingCulturePrepared4ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared4ControlId" attributenodeid="10448" controlid="txtNoofWorkingCulturePrepared4ControlId" id="txtNoofWorkingCulturePrepared4ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared4ControlId','#.##');PostControlEvents(10448,'txtNoofWorkingCulturePrepared4ControlId');Temperature_NgKeyUp(10448,'txtNoofWorkingCulturePrepared4ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10449,'DTDueDateofWC4ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC4ControlId" ng-change="PostControlEvents(10449,'DTDueDateofWC4ControlId');Temperature_NgKeyUp(10449,'DTDueDateofWC4ControlId', '',false)" attributenodeid="10449" controlid="DTDueDateofWC4ControlId" id="DTDueDateofWC4ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month4Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth4StatusControlId' options='WCMonth4Statuss' ng-model="NewDCModel.ChkWCMonth4StatusControlId" attributenodeid="10426" controlid="ChkWCMonth4StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10450,'txtComments4ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments4ControlId" attributenodeid="10450" controlid="txtComments4ControlId" id="txtComments4ControlId" ng-change="PostControlEvents(10450,'txtComments4ControlId');Temperature_NgKeyUp(10450,'txtComments4ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10452,'txtName4ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName4ControlId" attributenodeid="10452" controlid="txtName4ControlId" id="txtName4ControlId" ng-change="PostControlEvents(10452,'txtName4ControlId');Temperature_NgKeyUp(10452,'txtName4ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature4_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature4')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth5' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10454,'DTDateofWC5ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC5ControlId" ng-change="PostControlEvents(10454,'DTDateofWC5ControlId');Temperature_NgKeyUp(10454,'DTDateofWC5ControlId', '',false)" attributenodeid="10454" controlid="DTDateofWC5ControlId" id="DTDateofWC5ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10455,'txtNoofWorkingCulturePrepared5ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared5ControlId" attributenodeid="10455" controlid="txtNoofWorkingCulturePrepared5ControlId" id="txtNoofWorkingCulturePrepared5ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared5ControlId','#.##');PostControlEvents(10455,'txtNoofWorkingCulturePrepared5ControlId');Temperature_NgKeyUp(10455,'txtNoofWorkingCulturePrepared5ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10456,'DTDueDateofWC5ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC5ControlId" ng-change="PostControlEvents(10456,'DTDueDateofWC5ControlId');Temperature_NgKeyUp(10456,'DTDueDateofWC5ControlId', '',false)" attributenodeid="10456" controlid="DTDueDateofWC5ControlId" id="DTDueDateofWC5ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month5Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth5StatusControlId' options='WCMonth5Statuss' ng-model="NewDCModel.ChkWCMonth5StatusControlId" attributenodeid="10426" controlid="ChkWCMonth5StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10457,'txtComments5ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments5ControlId" attributenodeid="10457" controlid="txtComments5ControlId" id="txtComments5ControlId" ng-change="PostControlEvents(10457,'txtComments5ControlId');Temperature_NgKeyUp(10457,'txtComments5ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10459,'txtName5ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName5ControlId" attributenodeid="10459" controlid="txtName5ControlId" id="txtName5ControlId" ng-change="PostControlEvents(10459,'txtName5ControlId');Temperature_NgKeyUp(10459,'txtName5ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature5_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature5')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth6' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10461,'DTDateofWC6ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC6ControlId" ng-change="PostControlEvents(10461,'DTDateofWC6ControlId');Temperature_NgKeyUp(10461,'DTDateofWC6ControlId', '',false)" attributenodeid="10461" controlid="DTDateofWC6ControlId" id="DTDateofWC6ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10462,'txtNoofWorkingCulturePrepared6ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared6ControlId" attributenodeid="10462" controlid="txtNoofWorkingCulturePrepared6ControlId" id="txtNoofWorkingCulturePrepared6ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared6ControlId','#.##');PostControlEvents(10462,'txtNoofWorkingCulturePrepared6ControlId');Temperature_NgKeyUp(10462,'txtNoofWorkingCulturePrepared6ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10463,'DTDueDateofWC6ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC6ControlId" ng-change="PostControlEvents(10463,'DTDueDateofWC6ControlId');Temperature_NgKeyUp(10463,'DTDueDateofWC6ControlId', '',false)" attributenodeid="10463" controlid="DTDueDateofWC6ControlId" id="DTDueDateofWC6ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month6Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth6StatusControlId' options='WCMonth6Statuss' ng-model="NewDCModel.ChkWCMonth6StatusControlId" attributenodeid="10426" controlid="ChkWCMonth6StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->                      
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10464,'txtComments6ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments6ControlId" attributenodeid="10464" controlid="txtComments6ControlId" id="txtComments6ControlId" ng-change="PostControlEvents(10464,'txtComments6ControlId');Temperature_NgKeyUp(10464,'txtComments6ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10466,'txtName6ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName6ControlId" attributenodeid="10466" controlid="txtName6ControlId" id="txtName6ControlId" ng-change="PostControlEvents(10466,'txtName6ControlId');Temperature_NgKeyUp(10466,'txtName6ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature6_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature6')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth7' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10468,'DTDateofWC7ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC7ControlId" ng-change="PostControlEvents(10468,'DTDateofWC7ControlId');Temperature_NgKeyUp(10468,'DTDateofWC7ControlId', '',false)" attributenodeid="10468" controlid="DTDateofWC7ControlId" id="DTDateofWC7ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10469,'txtNoofWorkingCulturePrepared7ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared7ControlId" attributenodeid="10469" controlid="txtNoofWorkingCulturePrepared7ControlId" id="txtNoofWorkingCulturePrepared7ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared7ControlId','#.##');PostControlEvents(10469,'txtNoofWorkingCulturePrepared7ControlId');Temperature_NgKeyUp(10469,'txtNoofWorkingCulturePrepared7ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10470,'DTDueDateofWC7ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC7ControlId" ng-change="PostControlEvents(10470,'DTDueDateofWC7ControlId');Temperature_NgKeyUp(10470,'DTDueDateofWC7ControlId', '',false)" attributenodeid="10470" controlid="DTDueDateofWC7ControlId" id="DTDueDateofWC7ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month7Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth7StatusControlId' options='WCMonth7Statuss' ng-model="NewDCModel.ChkWCMonth7StatusControlId" attributenodeid="10426" controlid="ChkWCMonth7StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10471,'txtComments7ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments7ControlId" attributenodeid="10471" controlid="txtComments7ControlId" id="txtComments7ControlId" ng-change="PostControlEvents(10471,'txtComments7ControlId');Temperature_NgKeyUp(10471,'txtComments7ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10473,'txtName7ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName7ControlId" attributenodeid="10473" controlid="txtName7ControlId" id="txtName7ControlId" ng-change="PostControlEvents(10473,'txtName7ControlId');Temperature_NgKeyUp(10473,'txtName7ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature7_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature7')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                       
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth8' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10475,'DTDateofWC8ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC8ControlId" ng-change="PostControlEvents(10475,'DTDateofWC8ControlId');Temperature_NgKeyUp(10475,'DTDateofWC8ControlId', '',false)" attributenodeid="10475" controlid="DTDateofWC8ControlId" id="DTDateofWC8ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10476,'txtNoofWorkingCulturePrepared8ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared8ControlId" attributenodeid="10476" controlid="txtNoofWorkingCulturePrepared8ControlId" id="txtNoofWorkingCulturePrepared8ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared8ControlId','#.##');PostControlEvents(10476,'txtNoofWorkingCulturePrepared8ControlId');Temperature_NgKeyUp(10476,'txtNoofWorkingCulturePrepared8ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10477,'DTDueDateofWC8ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC8ControlId" ng-change="PostControlEvents(10477,'DTDueDateofWC8ControlId');Temperature_NgKeyUp(10477,'DTDueDateofWC8ControlId', '',false)" attributenodeid="10477" controlid="DTDueDateofWC8ControlId" id="DTDueDateofWC8ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month8Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth8StatusControlId' options='WCMonth8Statuss' ng-model="NewDCModel.ChkWCMonth8StatusControlId" attributenodeid="10426" controlid="ChkWCMonth8StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10478,'txtComments8ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments8ControlId" attributenodeid="10478" controlid="txtComments8ControlId" id="txtComments8ControlId" ng-change="PostControlEvents(10478,'txtComments8ControlId');Temperature_NgKeyUp(10478,'txtComments8ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10480,'txtName8ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName8ControlId" attributenodeid="10480" controlid="txtName8ControlId" id="txtName8ControlId" ng-change="PostControlEvents(10480,'txtName8ControlId');Temperature_NgKeyUp(10480,'txtName8ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature8_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature8')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                       
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth9' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10482,'DTDateofWC9ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC9ControlId" ng-change="PostControlEvents(10482,'DTDateofWC9ControlId');Temperature_NgKeyUp(10482,'DTDateofWC9ControlId', '',false)" attributenodeid="10482" controlid="DTDateofWC9ControlId" id="DTDateofWC9ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10483,'txtNoofWorkingCulturePrepared9ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared9ControlId" attributenodeid="10483" controlid="txtNoofWorkingCulturePrepared9ControlId" id="txtNoofWorkingCulturePrepared9ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared9ControlId','#.##');PostControlEvents(10483,'txtNoofWorkingCulturePrepared9ControlId');Temperature_NgKeyUp(10483,'txtNoofWorkingCulturePrepared9ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10484,'DTDueDateofWC9ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC9ControlId" ng-change="PostControlEvents(10484,'DTDueDateofWC9ControlId');Temperature_NgKeyUp(10484,'DTDueDateofWC9ControlId', '',false)" attributenodeid="10484" controlid="DTDueDateofWC9ControlId" id="DTDueDateofWC9ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month9Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth9StatusControlId' options='WCMonth9Statuss' ng-model="NewDCModel.ChkWCMonth9StatusControlId" attributenodeid="10426" controlid="ChkWCMonth9StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10485,'txtComments9ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments9ControlId" attributenodeid="10485" controlid="txtComments9ControlId" id="txtComments9ControlId" ng-change="PostControlEvents(10485,'txtComments9ControlId');Temperature_NgKeyUp(10485,'txtComments9ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10487,'txtName9ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName9ControlId" attributenodeid="10487" controlid="txtName9ControlId" id="txtName9ControlId" ng-change="PostControlEvents(10487,'txtName9ControlId');Temperature_NgKeyUp(10487,'txtName9ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature9_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature9')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth10' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10489,'DTDateofWC10ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC10ControlId" ng-change="PostControlEvents(10489,'DTDateofWC10ControlId');Temperature_NgKeyUp(10489,'DTDateofWC10ControlId', '',false)" attributenodeid="10489" controlid="DTDateofWC10ControlId" id="DTDateofWC10ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10490,'txtNoofWorkingCulturePrepared10ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared10ControlId" attributenodeid="10490" controlid="txtNoofWorkingCulturePrepared10ControlId" id="txtNoofWorkingCulturePrepared10ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared10ControlId','#.##');PostControlEvents(10490,'txtNoofWorkingCulturePrepared10ControlId');Temperature_NgKeyUp(10490,'txtNoofWorkingCulturePrepared10ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10491,'DTDueDateofWC10ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC10ControlId" ng-change="PostControlEvents(10491,'DTDueDateofWC10ControlId');Temperature_NgKeyUp(10491,'DTDueDateofWC10ControlId', '',false)" attributenodeid="10491" controlid="DTDueDateofWC10ControlId" id="DTDueDateofWC10ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month10Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth10StatusControlId' options='WCMonth10Statuss' ng-model="NewDCModel.ChkWCMonth10StatusControlId" attributenodeid="10426" controlid="ChkWCMonth10StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10492,'txtComments10ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments10ControlId" attributenodeid="10492" controlid="txtComments10ControlId" id="txtComments10ControlId" ng-change="PostControlEvents(10492,'txtComments10ControlId');Temperature_NgKeyUp(10492,'txtComments10ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10494,'txtName10ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName10ControlId" attributenodeid="10494" controlid="txtName10ControlId" id="txtName10ControlId" ng-change="PostControlEvents(10494,'txtName10ControlId');Temperature_NgKeyUp(10494,'txtName10ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature10_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature10')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth11' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10496,'DTDateofWC11ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC11ControlId" ng-change="PostControlEvents(10496,'DTDateofWC11ControlId');Temperature_NgKeyUp(10496,'DTDateofWC11ControlId', '',false)" attributenodeid="10496" controlid="DTDateofWC11ControlId" id="DTDateofWC11ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10497,'txtNoofWorkingCulturePrepared11ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared11ControlId" attributenodeid="10497" controlid="txtNoofWorkingCulturePrepared11ControlId" id="txtNoofWorkingCulturePrepared11ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared11ControlId','#.##');PostControlEvents(10497,'txtNoofWorkingCulturePrepared11ControlId');Temperature_NgKeyUp(10497,'txtNoofWorkingCulturePrepared11ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10498,'DTDueDateofWC11ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC11ControlId" ng-change="PostControlEvents(10498,'DTDueDateofWC11ControlId');Temperature_NgKeyUp(10498,'DTDueDateofWC11ControlId', '',false)" attributenodeid="10498" controlid="DTDueDateofWC11ControlId" id="DTDueDateofWC11ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month11Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth11StatusControlId' options='WCMonth11Statuss' ng-model="NewDCModel.ChkWCMonth11StatusControlId" attributenodeid="10426" controlid="ChkWCMonth11StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10499,'txtComments11ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments11ControlId" attributenodeid="10499" controlid="txtComments11ControlId" id="txtComments11ControlId" ng-change="PostControlEvents(10499,'txtComments11ControlId');Temperature_NgKeyUp(10499,'txtComments11ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10501,'txtName11ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName11ControlId" attributenodeid="10501" controlid="txtName11ControlId" id="txtName11ControlId" ng-change="PostControlEvents(10501,'txtName11ControlId');Temperature_NgKeyUp(10501,'txtName11ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature11_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature11')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'WorkingCultureMonth12' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10503,'DTDateofWC12ControlId',$event)">
+                                    <span>{{'DateOfWorkingCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateofWC12ControlId" ng-change="PostControlEvents(10503,'DTDateofWC12ControlId');Temperature_NgKeyUp(10503,'DTDateofWC12ControlId', '',false)" attributenodeid="10503" controlid="DTDateofWC12ControlId" id="DTDateofWC12ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10504,'txtNoofWorkingCulturePrepared12ControlId',$event)">
+                                    <span>{{'No.ofWorkingCulturePrepared' | xlat}}</span>
+                                    <input type="tel" ng-model="NewDCModel.txtNoofWorkingCulturePrepared12ControlId" attributenodeid="10504" controlid="txtNoofWorkingCulturePrepared12ControlId" id="txtNoofWorkingCulturePrepared12ControlId" ng-change="MakeDecimalControl('txtNoofWorkingCulturePrepared12ControlId','#.##');PostControlEvents(10504,'txtNoofWorkingCulturePrepared12ControlId');Temperature_NgKeyUp(10504,'txtNoofWorkingCulturePrepared12ControlId', '',false,'')">
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(10505,'DTDueDateofWC12ControlId',$event)">
+                                    <span>{{ 'DueDateforWCCulture'| xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDueDateofWC12ControlId" ng-change="PostControlEvents(10505,'DTDueDateofWC12ControlId');Temperature_NgKeyUp(10505,'DTDueDateofWC12ControlId', '',false)" attributenodeid="10505" controlid="DTDueDateofWC12ControlId" id="DTDueDateofWC12ControlId">
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-md multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <span>{{ 'Month12Status'| xlat}}</span>
+                                <buttons-band class="button-bar" data-toggle="buttons-band" model='NewDCModel.ChkWCMonth12StatusControlId' options='WCMonth12Statuss' ng-model="NewDCModel.ChkWCMonth12StatusControlId" attributenodeid="10426" controlid="ChkWCMonth12StatusControlId"></buttons-band>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(10506,'txtComments12ControlId',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtComments12ControlId" attributenodeid="10506" controlid="txtComments12ControlId" id="txtComments12ControlId" ng-change="PostControlEvents(10506,'txtComments12ControlId');Temperature_NgKeyUp(10506,'txtComments12ControlId', '',false,'')" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg signature">
+                            <div class="field-item">
+                                <div>
+                                    <label ng-click="PreControlEvents(10508,'txtName12ControlId',$event)">
+                                        <span>{{'EnterName' | xlat}}</span>
+                                        <input type="text" ng-model="NewDCModel.txtName12ControlId" attributenodeid="10508" controlid="txtName12ControlId" id="txtName12ControlId" ng-change="PostControlEvents(10508,'txtName12ControlId');Temperature_NgKeyUp(10508,'txtName12ControlId', '',false,'')">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <span>{{DCSignature12_lblSignature}}</span>
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" ng-click="Signature('DCSignature12')" class="button button-icon icon icon-pencil"></a>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                </div>
+                <!-- Main Column End -->
+            </div>  
+           
+        
+            <!-- DC Form End -->
+            <div class="row responsive-sm dc-button-holder margin-top-md">
+                <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block button-calm" ng-click="ViewRecords()"><i class="icon icon-eye"></i> {{'ViewRecords' | xlat }}</a>
+                </div>
+                <div class="col no-padding">
+                    <a href="javascript:void(0)" ng-click="ClearForm()" class="button button-block button-calm"><i class="icon icon-cancel-circle"></i> {{'Clear' | xlat }}</a>
+                </div>
+                <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="AddRecords()" ng-disabled="DisableSave"><i class="icon icon-plus"></i> {{'Add' | xlat }}</a>
+                </div>
+                <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="SubmitRecords()" ng-disabled="DisableSaveSubmit"><i class="icon icon-check-circle"></i> {{'SaveSubmit' | xlat }}</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="scroll-content" ng-show="DCSignature_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature2_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature2_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature3_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature3_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature4_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature4_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature5_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature5_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature6_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature6_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature7_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature7_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature8_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature8_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature9_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature9_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature10_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature10_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature11_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature11_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+    <div class="scroll-content" ng-show="DCSignature12_DivSignature">
+        <!-- Signature Pad Start  -->
+        <div class="signature-pad">
+            <div id="DCSignature12_SignaturePad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <canvas></canvas>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <div class="description">{{'Signabove' | xlat}}</div>
+                    <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i>{{'Clear' | xlat}}</button>
+                    <button class="button button-calm save" data-action="save"><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Signature Pad End -->
+    </div>
+</div>
+
+

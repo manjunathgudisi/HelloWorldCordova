@@ -1,0 +1,31 @@
+<div ng-controller="NewDcControllerNew">
+
+    <div class="bar sub-header item-input-inset no-padding">
+        <a class="button button-clear"><i class="icon icon-filter"></i><span class="hide-md">Filter</span></a>
+        <label class="item-input-wrapper margin-horizontal">
+            <i class="icon icon-search placeholder-icon"></i>
+            <input type="search" placeholder="Search">
+        </label>
+    </div>
+
+    <div class="scroll-content has-header custom-view">
+        <div class="full-height scrollable">
+            <div id="ContentDiv">
+
+            </div>
+            <div class="row responsive-sm dc-button-holder" ng-show="EditMasterShowDiv">
+                <div class="col no-padding">
+                    <a class="button button-block" ng-click="EditMaster()"><i class="icon icon-pencil"></i>{{'EditMasterData' | xlat}}</a>
+                </div>
+            </div>
+                <div class="row responsive-sm dc-button-holder">
+                    <div class="col no-padding" id="StartButtonId">
+                        <a class="button button-block button-calm" ng-click="NewDc()">Start</a>
+                    </div>
+                    <div class="col no-padding" id="EditButtonId">
+                        <a class="button button-block button-calm" ng-click="LoadViewRecordsPage()">Edit</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+include ':CordovaLib', ':OneViewModule'
+project(':CordovaLib').projectDir = new File('platforms/android/CordovaLib')
+project(':OneViewModule').projectDir = new File('platforms/android')

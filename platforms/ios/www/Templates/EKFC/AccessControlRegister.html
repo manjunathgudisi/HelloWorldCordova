@@ -1,0 +1,198 @@
+<div ng-controller="AccessControlRegisterController">
+    <div class="bar sub-header item-input-inset no-padding">
+        <a href="javascript:void(0)" class="button button-clear" ng-click="Back()"><i class="icon icon-chevron-left"></i>{{'Back' | xlat}}</a>
+        <a href="javascript:void(0)" class="button button-clear" ng-click="GetProbeStatus()"><i class="icon icon-thermometer"></i>{{Status | xlat }}</a>
+        <label class="item-input-wrapper">
+
+        </label>
+        <span class="badge blue hide-sm"><span class="light">{{CompletedRecords}}/</span>{{TotalCount}}<span class="badge badge-assertive" style="display:none;">{{NCCount}}</span></span>
+        <!--<span class="border-left">{{ 'Shift' | xlat}}</span>
+        <div class="shift-bar">
+            <buttons-band class="" data-toggle="buttons-band" model='NewDCModel.chkShift' options='ShiftOptions' ng-model="NewDCModel.chkShift" controlid="chkShift"></buttons-band>
+        </div>-->
+
+        <div class="shift-bar">
+            <div dropdown-select="ShiftOptions" dropdown-model="chkShift" dropdown-item-label="text"></div>
+        </div>
+    </div>
+
+    <div class="scroll-content has-header padding custom-view scrollable" id="ContentId">
+        <div>
+            <!-- DC Form Start -->
+            <div class="row responsive-md no-padding-vertical">
+                <!-- Main Column Start -->
+                <div class="col no-padding">
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'VisitorDetails' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label>
+                                    <span>{{'Date' | xlat}}</span>
+                                    <input type="date" ng-model="NewDCModel.DTDateControlId" attributenodeid="565" controlid="DTDateControlId" id="DTDateControlId" reset-field>
+                                    <i class="icon icon-calendar-o"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <label>
+                                    <span>{{'Name' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtNameControlID" attributenodeid="566" controlid="txtNameControlID" id="txtNameControlID" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(567,'txtPositionControlID',$event)">
+                                    <span>{{'Position' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtPositionControlID" attributenodeid="567" controlid="txtPositionControlID" id="txtPositionControlID" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                </div>
+                <!-- Main Column End -->
+                <!-- Main Column Start -->
+                <div class="col no-padding">
+                    <!-- Section Divider / Section Title -->
+                    <div class="title-bar rounded">{{'PurposeofVisit' | xlat}}</div>
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(570,'txtPurposeOfVisitOrEntryControlID',$event)">
+                                    <span>{{'PurposeOfVisitOrEntry' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtPurposeOfVisitOrEntryControlID" attributenodeid="570" controlid="txtPurposeOfVisitOrEntryControlID" id="txtPurposeOfVisitOrEntryControlID" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm multi-col">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(571,'DTTimeInControlId',$event)">
+                                    <span>{{'TimeIn' | xlat}}</span>
+                                    <!--<input type="time" ng-model="NewDCModel.DTTimeInControlId" ng-disabled="{{DTTimeInControlId_IsReadOnly}}" attributenodeid="571" controlid="DTTimeInControlId" id="DTTimeInControlId">-->
+                                    <input type="time" ng-disabled="{{DTTimeInControlId_IsReadOnly}}" ng-change="ngChange_setIsManualFlag('DTTimeInControlId');ngChange_setDateTime('DTTimeInControlId');PostControlEvents(571,'DTTimeInControlId');Temperature_NgKeyUp(571,'DTTimeInControlId', '',false,'')" ng-model="NewDCModel.DTTimeInControlId" attributenodeid="571" controlid="DTTimeInControlId" id="DTTimeInControlId">
+                                    <i class="icon icon-clock-o"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item with-icon">
+                                <label ng-click="PreControlEvents(572,'DTTimeOutControlId',$event)">
+                                    <span>{{'TimeOut' | xlat}}</span>
+                                    <!--<input type="time" ng-model="NewDCModel.DTTimeOutControlId" ng-disabled="{{DTTimeOutControlId_IsReadOnly}}" ng-change="ngChange_setIsManualFlag('DTTimeOutControlId')" attributenodeid="85" controlid="DTTimeOutControlId" id="DTTimeOutControlId" reset-field>-->
+                                    <input type="time" ng-disabled="{{DTTimeOutControlId_IsReadOnly}}" ng-change="ngChange_setIsManualFlag('DTTimeOutControlId');ngChange_setDateTime('DTTimeOutControlId');PostControlEvents(572,'DTTimeOutControlId');Temperature_NgKeyUp(572,'DTTimeOutControlId', '',false,'')" ng-model="NewDCModel.DTTimeOutControlId" attributenodeid="572" controlid="DTTimeOutControlId" id="DTTimeOutControlId">
+                                    <i class="icon icon-clock-o"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+                    <!-- Inner Form Items Responsive Row Start -->
+                    <div class="row no-padding responsive-sm">
+                        <!-- Inner Form Items Responsive Column Start -->
+                        <div class="col rounded light-bg margin-bottom">
+                            <div class="field-item">
+                                <label ng-click="PreControlEvents(574,'txtCommentsControlID',$event)">
+                                    <span>{{'Comments' | xlat}}</span>
+                                    <input type="text" ng-model="NewDCModel.txtCommentsControlID" attributenodeid="574" controlid="txtCommentsControlID" id="txtCommentsControlID" reset-field>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Inner Form Items Responsive Column End -->
+                    </div>
+                    <!-- Inner Form Items Responsive Row End -->
+
+                </div>
+                <!-- Main Column End -->   
+            </div>
+            <div class="row no-padding responsive-sm multi-col">
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg">
+                    <div class="field-item">
+                        <label ng-click="PreControlEvents(568,'txtCompanyControlID',$event)">
+                            <span>{{'Company' | xlat}}</span>
+                            <input type="text" ng-model="NewDCModel.txtCompanyControlID" attributenodeid="568" controlid="txtCompanyControlID" id="txtCompanyControlID" reset-field>
+                        </label>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+                <!-- Inner Form Items Responsive Column Start -->
+                <div class="col rounded light-bg signature">
+                    <div class="field-item">
+                        <!--<div class="col rounded light-bg margin-bottom">
+                            <span>{{'EnterName' | xlat}}</span>
+                            <input type="text" id="lblEnterName">
+                        </div>-->
+                        <div class="col rounded light-bg margin-bottom">
+                            <label>
+                                <span>{{lblSignature}}</span>
+                            </label>
+                        </div>
+                        <a href="javascript:void(0)" ng-click="Signature()" class="button button-icon icon icon-pencil"></a>
+                    </div>
+                </div>
+                <!-- Inner Form Items Responsive Column End -->
+            </div>
+            <!-- DC Form End -->
+            <div class="row responsive-sm dc-button-holder margin-top-md">
+                  <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block button-calm" ng-click="ViewRecords()"><i class="icon icon-eye"></i> {{'ViewRecords' | xlat }}</a>
+                  </div>
+                  <div class="col no-padding">
+                    <a href="javascript:void(0)" ng-click="ClearForm()" class="button button-block button-calm"><i class="icon icon-cancel-circle"></i> {{'Clear' | xlat }}</a>
+                  </div>
+                  <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="AddRecords()" ng-disabled="DisableSave"><i class="icon icon-plus"></i> {{'Add' | xlat }}</a>
+                  </div>
+                  <div class="col no-padding">
+                    <a href="javascript:void(0)" class="button button-block  button-calm" ng-click="SubmitRecords()" ng-disabled="DisableSaveSubmit"><i class="icon icon-check-circle"></i> {{'SaveSubmit' | xlat }}</a>
+                  </div>
+            </div>
+        </div>
+        <div class="scroll-content" ng-show="DivSignature">
+            <!-- Signature Pad Start -->
+            <div class="signature-pad">
+                <div id="SignaturePad" class="m-signature-pad">
+                    <div class="m-signature-pad--body">
+                        <canvas></canvas>
+                    </div>
+                    <div class="m-signature-pad--footer">
+                        <div class="description">{{'Signabove' | xlat}}</div>
+                        <button class="button button-assertive clear" data-action="clear"><i class="icon icon-cancel-circle"></i> {{'Clear' | xlat}}</button>
+                        <button class="button button-calm save" data-action="save" ><i class="icon icon-plus"></i> {{'Save' | xlat}}</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Signature Pad End -->
+        </div>
+    </div>
+</div>

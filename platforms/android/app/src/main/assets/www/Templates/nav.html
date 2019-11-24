@@ -1,0 +1,109 @@
+<div snap-drawer="left" >
+  <div class="oneview-menu oneview-menu-open">
+    <div class="text-center" style="background:#0e1b1e;"><img src="images/logo_small.png" style="margin-left:-10px;"/></div>
+      <ul class="list" id="MainMenuDiv">
+
+      </ul>
+  </div>
+</div>
+<div snap-drawer="right" id="divAutocomplatePopUp" snap-id="snap-right">
+
+</div>
+<div snap-content>
+
+
+    <!--<div class="Prob-panel" id="divBlueThermLiveTemperatureIndicator" style="display:none">
+        <div class="txt">
+            <div style="float:left;">Probe</div>
+            <div class="probe-battery" id="txtBatteryPercentageControlId"></div>
+        </div>
+        <div class="disp"><span class="lbl" id="txtTemperatureLoggerControlId">00.0000</span><span class="deg"> &deg;C</span></div>
+    </div>-->
+
+    <div class="Prob-panel" id="divBlueThermLiveTemperatureIndicator" style="display:none" ng-controller="BlueThermLiveTemperatureIndicatorController">
+        <div class="txt">
+            <div style="float:left;">{{'Probe' | xlat }} &nbsp; <span class="balanced" id="lblBlueThermStatus">{{'Auto' | xlat }}</span></div>
+            <div class="probe-battery" id="txtBatteryPercentageControlId"><span></span><i class="icon icon-battery-25"></i></div>
+        </div>
+        <div class="disp"><span class="lbl" id="txtTemperatureLoggerControlId">00.0000</span><span class="deg"> &deg;C</span> <a href="javascript:void(0)" class="ther-btn" ng-click="GetProbeStatus()"><i class="icon icon-thermometer"></i></a></div>
+        <div class="txt" style="display:none" id="divBlueThermLiveProbeConnectionButton"><a href="javascript:void(0)" class="ther-btn" ng-click="ConnectProbe()"><span style="color:white;">Connect Probe</span></a></div>
+    </div>
+
+
+    <div class="backdrop visible active" ng-show="Notification">
+    <div class="dropdown" >
+      <div class="arrow-up"></div>
+      <div class="bar bar-header">
+        <div class="h1 title">{{'Notifications' | xlat }}</div>
+        <a class="button button-icon icon icon-times" ng-click="OpenBellPopUp()"></a>
+      </div>
+      <div class="scroll-content has-header">
+        <div class="full-height scrollable">
+          <div class="list no-margin" id="NotoficationPanel">           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="backdrop visible active" ng-show="PopCommentBox">
+    <div class="dropdown comment-box">
+      <div class="arrow-up"></div>
+      <div class="bar bar-header">
+        <div class="h1 title"><i class="icon icon-comments dark"></i> {{'Enter Remarks' | xlat }}</div>
+        <a href="javascript:void(0)" class="button button-icon icon icon-times" ng-click="PopCommentBoxHide()"></a>
+      </div>
+      <div class="scroll-content padding has-header has-footer">
+        <div class="full-height">
+          <div class="field-item">
+            <label>
+              <textarea row="10" id="DcComments"></textarea>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="bar bar-footer no-padding">
+        <div class="row">
+          <div class="col"><a class="button button-block button-clear" ng-click="ClearDcComments()">{{'Clear' | xlat }}</a></div>
+          <div class="col"><a class="button button-block button-clear" ng-click="AddDcComments()">{{'Update' | xlat }}</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="backdrop visible active" ng-show="PopUpExcludedAttributeDetails">
+
+        <div class="dropdown comment-box">
+            <div class="arrow-up"></div>
+            <div class="bar bar-header">
+                <div class="h1 title"><i class="icon icon-comments dark"></i> {{'Include Attribute' | xlat }}</div>
+                <a href="javascript:void(0)" class="button button-icon icon icon-times" ng-click="PopExcludedAttributeCommentBoxHide()"></a>
+            </div>
+            <div class="scroll-content has-header has-footer anim" style="overflow: scroll;" id="DivIncludeAttribute">
+
+
+            </div>
+            <div class="bar bar-footer no-padding">
+                <div class="row">
+                    <div class="col"><a class="button button-block button-clear" ng-click="BtnUpdateIncludedAttribute()">{{'Update' | xlat }}</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="bar bar-header bar-positive item-input-inset no-padding">
+		<a snap-toggle="left" href="javascript:void(0)" class="button button-icon icon icon-navicon"></a>
+		 <div class="button-bar">
+           <span class="page-title" id="PageTitle">{{'PageTitle' | xlat }}</span>
+		 </div>
+        <div class="top-header-select" id="DivServiceDropdown">
+            <span class="icon icon-angle-down"></span>
+            <select id="ServiceDropdown" onchange="ServiceChangeEvent()"></select>
+        </div>
+		 <div class="buttons">                        
+			<!--<a href="javascript:void(0)" class="button button-icon icon icon-file-text"><div class="badge badge-assertive">10</div></a>
+			<a href="javascript:void(0)" class="button button-icon icon icon-bell"><div class="badge badge-energized">23</div></a>-->
+             <a href="javascript:void(0)" class="button button-icon icon icon-bell" id="TopRightBell" ng-click="OpenBellPopUp()"></a>
+			<a class="button button-icon icon icon-power-off" ng-click="Logout()"></a>
+		 </div>
+	</div>
+ <div class="scroll-content has-header" app-view-segment="1">
+</div>
+</div>
