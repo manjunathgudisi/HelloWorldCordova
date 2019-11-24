@@ -25,7 +25,7 @@
 -(NSString *)ShowToast:(NSString *)Message :(NSString *)ServiceURL;
 -(NSString *)ClearCacheFiles;
 -(NSString *)ClearCacheFilesByName:(NSString *)Name;
--(NSString *)SetLandScapeOrientation;
+-(NSString *) SetLandScapeOrientation;
 @end
 
 

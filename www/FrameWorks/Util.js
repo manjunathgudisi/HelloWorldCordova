@@ -83,7 +83,7 @@ function OneViewLocalStorage() {
                 //Save in Android Local Storage                
                 if (Key == "CloudManagerServiceInfo" || Key == "DeviceId" || Key == "LoginUserId" || Key == "LoginUserName") {
                     //oOneviewAndroidLocalStoragePlugin.Save(Key, Value);
-                    //NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
+                    NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
                 }
 
                 // OneViewConsole.Debug("Save End", "OneViewLocalStorage.Save");
@@ -115,7 +115,7 @@ function OneViewLocalStorage() {
                   //Remove Android Local Storage
                   if(Key == "CloudManagerServiceInfo" ||  Key == "DeviceId"){
                        //oOneviewAndroidLocalStoragePlugin.Remove(Key);
-                        //NativeStorage.remove(Key, OneViewNativeStorage.removeSuccess, OneViewNativeStorage.removeError);
+                        NativeStorage.remove(Key, OneViewNativeStorage.removeSuccess, OneViewNativeStorage.removeError);
                    }
 
                 //  OneViewConsole.Debug("Remove End", "OneViewLocalStorage.Remove");
@@ -185,7 +185,7 @@ function OneViewSessionStorage() {
                 //Save in Android Local Storage               
                 if (Key == "CloudManagerServiceInfo" || Key == "DeviceId" || Key == "LoginUserId" || Key == "LoginUserName") {
                     //oOneviewAndroidLocalStoragePlugin.Save(Key, Value);
-                    //NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
+                    NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
                 }
 
                // OneViewConsole.Debug("Save End", "OneViewSessionStorage.Save");
@@ -247,26 +247,26 @@ function OneViewSessionStorage() {
 //Native storage
 function OneViewNativeStorage() {
     
-    setSuccess: function (obj) {
+    this.setSuccess = function (obj) {
         console.log(obj.name);
         NativeStorage.getItem("reference", this.getSuccess, this.getError);
     },
-    setError: function (error) {
+    this.setError = function (error) {
         console.log(error.code);
         if (error.exception !== "") console.log(error.exception);
     },
-    getSuccess: function (obj) {
+    this.getSuccess = function (obj) {
         console.log(obj.name);
         NativeStorage.remove("reference", this.removeSuccess, this.removeError);
     },
-    getError: function (error) {
+    this.getError = function (error) {
         console.log(error.code);
         if (error.exception !== "") console.log(error.exception);
     },
-    removeSuccess: function () {
+    this.removeSuccess = function () {
         console.log("Removed");
     },
-    removeError: function (error) {
+    this.removeError = function (error) {
         console.log(error.code);
         if (error.exception !== "") console.log(error.exception);
     }

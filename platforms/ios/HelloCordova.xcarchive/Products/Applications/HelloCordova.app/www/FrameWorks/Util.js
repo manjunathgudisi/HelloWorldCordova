@@ -83,7 +83,7 @@ function OneViewLocalStorage() {
                 //Save in Android Local Storage                
                 if (Key == "CloudManagerServiceInfo" || Key == "DeviceId" || Key == "LoginUserId" || Key == "LoginUserName") {
                     //oOneviewAndroidLocalStoragePlugin.Save(Key, Value);
-                    NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
+                    //NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
                 }
 
                 // OneViewConsole.Debug("Save End", "OneViewLocalStorage.Save");
@@ -115,7 +115,7 @@ function OneViewLocalStorage() {
                   //Remove Android Local Storage
                   if(Key == "CloudManagerServiceInfo" ||  Key == "DeviceId"){
                        //oOneviewAndroidLocalStoragePlugin.Remove(Key);
-                        NativeStorage.remove(Key, OneViewNativeStorage.removeSuccess, OneViewNativeStorage.removeError);
+                        //NativeStorage.remove(Key, OneViewNativeStorage.removeSuccess, OneViewNativeStorage.removeError);
                    }
 
                 //  OneViewConsole.Debug("Remove End", "OneViewLocalStorage.Remove");
@@ -185,7 +185,7 @@ function OneViewSessionStorage() {
                 //Save in Android Local Storage               
                 if (Key == "CloudManagerServiceInfo" || Key == "DeviceId" || Key == "LoginUserId" || Key == "LoginUserName") {
                     //oOneviewAndroidLocalStoragePlugin.Save(Key, Value);
-                    NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
+                    //NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
                 }
 
                // OneViewConsole.Debug("Save End", "OneViewSessionStorage.Save");

@@ -247,26 +247,26 @@ function OneViewSessionStorage() {
 //Native storage
 function OneViewNativeStorage() {
     
-    setSuccess: function (obj) {
+    this.setSuccess = function (obj) {
         console.log(obj.name);
         NativeStorage.getItem("reference", this.getSuccess, this.getError);
     },
-    setError: function (error) {
+    this.setError = function (error) {
         console.log(error.code);
         if (error.exception !== "") console.log(error.exception);
     },
-    getSuccess: function (obj) {
+    this.getSuccess = function (obj) {
         console.log(obj.name);
         NativeStorage.remove("reference", this.removeSuccess, this.removeError);
     },
-    getError: function (error) {
+    this.getError = function (error) {
         console.log(error.code);
         if (error.exception !== "") console.log(error.exception);
     },
-    removeSuccess: function () {
+    this.removeSuccess = function () {
         console.log("Removed");
     },
-    removeError: function (error) {
+    this.removeError = function (error) {
         console.log(error.code);
         if (error.exception !== "") console.log(error.exception);
     }

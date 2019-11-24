@@ -27,7 +27,6 @@
 
 -(NSString *)  DownloadFile : (NSString *)ServiceURL;
 - (NSString *) UploadFile :  (NSString *)sourceFileUri : (NSString *)upLoadServerUri;
--(NSString *) Get :(NSString *)ServiceURL ;
 @end
 
 
@@ -55,7 +54,8 @@
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *responseCode = nil;
     
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    //NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    NSData *oResponseData = [HttpClinetPlugin sendSynchronousRequest:request returningResponse:&responseCode error:&error];
     
     if([responseCode statusCode] != 200){
         //NSLog(@"Error getting %@, HTTP status code %i", url, [responseCode statusCode]);
@@ -129,7 +129,8 @@
     
     NSHTTPURLResponse *responseCode = nil;
     NSError *error = [[NSError alloc] init];
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:req returningResponse:&responseCode error:&error];
+    //NSData *oResponseData = [NSURLConnection sendSynchronousRequest:req returningResponse:&responseCode error:&error];
+    NSData *oResponseData = [HttpClinetPlugin sendSynchronousRequest:req returningResponse:&responseCode error:&error];
     
     if([responseCode statusCode] == 200)
     {
@@ -173,37 +174,9 @@
     
 }
 
--(NSString *) Get:(NSString *)ServiceURL
-{
-    HttpClinetPlugin *oHttpClinetPlugin = [[HttpClinetPlugin alloc] init];
-    
-    NSString *UniqueFileName=[self GetUniqueFileName];
-    NSString *urld = [NSString stringWithFormat:@"%@?time=%@",
-                      ServiceURL,UniqueFileName];
-    
-    NSString  *output=[oHttpClinetPlugin Send_Get:urld];
-    
-    return output;
-}
 
--(NSString *) GetUniqueFileName {
-    
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"dd/mm/yyyy hh:mm:sss"];
-    NSDate* date = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:date];
-    NSInteger year = [components year];
-    NSInteger minute = [components minute];
-    NSInteger day = [components day];
-    NSInteger nanosecond = [components nanosecond];
-    
-    NSString *UniqueFileName =[NSString stringWithFormat:@"%ld%ld%ld%ld",
-                               minute, day,year,nanosecond];
-    
-    return UniqueFileName;
-}
+
+
 
 - (NSString *)  Send : (NSString *)Url : (NSString *)ReqParm : (NSString *)DeviceId : (NSString *)LoginUserId
                      : (NSString *)IpAddress : (NSString *)LoginUserName : (NSString *)VersionName : (NSString *)ServiceId :(NSString *)ServiceName
@@ -229,48 +202,48 @@
 //    [request setValue:ServiceId forHTTPHeaderField:@"ServiceId"];
 //    [request setValue:ServiceName forHTTPHeaderField:@"ServiceName"];
     
-    NSError *error = [NSError errorWithDomain:@"some_domain"
-        code:100
-    userInfo:@{
-                NSLocalizedDescriptionKey:@"Something went wrong"
-    }];
-    NSURLResponse *responseCode = nil;
+    NSError *error = [[NSError alloc] init];
+    NSHTTPURLResponse *responseCode = nil;
     
     //NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    
     NSData *oResponseData = [HttpClinetPlugin sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-
-    if([(NSHTTPURLResponse *)responseCode statusCode] == 200)
+    
+    if([responseCode statusCode] == 200)
     {
         NSString *HttpClientResponseDTO =
         [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
         return HttpClientResponseDTO;
-
-
+        
+        
      //   [NSString stringWithFormat:@"{ \"ResponseCode\" : \"%i\" ,\"IsAnyException\" : \"%@\" ,\"Response\" : \"%@\" ",
        //  [responseCode statusCode], @"true",@""];
-
+        
     }
     else
     {
-
-        NSLog(@"SOME ERROR OCCURED");
+        NSError *error = [[NSError alloc] init];
         
-        NSNumber *errocode = @([(NSHTTPURLResponse *)responseCode statusCode]);
+         NSNumber *errocode = @([responseCode statusCode]);
        // NSString *errocode =[@([responseCode statusCode]) stringValue];
-
+        
         NSDictionary *jsonDictionaryError = [NSDictionary dictionaryWithObjectsAndKeys:
                                        errocode, @"ResponseCode",
                                         @"true", @"IsAnyException",
-                                        error.localizedDescription, @"Response",nil];
-
+                                        @"error", @"Response",nil];
+        
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionaryError options:NSJSONWritingPrettyPrinted error:&error];
         NSString *HttpClientResponseDTO = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+        
+        return HttpClientResponseDTO;
 
+        
        // NSString *HttpClientResponseDTO =
       //  [NSString stringWithFormat:@"{ \"ResponseCode\" : \"%i\" ,\"IsAnyException\" : \"%@\" ,\"Response\" : \"%@\" ",
        //  [responseCode statusCode], @"true",@""];
-
-
+        
+        
         //NSLog(@"Error getting %@, HTTP status code %i", url, [responseCode statusCode]);
         return HttpClientResponseDTO;
     }
@@ -282,35 +255,40 @@
 }
 
 + (NSData *)sendSynchronousRequest:(NSURLRequest *)request
-    returningResponse:(__autoreleasing NSURLResponse **)responsePtr
-    error:(__autoreleasing NSError **)errorPtr {
-    
-    
-    dispatch_semaphore_t    sem;
-    __block NSData *        result;
+                 returningResponse:(NSURLResponse **)response
+                             error:(NSError **)error
+{
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_enter(group);
 
-    result = nil;
 
-    sem = dispatch_semaphore_create(0);
+    NSError __block *err = NULL;
+    NSData __block *data;
+    NSURLResponse __block *resp;
 
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
-        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (errorPtr != NULL) {
-            *errorPtr = error;
-        }
-        if (responsePtr != NULL) {
-            *responsePtr = response;
-        }
-        if (error == nil) {
-            result = data;
-        }
-        dispatch_semaphore_signal(sem);
+                                     completionHandler:^(NSData* _data, NSURLResponse* _response, NSError* _error) {
+        resp = _response;
+        err = _error;
+        data = _data;
+        dispatch_group_leave(group);
+
     }] resume];
 
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
 
-   return result;
+    if (response)
+    {
+        *response = resp;
+    }
+    if (error)
+    {
+        *error = err;
+    }
+
+    return data;
 }
+
 
 @end
 

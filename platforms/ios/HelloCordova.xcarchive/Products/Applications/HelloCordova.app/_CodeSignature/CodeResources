@@ -102,7 +102,7 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		NQyahwqUCS8QJKQhBo2lgkvQ6UQ=
+		dEjm9f+jiTKNy8GbfKPKXn1r2D0=
 		</data>
 		<key>CDVCapture.bundle/controls_bg.png</key>
 		<data>
@@ -226,11 +226,11 @@
 		</data>
 		<key>CDVLaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib/objects-13.0+.nib</key>
 		<data>
-		KT5lq51MYh+eAnovQB49PLuIT/U=
+		WWrxTaxiGDSfp6TglUDfNVyc700=
 		</data>
 		<key>CDVLaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib/runtime.nib</key>
 		<data>
-		cCRqGPRcQ8+aqiqYQpfeiRTYh20=
+		ZneyXxWRoEgXA3AY5sFKgQ6bGZ0=
 		</data>
 		<key>CDVLaunchScreen.storyboardc/Info.plist</key>
 		<data>
@@ -238,11 +238,11 @@
 		</data>
 		<key>CDVLaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib/objects-13.0+.nib</key>
 		<data>
-		LAdEoP5sbaMs6qpIv3anunr7bDA=
+		2YPUGdnH6lHtaJKzbBqw2NoXSHI=
 		</data>
 		<key>CDVLaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib/runtime.nib</key>
 		<data>
-		CvN1Cb4tn5qYgRhb1GqKqqKyavA=
+		MQsfz1VODo88re6Rv5fRLuwqQl8=
 		</data>
 		<key>CDVNotification.bundle/beep.wav</key>
 		<data>
@@ -250,7 +250,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		KZhz2Bf+dtjP8+2lzOy6Tknutcc=
+		LklpQcL4dJCl4xVdNLWjBMWQgj8=
 		</data>
 		<key>LaunchImage-1100-Landscape-2436h@3x.png</key>
 		<data>
@@ -326,11 +326,11 @@
 		</data>
 		<key>MainViewController.nib/objects-13.0+.nib</key>
 		<data>
-		w/xHJTlRUl7bGFF42fg/iVWOrYM=
+		Ownt8JrknmA0SWrwpWvTgCR5BkE=
 		</data>
 		<key>MainViewController.nib/runtime.nib</key>
 		<data>
-		WdngagjvcI0e0PqgeMPwJY4ZF38=
+		Rs2bqA9K/CBcMxKYSq7gWefeRHc=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -338,19 +338,19 @@
 		</data>
 		<key>config.xml</key>
 		<data>
-		KAmyIw1X0ntepT+BsaCqXij+7cc=
+		xpmS1ohyBoyoeY3scRKDGIWb88g=
 		</data>
 		<key>embedded.mobileprovision</key>
 		<data>
-		CXv3sqKY+GQ1bWxqJ1mEDrK4I1o=
+		84gL1j15p5rAkM+BQul5rxmNHW4=
 		</data>
 		<key>scannerOverlay.nib/objects-13.0+.nib</key>
 		<data>
-		o4Pdc7Ad5Z07Kc95U84npmmJEtQ=
+		ryijJz0NxkwGteFWGUp2rg2RQmk=
 		</data>
 		<key>scannerOverlay.nib/runtime.nib</key>
 		<data>
-		8KC/ws35NZt899Bub4jq06qlQZY=
+		yi+6+OOGRq72pSMfIctymhLJ1MI=
 		</data>
 		<key>www/BO/ACLConfigMetaDataBO.js</key>
 		<data>
@@ -1178,7 +1178,7 @@
 		</data>
 		<key>www/FrameWorks/Util.js</key>
 		<data>
-		gVe9oUKJJ6Yt6OhznAYuuCr8DXw=
+		HsNSPQ77GSc/Pf0kKsMNZ4+p0y4=
 		</data>
 		<key>www/FrameWorks/Vallidation.js</key>
 		<data>
@@ -1822,7 +1822,7 @@
 		</data>
 		<key>www/cordova_plugins.js</key>
 		<data>
-		z1Gs9SJ1t6df7WNnlahBPq5qkq0=
+		FztLwiR7FeJQVILixfi5eP4ES9o=
 		</data>
 		<key>www/css/font.css</key>
 		<data>
@@ -2559,11 +2559,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NQyahwqUCS8QJKQhBo2lgkvQ6UQ=
+			dEjm9f+jiTKNy8GbfKPKXn1r2D0=
 			</data>
 			<key>hash2</key>
 			<data>
-			gnf1f6SxY68lDVGif3Gnl6yo/Jby1ZfWeccRySItrj8=
+			93aQhgE17AOMRawHNNan7RCHvWOUb442KfD1Z7INI+8=
 			</data>
 		</dict>
 		<key>CDVCapture.bundle/controls_bg.png</key>
@@ -2853,22 +2853,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KT5lq51MYh+eAnovQB49PLuIT/U=
+			WWrxTaxiGDSfp6TglUDfNVyc700=
 			</data>
 			<key>hash2</key>
 			<data>
-			xIYhE6zpOcj2RzoLGVv4+sYwcXNelyKxkkDPWouyd1Y=
+			/wI7snwMwXmzgLO0Pt9UAMME3++idnE8GzHIck9BjH8=
 			</data>
 		</dict>
 		<key>CDVLaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cCRqGPRcQ8+aqiqYQpfeiRTYh20=
+			ZneyXxWRoEgXA3AY5sFKgQ6bGZ0=
 			</data>
 			<key>hash2</key>
 			<data>
-			c3M1nI2fvZul7qpTwRaiyMYIRsc3T5DKf4ONuZi2dMo=
+			FyPKWkkUaq1JJ98mbwH1r/tSt8N18K+kArgneWscQAk=
 			</data>
 		</dict>
 		<key>CDVLaunchScreen.storyboardc/Info.plist</key>
@@ -2886,22 +2886,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			LAdEoP5sbaMs6qpIv3anunr7bDA=
+			2YPUGdnH6lHtaJKzbBqw2NoXSHI=
 			</data>
 			<key>hash2</key>
 			<data>
-			wB1mKZDCc7aypEkMHJ/GFNfCjnQ8MxIBiUsRaCEFkVI=
+			VzWbrttyfrC9+GIHtbs0mYQB0IU8iySeGekFFjDWQ6w=
 			</data>
 		</dict>
 		<key>CDVLaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CvN1Cb4tn5qYgRhb1GqKqqKyavA=
+			MQsfz1VODo88re6Rv5fRLuwqQl8=
 			</data>
 			<key>hash2</key>
 			<data>
-			+ycpT4o0VYwIUeGFPZZvCkj/NiM3BPJVuA94PM2ckHU=
+			BKGeq0gGMBSykLuCgRRNFuSQ1E8SRW3lEZE4P41RNl0=
 			</data>
 		</dict>
 		<key>CDVNotification.bundle/beep.wav</key>
@@ -3117,66 +3117,66 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			w/xHJTlRUl7bGFF42fg/iVWOrYM=
+			Ownt8JrknmA0SWrwpWvTgCR5BkE=
 			</data>
 			<key>hash2</key>
 			<data>
-			HY0mUE12/xLe1Qak5MTpGjdbT/T9A8LJtI0g4gYfcy0=
+			LELY39w3ytSQpB4e83+IRSX2LQ9c14bBKmUb+TITwcY=
 			</data>
 		</dict>
 		<key>MainViewController.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			WdngagjvcI0e0PqgeMPwJY4ZF38=
+			Rs2bqA9K/CBcMxKYSq7gWefeRHc=
 			</data>
 			<key>hash2</key>
 			<data>
-			ibrHAwVAgHpb+06mGwOPsynDE029K9W08O6UrVYYnUs=
+			KJ7FculaPDUw+mui9IimjKUvZSXDkto7qfzfPqFVWKE=
 			</data>
 		</dict>
 		<key>config.xml</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KAmyIw1X0ntepT+BsaCqXij+7cc=
+			xpmS1ohyBoyoeY3scRKDGIWb88g=
 			</data>
 			<key>hash2</key>
 			<data>
-			CMO5MxOjVsOukUUeUt8l7nhCfUt9ky3pGugFWw3RCTM=
+			pRrRKyxyZ5k7Bd8dDzaAWa0wfk+eiUt4Aq/XK3amsRg=
 			</data>
 		</dict>
 		<key>embedded.mobileprovision</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CXv3sqKY+GQ1bWxqJ1mEDrK4I1o=
+			84gL1j15p5rAkM+BQul5rxmNHW4=
 			</data>
 			<key>hash2</key>
 			<data>
-			DqWN8dlP917fGBPOauN5wnJRRF4uGfV3F9UmM60ZzMQ=
+			J5Z0fDLpf9hhjIpT92TeRbmc7larnat+OcVLirrCYrY=
 			</data>
 		</dict>
 		<key>scannerOverlay.nib/objects-13.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			o4Pdc7Ad5Z07Kc95U84npmmJEtQ=
+			ryijJz0NxkwGteFWGUp2rg2RQmk=
 			</data>
 			<key>hash2</key>
 			<data>
-			iCDHfBHz1eE5W1s+6L7sqXtTdU7jc4KdllOypQxyrno=
+			CxD5CmLOlOyPHc1vQX2KWa5joPt1py4w465cnixRFxg=
 			</data>
 		</dict>
 		<key>scannerOverlay.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8KC/ws35NZt899Bub4jq06qlQZY=
+			yi+6+OOGRq72pSMfIctymhLJ1MI=
 			</data>
 			<key>hash2</key>
 			<data>
-			71iIHHK7kAUKO9ySlarUeKqcv+00dj4WUwJHn30l7y0=
+			JPpcVT1ifDHB5qmSKdP8v8hyvBz8l8njZbkKKxSgChA=
 			</data>
 		</dict>
 		<key>www/BO/ACLConfigMetaDataBO.js</key>
@@ -5449,11 +5449,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			gVe9oUKJJ6Yt6OhznAYuuCr8DXw=
+			HsNSPQ77GSc/Pf0kKsMNZ4+p0y4=
 			</data>
 			<key>hash2</key>
 			<data>
-			PXrCnPtxVIpO3BeGlSovECifyfeU7aku7Dmx3mYNQIU=
+			k5jkX6PkAakxxJ96tOgIjCStBEYz/p7T5MTYtS+ngjE=
 			</data>
 		</dict>
 		<key>www/FrameWorks/Vallidation.js</key>
@@ -7220,11 +7220,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			z1Gs9SJ1t6df7WNnlahBPq5qkq0=
+			FztLwiR7FeJQVILixfi5eP4ES9o=
 			</data>
 			<key>hash2</key>
 			<data>
-			kaMsDsgFLLx6Zy0/zZqpsNn/HqsVhpdc0gtXy/P3P5U=
+			Cvx6mGt4z2IXJSByrjH0RGovmglVbk1cLyRHlQGOlCM=
 			</data>
 		</dict>
 		<key>www/css/font.css</key>

@@ -11,5 +11,4 @@
 @interface HttpClinetPlugin : NSObject
 -(NSString *)  Send_Get : (NSString *)url;
 -(NSString *)  UploadFile :  (NSString *)sourceFileUri : (NSString *)upLoadServerUri;
--(NSString *)  Get : (NSString *)ServiceURL;
 @end

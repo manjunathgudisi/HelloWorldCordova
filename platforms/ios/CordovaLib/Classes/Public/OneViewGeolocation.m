@@ -44,12 +44,10 @@
 //TODO:IOS Migr (Need to test this code)
 -(NSString *)GetLatitudeAndLangtitude
 {
-    
-    
     CLLocationCoordinate2D coordinate = [self getLocation];
     NSString *latitude = [NSString stringWithFormat:@"%f", coordinate.latitude];
     NSString *longitude = [NSString stringWithFormat:@"%f", coordinate.longitude];
-    return @"12.1";
+    return [NSString stringWithFormat:@"%@, %@", latitude, longitude];
 }
 
 -(CLLocationCoordinate2D) getLocation{

@@ -22,7 +22,7 @@ function OneViewCordovaPlugin() {
             var NetworkDetails = {};
 
             NetworkDetails["ConnectionType"] = states[networkState];
-            alert('Connection type: ' + states[networkState]);
+            //alert('Connection type: ' + states[networkState]);
 
             if (states[networkState] != "Unknown connection" && states[networkState] != "No network connection") {
                 NetworkDetails["IsNetworkAvailable"] = true;

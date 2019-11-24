@@ -49,8 +49,8 @@
       "cordova-plugin-nativestorage": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

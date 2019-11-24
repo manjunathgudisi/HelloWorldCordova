@@ -40,7 +40,6 @@
 
 @property (nonatomic, strong) NSMutableArray *arrResults;
 
-@property (nonatomic) sqlite3 *sqlite3Database;
 
 
 -(void)copyDatabaseIntoDocumentsDirectory;
@@ -67,18 +66,6 @@
         
         // Copy the database file into the documents directory if necessary.
         [self copyDatabaseIntoDocumentsDirectory];
-        
-        // Create a sqlite object.
-        sqlite3 *sqlite3db;
-        
-        // Set the database file path.
-        NSString *databasePath = [self.documentsDirectory stringByAppendingPathComponent:self.databaseFilename];
-        
-        // Open the database.
-        BOOL openDatabaseResult = sqlite3_open([databasePath UTF8String], &sqlite3db);
-        if(openDatabaseResult == SQLITE_OK) {
-            self.sqlite3Database = sqlite3db;
-        }
     }
     return self;
 }
@@ -131,13 +118,12 @@
 
 -(NSString *)runQueryadv:(const char *)query isQueryExecutable:(BOOL)queryExecutable{
     // Create a sqlite object.
-    //sqlite3 *sqlite3Database;
-    sqlite3 *sqlite3Database = self.sqlite3Database;
+    sqlite3 *sqlite3Database;
     
     NSString *JsonResult= @" ";
     
     // Set the database file path.
-    //NSString *databasePath = [self.documentsDirectory stringByAppendingPathComponent:self.databaseFilename];
+    NSString *databasePath = [self.documentsDirectory stringByAppendingPathComponent:self.databaseFilename];
     
     // Initialize the results array.
     if (self.arrResults != nil) {
@@ -155,8 +141,8 @@
     
     
     // Open the database.
-    //BOOL openDatabaseResult = sqlite3_open([databasePath UTF8String], &sqlite3Database);
-    if(sqlite3Database != NULL) {
+    BOOL openDatabaseResult = sqlite3_open([databasePath UTF8String], &sqlite3Database);
+    if(openDatabaseResult == SQLITE_OK) {
         // Declare a sqlite3_stmt object in which will be stored the query after having been compiled into a SQLite statement.
         sqlite3_stmt *compiledStatement;
         
@@ -318,7 +304,7 @@
     }
     
     // Close the database.
-    //sqlite3_close(sqlite3Database);
+    sqlite3_close(sqlite3Database);
     
     return JsonResult;
 }
@@ -329,41 +315,16 @@
 
 -(NSString *) StartTransaction
 {
-    BOOL prepareStatementResult = sqlite3_exec(self.sqlite3Database, "BEGIN TRANSACTION", 0, 0, 0);
-    if(prepareStatementResult == SQLITE_OK){
-        return @"true";
-    }
-    else {
-        // In the database cannot be opened then show the error message on the debugger.
-        NSLog(@"%s", sqlite3_errmsg(self.sqlite3Database));
-        return @"false";
-    }
+    return @"Not implemented exception";
 }
 
 -(NSString *) EndTransaction
 {
-    BOOL prepareStatementResult = sqlite3_exec(self.sqlite3Database, "COMMIT TRANSACTION", 0, 0, 0);
-    if(prepareStatementResult == SQLITE_OK){
-        return @"true";
-    }
-    else {
-        // In the database cannot be opened then show the error message on the debugger.
-        NSLog(@"%s", sqlite3_errmsg(self.sqlite3Database));
-        return @"false";
-    }
+    return @"Not implemented exception";
 }
-
 -(NSString *) Rollback
 {
-    BOOL prepareStatementResult = sqlite3_exec(self.sqlite3Database, "ROllBACK TRANSACTION", 0, 0, 0);
-    if(prepareStatementResult == SQLITE_OK){
-        return @"true";
-    }
-    else {
-        // In the database cannot be opened then show the error message on the debugger.
-        NSLog(@"%s", sqlite3_errmsg(self.sqlite3Database));
-        return @"false";
-    }
+    return @"Not implemented exception";
 }
 
 -(NSString *)excecuteSqlReader:(NSString *)query{
