@@ -115,7 +115,7 @@ function OneViewBluetoothPlugin() {
 
     // check device is paired or not
     // Input : DeviceId
-    // Output : true or false (boolean)		
+    // Output : true or false (boolean)
     this.IsPaired = function (DeviceId) {
         try {
             OneViewConsole.Debug("IsPaired start", "OneViewBluetoothPlugin.IsPaired");
@@ -318,15 +318,15 @@ function OneViewBluetoothTemperatureLoggerPlugin() {
             OneViewConsole.Debug("AutoTemperatureListener start", "OneViewBluetoothTemperatureLoggerPlugin.AutoTemperatureListener");
             //alert(JSON.stringify(TemperatureInfo));
             //if (ConnectedProbe[0] == undefined) {
-            //    var _oTemperatureInfo = JSON.parse(TemperatureInfo);	              
+            //    var _oTemperatureInfo = JSON.parse(TemperatureInfo);
             //    if (_oTemperatureInfo.IsAnyException == false) {
             //        // ConnectedProbe[0]
             //        ConnectedProbe[0] = { "Index": 1, "Id": _oTemperatureInfo.Name, "Name": _oTemperatureInfo.Name };
-            //    }	              
+            //    }
             //}
             //else {
             //    var _oTemperatureInfo = JSON.parse(TemperatureInfo);
-            //    if (_oTemperatureInfo.IsAnyException == true) {	                    
+            //    if (_oTemperatureInfo.IsAnyException == true) {
             //        ConnectedProbe = {};
             //    }
             //}
@@ -1371,8 +1371,9 @@ function OneViewAutoUploadPlugin() {
                 OneViewConsole.Debug("NetworkDetails : " + JSON.stringify(NetworkStatus), "OneViewAutoUploadPlugin.start");
 
                 if (NetworkStatus.IsNetworkAvailable == true) {
-
-                    window.OneViewAutoUpload.Start();
+					if (window.OneViewAutoUpload) {
+						window.OneViewAutoUpload.Start();
+					}
                 }
                 //else {
 
@@ -1395,7 +1396,9 @@ function OneViewAutoUploadPlugin() {
         try {
             OneViewConsole.Debug("Stop start", "OneViewAutoUploadPlugin.Stop");
 
-            window.OneViewAutoUpload.Stop();
+			if (window.OneViewAutoUpload) {
+				window.OneViewAutoUpload.Stop();
+			}
 
             OneViewConsole.Debug("Stop end", "OneViewAutoUploadPlugin.Stop");
         }
@@ -1543,7 +1546,7 @@ function OneViewNewProbePlugin() {
             OneViewConsole.Debug("Scan start", "OneViewNewProbePlugin.Scan");
 
             //  alert('OneViewNewProbePlugin');
-            // 
+            //
             //Scan = 1
             var id = 1;//"0x7f070077";
             var IsSuccess = window.NewProbeFacade.Hello();
@@ -1598,3 +1601,4 @@ function OneviewBarcodeScannerPlugin() {
         }
     }
 }
+

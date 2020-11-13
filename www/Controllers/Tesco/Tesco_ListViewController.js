@@ -46,7 +46,7 @@
                         //alert(JSON.stringify(ValidationResponse));
                     }
                     else {
-                        alert("IN-SU-LVI-003 :: Perform data capture for atleast 1 attribute to save record");
+						navigator.notification.alert("IN-SU-LVI-003 :: Perform data capture for atleast 1 attribute to save record", ['OK'], "");
                     }
 
                     OneViewConsole.Debug("IsValidationSuccess End", "LVDataCaptureBO.IsValidationSuccess");
@@ -1562,7 +1562,7 @@
                         FinalAnswer = GetMostCommonAnswer(AnswerLst);
                     }
                     else {
-                        alert("AnswerModeLoadType = " + AnswerModeLoadType + " Not implemented exception, LVDataCaptureBO.FinalAnswer");
+                        navigator.notification.alert(("AnswerModeLoadType = " + AnswerModeLoadType + " Not implemented exception, LVDataCaptureBO.FinalAnswer"), ['OK'], "");
                     }
 
                     OneViewConsole.Debug("FinalAnswer End", "LVDataCaptureBO.FinalAnswer");
@@ -1630,7 +1630,7 @@
                 try {
                     OneViewConsole.Debug("GetAnswerByUserId Start", "LVDataCaptureBO.GetAnswerByUserId");
 
-                    alert("Answer By UserId Not implemented exception, LVDataCaptureBO.GetAnswerByUserId");
+                    navigator.notification.alert("Answer By UserId Not implemented exception, LVDataCaptureBO.GetAnswerByUserId", ['OK'], "");
 
                     OneViewConsole.Debug("GetAnswerByUserId End", "LVDataCaptureBO.GetAnswerByUserId");
 
@@ -1647,7 +1647,7 @@
                 try {
                     OneViewConsole.Debug("GetMostCommonAnswer Start", "LVDataCaptureBO.GetMostCommonAnswer");
 
-                    alert("Most Common Answer Not implemented exception, LVDataCaptureBO.GetMostCommonAnswer");
+					navigator.notification.alert("Most Common Answer Not implemented exception, LVDataCaptureBO.GetMostCommonAnswer", ['OK'], "");
                    
                     OneViewConsole.Debug("GetMostCommonAnswer End", "LVDataCaptureBO.GetMostCommonAnswer");
 

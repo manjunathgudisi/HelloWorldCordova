@@ -2,10 +2,10 @@ function MultiSelectEvalFamework() {
 
     /// <summary>
     /// Eval equation
-    /// </summary> 
+    /// </summary>
     /// <param name="AttributeId">AttributeId</param>
-    /// <param name="ControlId">ControlId</param>   
-    /// <param name="ComparisonValue">ComparisonValue (Value for comparison)</param>      
+    /// <param name="ControlId">ControlId</param>
+    /// <param name="ComparisonValue">ComparisonValue (Value for comparison)</param>
     /// <param name="ComparisonKey">(column name/ property name which will used from entity for comparison) , Ex : (Dropdown :  id,name) , (Band : value, colorindex)</param>
     /// <param name="ControlType">ControlType( Type of Multi select Control : Band , Dropdown , checkbox)</param>
     this.Eval = function (AttributeId, ControlId, Operator, ComparisonValue, ComparisonKey, ControlType, DataType) {
@@ -43,13 +43,13 @@ function MultiSelectEvalFamework() {
                         }
                     }
                     else {
-                        alert("Not implemented exception  : ComparisonKey = " + ComparisonKey);
+                        navigator.notification.alert(("Not implemented exception  : ComparisonKey = " + ComparisonKey), ['OK'], "");
                     }
                 }
 
             }
             else {
-                alert("Not implemented exception : ControlType = " + ControlType);
+                navigator.notification.alert(("Not implemented exception : ControlType = " + ControlType), ['OK'], "");
             }
 
 
@@ -61,3 +61,4 @@ function MultiSelectEvalFamework() {
         }
     }
 }
+

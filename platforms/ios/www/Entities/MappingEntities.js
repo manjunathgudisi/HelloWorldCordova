@@ -542,3 +542,403 @@ function PurchaseOrder() {
     this.IsItemDCCompleted = "TEXT";
 }
 
+function WorkOrderItemDetails() {
+
+    // Primary key
+    this.Id = "INT PRIMARYKEY";
+
+    // Client Guid
+    this.ClientGuid = "TEXT";
+
+
+
+    // Hand shaking id
+    this.ServerId = "INT";
+
+    // Service id
+    this.OSGuid = "TEXT";
+
+    // OneView global Version id (for mdm)
+    this.OVGuid = "INT";
+
+    // Mobile version id (for audit trial)
+    this.MobileVersionId = "INT";
+
+    // Type of WorkOrderItem
+    this.Type = "TEXT";
+
+
+    this.BusinessUnitId = "INT";
+    this.BusinessUnitName = "TEXT";
+    this.BusinessUnitCode = "TEXT";
+
+    this.SectionId = "INT";
+    this.SectionName = "TEXT";
+    this.SectionCode = "TEXT";
+
+    this.WorkOrderNo = "TEXT";
+
+    this.ItemMasterId = "INT";
+    this.ItemMasterName = "TEXT";
+    this.ItemMasterCode = "TEXT";
+
+    this.RequestDate = "TEXT";
+    this.StartDate = "TEXT";
+
+    this.ParentItemMasterId = "INT";
+    this.ParentItemMasterName = "TEXT";
+    this.ParentItemMasterCode = "TEXT";
+
+    this.Sector = "TEXT";
+
+    this.AirlineId = "INT";
+    this.AirlineName = "TEXT";
+
+    this.FlightId = "INT";
+    this.FlightName = "TEXT";
+
+    this.Class = "TEXT";
+    this.MealTypeName = "TEXT";
+
+    this.CompanyMasterId = "INT";
+
+    this.RequiredQuantity = "TEXT";
+    this.UOM = "TEXT";
+    //enum WorkOrderFsms2StatusEnum   {    // peniding order    Active = 0,    // Cancel order    InActive = 1,    // recevied order    Completed = 2}
+    this.Status = "TEXT";
+
+    this.ParentInfo = "TEXT";
+
+    this.TimeStamp = "TEXT";
+}
+
+//BeltPlan
+function FlightBeltPlanDetails() {
+
+    // Primary key
+    this.Id = "INT PRIMARYKEY";
+
+    // Client Guid
+    this.ClientGuid = "TEXT";
+
+
+
+    // Hand shaking id
+    this.ServerId = "INT";
+
+    // Service id
+    this.OSGuid = "TEXT";
+
+    // OneView global Version id (for mdm)
+    this.OVGuid = "INT";
+
+    // Mobile version id (for audit trial)
+    this.MobileVersionId = "INT";
+
+    // Type of FlightBeltPlanDetails
+    this.Type = "TEXT";
+
+
+    this.Airline = "TEXT";
+    this.FlightNo = "TEXT";
+    this.AircraftType = "TEXT";
+    this.Regn = "TEXT";
+    this.SDD = "TEXT";
+    this.ETD = "TEXT";
+
+    this.FlightPlanFrom = "TEXT";
+    this.FlightPlanTo = "TEXT";
+    this.FCONo = "TEXT";
+    this.Rev = "INT";
+    this.Class = "TEXT";
+
+    this.Config = "INT";
+    this.Load = "INT";
+    this.Normal = "INT";
+    this.SPMLTotal = "INT";
+    this.SPML = "TEXT";
+
+    this.CompanyName = "TEXT";
+    this.CompanyId = "INT";
+    this.BeltName = "TEXT";
+    this.BeltId = "INT";
+    this.UPLift = "TEXT";
+
+    
+    //enum FlightBeltPlanDetailsStatusEnum   {    // peniding order    Active = 0,    // Cancel order    InActive = 1,    // recevied order    Completed = 2}
+    this.Status = "TEXT";
+
+    this.TimeStamp = "TEXT";
+}
+
+
+//CellPlan
+function FlightCellPlanDetails() {
+
+    // Primary key
+    this.Id = "INT PRIMARYKEY";
+
+    // Client Guid
+    this.ClientGuid = "TEXT";
+
+
+
+    // Hand shaking id
+    this.ServerId = "INT";
+
+    // Service id
+    this.OSGuid = "TEXT";
+
+    // OneView global Version id (for mdm)
+    this.OVGuid = "INT";
+
+    // Mobile version id (for audit trial)
+    this.MobileVersionId = "INT";
+
+    // Type of FlightBeltPlanDetails
+    this.Type = "TEXT";
+
+
+    this.Airline = "TEXT";
+    this.FlightNo = "TEXT";
+    this.AircraftType = "TEXT";
+    this.Regn = "TEXT";
+    this.SDD = "TEXT";
+    this.ETD = "TEXT";
+
+    this.FlightPlanFrom = "TEXT";
+    this.FlightPlanTo = "TEXT";
+    this.FCONo = "TEXT";
+    this.Rev = "INT";
+    this.Class = "TEXT";
+
+    this.Config = "INT";
+    this.Load = "INT";
+    this.Normal = "INT";
+    this.SPMLTotal = "INT";
+    this.SPML = "TEXT";
+
+    this.CompanyName = "TEXT";
+    this.CompanyId = "INT";
+    this.CellName = "TEXT";
+    this.CellId = "INT";
+    this.UPLift = "TEXT";
+
+
+    //enum FlightBeltPlanDetailsStatusEnum   {    // peniding order    Active = 0,    // Cancel order    InActive = 1,    // recevied order    Completed = 2}
+    this.Status = "TEXT";
+
+    this.TimeStamp = "TEXT";
+
+}
+
+//OLAPlan
+function FlightOALPlanDetails() {
+
+    // Primary key
+    this.Id = "INT PRIMARYKEY";
+
+    // Client Guid
+    this.ClientGuid = "TEXT";
+
+
+
+    // Hand shaking id
+    this.ServerId = "INT";
+
+    // Service id
+    this.OSGuid = "TEXT";
+
+    // OneView global Version id (for mdm)
+    this.OVGuid = "INT";
+
+    // Mobile version id (for audit trial)
+    this.MobileVersionId = "INT";
+
+    // Type of FlightBeltPlanDetails
+    this.Type = "TEXT";
+
+    this.Airline = "TEXT";
+    this.FlightNo = "TEXT";
+    this.FlightId = "INT";
+    this.AircraftType = "TEXT";
+    this.Regn = "TEXT";
+    this.SDD = "TEXT";
+    this.ETD = "TEXT";
+    this.FlightPlanFrom = "TEXT";
+    this.FlightPlanTo = "TEXT";
+    this.FCONo = "TEXT";
+    this.Rev = "INT";
+    this.Class = "TEXT";
+    this.Config = "INT";
+    this.Load = "INT";
+    this.Normal = "INT";
+    this.SPMLTotal = "INT";
+    this.SPML = "TEXT";
+    this.CompanyName = "TEXT";
+    this.CompanyId = "INT";
+    this.CellName = "TEXT";
+    this.CellId = "INT";
+    this.UPLift = "TEXT";
+
+
+
+
+    //enum FlightBeltPlanDetailsStatusEnum   {    // peniding order    Active = 0,    // Cancel order    InActive = 1,    // recevied order    Completed = 2}
+    this.Status = "TEXT";
+
+    this.TimeStamp = "TEXT";
+
+}
+
+//PickListMasterDetails
+function PickListMasterDetails() {
+
+    // Primary key
+    this.Id = "INT PRIMARYKEY";
+
+    // Client Guid
+    this.ClientGuid = "TEXT";
+
+
+
+    // Hand shaking id
+    this.ServerId = "INT";
+
+    // Service id
+    this.OSGuid = "TEXT";
+
+    // OneView global Version id (for mdm)
+    this.OVGuid = "INT";
+
+    // Mobile version id (for audit trial)
+    this.MobileVersionId = "INT";
+
+    // Type of FlightBeltPlanDetails
+    this.Type = "TEXT";
+
+    // Type of FlightBeltPlanDetails
+    this.FlightPlanType = "TEXT";
+    this.FlightPlanId = "INT";
+    this.ScheduleDate = "TEXT";
+    this.ITEMCode = "TEXT";
+    this.ItemName = "TEXT";
+
+
+    //enum FlightBeltPlanDetailsStatusEnum   {    // peniding order    Active = 0,    // Cancel order    InActive = 1,    // recevied order    Completed = 2}
+    this.Status = "TEXT";
+
+    this.TimeStamp = "TEXT";
+
+}
+
+function ASOWorkOrderDetails() {
+
+    // Primary key
+    this.Id = "INT PRIMARYKEY";
+
+    // Client Guid
+    this.ClientGuid = "TEXT";
+
+
+
+    // Hand shaking id
+    this.ServerId = "INT";
+
+    // Service id
+    this.OSGuid = "TEXT";
+
+    // OneView global Version id (for mdm)
+    this.OVGuid = "INT";
+
+    // Mobile version id (for audit trial)
+    this.MobileVersionId = "INT";
+
+    // Type of WorkOrderItem
+    this.Type = "TEXT";
+
+
+    this.AirlineId = "INT";
+    this.Airline = "TEXT";
+
+    this.FlightId = "INT";
+    this.FlightNo = "TEXT";
+    this.Sector = "TEXT";
+
+    this.Class = "TEXT";
+
+    this.ItemCode = "TEXT";
+    this.ItemName = "TEXT";
+
+    this.MealType = "TEXT";
+    this.DespatchGroup = "TEXT";
+
+    this.ETA = "TEXT";
+    this.ETD = "TEXT";
+
+    this.WorkOrderFrom = "TEXT";
+    this.WorkOrderTo = "TEXT";
+
+    this.IsChecked = "TEXT";
+    this.IsNC = "TEXT";
+
+    this.CompanyId = "INT";
+    this.CompanyName = "TEXT";
+
+    this.Status = "TEXT";
+
+    this.TimeStamp = "TEXT";
+
+}
+
+function RFLWorkOrder() {
+
+    // Primary key
+    this.Id = "INT PRIMARYKEY";
+
+    // Client Guid
+    this.ClientGuid = "TEXT";
+
+
+    // Hand shaking id
+    this.ServerId = "INT";
+
+    // Service id
+    this.OSGuid = "TEXT";
+
+    // OneView global Version id (for mdm)
+    this.OVGuid = "INT";
+
+    // Mobile version id (for audit trial)
+    this.MobileVersionId = "INT";
+
+    // Type of WorkOrderItem
+    this.Type = "TEXT";
+
+    this.WardId = "INT";
+    this.ItemName = "TEXT";
+    this.ItemId = "INT";
+    this.OrderTypeId = "TEXT";
+    this.OrderTypeName = "TEXT";
+    this.DietCode = "TEXT";
+    this.Allergens = "TEXT";
+    this.ServiceDate = "TEXT";
+    this.Quantity = "INT";
+    this.OrderDetails = "TEXT";
+    this.PackedQuantity = "INT";
+    this.PackedDetails = "TEXT";
+    this.PackedRemarks = "TEXT";
+
+    this.CookedQuantity = "INT";
+    this.CookedDate = "TEXT";
+    this.CookedRemarks = "TEXT";
+    this.CookedDetails = "TEXT";
+    this.CreatedDate = "TEXT";
+    this.OrderStatus = "TEXT";
+    this.CurrentStatus = "TEXT";
+
+    this.Status = "TEXT";
+
+    this.TimeStamp = "TEXT";
+
+}

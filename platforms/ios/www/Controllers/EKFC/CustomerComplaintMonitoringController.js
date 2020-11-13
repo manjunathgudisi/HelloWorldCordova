@@ -107,7 +107,7 @@ MyApp.controller('CustomerComplaintMonitoringController',
             $location.url('/ViewRecords');
         }
         else {
-            alert(xlatService.xlat('No_Records_Available'));
+            navigator.notification.alert(xlatService.xlat('No_Records_Available'), ['OK'], "");
             //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('No_Records_Available'));
         }
     };
@@ -215,7 +215,7 @@ MyApp.controller('CustomerComplaintMonitoringController',
             $scope.NewDCModel.txtCustomObservation = "";
         }
         else {
-            alert(xlatService.xlat('ValidObservation'));
+            navigator.notification.alert(xlatService.xlat('ValidObservation'), ['OK'], "");
         }
     }
 
@@ -233,7 +233,7 @@ MyApp.controller('CustomerComplaintMonitoringController',
             $scope.NewDCModel.txtCustomCorrectiveAction = "";
         }
         else {
-            alert(xlatService.xlat('ValidAction'));
+            navigator.notification.alert(xlatService.xlat('ValidAction'), ['OK'], "");
         }
     }
 
@@ -1774,7 +1774,7 @@ function CustomerComplaintMonitoringFacade(parm) {
 
             if (ActionResponseList != undefined) {
                 if (ActionResponseList.length > 1) {
-                    alert('More than one action for a single attribute : Not implemeneted');
+                    navigator.notification.alert(('More than one action for a single attribute : Not implemeneted'), ['OK'], "");
                 }
                 else {
                     for (var i = 0; i < ActionResponseList.length; i++) {
@@ -2460,7 +2460,7 @@ function CustomerComplaintMonitoringFacade(parm) {
             saveButton.addEventListener("click", function (event) {
                 //alert(signaturePad.toDataURL().length);
                 if (signaturePad.isEmpty()) {
-                    alert("MN-RQ-NCF-001 :: Please provide signature first.");
+                    navigator.notification.alert("MN-RQ-NCF-001 :: Please provide signature first.", ['OK'], "");
                 } else {
                     MyInstance.SaveSignature(SignatureNameControlId, signaturePad);
                 }

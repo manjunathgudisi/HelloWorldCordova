@@ -25,7 +25,8 @@
 -(NSString *)ShowToast:(NSString *)Message :(NSString *)ServiceURL;
 -(NSString *)ClearCacheFiles;
 -(NSString *)ClearCacheFilesByName:(NSString *)Name;
--(NSString *) SetLandScapeOrientation;
+-(NSString *)SetLandScapeOrientation;
+-(BOOL)IsFileExist:(NSString *)path;
 @end
 
 
@@ -143,4 +144,9 @@
 {
     return @"OneViewAppInfo.ClearCacheFilesByName : Not implemented exception";
 }
+
+-(BOOL)IsFileExist:(NSString *)path {
+	return [[NSFileManager defaultManager] fileExistsAtPath:path];
+}
+
 @end

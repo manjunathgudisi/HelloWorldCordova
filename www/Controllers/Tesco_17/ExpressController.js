@@ -651,7 +651,7 @@ function ExpressFacade(param) {
                     }
                     else {
                         IsValid = false;
-                        alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"));
+                        navigator.notification.alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"), ['OK'], "");
                     }
                 }
 
@@ -661,7 +661,7 @@ function ExpressFacade(param) {
                 }
             }
             else {
-                alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"));
+                navigator.notification.alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"), ['OK'], "");
             }
 
             //alert(JSON.stringify(LVActionResult[RuleId]));
@@ -1162,7 +1162,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                         alert(oxlatService.xlat("Periodic_PartialApprove_Validation_Message"));
                     }
                     else {
-                        alert(oxlatService.xlat('No Valid Profiles'));
+                        navigator.notification.alert(xlatService.xlat('No Valid Profiles'), ['OK'], "");
                     }
                 }
             }
@@ -2612,7 +2612,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             }
             if (i == 0) {
                 oSetDefaultSpinner.Stop();
-                alert(oxlatService.xlat('VL-CU-PWT-004 :: There is no record to Save'));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-004 :: There is no record to Save'), ['OK'], "");
             }
             else {
                // MyInstance.ReloadStatus();
@@ -2620,7 +2620,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                 MyInstance.LoadTemplateList(CurrentArea_TemplateGroupNodeId);
                 MyInstance.GraphSearch(oscope);
                 oSetDefaultSpinner.Stop();
-                alert(oxlatService.xlat('VL-CU-PWT-005 :: Saved successfully'));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-005 :: Saved successfully'), ['OK'], "");
 
                 var SubmitValidationResponse = MyInstance.GetDcSubmitStatus();
                 if (SubmitValidationResponse.IsSubmit == true) {
@@ -2764,7 +2764,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             var SubmitValidationResponse = MyInstance.GetDcSubmitStatus();
             if (SubmitValidationResponse.IsAnyDcSubmitted == false) {
                 oSetDefaultSpinner.Stop();
-                alert(oxlatService.xlat('VL-CU-PWT-002 :: No records for Submit'));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-002 :: No records for Submit'), ['OK'], "");
             }
             else if (SubmitValidationResponse.IsSubmit == true) {
                 var IsCompleted = true;
@@ -2956,7 +2956,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                 //reload the page     
                 MyInstance.LoadTemplateList(CurrentArea_TemplateGroupNodeId);
                 MyInstance.GraphSearch(oscope);
-                alert(oxlatService.xlat('VL-CU-PWT-001 :: Submitted Successfully'));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-001 :: Submitted Successfully'), ['OK'], "");
                 
                 TemplateGroupWiseStatusDict = MyInstance.GetTemplateGroupWiseStatus(TemplateGroupId);
                 MyInstance.LoadSubGroup(CurrentSubGroupId);
@@ -2964,7 +2964,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
 
             else {
                 oSetDefaultSpinner.Stop();
-                alert(oxlatService.xlat('VL-CU-PWT-003 :: ' + SubmitValidationResponse.Message));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-003 :: ' + SubmitValidationResponse.Message), ['OK'], "");
                 
             }
 

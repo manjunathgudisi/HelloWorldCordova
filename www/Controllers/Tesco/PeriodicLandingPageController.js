@@ -111,7 +111,7 @@ function PeriodicLandingPageFacade($scope, xlatService, $location, snapRemote, $
                 _oPeriodicLandingBO.DownloadDCProfile();               
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "PeriodicLandingPageFacade.DownLoadProfile");
             }
 
@@ -138,7 +138,7 @@ function PeriodicLandingPageFacade($scope, xlatService, $location, snapRemote, $
                 _oPeriodicLandingBO.UploadDC();
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No internet connection", "PeriodicLandingPageFacade.Upload");
             }
 
@@ -252,7 +252,7 @@ function PeriodicLandingBO($scope, xlatService, $location, snapRemote, $compile,
                 OneViewLocalStorage.Save("PeriodicLandingPageLastSyncDate", new DateTime().GetDateAndTime());
 
                 if (IsShowDownloadSuccessMessage == true) {
-                    alert(xlatService.xlat('Periodic_Download_Success_Message'));
+                    navigator.notification.alert(xlatService.xlat('Periodic_Download_Success_Message'), ['OK'], "");
                 }
 
                 oSetDefaultSpinner.Start();
@@ -312,7 +312,7 @@ function PeriodicLandingBO($scope, xlatService, $location, snapRemote, $compile,
                 }
             }
             else {
-                alert(xlatService.xlat('NoDataForUpload'));
+                navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                 OneViewConsole.Info("No dc available", "DasboardBO.UploadDcAndAction");
             }            
 
@@ -353,12 +353,12 @@ function PeriodicLandingBO($scope, xlatService, $location, snapRemote, $compile,
                         IsSuccess = _oUploadBO.BatchUploadAdv(_oDcFilterParamRequest);
                     }
                     else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
-                        alert(xlatService.xlat('UploadFailed'));
+                        navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                         IsSuccess = false;
                     }
                 }
                 else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {
-                    alert(xlatService.xlat('UploadFailed'));
+                    navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     IsSuccess = false;
                 }
 

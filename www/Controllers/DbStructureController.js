@@ -207,7 +207,7 @@ function DbStructureController() {
                     ErrorMessage += " .Please Contact Administrator.";
                 }
                 else {
-                    alert("Databases Copied Successfully");
+                    navigator.notification.alert("Databases Copied Successfully", ['OK'], "");
                 }
             }
             oSetDefaultSpinner.Stop();
@@ -765,12 +765,12 @@ function DbStructureDAO() {
     }
 
     var DownloadSuccessCallback = function (url) {
-        alert("File downloaded successfully to location :" + JSON.stringify(url));
+        navigator.notification.alert(("File downloaded successfully to location :" + JSON.stringify(url)), ['OK'], "");
     }
 
    var DownloadErrorCallback = function (details) {
-        alert('Error downloading file');
-        alert(JSON.stringify(details));
+        //alert('Error downloading file');
+	   navigator.notification.alert(JSON.stringify(details), ['OK'], "");
    }
 
 
@@ -849,7 +849,7 @@ function DbStructureDAO() {
    }
 
    var fail = function (error) {
-       alert("Download Error Code: "+error.code);
+       navigator.notification.alert(("Download Error Code: "+error.code), ['OK'], "");
    }
     ///////////////Create Directory structure for DOWNLOADED Logs---- End ////////////
 
@@ -863,7 +863,7 @@ function DbStructureDAO() {
     }
 
     var UploadLogsSuccess = function (r) {
-        alert('Log uploaded successfully');
+        navigator.notification.alert('Log uploaded successfully', ['OK'], "");
         GetFromLocalStorage();
     }
 
@@ -877,7 +877,7 @@ function DbStructureDAO() {
         //    alert("DB Upload failed");
         //}
        // alert("Please contact administrator, Error Code : " + error.http_status);
-        alert(OneViewGlobalization[CurrentLanguage].DB_Upload_Failed);
+        navigator.notification.alert((OneViewGlobalization[CurrentLanguage].DB_Upload_Failed), ['OK'], "");
     }
 
     var UploadLogfail = function (error) {
@@ -889,7 +889,7 @@ function DbStructureDAO() {
         //else {
         //    alert("Log Upload failed");
         //}
-        alert("Please contact administrator, Error Code : " + error.http_status);
+        navigator.notification.alert(("Please contact administrator, Error Code : " + error.http_status), ['OK'], "");
     }
 
     var Deletefail = function (error) {
@@ -1236,7 +1236,7 @@ function DbStructureDAO() {
             }
             else if (OSType == OSTypeEnum.IOS) //ios
             {
-                alert("Not Implemented For IOS");
+                navigator.notification.alert("Not Implemented For IOS", ['OK'], "");
             }
 
             OneViewConsole.Debug("UploadDbForParticularService end", "DbStructureDAO.UploadDbForParticularService");
@@ -1305,7 +1305,7 @@ function DbStructureDAO() {
                     oSetDefaultSpinner.Stop();
                     GlobalUploadDbAcrossServiceDict = {};
                     GlobalUploadedDbCount = 0;
-                    alert("Databases Uploaded Successfully");
+                    navigator.notification.alert("Databases Uploaded Successfully", ['OK'], "");
                 }
 
             }
@@ -1332,7 +1332,7 @@ function DbStructureDAO() {
             GlobalUploadedDbCount = 0;
 
             if (error.http_status != null && error.http_status != undefined && error.http_status != "") {
-                alert("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator. Error details are : " + error.http_status);
+                navigator.notification.alert(("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator. Error details are : " + error.http_status), ['OK'], "");
             }
             else {
                 var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
@@ -1341,10 +1341,10 @@ function DbStructureDAO() {
 
                 // If network is available
                 if (NetworkDetails.IsNetworkAvailable == true) {
-                    alert("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator.");
+                    navigator.notification.alert(("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator."), ['OK'], "");
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 }
 
             }
@@ -1394,7 +1394,7 @@ function DbStructureDAO() {
             }
             else if (OSType == OSTypeEnum.IOS) //ios
             {
-                alert("Not Implemented For IOS");
+                navigator.notification.alert("Not Implemented For IOS", ['OK'], "");
             }
 
             OneViewConsole.Debug("UploadDbForParticularServiceForImages end", "DbStructureDAO.UploadDbForParticularServiceForImages");
@@ -1519,7 +1519,7 @@ function DbStructureDAO() {
             GlobalUploadedDbCount = 0;
 
             if (error.http_status != null && error.http_status != undefined && error.http_status != "") {
-                alert("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator. Error details are : " + error.http_status);
+                navigator.notification.alert(("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator. Error details are : " + error.http_status), ['OK'], "");
 
                 //Upload Log after db and images upload with a confirmation messsages
                 MyInstance.UploadLogsAfterDb(GlobalXlatService);
@@ -1531,13 +1531,13 @@ function DbStructureDAO() {
 
                 // If network is available
                 if (NetworkDetails.IsNetworkAvailable == true) {
-                    alert("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator.");
+                    navigator.notification.alert(("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator."), ['OK'], "");
 
                     //Upload Log after db and images upload with a confirmation messsages
                     MyInstance.UploadLogsAfterDb(GlobalXlatService);
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 }
 
             }
@@ -1683,7 +1683,7 @@ function DbStructureDAO() {
             else if (oHttpClientResponseDTO.IsAnyException == "false" && oHttpClientResponseDTO.ResponseCode == "503")//Service Unavailable
             {
                 IsSuccess = false;
-                // alert(OneViewGlobalization[CurrentLanguage].ServiceUnavailable_Message);             
+                // navigator.notification.alert((OneViewGlobalization[CurrentLanguage].ServiceUnavailable_Message), ['OK'], "");             
 
             }
             else if (oHttpClientResponseDTO.IsAnyException == "false" && oHttpClientResponseDTO.ResponseCode == "504")//Gateway Timeout
@@ -1849,7 +1849,7 @@ function DbStructureDAO() {
     var UploadCommonLogfail = function (error) {
        // alert("Error Code: " + error.code);//FileTransferError.FILE_NOT_FOUND_ERR
         if (error.code == 1) {
-             alert("No logs available to upload");
+            navigator.notification.alert("No logs available to upload", ['OK'], "");
             //Upload ServiceWise Logs
 
             var userName = OneViewSessionStorage.Get("LoginUserName");
@@ -1863,7 +1863,7 @@ function DbStructureDAO() {
         }
         else {
             //  alert("Log Upload failed");
-            alert("Please contact administrator, Error Code : " + error.http_status);
+            navigator.notification.alert(("Please contact administrator, Error Code : " + error.http_status), ['OK'], "");
         }
        
     }
@@ -2009,15 +2009,15 @@ function DbStructureDAO() {
     }
 
     var UploadZippedLogfail = function (error) {
-        alert("Error : " + JSON.stringify(error));
-        alert("Error Code: " + error.code);//FileTransferError.FILE_NOT_FOUND_ERR
+        //alert("Error : " + JSON.stringify(error));
+        //alert("Error Code: " + error.code);//FileTransferError.FILE_NOT_FOUND_ERR
         //if (error.code == 1) {
         //    alert("No logs available to upload");
         //}
         //else {
         //    alert("Log Upload failed");
         //}
-        alert("DBC-01 : Please contact administrator, Error Code : " + error.http_status);
+        navigator.notification.alert(("DBC-01 : Please contact administrator, Error Code : " + error.http_status), ['OK'], "");
     }
 
 }

@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 #import "DBManager.h"
 #import "HttpClinetPlugin.h"
+#import "MyProgressHUD.h"
 #import "OneViewAppInfo.h"
 #import "OneViewDeviceInfo.h"
 #import "OneViewGeolocation.h"
@@ -124,6 +125,10 @@ static NSHashTable* g_webViews = nil;
     // set up OneViewSqlite
     HttpClinetPlugin *httpClinetPlugin = [[HttpClinetPlugin alloc] init];
     ts_javaScriptContext[@"HttpClinetPlugin"] = httpClinetPlugin;
+	
+	// set up progress
+    MyProgressHUD *myProgressHUD = [[MyProgressHUD alloc] init];
+    ts_javaScriptContext[@"MyProgressHUD"] = myProgressHUD;
     
     // set up OneViewSqlite
     OneViewDeviceInfo *oOneViewDeviceInfo = [[OneViewDeviceInfo alloc] init];

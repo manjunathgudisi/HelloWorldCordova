@@ -61,7 +61,7 @@ MyApp.controller('VictoryEquipmentSanitizerEKFC2Controller',
         }
         else {
             //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('No_Records_Available'));
-            alert(xlatService.xlat('No_Records_Available'));
+            navigator.notification.alert(xlatService.xlat('No_Records_Available'), ['OK'], "");
         }
     };
 
@@ -704,7 +704,7 @@ function VictoryEquipmentSanitizerEKFC2ControllerFacade(parm) {
 
                 if (ActionResponseList != undefined) {
                     if (ActionResponseList.length > 1) {
-                        alert('More than one action for a single attribute : Not implemeneted');
+                        navigator.notification.alert(('More than one action for a single attribute : Not implemeneted'), ['OK'], "");
                     }
                     else {
                         for (var i = 0; i < ActionResponseList.length; i++) {

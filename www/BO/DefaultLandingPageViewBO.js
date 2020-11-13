@@ -131,7 +131,7 @@ function DefaultLandingPageViewBO() {
                 LandingPageGetHtmlResponse = FormatTaskDetailsForParentTypePlace(TaskDetails, ChildViewConfig);
             }
             else {
-                alert("Not implemented exception : " + ParentViewConfig.LandingPageParent + ", DefaultLandingPageViewBO.GetTaskStatus");
+                navigator.notification.alert(("Not implemented exception : " + ParentViewConfig.LandingPageParent + ", DefaultLandingPageViewBO.GetTaskStatus"), ['OK'], "");
             }
            
             return LandingPageGetHtmlResponse;
@@ -217,7 +217,7 @@ function DefaultLandingPageViewBO() {
                 //alert("Response : " + JSON.stringify(LandingPageGetAllTaskStatusResponse));
             }
             else {
-                alert("Not implemented exception : " + LandingPageViewCriteria.Type + ", DefaultLandingPageViewBO.GetAllTaskStatus");
+                navigator.notification.alert(("Not implemented exception : " + LandingPageViewCriteria.Type + ", DefaultLandingPageViewBO.GetAllTaskStatus"), ['OK'], "");
             }
             OneViewConsole.Debug("GetAllTaskStatus End", "DefaultLandingPageViewBO.GetAllTaskStatus");
             return LandingPageGetAllTaskStatusResponse;
@@ -323,7 +323,7 @@ function DefaultLandingPageViewBO() {
                         ChildViewResponse.IsDcPlace = false;
                     }
                     else {
-                        alert("Not implemented exception : " + Key + ", DefaultLandingPageViewBO.FormatChildView");
+                        navigator.notification.alert(("Not implemented exception : " + Key + ", DefaultLandingPageViewBO.FormatChildView"), ['OK'], "");
                     }
                 }
                 if (ParentViewResponse.IsLeafLevelParentNode == true && ChildViewResponse.IsLeafLevelChildNode == true) {
@@ -335,7 +335,7 @@ function DefaultLandingPageViewBO() {
                     }
                 }
                 else {
-                    alert("Not implemented exception IsLeafLevelParentNode: " + ParentViewResponse.IsLeafLevelParentNode + ", DefaultLandingPageViewBO.FormatChildView");
+                    navigator.notification.alert(("Not implemented exception IsLeafLevelParentNode: " + ParentViewResponse.IsLeafLevelParentNode + ", DefaultLandingPageViewBO.FormatChildView"), ['OK'], "");
                 }
             }
 
@@ -372,7 +372,7 @@ function DefaultLandingPageViewBO() {
 
                 }
                 else {
-                    alert("Not implemented exception : " + Key + ", DefaultLandingPageViewBO.EvaluateExpression");
+                    navigator.notification.alert(("Not implemented exception : " + Key + ", DefaultLandingPageViewBO.EvaluateExpression"), ['OK'], "");
                 }
             }
       
@@ -456,7 +456,7 @@ function DefaultLandingPageDAO() {
             if (LandingPageViewCriteria.DcPlaceNodeIdLst.length > 0) {
                 //var DcPlaceIdExp = FomatForStringInCondition(LandingPageViewCriteria.DcPlaceNodeIdLst);
                 //Condition = "DcPlaceId IN " + DcPlaceIdExp;
-                alert("Not implemented exception : DcPlaceNodeIdLst, DefaultLandingPageDAO.GetAllTaskStatusDetails");
+                navigator.notification.alert(("Not implemented exception : DcPlaceNodeIdLst, DefaultLandingPageDAO.GetAllTaskStatusDetails"), ['OK'], "");
             }          
             else if (LandingPageViewCriteria.TemplateNodeIdLst.length > 0) {
                 var TemplateNodeIdExp = FomatForInCondition(LandingPageViewCriteria.TemplateNodeIdLst);
@@ -465,7 +465,7 @@ function DefaultLandingPageDAO() {
             else if (LandingPageViewCriteria.ProfileServerIdLst.length > 0) {
                 //var DcProfileIdExp = FomatForStringInCondition(LandingPageViewCriteria.ProfileServerIdLst);
                 //Condition = "DcProfileId IN " + DcProfileIdExp;
-                alert("Not implemented exception : ProfileServerIdLst, DefaultLandingPageDAO.GetAllTaskStatusDetails");
+                navigator.notification.alert(("Not implemented exception : ProfileServerIdLst, DefaultLandingPageDAO.GetAllTaskStatusDetails"), ['OK'], "");
             }
         
             var Result = "";

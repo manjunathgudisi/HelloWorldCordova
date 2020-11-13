@@ -45,7 +45,7 @@ MyApp.controller('DispatchingViewRecordsController', function ($scope, xlatServi
             //    $location.url('/8272');
             //}
             //else {
-            //    alert("IN-NF-MAU-004 :: No records available");
+            //    navigator.notification.alert("IN-NF-MAU-004 :: No records available", ['OK'], "");
             //}
             OneViewSessionStorage.Remove("DcId");
             OneViewSessionStorage.Save("TemplateId", "8272");
@@ -372,7 +372,7 @@ function DispatchingViewRecordsFacade($scope, xlatService, toaster) {
 	            scope.divNCButton = false;
 	        }
 	        else {
-	            alert("IN-NF-MAU-004 :: No records available");
+	            navigator.notification.alert("IN-NF-MAU-004 :: No records available", ['OK'], "");
 	        }
 
 	        OneViewConsole.Debug("LoadFlightList end", "ViewRecordsFacade.LoadFlightList");
@@ -434,7 +434,7 @@ function DispatchingViewRecordsFacade($scope, xlatService, toaster) {
 	            }
 	        }
 	        else {
-	            alert("IN-NF-MAU-004 :: No records available");
+	            navigator.notification.alert("IN-NF-MAU-004 :: No records available", ['OK'], "");
 	        }
 
 	        scope.divNCButton = false;
@@ -2583,7 +2583,7 @@ function DispatchingViewRecordsFacade($scope, xlatService, toaster) {
 
                             if (ActionResponseList != undefined) {
                                 if (ActionResponseList.length > 1) {
-                                    alert('More than one action for a single attribute : Not implemeneted');
+                                    navigator.notification.alert(('More than one action for a single attribute : Not implemeneted'), ['OK'], "");
                                 }
                                 else {
                                     if (ActionResponseList.length > 0) {

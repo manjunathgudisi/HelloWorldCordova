@@ -1,0 +1,50 @@
+{
+  "_from": "git+https://github.com/kartagis/cordova-activityindicator.git",
+  "_id": "cordova-plugin-activityindicator@2.1.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-activityindicator",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/kartagis/cordova-activityindicator",
+    "rawSpec": "https://github.com/kartagis/cordova-activityindicator",
+    "saveSpec": "git+https://github.com/kartagis/cordova-activityindicator.git",
+    "fetchSpec": "https://github.com/kartagis/cordova-activityindicator.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/kartagis/cordova-activityindicator.git#f30b3f97948b71de8f594cba86185fa170aedc43",
+  "_spec": "https://github.com/kartagis/cordova-activityindicator",
+  "_where": "/Users/i302342/Documents/Akaara/HelloWorldCordova",
+  "bugs": {
+    "url": "https://github.com/kartagis/cordova-plugin-activityindicator/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-activityindicator",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova Activity Indicator Plugin",
+  "homepage": "https://github.com/kartagis/cordova-plugin-activityindicator#readme",
+  "keywords": [
+    "cordova",
+    "camera",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "name": "cordova-plugin-activityindicator",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kartagis/cordova-plugin-activityindicator.git"
+  },
+  "version": "2.1.0"
+}

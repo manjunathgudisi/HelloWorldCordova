@@ -13,18 +13,21 @@
         
         $scope.Logout = function () {
 
-            var IsSuccess = confirm(OneViewGlobalization[CurrentLanguage].SignOut_Confirm_Message);
+			var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+			oOneViewCordovaPlugin.DefaultConfirmBox("Confirm", OneViewGlobalization[CurrentLanguage].SignOut_Confirm_Message, function (ConfirmationId) {
+					if (ConfirmationId == "2") {
 
-            if (IsSuccess == true) {
+						$location.url('/login');
 
-                $location.url('/login');
+						OneViewSessionStorage.Clear();
+						ClearGlobalVariable();
+						//oOneViewAppInfoPlugin.ClearCache();
 
-                OneViewSessionStorage.Clear();
-                ClearGlobalVariable();
-                //oOneViewAppInfoPlugin.ClearCache(); 
+						//alert('Success : ' + OneViewGlobalization[CurrentLanguage].SignOut_Success_Message);
+					}
+			});
 
-                //alert('Success : ' + OneViewGlobalization[CurrentLanguage].SignOut_Success_Message);
-            }
+            
         }
 
         $scope.OpenBellPopUp = function () {
@@ -135,7 +138,7 @@
                 //    $location.url('/8272');
                 //}
                 //else {
-                //    alert("IN-NF-MAU-004 :: No records available");
+                //    navigator.notification.alert("IN-NF-MAU-004 :: No records available", ['OK'], "");
                 //}
                 OneViewSessionStorage.Remove("DcId");
                 OneViewSessionStorage.Save("TemplateId", "8272");

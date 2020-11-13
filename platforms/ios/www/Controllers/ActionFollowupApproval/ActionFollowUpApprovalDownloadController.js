@@ -268,7 +268,7 @@
                             });
                         }
                         else {
-                            alert(xlatService.xlat('NoTemplatesSelected'));
+                            navigator.notification.alert(xlatService.xlat('NoTemplatesSelected'), ['OK'], "");
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoTemplatesSelected'));
                         }
                     }
@@ -286,12 +286,12 @@
                             });
                         }
                         else {
-                            alert(xlatService.xlat('NoPlacesSelected'));                            
+                            navigator.notification.alert(xlatService.xlat('NoPlacesSelected'), ['OK'], "");                            
                         }
                     }
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));                   
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");                   
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpApprovalDownloadFacade.DownLoadProfile");
                 }
 
@@ -544,7 +544,7 @@
                     }
                     else {
                         $scope.ImmediateParentColumn = false;
-                        //alert(xlatService.xlat('NoProfiles'));
+                        //navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                     }
                 }
                 else {                  
@@ -693,7 +693,7 @@
                         }
                         else {
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoProfiles'));
-                            alert(xlatService.xlat('NoProfiles'));
+                            navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                             OneViewConsole.Info("NoProfiles", "ActionFollowUpApprovalDownloadFacade.LoadTemplateContentBlock");
                         }
                     }
@@ -702,7 +702,7 @@
                 else {
 
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpApprovalDownloadFacade.LoadTemplateContentBlock");
                 }
 
@@ -761,7 +761,7 @@
                         }
                         else {
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoProfiles'));
-                            //alert(xlatService.xlat('NoProfiles'));
+                            //navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                             alert(xlatService.xlat('No Places available'));
                             OneViewConsole.Info("NoProfiles", "ActionFollowUpApprovalDownloadFacade.LoadPlaceContentBlock");
                         }
@@ -771,7 +771,7 @@
                 else {
 
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpApprovalDownloadFacade.LoadPlaceContentBlock");
                 }
 
@@ -1008,7 +1008,7 @@
                     //If no internet connection
                 else if (ShowExceptionMessage != false) {
                     IsActionFollowUpApprovalProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpApprovalDownloadFacade.DownloadActionFollowUpApprovalProfile");
                 }
             }

@@ -44,6 +44,8 @@
     <script type="text/javascript" src="js/angularbox.js"></script>
     <script type="text/javascript" src="js/angular-dropdowns.js"></script>
     <script type="text/javascript" src="js/jwplayer.js"></script>
+	<script type="text/javascript" src="Controllers/PortalPageRouteController.js"></script>
+	<script type="text/javascript" src="Controllers/PortalPageDisplayController.js"></script> 
     
     <script>
         var MyApp = angular.module('Oneview', ['ngRoute', 'ngAnimate', 'route-segment', 'view-segment', 'snap', 'vs-repeat', 'monospaced.elastic', 'angularbox', 'ngDropdowns']);
@@ -69,6 +71,7 @@
        {
         window['OneViewSqlite']=OneViewSqlite;
         window['HttpClinetPlugin']=HttpClinetPlugin;
+		window['MyProgressHUD']=MyProgressHUD;
         window['OneViewDeviceInfo']=OneViewDeviceInfo;
         window['OneViewAppInfo']=OneViewAppInfo;
         window['OneViewGeolocation']=OneViewGeolocation;

@@ -511,6 +511,7 @@ function ActionPreviewUIComponent(param) {
                         Html += '   <div class="margin-left">';
                     }
                     //Html += '<div class="list no-margin margin-bottom">';
+                    var IsNeedToHideUnansweredattribute = MyInstance.IsRequiredToHideUnansweredattribute();
                     for (var i = 0; i < ChildList.length ; i++) {
                         var Child = ChildList[i];
                         //alert('Child : ' + JSON.stringify(Child));
@@ -520,11 +521,11 @@ function ActionPreviewUIComponent(param) {
                                 IsExists = true;
                             }
                             if (IsExists == true) {
-                                Html += ReadChilds(Child, AttributeGroupHeader, DcResultDetailsDict);
+                                Html += ReadChilds(Child, AttributeGroupHeader, DcResultDetailsDict, IsNeedToHideUnansweredattribute);
                             }
                         }
                         else {
-                            Html += ReadChilds(Child, AttributeGroupHeader, DcResultDetailsDict);
+                            Html += ReadChilds(Child, AttributeGroupHeader, DcResultDetailsDict, IsNeedToHideUnansweredattribute);
                         }
                     }
                     // Html += '</div></div>';
@@ -542,7 +543,7 @@ function ActionPreviewUIComponent(param) {
         }
     }
 
-    var ReadChilds = function (Child, AttributeGroupHeader, DcResultDetailsDict) {
+    var ReadChilds = function (Child, AttributeGroupHeader, DcResultDetailsDict, IsNeedToHideUnansweredattribute) {
         try {
             var SubChildList = Child.Childs;
             var Html = "";
@@ -561,7 +562,7 @@ function ActionPreviewUIComponent(param) {
                             Html += ReadChilds(SubChild, AttributeGroupHeader, DcResultDetailsDict);
                         }
                         else {
-                            Html += MyInstance.FormAnswermodeHtml(SubChild, DcResultDetailsDict);
+                            Html += MyInstance.FormAnswermodeHtml(SubChild, DcResultDetailsDict, IsNeedToHideUnansweredattribute);
 
                         }
                     }
@@ -570,7 +571,7 @@ function ActionPreviewUIComponent(param) {
 
             }
             else {
-                Html += MyInstance.FormAnswermodeHtml(Child, DcResultDetailsDict);
+                Html += MyInstance.FormAnswermodeHtml(Child, DcResultDetailsDict, IsNeedToHideUnansweredattribute);
 
             }
            
@@ -583,7 +584,7 @@ function ActionPreviewUIComponent(param) {
         }
     }
 
-    this.FormAnswermodeHtml = function (TemplateData, DcResultDetailsDict) {
+    this.FormAnswermodeHtml = function (TemplateData, DcResultDetailsDict, IsNeedToHideUnansweredattribute) {
         try {
 
             OneViewConsole.Debug("FormAnswermodeHtml Start", "DcPreviewUIComponent.FormAnswermodeHtml");
@@ -815,6 +816,22 @@ function ActionPreviewUIComponent(param) {
                 }
             }*/
             Html += '</div>';
+
+            if (IsNeedToHideUnansweredattribute != undefined) {
+                if (IsNeedToHideUnansweredattribute == true) {
+                    if (AnswerList.length > 0) {
+                        if (AnswerList[0].IsNA != 'true' && AnswerList[0].Answer != "") {
+                        }
+                        else {
+                            Html = "";
+                        }
+                    }
+                    else {
+                        Html = "";
+                    }
+                }
+            }
+
             OneViewConsole.Debug("FormAnswermodeHtml End", "DcPreviewUIComponent.FormAnswermodeHtml");
          
             return Html;
@@ -1912,7 +1929,38 @@ function ActionPreviewUIComponent(param) {
         }
     }
 
-   
+    this.IsRequiredToHideUnansweredattribute = function (Req) {
+        try {
+            OneViewConsole.Debug("ViewButtonHandler start", "LandingPageFacade.ViewButtonHandler");
+            var IsSuccess = false;
+          
+            var BusinessEventHandlerObjectKeys = "IsRequiredToHideUnansweredattributeForActionPreview";
+            //var TemplateId = Req.TemplateId;
+
+            var _BusinessEventEntityBO = new BusinessEventEntityBO();
+            //   var ViewRecordHandlerObj = { RequiredBusinessEventHandlerObjectKeys: "ValidateImageExistForAction", TemplateId: "" };
+            var ReqParameter = { ClassName: "HideUnansweredattributeFromPreviewComponent", MethodName: "IsRequiredToHideUnansweredattribute", RequiredBusinessEventHandlerObjectKeys: {}, IsTemplateValidationRequired: false, TemplateIdLst: "", };
+            ReqParameter.RequiredBusinessEventHandlerObjectKeys[BusinessEventHandlerObjectKeys] = "";
+
+            var _BusinessEventEntityBO = new BusinessEventEntityBO();
+            var _IsBussinessEventExist = _BusinessEventEntityBO.IsBussinessEventExist(ReqParameter);
+
+            if (_IsBussinessEventExist.BusinessEventHandlersObjectKeysDetails[BusinessEventHandlerObjectKeys] != undefined) {
+                if (_IsBussinessEventExist.BusinessEventHandlersObjectKeysDetails[BusinessEventHandlerObjectKeys].IsSuccess == true) {
+                    IsSuccess = true;
+                }
+
+            }
+
+            OneViewConsole.Debug("ViewButtonHandler end", "LandingPageFacade.ViewButtonHandler");
+            //alert("IsSuccess : " + IsSuccess);
+           // alert(IsSuccess);
+            return IsSuccess;
+        }
+        catch (Excep) {
+            oOneViewExceptionHandler.Catch(Excep, "LandingPageFacade.ViewButtonHandler", xlatService);
+        }
+    }
 }
 
 

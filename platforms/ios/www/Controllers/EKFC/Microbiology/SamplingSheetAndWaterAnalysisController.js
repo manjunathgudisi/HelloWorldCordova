@@ -59,7 +59,7 @@ MyApp.controller('SamplingSheetAndWaterAnalysisController',
         }
         else {
             //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('No_Records_Available'));
-            alert(xlatService.xlat('No_Records_Available'));
+            navigator.notification.alert(xlatService.xlat('No_Records_Available'), ['OK'], "");
         }
     };
 
@@ -674,7 +674,7 @@ function SamplingSheetAndWaterAnalysisControllerFacade(parm) {
 
                     else {
                         _oDataCaptureBO.ClearControls(scope, TemplateNodes);
-                        alert('IN-SU-SWA-001 ::  Data Capture Profiles are expired ');
+                        navigator.notification.alert(('IN-SU-SWA-001 ::  Data Capture Profiles are expired '), ['OK'], "");
                     }
                 }
                 _oDataCaptureBO.ShowDCSummary();
@@ -1555,7 +1555,7 @@ function SamplingSheetAndWaterAnalysisControllerFacade(parm) {
               
                 if (ActionResponseList != undefined) {
                     if (ActionResponseList.length > 1) {
-                        alert('More than one action for a single attribute : Not implemeneted');
+                        navigator.notification.alert(('More than one action for a single attribute : Not implemeneted'), ['OK'], "");
                     }
                     else {
                         for (var i = 0; i < ActionResponseList.length; i++) {
@@ -2309,7 +2309,7 @@ function SamplingSheetAndWaterAnalysisControllerFacade(parm) {
                 saveButton.addEventListener("click", function (event) {
                     //alert(signaturePad.toDataURL().length);
                     if (signaturePad.isEmpty()) {
-                        alert("MN-RQ-NCF-001 :: Please provide signature first.");
+                        navigator.notification.alert("MN-RQ-NCF-001 :: Please provide signature first.", ['OK'], "");
                     } else {
                         // MyInstance.SaveSignature('DCSignature', signaturePad);
                         MyInstance.SaveSignature(SignatureNameControlId, signaturePad);

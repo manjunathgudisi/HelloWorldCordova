@@ -179,14 +179,17 @@ function LabelMenuFrameWork(ReqObj) {
             else if (_oLabelName.toUpperCase().trim() == "LUNCH") {
                 ClassName += " button-balanced";
             }
-            else if (_oLabelName.toUpperCase().trim() == "DINNER") {
+            else if (_oLabelName.toUpperCase().trim() == "DINNER" || _oLabelName.toUpperCase().trim() == "SUPPER") {
                 ClassName += " button-positive";
             }
-            else if (_oLabelName.toUpperCase().trim() == "ALL DAY") {
+            else if (_oLabelName.toUpperCase().trim() == "ALL DAY" || _oLabelName.toUpperCase().trim() == "SNACKS") {
                 ClassName += " button-assertive";
             }
             else if (_oLabelName.toUpperCase().trim() == "OTHERS") {
                 ClassName += " button-Others";
+            }
+            if (OneViewSessionStorage.Get("ServiceId") == 52) {
+                ClassName += " button-positive";
             }
 
            /* Html += '<div class="col no-padding" id=' + DivId + '>';

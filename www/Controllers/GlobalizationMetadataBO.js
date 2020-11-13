@@ -68,7 +68,7 @@ function GlobalizationMetadataBO(xlatService) {
                 }
                     // If no internet connection
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "GlobalizationMetadataBO.DownloadPageWiseMetadata");
                     GlobalizationMetdataSuccess = false;
                 }
@@ -135,7 +135,7 @@ function GlobalizationMetadataBO(xlatService) {
             else {
                 IsDownLoadProfileSuccess = false;
                 GlobalizationMetdataSuccess = false;
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "GlobalizationMetadataBO.DownloadTemplateWiseMetadata");
             }
         }

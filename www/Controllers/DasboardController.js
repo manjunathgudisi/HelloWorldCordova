@@ -24,7 +24,7 @@ MyApp.controller('DasboardController', function ($scope, $document, xlatService,
     _oDasboardFacade.Init();
     _oDasboardFacade.PageLoad();
     
-    ServiceChangeEvent = function () {        
+    ServiceChangeEvent = function () {
         _oDasboardFacade.ServiceChangeEvent($location);
     }
 
@@ -68,7 +68,7 @@ MyApp.controller('DasboardController', function ($scope, $document, xlatService,
         _oDasboardFacade.AdvFilterChange();
     }
 
-    $scope.UploadDC = function ($event) { 
+    $scope.UploadDC = function ($event) {
         _oDasboardFacade.UploadDC($event);
     }
 
@@ -92,7 +92,7 @@ MyApp.controller('DasboardController', function ($scope, $document, xlatService,
         _oDasboardFacade.ToggleDivSmallDeviceStatusBar();
     }
 
-    $scope.ApproveDC = function ($event) {       
+    $scope.ApproveDC = function ($event) {
         _oDasboardFacade.ApproveDC($event);
     }
 
@@ -104,7 +104,7 @@ MyApp.controller('DasboardController', function ($scope, $document, xlatService,
         _oDasboardFacade.CloseMultipleDcApproval();
     }
         
-    SelectDC = function (Id) {       
+    SelectDC = function (Id) {
         _oDasboardFacade.SelectDC(Id);
     }
 
@@ -113,7 +113,7 @@ MyApp.controller('DasboardController', function ($scope, $document, xlatService,
     }
        
     var lastTimeOutId = null;
-    $scope.GraphSearch = function () {        
+    $scope.GraphSearch = function () {
         if (lastTimeOutId != null)
             $timeout.cancel(lastTimeOutId);
         lastTimeOutId = $timeout(function () { _oDasboardFacade.GraphSearch(); }, LandingPageGraphSearchTime);
@@ -137,11 +137,11 @@ MyApp.controller('DasboardController', function ($scope, $document, xlatService,
 
     $scope.ClearGraphSearchElement = function () {
         _oDasboardFacade.ClearGraphSearchElement();
-    }  
+    }
 
-    $scope.DummyEvent = function ($event) {       
-        $event.stopPropagation();       
-    }  
+    $scope.DummyEvent = function ($event) {
+        $event.stopPropagation();
+    }
 });
 
 // DasboardFacade
@@ -185,7 +185,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
             IsOnDeviceApprovalProfileNeeded = false;
             LandingPageViewDisplayConfig = null;
 
-            //if (OneViewGlobalServiceTypeEnum[OneViewGlobalServiceType] == 18) {                
+            //if (OneViewGlobalServiceTypeEnum[OneViewGlobalServiceType] == 18) {
             //    _oOneViewGeolocationPlugin.RemoveLocationUpdates();
             //}
 
@@ -220,7 +220,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                 $scope.DivBulkDownload = true;
             }
 
-            if (OneViewLocalStorage.Get("IsGlobalGeoLocationValidationEnabled") == "true") {               
+            if (OneViewLocalStorage.Get("IsGlobalGeoLocationValidationEnabled") == "true") {
                 _oOneViewGeolocationPlugin.RequestLocationUpdates();
             }
             else {
@@ -229,7 +229,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
             BulkUpload();
             LandingPageAutoSync();
-            // Registering page name for globalization   
+            // Registering page name for globalization
           
 
             if (IsGlobalBlueThermLiveTemperatureIndicatorEnabled == true) {
@@ -369,7 +369,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                 if (CloudManagerResponse.ServicesLst[i].Name == ServiceName) {
                     ServiceInfo = CloudManagerResponse.ServicesLst[i];
                     break;
-                }               
+                }
             }
 
             //OneViewSessionStorage.Save("ServiceId", ServiceInfo.Id);
@@ -404,7 +404,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
             UpdateCloudManagerUserServiceMapping(ServiceInfo);
 
-            alert(xlatService.xlat('IN-SU-MDB-001 :: Service Changed successfully.Please login to Continue.'));
+            navigator.notification.alert(xlatService.xlat('IN-SU-MDB-001 :: Service Changed successfully.Please login to Continue.'), ['OK'], "");
             $location.url('/login');
 
             OneViewSessionStorage.Clear();
@@ -424,7 +424,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
             OneViewConsole.Debug("UpdateCloudManagerUserServiceMapping start", "DasboardFacade.UpdateCloudManagerUserServiceMapping");
 
             var UserId = OneViewSessionStorage.Get("LoginUserName");
-            UserId = UserId.toLowerCase();          
+            UserId = UserId.toLowerCase();
 
             var CloudManagerUserServiceMapping = {};
 
@@ -555,8 +555,9 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
             var ProfileDetails = _oDasboardBO.GetProfileDetails(oChild);
            
            
-            if (oChild.Occurence > 0 && oChild.Occurence == oChild.DCStatusInfo.CompletedCount) {            
-                alert(xlatService.xlat("IN-NF-LDP-010 :: Task is inprogress/completed"));
+            if (oChild.Occurence > 0 && oChild.Occurence == oChild.DCStatusInfo.CompletedCount) {
+                //alert(xlatService.xlat("IN-NF-LDP-010 :: Task is inprogress/completed"));
+				navigator.notification.alert(xlatService.xlat("IN-NF-LDP-010 :: Task is inprogress/completed"), ['OK'], "");
             }
             //else if (ProfileDetails != null && ProfileDetails.IsProfileValid == true && (oChild.Occurence == -1 || (oChild.Occurence > oChild.DCStatusInfo.OverallCount))) {
             else if (ProfileDetails != null && ProfileDetails.IsProfileValid == true && (ProfileDetails.Occurence == -1 || (ProfileDetails.Occurence > ProfileDetails.TotalDc))) {
@@ -567,7 +568,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                                     
                     var ReqObjForNewDCAccessHandler = { IsShowMessage: true, oChild: oChild };
                     var _oValidateActionFollowUpBeforeNewDC = new ValidateActionFollowUpBeforeNewDCHandler();
-                    var NewDCAccessValidationHandlerResponse = _oDasboardBO.NewDCAccessValidationHandler(ReqObjForNewDCAccessHandler);                                  
+                    var NewDCAccessValidationHandlerResponse = _oDasboardBO.NewDCAccessValidationHandler(ReqObjForNewDCAccessHandler);
               
 
                     if(NewDCAccessValidationHandlerResponse.IsSuccess){
@@ -609,7 +610,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                                 $location.url(DCStartRouteKey);
                             }
                             else {
-                                alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+                                //alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+								navigator.notification.alert(xlatService.xlat(IsGeoLocationValid.MessageKey), ['OK'], "");
                             }
                         }
                         else {
@@ -623,7 +625,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                     }
                     else {
                         if (NewDCAccessValidationHandlerResponse.IsActionResolvedIsMandatoryBeforeNewDc == true) {
-                            alert(xlatService.xlat('IN-NF-MSE-017 :: Please resolve actions and Continue audit'));
+                            //alert(xlatService.xlat('IN-NF-MSE-017 :: Please resolve actions and Continue audit'));
+							navigator.notification.alert(xlatService.xlat('IN-NF-MSE-017 :: Please resolve actions and Continue audit'), ['OK'], "");
 
                             $location.url("nav/my-actions");
                         }
@@ -677,7 +680,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                                             $location.url(DCStartRouteKey);
                                         }
                                         else {
-                                            alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+                                            //alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+											navigator.notification.alert(xlatService.xlat(IsGeoLocationValid.MessageKey), ['OK'], "");
                                         }
                                     }
                                     else {
@@ -697,19 +701,22 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
                     }
 
-                    // 
+                    //
                 }
 
                 else {
-                    alert(xlatService.xlat('Please_Complete_Induction'));
+                    //alert(xlatService.xlat('Please_Complete_Induction'));
+					navigator.notification.alert(xlatService.xlat('Please_Complete_Induction'), ['OK'], "");
                 }
             }
             //else if (ProfileDetails != null && ProfileDetails.IsProfileValid == true && oChild.Occurence == oChild.DCStatusInfo.OverallCount) {
             else if (ProfileDetails != null && ProfileDetails.IsProfileValid == true && ProfileDetails.Occurence == ProfileDetails.TotalDc) {
-                alert(xlatService.xlat("IN-NF-LDP-010 :: Task is inprogress/completed"));
+                //alert(xlatService.xlat("IN-NF-LDP-010 :: Task is inprogress/completed"));
+				navigator.notification.alert(xlatService.xlat("IN-NF-LDP-010 :: Task is inprogress/completed"), ['OK'], "");
             }
             else {
-                alert(xlatService.xlat("IN-NF-LDP-001 :: No Profile(s) are available. Please download the profile(s) and continue"));
+                //alert(xlatService.xlat("IN-NF-LDP-001 :: No Profile(s) are available. Please download the profile(s) and continue"));
+				navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No Profile(s) are available. Please download the profile(s) and continue"), ['OK'], "");
             }
 
             $event.stopPropagation();
@@ -736,7 +743,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                 /*oSetDefaultSpinner.Start(xlatService.xlat("Location Search"));
                 var CurrentLLocation = _OneViewGeolocationPlugin.GetLatitudeAndLongitude();
 
-                while (CurrentLLocation.Latitude == undefined) {                   
+                while (CurrentLLocation.Latitude == undefined) {
                     CurrentLLocation = _OneViewGeolocationPlugin.GetLatitudeAndLongitude();
                 }
 
@@ -773,8 +780,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
             }
             else {
                 Response.IsSuccess = false;
-                Response.MessageKey = "Location_notfound";                
-            }           
+                Response.MessageKey = "Location_notfound";
+            }
             
             return Response;
             OneViewConsole.Debug("GeoLocationValidation end", "DasboardFacade.GeoLocationValidation");
@@ -803,7 +810,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                 Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            var d = R * c;    
+            var d = R * c;
 
             if (Unit == "km") {
                 d = Math.round(d);
@@ -857,7 +864,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                     else {
 
                         if (DcInfo.length == 0) {
-                            alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"));
+                            //alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"));
+							navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"), ['OK'], "");
                         }
                         else if (DcInfo.length == 1) {
 
@@ -876,7 +884,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                                         $location.url(oChild.DCStartRouteKey);
                                     }
                                     else {
-                                        alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+                                        //alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+										navigator.notification.alert(xlatService.xlat(IsGeoLocationValid.MessageKey), ['OK'], "");
                                     }
                                 }
                                 else {
@@ -909,7 +918,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                                             $location.url(Url);
                                         }
                                         else {
-                                            alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+                                            //alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+											navigator.notification.alert(xlatService.xlat(IsGeoLocationValid.MessageKey), ['OK'], "");
                                         }
                                     }
                                     else {
@@ -932,7 +942,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                     var ShowNotStartedDCProfiles = 1;
                     var ShowInProgressDCProfiles = 0;
                     var ShowCompletedDCProfiles = 0;
-                    var ShowInProgressOrCompletedDCProfiles = 0;                    
+                    var ShowInProgressOrCompletedDCProfiles = 0;
 
                     if (LandingPageSelectedStatusTypeId == 1 || LandingPageSelectedStatusTypeId == 7) {
                         ShowNotStartedDCProfiles = 0;
@@ -975,8 +985,9 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                     
                     if (ProfileDetails.TotalDc == 0) {
 
-                        alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"));
-                    }                   
+                        //alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"));
+						navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"), ['OK'], "");
+                    }
                     else {
                         DCViewRouteKey += '&ShowNotStartedDCProfiles=' + ShowNotStartedDCProfiles + '&ShowInProgressDCProfiles=' + ShowInProgressDCProfiles + '&ShowCompletedDCProfiles=' + ShowCompletedDCProfiles + '&ShowInProgressOrCompletedDCProfiles=' + ShowInProgressOrCompletedDCProfiles + '';
 
@@ -991,7 +1002,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                                     $location.url(DCViewRouteKey);
                                 }
                                 else {
-                                    alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+                                    //alert(xlatService.xlat(IsGeoLocationValid.MessageKey));
+									navigator.notification.alert(xlatService.xlat(IsGeoLocationValid.MessageKey), ['OK'], "");
                                 }
                             }
                             else {
@@ -1005,7 +1017,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                 }
             }
             else {
-                alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"));
+                //alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"));
+				navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"), ['OK'], "");
             }
 
             $event.stopPropagation();
@@ -1073,7 +1086,10 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
             // If network is available
             if (NetworkDetails.IsNetworkAvailable == true) {
-
+				if(OSType == OSTypeEnum.IOS) {
+					IsCheckForUpdateRequired = false;
+					_oDasboardBO.DownloadDCProfile();
+				} else {
                 var oAPKUpgradeProcessStatus = OneViewLocalStorage.Get("APKUpgradeProcessStatus");
                 var oAPKUpgradeProcessBO = new APKUpgradeProcessBO();
                 if (oAPKUpgradeProcessStatus != null) {
@@ -1088,10 +1104,11 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                         //check for update
                     }
                 }
+				}
 
                 if (IsCheckForUpdateRequired == true) {
                     var response = oAPKUpgradeProcessBO.CheckIsUpgradeAvailable();
-                    if (response.IsUpgradeAvailable == true) {                      
+                    if (response.IsUpgradeAvailable == true) {
                        // alert(xlatService.xlat('NewUpdateAvailablePart1') + response.LatestVersion + xlatService.xlat('NewUpdateAvailablePart2') + response.CurrentVersion);
                         //download metadata
                         var _oAPKUpgradeProcessMetadataDownloadBO = new APKUpgradeProcessMetadataDownloadBO(xlatService);
@@ -1110,7 +1127,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
                                     if (ConfirmationId == "2") {
                                         if (IsOperationAccessAllowed == true) {
-                                            alert('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.');
+                                            navigator.notification.alert(('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.'), ['OK'], "");
                                         }
                                         else {
                                             //navigate to upgrade
@@ -1129,7 +1146,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                                 alert(NewUpdateMsg);
                                
                                 if (IsOperationAccessAllowed == true) {
-                                    alert('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.');
+                                    navigator.notification.alert(('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.'), ['OK'], "");
                                 }
                                 else {
                                     //navigate to upgrade
@@ -1149,10 +1166,10 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                 }
 
             }
-            else {
-                alert(xlatService.xlat('NoInternetConnection'));
-                OneViewConsole.Info("No Internet Connection", "DasboardFacade.DownLoadProfile");
-            }
+//            else {
+//                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+//                OneViewConsole.Info("No Internet Connection", "DasboardFacade.DownLoadProfile");
+//            }
 
             $event.stopPropagation();
 
@@ -1176,7 +1193,10 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
             var NetworkStatus = oOneViewCordovaPlugin.CheckNetworkStatus();
 
             if (NetworkStatus.IsNetworkAvailable == true) {
-                //
+				if(OSType == OSTypeEnum.IOS) {
+					IsCheckForUpdateRequired = false;
+					_oDasboardBO.UploadDC();
+				} else {
                 var oAPKUpgradeProcessStatus = OneViewLocalStorage.Get("APKUpgradeProcessStatus");
                 var oAPKUpgradeProcessBO = new APKUpgradeProcessBO();
                 if (oAPKUpgradeProcessStatus != null) {
@@ -1191,6 +1211,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                         //check for update
                     }
                 }
+				}
 
                 if (IsCheckForUpdateRequired == true) {
                     var response = oAPKUpgradeProcessBO.CheckIsUpgradeAvailable();
@@ -1230,7 +1251,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                             }
                             else {
 
-                                alert(NewUpdateMsg);                                
+                                alert(NewUpdateMsg);
                                 if (IsOperationAccessAllowed == true) {
                                     alert('OperationAccessPermissionKey = IsAllowDcUpload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.');
                                 }
@@ -1250,12 +1271,6 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                         _oDasboardBO.UploadDC();
                     }
                 }
-
-
-            }
-            else {
-                alert(xlatService.xlat('NoInternetConnection'));
-                OneViewConsole.Info("No internet connection", "LandingPageFacade.Upload");
             }
 
             $event.stopPropagation();
@@ -1292,8 +1307,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
             if (IsBulkUpload != undefined && IsBulkUpload ==true) {
                 var _oDcDAO = new DcDAO();
-                var _oDcFilterParamRequest = new DcFilterParamRequest();           
-                _oDcFilterParamRequest.SystemUserId = OneViewSessionStorage.Get("LoginUserId");;           
+                var _oDcFilterParamRequest = new DcFilterParamRequest();
+                _oDcFilterParamRequest.SystemUserId = OneViewSessionStorage.Get("LoginUserId");;
                 _oDcFilterParamRequest.IsSynchronized = false;
 
              
@@ -1476,10 +1491,12 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                                 MyInstance.Init();
                                 MyInstance.PageLoad();
 
-                                alert(xlatService.xlat("IN-NF-LDP-002 :: Task synchronized successfully"));
+                                //alert(xlatService.xlat("IN-NF-LDP-002 :: Task synchronized successfully"));
+								navigator.notification.alert(xlatService.xlat("IN-NF-LDP-002 :: Task synchronized successfully"), ['OK'], "");
                             }
                             else if (IsSuccess != null && IsSuccess == false) {
-                                alert(xlatService.xlat("IN-NF-LDP-003 :: Task synchronization failed"));
+                                //alert(xlatService.xlat("IN-NF-LDP-003 :: Task synchronization failed"));
+								navigator.notification.alert(xlatService.xlat("IN-NF-LDP-003 :: Task synchronization failed"), ['OK'], "");
                             }
 
                             oSetDefaultSpinner.Stop();
@@ -1487,11 +1504,12 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                     });
                 }
                 else {
-                    alert(xlatService.xlat("IN-NF-LDP-004 :: Please upload all the data captures and try again"));
+                    //alert(xlatService.xlat("IN-NF-LDP-004 :: Please upload all the data captures and try again"));
+					navigator.notification.alert(xlatService.xlat("IN-NF-LDP-004 :: Please upload all the data captures and try again"), ['OK'], "");
                 }
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "DasboardFacade.SyncTask");
             }
 
@@ -1561,12 +1579,13 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                     }
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No internet connection", "LandingPageFacade.Upload");
                 }
             }
             else {
-                alert(xlatService.xlat('Please complete and approve Datacapture before Upload'));
+                //alert(xlatService.xlat('Please complete and approve Datacapture before Upload'));
+				navigator.notification.alert(xlatService.xlat('Please complete and approve Datacapture before Upload'), ['OK'], "");
             }
 
             OneViewConsole.Debug("ClickBulkUpload end", "LandingPageFacade.ClickBulkUpload");
@@ -1609,7 +1628,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
                     if (IsDefaultProfiledownloadSuccess == true) {
 
-                        alert(xlatService.xlat("IN-SU-LNP-001 :: Profile(s) downloaded successfully"));
+						navigator.notification.alert(xlatService.xlat("IN-SU-LNP-001 :: Profile(s) downloaded successfully"), ['Ok'], "");
 
                         oSetDefaultSpinner.Start();
 
@@ -1695,10 +1714,10 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
             OneViewConsole.Debug("ToggleDivSmallDeviceStatusBar end", "LandingPageFacade.ToggleDivSmallDeviceStatusBar");
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "LandingPageFacade.ToggleDivSmallDeviceStatusBar", Excep);
         }
-        finally {            
+        finally {
         }
     }
 
@@ -1713,7 +1732,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
                 if (_oDOM.GetAttributeValueByObj(oDivSmallDeviceStatusBar, 'data-mfb-state') == 'open') {
                     _oDOM.SetAttributeValueByObj(oDivSmallDeviceStatusBar, 'data-mfb-state', 'closed');
-                }               
+                }
             }
 
             OneViewConsole.Debug("ToggleMenu end", "LandingPageFacade.ToggleMenu");
@@ -1844,22 +1863,24 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
                 if (ApprovalInfoResponse.length == 0) {
 
-                    alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"));
+                    //navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"), ['OK'], "");
+					navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"), ['OK'], "");
                 }
-                else if (ApprovalInfoResponse.length==1) {                  
+                else if (ApprovalInfoResponse.length==1) {
                     DcOnDeviceApprovalInfoLst = ApprovalInfoResponse;
                     $location.url('/my-approval');
                 }
                 else if (ApprovalInfoResponse.length > 1) {
                     DcOnDeviceApprovalInfoLst = [];
                     $scope.MultipleDcApprovalShow = true;
-                    DcApprovalInfoList = ApprovalInfoResponse;                   
+                    DcApprovalInfoList = ApprovalInfoResponse;
                     _oMultipleDcApprovalBO.LoadHtml('DivDcToApproveId');
                 }
 
             }
             else {
-                alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"));
+                //navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"), ['OK'], "");
+				navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"), ['OK'], "");
             }
 
             $event.stopPropagation();
@@ -1879,16 +1900,17 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
             OneViewConsole.Debug("ApproveMultipleDC start", "LandingPageFacade.ApproveMultipleDC");
                        
             if (DcOnDeviceApprovalInfoLst.length == 0) {
-                alert(xlatService.xlat("IN-NF-LDP-011 :: Approval profile not available"));
+                //alert(xlatService.xlat("IN-NF-LDP-011 :: Approval profile not available"));
+				navigator.notification.alert(xlatService.xlat("IN-NF-LDP-011 :: Approval profile not available"), ['OK'], "");
             }
             else if (DcOnDeviceApprovalInfoLst.length > 0) {
 
                 var _oDcApprovalBO = new DcApprovalBO();
-                var PreValidationStatus = _oDcApprovalBO.PreValidation(DcOnDeviceApprovalInfoLst);                
-                if (PreValidationStatus == false) {                    
+                var PreValidationStatus = _oDcApprovalBO.PreValidation(DcOnDeviceApprovalInfoLst);
+                if (PreValidationStatus == false) {
                     $location.url('/my-approval');
                 }
-            }           
+            }
 
 
             OneViewConsole.Debug("ApproveMultipleDC end", "LandingPageFacade.ApproveMultipleDC");
@@ -1976,37 +1998,41 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
                                 else {
                                     _oOneViewSqlitePlugin.Rollback();
                                     if(DownloadMastersResponse.IsSuccess !=null){
-                                        alert(xlatService.xlat(DownloadMastersResponse.Message));
+                                        //alert(xlatService.xlat(DownloadMastersResponse.Message));
+										navigator.notification.alert(xlatService.xlat(DownloadMastersResponse.Message), ['OK'], "");
                                     }
                                 }
 
 
                                 if (DownloadMastersResponse.IsSuccess == true && ServerSyncResponse.IsSuccess == true) { //LocalSyncResponse.IsSuccess== true &&
                                     _oOneViewSqlitePlugin.EndTransaction();
-                                    alert(xlatService.xlat(ServerSyncResponse.Message));
+                                    //alert(xlatService.xlat(ServerSyncResponse.Message));
+									navigator.notification.alert(xlatService.xlat(ServerSyncResponse.Message), ['OK'], "");
                                 }
                             }
                             catch (Excep) {
                                 _oOneViewSqlitePlugin.Rollback();
-                                alert(xlatService.xlat("Sync master and metadata failed"));
+                                //alert(xlatService.xlat("Sync master and metadata failed"));
+								navigator.notification.alert(xlatService.xlat("Sync master and metadata failed"), ['OK'], "");
                             }
                         }
                     });
                 }
                 else {
-                    alert(xlatService.xlat('No Data to Synchronize.'));
+                    //alert(xlatService.xlat('No Data to Synchronize.'));
+					navigator.notification.alert(xlatService.xlat('No Data to Synchronize.'), ['OK'], "");
                 }
 
 
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "LandingPageFacade.SyncMaster");
             }
 
             OneViewConsole.Debug("SyncMaster end", "LandingPageFacade.SyncMaster");
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "LandingPageFacade.SyncMaster", Excep);
         }
         finally {
@@ -2142,7 +2168,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
         try {
             OneViewConsole.Debug("CloseGrigFilter start", "DasboardFacade.CloseGrigFilter");
 
-            var oOneViewSidePanel = new OneViewSidePanel();            
+            var oOneViewSidePanel = new OneViewSidePanel();
             oOneViewSidePanel.Toggle(snapRemote);
             oOneViewSidePanel.Clear();
 
@@ -2170,7 +2196,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.ApplyFilter", xlatService);
-        }        
+        }
     }
 
     this.ClearGraphSearchElement = function () {
@@ -2216,7 +2242,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
            // alert(CurrentUserDcCount + ' , CurrentUserDcCount   , NavigateToViewDCHandoverCase HandoverRecordsCount : ' + HandoverRecordsCount);
             if (HandoverRecordsCount != null && HandoverRecordsCount > 0) {
-                TotalDcCount = parseInt(CurrentUserDcCount) + parseInt(HandoverRecordsCount);               
+                TotalDcCount = parseInt(CurrentUserDcCount) + parseInt(HandoverRecordsCount);
             }
             else {
                 TotalDcCount = TotalDcCount + parseInt(CurrentUserDcCount);
@@ -2225,7 +2251,8 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
            // alert('DcInfo : ' + JSON.stringify(DcInfo));
 
             if (TotalDcCount == 0) {
-                alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"));
+                //alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"));
+				navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for view or edit"), ['OK'], "");
             }
             else if (TotalDcCount == 1) {
                // alert('in TotalDcCount : ' + TotalDcCount);
@@ -2505,7 +2532,8 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
             FilterParams.DCPlaceRCOType = oChild.DCPlaceRCOType;
 
             if (oChild.Occurence > 0 && oChild.Occurence == oChild.DCStatusInfo.CompletedCount) {
-                alert(xlatService.xlat("IN-NF-LDP-010 :: Task is inprogress/completed"));
+                //alert(xlatService.xlat("IN-NF-LDP-010 :: Task is inprogress/completed"));
+				navigator.notification.alert(xlatService.xlat("IN-NF-LDP-010 :: Task is inprogress/completed"), ['OK'], "");
             }
 
             var IsValidationSuccess = MyInstance.TemplateAccessValidationHandler(LandingPageViewInfo);
@@ -2513,19 +2541,19 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
             if (IsValidationSuccess == true) {
                 //else if (oChild.TemplateKeyElementIsGroup == false) {
 
+				oSetDefaultSpinner.Start();
+				
                 var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
                 oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('Navigate_confirm_Title'), xlatService.xlat('Download_confirm_Message'), function (ConfirmationId) {
 
                     if (ConfirmationId == "2") {
-
+														
                         var _oProfileDownloadFacade = new ProfileDownloadFacade();
                         var IsDefaultProfiledownloadSuccess = _oProfileDownloadFacade.DefaultProfiledownload(FilterParams, $scope, xlatService, '', '', $location);
-
+														
                         if (IsDefaultProfiledownloadSuccess == true) {
 
-                            alert(xlatService.xlat("IN-SU-LNP-001 :: Profile(s) downloaded successfully"));
-
-                            oSetDefaultSpinner.Start();
+							navigator.notification.alert(xlatService.xlat("IN-SU-LNP-001 :: Profile(s) downloaded successfully"), ['Ok'], "");
 
                             MyInstance.SetByView(LandingPageViewInfo.LandingPageViewName);
                             MyInstance.UpdateTaskStatus(DCTaskViewInfoDTO);
@@ -2533,14 +2561,15 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
                             MyInstance.UpdateActionSheet();
                             $scope.$apply();
 
-                            oSetDefaultSpinner.Stop();
                         }
                     }
+					oSetDefaultSpinner.Stop();
                 });
                 //}
             }
             else {
-                alert(xlatService.xlat('Please_Complete_Induction'));
+                //alert(xlatService.xlat('Please_Complete_Induction'));
+				navigator.notification.alert(xlatService.xlat('Please_Complete_Induction'), ['OK'], "");
             }
             OneViewConsole.Debug("DownloadDCProfile end", "DasboardBO.DownloadDCProfile");
         }
@@ -2638,7 +2667,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
                 }
                 else {
                     //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoDataForUpload'));
-                    alert(xlatService.xlat('NoDataForUpload'));
+                    navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                     OneViewConsole.Info("No dc available", "DasboardBO.UploadDcAndAction");
                 }
             //}
@@ -2685,7 +2714,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
             var _oValidateActionFollowUpBeforeNewDC = new ValidateActionFollowUpBeforeNewDCHandler(xlatService);
             var ReqObjForValidateActionFollowUpBeforeNewDC = { TemplateIdLst: FilterParams.TemplateId, IsTemplateValidationRequired: Req.IsTemplateValidationRequired };
            
-            if (_oValidateActionFollowUpBeforeNewDC.IsNeedToValidateActionFollowUpBeforeNewDC(ReqObjForValidateActionFollowUpBeforeNewDC)) {            
+            if (_oValidateActionFollowUpBeforeNewDC.IsNeedToValidateActionFollowUpBeforeNewDC(ReqObjForValidateActionFollowUpBeforeNewDC)) {
         
                 _oValidateActionFollowUpBeforeNewDC.Download(FilterParams, xlatService, "false");
 
@@ -2764,44 +2793,45 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
             if (MultiMediaValidationResponse.IsSuccess == false) {
                 Message = xlatService.xlat(MultiMediaValidationResponse.MessageKey) ;
             }
+			
+			oOneViewProgressbar.Start(xlatService.xlat("Uploading"));
+			var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+			oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('Navigate_confirm_Title'), Message, function (ConfirmationId) {
+				if (ConfirmationId == "2") {
 
-            var IsSuccess = oOneViewDefaultConfirmBox.Show(Message);
+					if (MultiMediaValidationResponse.IsSuccess == false) {
+						DeleteUnAvailableMultiMediaSubElements(MultiMediaValidationResponse.ValidationFailedMultiMediaSubElements);
+					}
 
-            if (IsSuccess == true) {
+					var _oUploadBO = new UploadBO(xlatService, '');
 
-                oOneViewProgressbar.Start(xlatService.xlat("Uploading"));
+					var _oDcPendingTaskBO = new DcPendingTaskBO();
+					_oDcPendingTaskBO.Download();
 
-                if (MultiMediaValidationResponse.IsSuccess == false) {
-                    DeleteUnAvailableMultiMediaSubElements(MultiMediaValidationResponse.ValidationFailedMultiMediaSubElements);
-                }
+					var IsMultiMediaSubElementsSuccess = _oUploadBO.UploadMultiMediaSubElements();
 
-                var _oUploadBO = new UploadBO(xlatService, '');
+					if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == true) {
 
-                var _oDcPendingTaskBO = new DcPendingTaskBO();
-                _oDcPendingTaskBO.Download();
+						var IsSyncDynamicRcoAndAssetNodesSuccess = _oUploadBO.SyncDynamicRcoAndAssetNodes(true);
 
-                var IsMultiMediaSubElementsSuccess = _oUploadBO.UploadMultiMediaSubElements();
+						if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == true) {
 
-                if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == true) {
+							IsSuccess = _oUploadBO.BatchUploadAdv(_oDcFilterParamRequest);
+						}
+						else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
+							navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
+							IsSuccess = false;
+						}
+					}
+					else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {
+						navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
+						IsSuccess = false;
+					}
+				}
+				oOneViewProgressbar.Stop();
+			});
 
-                    var IsSyncDynamicRcoAndAssetNodesSuccess = _oUploadBO.SyncDynamicRcoAndAssetNodes(true);
-
-                    if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == true) {
-
-                        IsSuccess = _oUploadBO.BatchUploadAdv(_oDcFilterParamRequest);
-                    }
-                    else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
-                        alert(xlatService.xlat('UploadFailed'));
-                        IsSuccess = false;
-                    }
-                }
-                else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {
-                    alert(xlatService.xlat('UploadFailed'));
-                    IsSuccess = false;
-                }
-
-                oOneViewProgressbar.Stop();
-            }
+		
 
             OneViewConsole.Debug("UploadDC end", "LandingPageFacade.UploadDC");
 
@@ -2839,7 +2869,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
             if (Result.ValidationFailedMultiMediaSubElements.length > 0) {
                 Result.IsSuccess = false;
                 //Result.MessageKey = "IN-MG-LDP-001 :: File not exist In local.Are you sure you want to Upload?";
-                Result.MessageKey = "Upload_confirm_Message_ForMultiMediaValidation";          
+                Result.MessageKey = "Upload_confirm_Message_ForMultiMediaValidation";
             }
             //alert("Result : " + JSON.stringify(Result));
             OneViewConsole.Debug("MultiMediaValidation end", "LandingPageFacade.MultiMediaValidation");
@@ -2884,7 +2914,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
             _oDcDeletion.DeleteInCompleteAndSyncedDataInDays(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
             _oDcDeletion.DeleteCompletedSyncAndApprovedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
             _oDcDeletion.DeleteCompletedSyncAndOnDeviceApprovalFinishedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-            if (OneViewSessionStorage.Get("ServiceId") == 39) {           
+            if (OneViewSessionStorage.Get("ServiceId") == 39) {
                 _oDcDeletion.DeleteInActivePurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
                 _oDcDeletion.DeleteItemCompletedorInActiveInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
                 _oDcDeletion.DeleteCompletedItemInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
@@ -3083,7 +3113,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
                                 if (IsSearchValidationSuccessForGroup == true || IsSearchValidationSuccessForTaskDetaills == true) {
                                     ChildHtml += GetChildHtml(DCTaskViewInfoDTO.LandingPageViewName, i, j, DCTaskDTOList[i].DCTaskDetaillst[j], StatusType);
                                 }
-                            }                            
+                            }
                         }
 
                         if (ChildHtml != '') {
@@ -3136,7 +3166,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
                         }
                     }
 
-                }                
+                }
                 else if (Value.indexOf(GraphSearchElement) != -1) {
 
                     IsSuccess = true;
@@ -3873,7 +3903,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 
                     if (oChild.DCStatusInfo.SyncedCount == oChild.Occurence) {
                         if (OneViewSessionStorage.Get("ServiceId") != 36) {
-                            _oDOM.AddClass("BtnUploadDC", "step--complete step--inactive step--disabled");                        
+                            _oDOM.AddClass("BtnUploadDC", "step--complete step--inactive step--disabled");
                         }
                         else if (OneViewSessionStorage.Get("ServiceId") == 36 && IsUploadActive != true) {
                             _oDOM.AddClass("BtnUploadDC", "step--complete step--inactive step--disabled");
@@ -3899,14 +3929,14 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
                         var UploadButtonHandlerObj = { RequiredBusinessEventHandlerObjectKeys: "DisableUploadIfNotApproved", TemplateId: [oChild.TemplateKeyId] };
                         
                         if (MyInstance.IsUploadButtonHandlerMetadataExist(UploadButtonHandlerObj) == true) {
-                            if (TotalRecordsToApprove > 0) {                              
+                            if (TotalRecordsToApprove > 0) {
                                 _oDOM.AddClass("BtnUploadDC", "step--incomplete step--inactive step--disabled");
                             }
                             else if (TotalRecordsToApprove == 0) {
                                // var _DCDAO = new DcDAO();
                               //  var count = _DCDAO.GetPendingRecordsCount(oChild.TemplateKeyId, oChild.DCPlaceKeyId, OneViewSessionStorage.Get("LoginUserId"), OneViewSessionStorage.Get("ServiceId"));
                                 if (TotalRecordsToEdit > 0) {
-                                      _oDOM.AddClass("BtnUploadDC", "step--incomplete step--inactive step--disabled");                                 
+                                      _oDOM.AddClass("BtnUploadDC", "step--incomplete step--inactive step--disabled");
                                    
                                 }
                                 else {
@@ -3924,7 +3954,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
                       
                     }
                 }
-                else {                    
+                else {
                     if (OneViewSessionStorage.Get("ServiceId") == 36) {
                         ActivateViewDCButtonHandoverCase(ServiceId, oChild.DCPlaceKeyId, oChild.TemplateKeyId, LoginUserId);
                         //Todo(30-10-2018) : Added by Sangeeta Bhatt :  Temporary fix, to activate UploadDC button, when handover DC is edited.
@@ -4079,8 +4109,8 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
             if (ServiceId == 5) {
 
                 var oParent = DCTaskViewInfoDTO.DCTaskDTOList[LandingPageViewInfo.ParentIndex]
-                var oChild = oParent.DCTaskDetaillst[LandingPageViewInfo.ChildIndex];               
-                var TemplateId = oChild.TemplateKeyId;              
+                var oChild = oParent.DCTaskDetaillst[LandingPageViewInfo.ChildIndex];
+                var TemplateId = oChild.TemplateKeyId;
                 //alert('TemplateId : ' + TemplateId);
                 var InductionTemplateId = 942;
                 if (TemplateId != InductionTemplateId) { //Check for all template apart from Induction Template
@@ -4118,7 +4148,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 
             return IsSuccess;
         }
-        catch (Excep) {            
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DasboardBO.TemplateAccessValidationHandler", Excep);
         }
     }
@@ -4167,7 +4197,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
                     _oDcFilterParamRequest = MakeDcFilterRequestForPlaceAndTemplate(oChild);
                     MyAuditTotalDCCountForUpload = _oDcDAO.GetDCCountWithFilters(_oDcFilterParamRequest);
                 }
-                else {//if (oChild.DCPlaceKeyElementIsGroup == true && oChild.TemplateKeyElementIsGroup == false) {               
+                else {//if (oChild.DCPlaceKeyElementIsGroup == true && oChild.TemplateKeyElementIsGroup == false) {
                     _oDcFilterParamRequest = MakeDcFilterRequestForPlaceGroupAndTemplate(oChild);
                     MyAuditTotalDCCountForUpload = _oDcDAO.GetDCCountWithFiltersAdv(_oDcFilterParamRequest);
                 }
@@ -4467,7 +4497,7 @@ function MultipleDcApprovalBO() {
                     MyInstance.RemoveClass(Id, 'active');
                     MyInstance.RemoveIcon(Id);
                     MyInstance.RemoveDC(Id, true);
-                }              
+                }
             }
             else if (Id != -1) {
                 if (IsAdd == true) {
@@ -4523,11 +4553,11 @@ function MultipleDcApprovalBO() {
             for (var i = 0; i < DcOnDeviceApprovalInfoLst.length ; i++) {
                 var Data = DcOnDeviceApprovalInfoLst[i];
                 var DcInfo = Data.DcInfo;
-                if (DcInfo.Id == Id || IsRemoveAll == true) {                
+                if (DcInfo.Id == Id || IsRemoveAll == true) {
                     MyInstance.RemoveClass(DcInfo.Id, 'active');
                     MyInstance.RemoveIcon(DcInfo.Id);
                     DcOnDeviceApprovalInfoLst.splice(i, 1);
-                    i--;                   
+                    i--;
                     if (IsRemoveAll != true) {
                         break;
                     }
@@ -4567,7 +4597,7 @@ function MultipleDcApprovalBO() {
 
             var IsSelected = false;
             var DivData = document.getElementById(Id);
-            if (DivData != null) {             
+            if (DivData != null) {
                 if (DivData.className.indexOf(ClassName) == '-1') {
                     IsSelected = true;
                 }
@@ -4638,11 +4668,11 @@ function MultipleDcApprovalBO() {
             var DivData = document.getElementById(Id);
             if (DivData != null) {
                 document.getElementById(Id).appendChild(Icon);
-            }          
+            }
 
             OneViewConsole.Debug("AppendIcon end", "ViewRecordsBO.AppendIcon");
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "ViewRecordsBO.AppendIcon", Excep);
         }
         finally {
@@ -4667,7 +4697,7 @@ function MultipleDcApprovalBO() {
 
             OneViewConsole.Debug("RemoveIcon end", "ViewRecordsBO.RemoveIcon");
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "ViewRecordsBO.RemoveIcon", Excep);
         }
         finally {
@@ -4676,3 +4706,6 @@ function MultipleDcApprovalBO() {
     }
 
 }
+
+
+

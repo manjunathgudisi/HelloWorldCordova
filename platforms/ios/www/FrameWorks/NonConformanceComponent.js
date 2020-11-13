@@ -182,7 +182,8 @@ function NCComponent(scope, TemplateNodes, toaster, xlatService) {
 
                     var element = document.getElementById("divDeviatedValue");
                     if (NcStatus == true) {
-                        alert(xlatService.xlat('Title_Notification') + ': ' + objRule.CriteriaDisplayLabel);
+                        //alert(xlatService.xlat('Title_Notification') + ': ' + objRule.CriteriaDisplayLabel);
+						navigator.notification.alert((xlatService.xlat('Title_Notification') + ': ' + objRule.CriteriaDisplayLabel), ['OK'], "");
                         //toaster.pop('warning', 'Notification', objRule.CriteriaDisplayLabel);
                         //oScope.toggle = true;
                         //oScope.DisplayDeviatedValue = 'Bad';

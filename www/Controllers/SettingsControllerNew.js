@@ -473,7 +473,7 @@ function SettingsFacade() {
                         _oOneViewAppConfig.CheckForNewUpdates(toaster, true);
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                        // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
@@ -503,7 +503,7 @@ function SettingsFacade() {
                             $scope.ShiftsVisible = false;
                         }
                         else {
-                            alert(xlatService.xlat('NoInternetConnection'));
+                            navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                             OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                         }
@@ -601,7 +601,7 @@ function SettingsFacade() {
                         }
                     }
                     else {
-                        alert(xlatService.xlat(oDefaultValidationResponse.MessageKey));
+                        navigator.notification.alert(xlatService.xlat(oDefaultValidationResponse.MessageKey), ['OK'], "");
                     }
 
                 }
@@ -723,7 +723,8 @@ function SettingsFacade() {
                         var _DcPendingTaskBO = new DcPendingTaskBO();
                         _DcPendingTaskBO.UpdateTopRightBell(OneViewSessionStorage.Get("LoginUserId"));
 
-                        alert(xlatService.xlat('IN-SU-MSE-002 :: DB Restored successfully'));
+                        //alert(xlatService.xlat('IN-SU-MSE-002 :: DB Restored successfully'));
+						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-002 :: DB Restored successfully'), ['OK'], "");
                     }
                 }
                 //else if (SettingsObj.title == "Copy DB") {
@@ -736,7 +737,8 @@ function SettingsFacade() {
 
                         var oDbStructureController = new DbStructureController();
                         oDbStructureController.CopyDb();
-                        alert(xlatService.xlat('IN-SU-MSE-003 :: DB Copied successfully'));
+                        //alert(xlatService.xlat('IN-SU-MSE-003 :: DB Copied successfully'));
+						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-003 :: DB Copied successfully'), ['OK'], "");
                     }
                 }
 
@@ -782,7 +784,8 @@ function SettingsFacade() {
                         var _DcPendingTaskBO = new DcPendingTaskBO();
                         _DcPendingTaskBO.UpdateTopRightBell(OneViewSessionStorage.Get("LoginUserId"));
 
-                        alert(xlatService.xlat('IN-SU-MSE-006 :: Cleared successfully'));
+                        //alert(xlatService.xlat('IN-SU-MSE-006 :: Cleared successfully'));
+						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-006 :: Cleared successfully'), ['OK'], "");
                     }
                 }
 
@@ -811,7 +814,8 @@ function SettingsFacade() {
 
                         //oOneViewAppInfoPlugin.ClearCacheFiles();
 
-                        alert(xlatService.xlat('IN-SU-MSE-007 :: DB Cleaned successfully'));
+                        //alert(xlatService.xlat('IN-SU-MSE-007 :: DB Cleaned successfully'));
+						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-007 :: DB Cleaned successfully'), ['OK'], "");
                     }
                 }
 
@@ -914,7 +918,8 @@ function SettingsFacade() {
 
                             oOneViewProgressbar.SetProgressValue(100);
 
-                            alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully'));
+                            //alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully'));
+							navigator.notification.alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully'), ['OK'], "");
                         }
 
                         oOneViewProgressbar.Stop();
@@ -1008,7 +1013,8 @@ function SettingsFacade() {
 
                             oOneViewProgressbar.SetProgressValue(100);
 
-                            alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully. Please login to Continue.'));
+                            //alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully. Please login to Continue.'));
+							navigator.notification.alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully. Please login to Continue.'), ['OK'], "");
                             $location.url('/login');
 
                             OneViewSessionStorage.Clear();
@@ -1018,7 +1024,7 @@ function SettingsFacade() {
                         }
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1050,7 +1056,8 @@ function SettingsFacade() {
                             oGlobalizationComponent.FormGlobalizationMeta(MetaDataList, OneViewGlobalcurrentLanguage);
 
                             oOneViewProgressbar.SetProgressValue(100);
-                            alert(xlatService.xlat('IN-SU-MSE-013 :: Refreshed successfully'));
+                            //alert(xlatService.xlat('IN-SU-MSE-013 :: Refreshed successfully'));
+							navigator.notification.alert(xlatService.xlat('IN-SU-MSE-013 :: Refreshed successfully'), ['OK'], "");
                         }
 
                         oOneViewProgressbar.Stop();
@@ -1077,7 +1084,8 @@ function SettingsFacade() {
                             var RefreshCloudManagerIsSuccess = _SettingsBO.RefreshCloudManagerBO(xlatService);
 
                             if (RefreshCloudManagerIsSuccess == true) {
-                                alert(xlatService.xlat('IN-SU-MSE-015 :: Refreshed successfully.Please login to Continue.'));
+                                //alert(xlatService.xlat('IN-SU-MSE-015 :: Refreshed successfully.Please login to Continue.'));
+								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-015 :: Refreshed successfully.Please login to Continue.'), ['OK'], "");
                                 $location.url('/login');
 
                                 OneViewSessionStorage.Clear();
@@ -1087,7 +1095,7 @@ function SettingsFacade() {
                         }
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1112,13 +1120,14 @@ function SettingsFacade() {
                             var RefreshMetadataIsSuccess = _SettingsBO.RefreshMetadataConfigurationBO(xlatService,$scope, $compile);
 
                             if (RefreshMetadataIsSuccess == true) {
-                                alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'));
+                                //alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'));
+								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'), ['OK'], "");
                             }                         
                            
                         }
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));                      
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");                      
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1142,13 +1151,14 @@ function SettingsFacade() {
                             var RefreshMetadataIsSuccess = _SettingsBO.RefreshDATEntityTypesBO(xlatService, $scope, $compile);
 
                             if (RefreshMetadataIsSuccess == true) {
-                                alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'));
+                                //alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'));
+								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'), ['OK'], "");
                             }
 
                         }
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1200,14 +1210,15 @@ function SettingsFacade() {
                             oOneViewProgressbar.SetProgressValue(100);
 
                             if (RefreshDcCustomHtmlSuccess == true) {
-                                alert(xlatService.xlat('IN-SU-MSE-019 :: Refreshed successfully'));
+                                //alert(xlatService.xlat('IN-SU-MSE-019 :: Refreshed successfully'));
+								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-019 :: Refreshed successfully'), ['OK'], "");
                             }
 
                             oOneViewProgressbar.Stop();
                         }
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1228,7 +1239,7 @@ function SettingsFacade() {
                     //    _oOneViewAppConfig.CheckForNewUpdates(toaster, true);
                     //}
                     //else {
-                    //    alert(xlatService.xlat('NoInternetConnection'));
+                    //    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     //    // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                     //    OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     //}
@@ -1262,7 +1273,7 @@ function SettingsFacade() {
                         $scope.ShiftsVisible = false;
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                         // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
@@ -1330,13 +1341,14 @@ function SettingsFacade() {
                             var RefreshMetadataIsSuccess = _SettingsBO.RefreshMobileAutoSyncMetadata(xlatService);
 
                             if (RefreshMetadataIsSuccess == true) {
-                                alert(xlatService.xlat('IN-SU-MSE-021 ::Mobile Auto Sync Metadata Refreshed successfully'));
+                                //alert(xlatService.xlat('IN-SU-MSE-021 ::Mobile Auto Sync Metadata Refreshed successfully'));
+								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-021 ::Mobile Auto Sync Metadata Refreshed successfully'), ['OK'], "");
                             }
 
                         }
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                         OneViewConsole.Info("No Internet Connection", "DasboardFacade.DownLoadProfile");
                     }
                 }
@@ -1472,7 +1484,8 @@ function SettingsFacade() {
                         $scope.NewPassword = "";
                         $scope.ConfirmPassword = "";
 
-                        alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'));
+                        //alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'));
+						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'), ['OK'], "");
 
                         $location.url('/login');
 
@@ -1480,16 +1493,19 @@ function SettingsFacade() {
                         ClearGlobalVariable();
                     }
                 }
-                else if ($scope.OldPassword == undefined || $scope.OldPassword == "") {
-                    alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'));
+				else if ($scope.OldPassword == undefined || $scope.OldPassword == "") {
+                    //alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'), ['OK'], "");
                 }
                 else if ($scope.NewPassword == undefined || $scope.NewPassword == "") {
-                    alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'));
+                    //alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'), ['OK'], "");
                 }
                 else if ($scope.ConfirmPassword == undefined || $scope.ConfirmPassword == "") {
-                    alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'));
+                    //alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'), ['OK'], "");
                 }
-               
+				
                 OneViewConsole.Debug("ResetPassword End", "SettingsFacade.ResetPassword");
             }
             catch (Excep) {
@@ -1529,7 +1545,7 @@ function SettingsFacade() {
                         _oSettingsPresenter.UpdateProbeDisconnectStatus($scope, probeObj);
                     
                         //  toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('DisconnectExistingProbe'));
-                        alert(xlatService.xlat('DisconnectExistingProbe'));
+                        navigator.notification.alert(xlatService.xlat('DisconnectExistingProbe'), ['OK'], "");
                     }
                         //Disconnect the connected probe
                     else if (ConnectedProbe[0] != undefined && ConnectedProbe[0].Name == probeObj.Name) {
@@ -1602,7 +1618,7 @@ function SettingsFacade() {
                         _oSettingsPresenter.UpdateNewProbeDisconnectStatus($scope, probeObj);
 
                         //  toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('DisconnectExistingProbe'));
-                        alert(xlatService.xlat('DisconnectExistingProbe'));
+                        navigator.notification.alert(xlatService.xlat('DisconnectExistingProbe'), ['OK'], "");
                     }
                         //Disconnect the connected probe
                     else if (ConnectedProbe[0] != undefined && ConnectedProbe[0].Name == probeObj.Name) {
@@ -1686,7 +1702,7 @@ function SettingsFacade() {
                     //LabelName.toUpperCase().trim() 
                     if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {
 
-                        alert(xlatService.xlat('ProbeConnectedSuccesfully'));                       
+                        navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");                       
                         $scope.probes[probeObj.Index].selected = true;
                         NewConnectProbe[0] = { "Index": probeObj.Index, "Id": probeObj.Name, "Name": probeObj.Name };
                         alert("NewConnectProbe : " + JSON.stringify(NewConnectProbe));
@@ -1722,7 +1738,7 @@ function SettingsFacade() {
                 //        _oSettingsPresenter.UpdateProbeDisconnectStatus($scope, probeObj);
 
                 //        //  toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('DisconnectExistingProbe'));
-                //        alert(xlatService.xlat('DisconnectExistingProbe'));
+                //        navigator.notification.alert(xlatService.xlat('DisconnectExistingProbe'), ['OK'], "");
                 //    }
                 //        //Disconnect the connected probe
                 //else if (NewConnectProbe[0] != undefined && NewConnectProbe[0].Name == probeObj.Name) {
@@ -1791,7 +1807,7 @@ function SettingsFacade() {
                     }
                         // If no devices available
                     else {
-                        alert(xlatService.xlat('Nodevicesfound'));
+                        navigator.notification.alert(xlatService.xlat('Nodevicesfound'), ['OK'], "");
                        // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('Nodevicesfound'));
                     }
                 }
@@ -1839,7 +1855,7 @@ function SettingsFacade() {
                         var IsConnectionAlive = oBluetoothTemperatureLoggerBO.IsConnectionAlive(probeObj.Name);
                         
                         if (IsConnectionAlive) {
-                            alert(xlatService.xlat('ProbeConnectedSuccesfully'));
+                            navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
                           //  toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectedSuccesfully'));
                             $scope.probes[probeObj.Index].selected = true;                            
                             //Save selected probe information
@@ -1848,7 +1864,7 @@ function SettingsFacade() {
                         }
                         else {                        
                             // toaster.pop('error', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectionFailed'));
-                            alert(xlatService.xlat('ProbeConnectionFailed'));
+                            navigator.notification.alert(xlatService.xlat('ProbeConnectionFailed'), ['OK'], "");
                             $scope.probes[probeObj.Index].selected = '';
                            //// alert('Connection failed try again');
                             oOneViewBluetoothTemperatureLoggerPlugin.DisConnect("BlueThermProbe");
@@ -1940,7 +1956,7 @@ function SettingsFacade() {
                             $scope.probes[probeObj.Index].selected = '';
                             ProbeDetails = _oOneViewAppInfoPlugin.ConnectNewProbe(ProbeName);
                             if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {
-                                alert(xlatService.xlat('ProbeConnectedSuccesfully'));
+                                navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
                                 $scope.probes[probeObj.Index].selected = true;
                                 _oSettingsPresenter.SaveSelectedDevice(probeObj);
 
@@ -1951,7 +1967,7 @@ function SettingsFacade() {
                         }
 
                         else if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {
-                            alert(xlatService.xlat('ProbeConnectedSuccesfully'));
+                            navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
                             //  toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectedSuccesfully'));
                             $scope.probes[probeObj.Index].selected = true;
                             //Save selected probe information
@@ -1963,7 +1979,7 @@ function SettingsFacade() {
                         }
                         else {
                             // toaster.pop('error', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectionFailed'));
-                            alert(xlatService.xlat('ProbeConnectionFailed'));
+                            navigator.notification.alert(xlatService.xlat('ProbeConnectionFailed'), ['OK'], "");
                             $scope.probes[probeObj.Index].selected = '';
                            //_oOneViewAppInfoPlugin.DisConnectNewProbe(ProbeName);
 
@@ -2042,7 +2058,7 @@ function SettingsFacade() {
                     $scope.probes[probeObj.Index].selected = '';
 
                     // toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " disconnected successfully");
-                    alert(probeObj.Name + " disconnected successfully");
+                    navigator.notification.alert((probeObj.Name + " disconnected successfully"), ['OK'], "");
                 }
                 else {
                     // Update model with connection status
@@ -2096,7 +2112,7 @@ function SettingsFacade() {
                     $scope.probes[probeObj.Index].selected = false;
 
                     // toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " disconnected successfully");
-                    //alert(probeObj.Name + " disconnected successfully");
+                    //navigator.notification.alert((probeObj.Name + " disconnected successfully"), ['OK'], "");
                 }
                 else {
                     // Update model with connection status
@@ -2148,7 +2164,7 @@ function SettingsFacade() {
                 }
                     // If no devices available
                 else {
-                    alert(xlatService.xlat('Nodevicesfound'));
+                    navigator.notification.alert(xlatService.xlat('Nodevicesfound'), ['OK'], "");
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('Nodevicesfound'));
                 }
                 
@@ -2327,7 +2343,7 @@ function SettingsFacade() {
                 }
                     // If no Shifts available
                 else {
-                    alert(xlatService.xlat('NoShiftsfound'));                    
+                    navigator.notification.alert(xlatService.xlat('NoShiftsfound'), ['OK'], "");                    
                 }
 
                 OneViewConsole.Debug("LoadAllValidShifts Start", "SettingsFacade.LoadAllValidShifts");
@@ -2411,7 +2427,7 @@ function SettingsFacade() {
                                 alert(NewUpdateMsg);
                                 var IsOperationAccessAllowed = oAPKUpgradeProcessBO.ValidationForAPKUpgradeProcess("IsAllowDcProfileDownload");
                                 if (IsOperationAccessAllowed == true) {
-                                    alert('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.');
+                                    navigator.notification.alert(('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.'), ['OK'], "");
                                 }
                                 else {
                                     //navigate to upgrade
@@ -2425,13 +2441,13 @@ function SettingsFacade() {
                         }
                         else {
                             //No update available
-                            alert(xlatService.xlat('NoUpdatesAvailable'));
+                            navigator.notification.alert(xlatService.xlat('NoUpdatesAvailable'), ['OK'], "");
                         }
                     }                                      
 
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "DasboardFacade.DownLoadProfile");
                 }
 
@@ -3535,13 +3551,13 @@ function SettingsBO() {
                         //// alert("Probe" + ConnectedProbe[0].Name + " is disconnected ,please go to  settings page and reconnect the probe");
                         var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnectionLost');
                         // toaster.pop('info', xlatService.xlat('Title_Notification'), msg);
-                        alert(msg);
+                        navigator.notification.alert(msg, ['OK'], "");
                     }
                     else {
                         //// alert("Probe" + ConnectedProbe[0].Name + " is connected , go ahead");
                         var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnected');
                         // toaster.pop('success', xlatService.xlat('Title_Success'), msg);
-                        alert(msg);
+                        navigator.notification.alert(msg, ['OK'], "");
                     }
                 }
                 else {
@@ -3551,13 +3567,13 @@ function SettingsBO() {
                         //// alert("Probe" + ConnectedProbe[0].Name + " is disconnected ,please go to  settings page and reconnect the probe");
                         var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnectionLost');
                         // toaster.pop('info', xlatService.xlat('Title_Notification'), msg);
-                        alert(msg);
+                        navigator.notification.alert(msg, ['OK'], "");
                     }
                     else {
                         //// alert("Probe" + ConnectedProbe[0].Name + " is connected , go ahead");
                         var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnected');
                         // toaster.pop('success', xlatService.xlat('Title_Success'), msg);
-                        alert(msg);
+                        navigator.notification.alert(msg, ['OK'], "");
                     }
                 }
               
@@ -3566,7 +3582,7 @@ function SettingsBO() {
                 ////alert("No Probe is connected ,please go to  settings page and connect the probe");
                 var msg = xlatService.xlat('ProbeConnectionLostOrNoProbe');
                 // toaster.pop('warning', xlatService.xlat('Title_Notification'), msg);
-                alert(msg);
+                navigator.notification.alert(msg, ['OK'], "");
 
                 var obj = document.getElementById('txtTemperatureLoggerControlId');
                 if (obj != null) {
@@ -3913,7 +3929,7 @@ function SettingsBO() {
                 oSetDefaultSpinner.Stop();
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "SettingsBO.GetManualPinValidityStatus");
             }
 

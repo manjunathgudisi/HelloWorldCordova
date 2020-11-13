@@ -683,7 +683,7 @@ function ViewRecordsFacade($scope, xlatService, toaster) {
 
                             if (ActionResponseList != undefined) {
                                 if (ActionResponseList.length > 1) {
-                                    alert('More than one action for a single attribute : Not implemeneted');
+                                    navigator.notification.alert(('More than one action for a single attribute : Not implemeneted'), ['OK'], "");
                                 }
                                 else {
                                     if (ActionResponseList.length > 0) {

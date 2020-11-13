@@ -105,7 +105,7 @@ MyApp.controller('FoodSafetyShiftReportRev2Controller',
             $location.url('/ViewRecords');
         }
         else {
-            alert(xlatService.xlat('No_Records_Available'));
+            navigator.notification.alert(xlatService.xlat('No_Records_Available'), ['OK'], "");
             //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('No_Records_Available'));
         }
     };
@@ -213,7 +213,7 @@ MyApp.controller('FoodSafetyShiftReportRev2Controller',
             $scope.NewDCModel.txtCustomObservation = "";
         }
         else {
-            alert(xlatService.xlat('ValidObservation'));
+            navigator.notification.alert(xlatService.xlat('ValidObservation'), ['OK'], "");
         }
     }
 
@@ -231,7 +231,7 @@ MyApp.controller('FoodSafetyShiftReportRev2Controller',
             $scope.NewDCModel.txtCustomCorrectiveAction = "";
         }
         else {
-            alert(xlatService.xlat('ValidAction'));
+            navigator.notification.alert(xlatService.xlat('ValidAction'), ['OK'], "");
         }
     }
 
@@ -1901,7 +1901,7 @@ function FoodSafetyShiftReportRev2Facade(parm) {
 
             if (ActionResponseList != undefined) {
                 if (ActionResponseList.length > 1) {
-                    alert('More than one action for a single attribute : Not implemeneted');
+                    navigator.notification.alert(('More than one action for a single attribute : Not implemeneted'), ['OK'], "");
                 }
                 else {
                     for (var i = 0; i < ActionResponseList.length; i++) {

@@ -457,7 +457,7 @@ function MyAuditFacade($scope, $location, xlatService, toaster) {
             OneViewConsole.Debug("DELETE start", "MyAuditFacade.DELETE");
 
             //toaster.pop('info', xlatService.xlat('Title_Notification'), xlatService.xlat('Not_Enabled'));
-            alert(xlatService.xlat('Not_Enabled'));
+            navigator.notification.alert(xlatService.xlat('Not_Enabled'), ['OK'], "");
 
             OneViewConsole.Debug("DELETE end", "MyAuditFacade.DELETE");
         }
@@ -471,7 +471,7 @@ function MyAuditFacade($scope, $location, xlatService, toaster) {
             OneViewConsole.Debug("APPROVE start", "MyAuditFacade.APPROVE");
 
             //toaster.pop('info', xlatService.xlat('Title_Notification'), xlatService.xlat('Not_Enabled'));
-            alert(xlatService.xlat('Not_Enabled'));
+            navigator.notification.alert(xlatService.xlat('Not_Enabled'), ['OK'], "");
 
             OneViewConsole.Debug("APPROVE end", "MyAuditFacade.APPROVE");
         }
@@ -497,7 +497,7 @@ function MyAuditFacade($scope, $location, xlatService, toaster) {
             }
             else {
                 // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No internet connection", "UploadDcFacade.Upload");
             }
 
@@ -528,7 +528,7 @@ function MyAuditFacade($scope, $location, xlatService, toaster) {
             }
             else {
                 //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No internet connection", "UploadDcFacade.Upload");
             }
 
@@ -1600,7 +1600,7 @@ function MyAuditBO($scope, $location, xlatService, toaster) {
                         }
                         else {
                             // toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('UploadFailed'));
-                            alert(xlatService.xlat('UploadFailed'));
+                            navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                         }
 
                         oOneViewProgressbar.Stop();
@@ -1608,13 +1608,13 @@ function MyAuditBO($scope, $location, xlatService, toaster) {
                 }
                 else {
                     //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoDataForUpload'));
-                    alert(xlatService.xlat('NoDataForUpload'));
+                    navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                     OneViewConsole.Info("No dc available", "UploadDcFacade.UploadDcAndAction");
                 }
             }
             else {
                 //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('AlreadyUpload'));
-                alert(xlatService.xlat('AlreadyUpload'));
+                navigator.notification.alert(xlatService.xlat('AlreadyUpload'), ['OK'], "");
                 OneViewConsole.Info("This records already uploaded", "UploadDcFacade.UploadDcAndAction");
             }
 

@@ -183,7 +183,7 @@ function ActionFollowupApprovalPlaceSelectionBO($scope, $compile, $location, xla
                 $scope.PlaceLst = ResponseObj;
             }
             else {
-                alert("Not implemented exception : Templatewise view");
+                navigator.notification.alert("Not implemented exception : Templatewise view", ['OK'], "");
                 //ResponseLst = _oActionFollowupApprovalPlaceSelectionDAO.GetAllTemplates(ServiceId, LoginUserId);
                 //for (var i = 0; i < ResponseLst.length; i++) {
                 //    ResponseLst[i].TotalActions = _oActionFollowupApprovalPlaceSelectionDAO.GetAllActionsCount(ServiceId, -1, ResponseLst[i].Id, LoginUserId);
@@ -276,16 +276,16 @@ function ActionFollowupApprovalPlaceSelectionBO($scope, $compile, $location, xla
                             }
                         }
                         else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {
-                            alert(xlatService.xlat('UploadFailed'));
+                            navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                         }
                     }
                     else {
-                        alert("Not implemented exception : Templatewise upload");
+                        navigator.notification.alert("Not implemented exception : Templatewise upload", ['OK'], "");
                     }
                 }
             }
             else {
-                alert(xlatService.xlat('NoDataForUpload'));
+                navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                 OneViewConsole.Info("No resolve action available", "MyActionFacade.Upload");
             }
 
@@ -974,11 +974,11 @@ function ActionFollowupApprovalUploadBO($scope, xlatService) {
                                 
                                 _oOneViewSqlitePlugin.EndTransaction();
 
-                                alert(xlatService.xlat('UploadSuccess'));
+                                navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
                                 OneViewConsole.Info("Upload success", "ActionFollowupApprovalUploadBO.BulkUpload");
                             }
                             catch (Excep) {
-                                alert(xlatService.xlat('UploadFailedLocal'));
+                                navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
                                 OneViewConsole.Info("Upload failed local", "ActionFollowupApprovalUploadBO.BulkUpload");
                                 _oOneViewSqlitePlugin.Rollback();
                                 IsSuccess = false;
@@ -990,17 +990,17 @@ function ActionFollowupApprovalUploadBO($scope, xlatService) {
                         }
                     }
                     else {
-                        alert(xlatService.xlat('NoDataForUpload'));
+                        navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                         OneViewConsole.Info("No dc available", "ActionFollowupApprovalUploadBO.BulkUpload");
                     }
                 }
                 else {
-                    alert(xlatService.xlat('NoDataForUpload'));
+                    navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                     OneViewConsole.Info("No dc available", "ActionFollowupApprovalUploadBO.BulkUpload");
                 }
             }
             else {
-                alert(xlatService.xlat('NoDataForUpload'));
+                navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                 OneViewConsole.Info("No dc available", "ActionFollowupApprovalUploadBO.BulkUpload");
             }
 
@@ -1198,11 +1198,11 @@ function ActionFollowupApprovalUploadBO($scope, xlatService) {
 
                                 _oOneViewSqlitePlugin.EndTransaction();
 
-                                //alert(xlatService.xlat('UploadSuccess'));
+                                //navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
                                 OneViewConsole.Info("Upload success", "ActionFollowupApprovalUploadBO.BulkUpload");
                             }
                             catch (Excep) {
-                                //alert(xlatService.xlat('UploadFailedLocal'));
+                                //navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
                                 OneViewConsole.Info("Upload failed local", "ActionFollowupApprovalUploadBO.BulkUpload");
                                 _oOneViewSqlitePlugin.Rollback();
                                 IsSuccess = false;
@@ -1214,17 +1214,17 @@ function ActionFollowupApprovalUploadBO($scope, xlatService) {
                         }
                     }
                     else {
-                        alert(xlatService.xlat('NoDataForUpload'));
+                        navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                         OneViewConsole.Info("No dc available", "ActionFollowupApprovalUploadBO.BulkUpload");
                     }
                 }
                 else {
-                    //alert(xlatService.xlat('NoDataForUpload'));
+                    //navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                     OneViewConsole.Info("No dc available", "ActionFollowupApprovalUploadBO.BulkUpload");
                 }
             }
             else {
-               // alert(xlatService.xlat('NoDataForUpload'));
+               // navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                 OneViewConsole.Info("No dc available", "ActionFollowupApprovalUploadBO.BulkUpload");
             }
 

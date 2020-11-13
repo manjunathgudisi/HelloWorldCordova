@@ -749,7 +749,7 @@ function DcProfileDAO() {
 
             if (LeftRightList.length > 0) {
                 if (LeftRightList.length > 1) {
-                    alert("Not implemented exception : " + LeftRightList.length + ", DcProfileDAO.GetProfileDetailsByPlaceGroupId");
+                    navigator.notification.alert(("Not implemented exception : " + LeftRightList.length + ", DcProfileDAO.GetProfileDetailsByPlaceGroupId"), ['OK'], "");
                 }
                 Query = "select ServerId from organizationAssetsNode where [Left]>=" + LeftRightList[0].Left + " and [Right]<=" + LeftRightList[0].Right + " and  childDbElementType = '" + DCPlaceRCOType + "'";
                 

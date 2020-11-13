@@ -766,6 +766,523 @@ function DcDeletion() {
             }
         }
 
+        this.DeleteCompletedItemFromWorkOrder = function (ServiceId, TemplateNodeId, LoginUserId, DcPlaceId) {
+            try {
+                OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder Start", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+
+                var _oDcDeletionBO = new DcDeletionBO();
+                var DeletionData = _oDcDeletionBO.SetMetadata({ ServiceId: ServiceId, DcUserId: LoginUserId, TemplateNodeId: TemplateNodeId, DcPlaceId: DcPlaceId });
+
+                if (DeletionData != null) {
+
+                    if (DeletionData.Configuration.CompletedWorkOrderItems != undefined) {
+                        var ExpiredOrderItems = DeletionData.Configuration.CompletedWorkOrderItems;
+
+                        if (parseInt(ExpiredOrderItems) !== -1) {
+
+                            var oDateTime = new DateTime();
+                            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+
+                            var currentDate = oDateTime.GetDateAndTime();
+                            currentDate = oDateTime.ConvertDateTimeToInteger(currentDate);
+
+                            var Query = "SELECT Id FROM WorkOrderItemDetails WHERE Status='2'";
+
+
+                            var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+/*
+                            if(result.length>0){
+                                for(var d=0;d<result.length;d++){
+                                    
+                                  var DQuery = "Delete FROM WorkOrderItemDetails WHERE id="+result[d].Id+"";
+
+
+                                     oOneViewSqlitePlugin.ExcecuteSqlReader(DQuery);   
+                                    }
+                            }
+*/
+var oItemDAO = new ItemDAO();
+
+oItemDAO.DeleteWorkOrderItems(result);
+                            //_oDcDeletionBO.DeleteWorkOrderItems({ Result: result, DCPlaceNodeId: DeletionData.DCPlaceNodeId, TemplateId: TemplateNodeId });
+                        }
+                    }
+                }
+
+                
+                OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder End", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+            } 
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemInPurchaseOrder", Excep);
+            }
+            finally {
+                //GetDataFromMetaData = null;
+                DeletionData = null;
+                ConfigCount = null;
+                Query = null;
+                result = null;
+                oDcDAO = null;
+            }
+
+
+        }
+
+        this.DeleteExpiredItemFromWorkOrder = function (ServiceId, TemplateNodeId, LoginUserId, DcPlaceId) {
+            try {
+                var _oDcDeletionBO = new DcDeletionBO();
+                var DeletionData = _oDcDeletionBO.SetMetadata({ ServiceId: ServiceId, DcUserId: LoginUserId, TemplateNodeId: TemplateNodeId, DcPlaceId: DcPlaceId });
+                
+                if (DeletionData != null) {
+
+                    if (DeletionData.Configuration.ExpiredWorkOrderItems != undefined) {
+                        var ExpiredOrderItems = DeletionData.Configuration.ExpiredWorkOrderItems;
+
+                        if (parseInt(ExpiredOrderItems) !== -1) {
+
+                            var oDateTime = new DateTime();
+                            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+
+                            var currentDate = oDateTime.GetDateAndTime();
+                            currentDate = oDateTime.ConvertDateTimeToInteger(currentDate);
+
+                            var StartDateValidity = '-32 Hours';
+
+                            var ReqObj = { "TemplateId":TemplateNodeId };
+                            var _oItemDAO = new ItemDAO();
+                            var StartDateAnEndDateConfiguration = _oItemDAO.GetStartDateAnEndDateConfiguration(ReqObj);
+                            StartDateValidity = StartDateAnEndDateConfiguration.GrabageCollectorDate;
+                        
+
+                            var Query = "SELECT DISTINCT WrkOrdrD.Id AS Id,WrkOrdrD.ServerId AS ServerIdorg," +
+                                         //StartDate StartDate(-24 hr)
+                                         "(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,1,4) ||" +
+                                         "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,6,2) ||" +
+                                         "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,9,2) ||" +
+                                         "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,12,2) ||" +
+                                         "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,15,2) ||" +
+                                         "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) ,  '" + StartDateValidity + "')) ,18,2) ) as DStartDate," +
+                                         //StartDate EndDate(+4 hr)
+                                         //"(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,1,4) ||" +
+                                         //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,6,2) ||" +
+                                         //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,9,2) ||" +
+                                         //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,12,2) ||" +
+                                         //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,15,2) ||" +
+                                         //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,18,2) ) as DEndDate," +
+                                         "WrkOrdrD.RequestDate AS RequestDate,WrkOrdrD.StartDate AS StartDate," +
+                                         "(SUBSTR(WrkOrdrD.StartDate, 7, 4) || SUBSTR(WrkOrdrD.StartDate, 4, 2) || SUBSTR(WrkOrdrD.StartDate, 1, 2) || SUBSTR(WrkOrdrD.StartDate, 12, 2) ||  SUBSTR(WrkOrdrD.StartDate, 15, 2) || SUBSTR(WrkOrdrD.StartDate, 18, 2) ) AS StartDate1 " +
+                                         " FROM  WorkOrderItemDetails WrkOrdrD " +
+                                         " WHERE (-1=" + DeletionData.DCPlaceNodeId + " OR  WrkOrdrD.BusinessUnitId=" + DeletionData.DCPlaceNodeId + ") " +
+                                         " AND (   StartDate1 <= DStartDate  )  ";
+
+                            var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+                               /*
+                            if(result.length>0){
+                                for(var d=0;d<result.length;d++){
+                                    
+                                  var DQuery = "Delete FROM WorkOrderItemDetails WHERE id="+result[d].Id+"";
+
+
+                                     oOneViewSqlitePlugin.ExcecuteSqlReader(DQuery);   
+                                    }
+                            }
+*/
+
+var oItemDAO = new ItemDAO();
+
+oItemDAO.DeleteWorkOrderItems(result);
+
+          
+                            //_oDcDeletionBO.DeleteWorkOrderItems({ Result: result, DCPlaceNodeId: DeletionData.DCPlaceNodeId, TemplateId: TemplateNodeId });
+                        }
+                    }
+                }
+                OneViewConsole.Debug("DeleteCompletedSyncAndOnDeviceApprovalFinishedData End", "DcDeletion.DeleteCompletedSyncAndOnDeviceApprovalFinishedData");
+            }
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedSyncAndOnDeviceApprovalFinishedData", Excep);
+            }
+            finally {
+                //GetDataFromMetaData = null;
+                DeletionData = null;
+                ConfigCount = null;
+                Query = null;
+                result = null;
+                oDcDAO = null;
+                oActionDAO = null;
+                _oOneViewSqlitePlugin = null;
+            }
+        }
+
+        this.DeleteCompletedItemForFlightPreparation = function (ServiceId, TemplateNodeId, LoginUserId, DcPlaceId) {
+            try {
+                OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder Start", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+ 
+
+                var Query = GetQueryForCompletedItemForFlightPreparation(TemplateNodeId);
+
+                if (Query != "") {
+                    var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+                    if (result.length > 0) {
+                        var _DcDeletionBO = new DcDeletionBO();
+
+                        //var Incondition = "(";
+
+                        //for (var i = 0; i < Result.length; i++) {
+                        //    Incondition += Result[i].Id;
+                        //    Incondition += (i <= Result.length - 2) ? "," : ")";
+                        //}
+
+                        _DcDeletionBO.DeleteFlightPreparationItemTables(TemplateNodeId, result[0].Id);
+                    }
+                }
+
+
+                OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder End", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+            }
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemInPurchaseOrder", Excep);
+            }
+            finally {
+                //GetDataFromMetaData = null;
+                DeletionData = null;
+                ConfigCount = null;
+                Query = null;
+                result = null;
+                oDcDAO = null;
+            }
+
+
+        }
+
+
+        var GetQueryForCompletedItemForFlightPreparation = function ( TemplateNodeId) {
+            try {
+                OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder Start", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+
+                var Query = "";
+
+                if (TemplateNodeId == 3) {
+                    Query = "SELECT Id FROM FlightBeltPlanDetails WHERE Status='2'";
+                }
+                else if (TemplateNodeId == 26) {
+                    Query = "SELECT Id FROM FlightCellPlanDetails WHERE Status='2'";
+                }
+                else if (TemplateNodeId == 47) {
+                    Query = "SELECT Id FROM PickListMasterDetails WHERE Status='2'";
+                }
+
+                return Query;
+
+                OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder End", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+            }
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemInPurchaseOrder", Excep);
+            }
+            finally {
+                //GetDataFromMetaData = null;
+                DeletionData = null;
+                ConfigCount = null;
+                Query = null;
+                result = null;
+                oDcDAO = null;
+            }
+
+
+        }
+
+
+        this.DeleteExpiredItemForFlightPreparation = function (ServiceId, TemplateNodeId, LoginUserId, DcPlaceId) {
+            try {
+                OneViewConsole.Debug("DeleteExpiredItemForFlightPreparation Start", "DcDeletion.DeleteExpiredItemForFlightPreparation");
+
+
+                //var Query = GetQueryForExpiredItemForFlightPreparation(TemplateNodeId);
+
+                //if (Query != "") {
+                //    var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+                //    if (result.length > 0) {
+                //        var _DcDeletionBO = new DcDeletionBO();                   
+
+                //        var Incondition = "(";
+
+                //        for (var i = 0; i < Result.length; i++) {
+                //            Incondition += Result[i].Id;
+                //            Incondition += (i <= Result.length - 2) ? "," : ")";
+                //        }
+
+                //        _DcDeletionBO.DeleteExpiredFlightPreparationItemTables(TemplateNodeId, Incondition);
+                //    }
+                //}
+
+
+                OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder End", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+            }
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemInPurchaseOrder", Excep);
+            }
+            finally {
+                //GetDataFromMetaData = null;
+                DeletionData = null;
+                ConfigCount = null;
+                Query = null;
+                result = null;
+                oDcDAO = null;
+            }
+
+
+        }
+
+
+        var GetQueryForExpiredItemForFlightPreparation = function (TemplateNodeId) {
+            try {
+                OneViewConsole.Debug("GetQueryForExpiredItemForFlightPreparation Start", "DcDeletion.GetQueryForExpiredItemForFlightPreparation");
+
+                var Query = "";
+
+                var oDateTime = new DateTime();
+                var CurrentDateAndTime = oDateTime.GetDateAndTim
+
+                var ReqObj = { "TemplateId": TemplateNodeId };
+                var _oItemDAO = new ItemDAO();
+                var StartDateAnEndDateConfiguration = _oItemDAO.GetStartDateAnEndDateConfiguration(ReqObj);
+                StartDateValidity = StartDateAnEndDateConfiguration.GrabageCollectorDate;
+
+
+                if (TemplateNodeId == 3) {
+                    Query = "SELECT Id, "+
+                        "(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,1,4) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,6,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,9,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,12,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,15,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) ,  '" + StartDateValidity + "')) ,18,2) ) as DStartDate, " +
+                            "(SUBSTR(ETD, 7, 4) || SUBSTR(ETD, 4, 2) || SUBSTR(ETD, 1, 2) || SUBSTR(ETD, 12, 2) ||  SUBSTR(ETD, 15, 2) || SUBSTR(ETD, 18, 2) ) AS StartDate1 " +
+                            " FROM FlightBeltPlanDetails "+
+                            " WHERE (   StartDate1 <= DStartDate  )";
+                }
+                else if (TemplateNodeId == 26) {
+                    Query = "SELECT Id, " +
+                            "(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,1,4) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,6,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,9,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,12,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,15,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) ,  '" + StartDateValidity + "')) ,18,2) ) as DStartDate, " +
+                            "(SUBSTR(ETD, 7, 4) || SUBSTR(ETD, 4, 2) || SUBSTR(ETD, 1, 2) || SUBSTR(ETD, 12, 2) ||  SUBSTR(ETD, 15, 2) || SUBSTR(ETD, 18, 2) ) AS StartDate1 " +
+                            " FROM FlightCellPlanDetails"+
+                            " WHERE (   StartDate1 <= DStartDate  )";
+                }
+                else if (TemplateNodeId == 47) {
+                    Query = "SELECT Id, " +
+                            "(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,1,4) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,6,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,9,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,12,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,15,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) ,  '" + StartDateValidity + "')) ,18,2) ) as DStartDate, " +
+                            "(SUBSTR(ETD, 7, 4) || SUBSTR(ETD, 4, 2) || SUBSTR(ETD, 1, 2) || SUBSTR(ETD, 12, 2) ||  SUBSTR(ETD, 15, 2) || SUBSTR(ETD, 18, 2) ) AS StartDate1 " +
+                            " FROM FlightOALPlanDetails"+
+                            " WHERE (   StartDate1 <= DStartDate  )";
+                }
+
+                return Query;
+
+                OneViewConsole.Debug("GetQueryForExpiredItemForFlightPreparation End", "DcDeletion.GetQueryForExpiredItemForFlightPreparation");
+            }
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemInPurchaseOrder", Excep);
+            }
+            finally {
+                //GetDataFromMetaData = null;
+                DeletionData = null;
+                ConfigCount = null;
+                Query = null;
+                result = null;
+                oDcDAO = null;
+            }
+
+
+        }
+
+        this.DeleteCompletedItemForASOWorkOrder = function (ServiceId, TemplateNodeId, LoginUserId, DcPlaceId) {
+            try {
+                OneViewConsole.Debug("DeleteCompletedItemForASOWorkOrder Start", "DcDeletion.DeleteCompletedItemForASOWorkOrder");
+
+
+                var Query = "SELECT Id FROM ASOWorkOrderDetails WHERE Status='2'";
+
+                if (Query != "") {
+                    var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+                    if (result.length > 0) {
+                        var _DcDeletionBO = new DcDeletionBO();
+                     
+                        var DeleteQuery = "DELETE FROM ASOWorkOrderDetails WHERE Status='2'";
+
+                        oOneViewSqlitePlugin.ExcecuteSql(DeleteQuery);
+                    }
+                }
+
+
+                OneViewConsole.Debug("DeleteCompletedItemForASOWorkOrder End", "DcDeletion.DeleteCompletedItemForASOWorkOrder");
+            }
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemForASOWorkOrder", Excep);
+            }
+            finally {
+           
+            }
+        }
+
+        this.DeleteExpiredItemForASOWorkOrder = function (ServiceId, TemplateNodeId, LoginUserId, DcPlaceId) {
+            try {
+                OneViewConsole.Debug("DeleteCompletedItemForASOWorkOrder Start", "DcDeletion.DeleteCompletedItemForASOWorkOrder");
+
+                var Query = "";
+
+                var oDateTime = new DateTime();
+                var CurrentDateAndTime = oDateTime.GetDateAndTime();
+                var ReqObj = { "TemplateId": TemplateNodeId };
+                var _oItemDAO = new ItemDAO();
+                var StartDateAnEndDateConfiguration = _oItemDAO.GetStartDateAnEndDateConfiguration(ReqObj);
+                StartDateValidity = StartDateAnEndDateConfiguration.GrabageCollectorDate;
+
+
+               
+                    Query = "SELECT Id, " +
+                        "(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,1,4) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,6,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,9,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,12,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,15,2) ||" +
+                            "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) ,  '" + StartDateValidity + "')) ,18,2) ) as DStartDate, " +
+                            "(SUBSTR(ETD, 7, 4) || SUBSTR(ETD, 4, 2) || SUBSTR(ETD, 1, 2) || SUBSTR(ETD, 12, 2) ||  SUBSTR(ETD, 15, 2) || SUBSTR(ETD, 18, 2) ) AS StartDate1 " +
+                            " FROM ASOWorkOrderDetails " +
+                            " WHERE (   StartDate1 <= DStartDate  )";
+                
+
+                if (Query != "") {
+                    var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+                    if (result.length > 0) {
+                                var _DcDeletionBO = new DcDeletionBO();                   
+
+                                var Incondition = "(";
+
+                                for (var i = 0; i < Result.length; i++) {
+                                    Incondition += Result[i].Id;
+                                    Incondition += (i <= Result.length - 2) ? "," : ")";
+                                }
+
+                                var DeleteQuery = "DELETE FROM ASOWorkOrderDetails WHERE Id in " + Incondition;
+
+
+                                oOneViewSqlitePlugin.ExcecuteSql(DeleteQuery);
+                    }
+                }
+
+
+                OneViewConsole.Debug("DeleteCompletedItemForASOWorkOrder End", "DcDeletion.DeleteCompletedItemForASOWorkOrder");
+            }
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemForASOWorkOrder", Excep);
+            }
+            finally {
+
+            }
+        }
+
+        this.DeleteCompletedItemFromRFLWorkOrder = function (ServiceId, TemplateNodeId, LoginUserId, DcPlaceId) {
+            try {
+                OneViewConsole.Debug("DeleteCompletedItemFromRFLWorkOrder Start", "DcDeletion.DeleteCompletedItemFromRFLWorkOrder");
+
+
+                var Query = "SELECT Id FROM RFLWorkOrder WHERE Status='2'";
+
+                if (Query != "") {
+                    var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+                    if (result.length > 0) {
+                        var _DcDeletionBO = new DcDeletionBO();
+
+                        var DeleteQuery = "DELETE FROM RFLWorkOrder WHERE Status='2'";
+
+                        oOneViewSqlitePlugin.ExcecuteSql(DeleteQuery);
+                    }
+                }
+
+
+                OneViewConsole.Debug("DeleteCompletedItemFromRFLWorkOrder End", "DcDeletion.DeleteCompletedItemFromRFLWorkOrder");
+            }
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemFromRFLWorkOrder", Excep);
+            }
+            finally {
+
+            }
+        }
+
+        this.DeleteExpiredItemFromRFLWorkOrder = function (ServiceId, TemplateNodeId, LoginUserId, DcPlaceId) {
+            try {
+                OneViewConsole.Debug("DeleteExpiredItemFromRFLWorkOrderr Start", "DcDeletion.DeleteExpiredItemFromRFLWorkOrderr");
+
+                var Query = "";
+
+                var oDateTime = new DateTime();
+                var CurrentDateAndTime = oDateTime.GetDateAndTime();
+
+                var ReqObj = { "TemplateId": TemplateNodeId };
+                var _oItemDAO = new ItemDAO();
+                var StartDateAnEndDateConfiguration = _oItemDAO.GetStartDateAnEndDateConfiguration(ReqObj);
+                StartDateValidity = StartDateAnEndDateConfiguration.GrabageCollectorDate;
+
+
+
+                Query = "SELECT Id, " +
+                    "(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,1,4) ||" +
+                        "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,6,2) ||" +
+                        "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,9,2) ||" +
+                        "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,12,2) ||" +
+                        "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,15,2) ||" +
+                        "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) ,  '" + StartDateValidity + "')) ,18,2) ) as DStartDate, " +
+                        "(SUBSTR(ServiceDate, 7, 4) || SUBSTR(ServiceDate, 4, 2) || SUBSTR(ServiceDate, 1, 2) || SUBSTR(ServiceDate, 12, 2) ||  SUBSTR(ServiceDate, 15, 2) || SUBSTR(ServiceDate, 18, 2) ) AS ServiceDate " +
+                        " FROM RFLWorkOrder " +
+                        " WHERE (   ServiceDate <= DStartDate  )";
+
+
+                if (Query != "") {
+                    var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+                    if (result.length > 0) {
+                        var _DcDeletionBO = new DcDeletionBO();
+
+                        var Incondition = "(";
+
+                        for (var i = 0; i < Result.length; i++) {
+                            Incondition += Result[i].Id;
+                            Incondition += (i <= Result.length - 2) ? "," : ")";
+                        }
+
+                        var DeleteQuery = "DELETE FROM RFLWorkOrder WHERE Id in " + Incondition;
+
+
+                        oOneViewSqlitePlugin.ExcecuteSql(DeleteQuery);
+                    }
+                }
+
+
+                OneViewConsole.Debug("DeleteExpiredItemFromRFLWorkOrderr End", "DcDeletion.DeleteExpiredItemFromRFLWorkOrderr");
+            }
+            catch (Excep) {
+                throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteExpiredItemFromRFLWorkOrderr", Excep);
+            }
+            finally {
+
+            }
+        }
 }
 
 
@@ -952,6 +1469,7 @@ function DcProfileDeletionComponent() {
 function DcDeletionBO() {
 
     var MyInstance = this;
+    var _OneViewSqlitePlugin = new OneViewSqlitePlugin();
 
     this.SetMetadata = function (Req) {
         try {
@@ -1025,6 +1543,146 @@ function DcDeletionBO() {
         }
         finally {
         }
+    }
+
+    this.DeleteFlightPreparationItemTables = function (TemplateNodeId, Id) {
+        try {
+            OneViewConsole.Debug("DeleteOrderItems start", "DcDeletionBO.DeleteOrderItems");
+   
+            var FlightOALPlanDetailsDeleteQuery = "";
+            if (TemplateNodeId == 47) {
+                var OALPlanQuery = "SELECT DISTINCT OAL.Id as  Id" +                      
+                       " FROM  FlightOALPlanDetails OAL " +
+                       " INNER JOIN  PickListMasterDetails PickList " +
+                       " ON  PickList.FlightPlanId=OAL.ServerId" +
+                       " AND  PickList.FlightPlanType=OAL.Type" +
+                       " WHERE PickList.Status='2'";
+               
+
+                var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+                if (Result.length > 0) {
+
+                    var Incondition = "(";
+
+                    for (var i = 0; i < Result.length; i++) {
+                        Incondition += Result[i].Id;
+                        Incondition += (i <= Result.length - 2) ? "," : ")";
+                    }
+
+                    FlightOALPlanDetailsDeleteQuery = "DELETE FROM FlightOALPlanDetails WHERE Id IN " + Incondition;
+                }
+            }
+            var Query = MyInstance.GetDeleteQueryForFlightPreparationItemTables(TemplateNodeId, Id);
+            if (Query != "") {
+                _OneViewSqlitePlugin.ExcecuteSql(Query);
+
+                if (FlightOALPlanDetailsDeleteQuery != "" && TemplateNodeId == 47) {
+                    _OneViewSqlitePlugin.ExcecuteSql(FlightOALPlanDetailsDeleteQuery);
+                }
+            }
+
+
+            OneViewConsole.Debug("DeleteOrderItems end", "DcDeletionBO.DeleteOrderItems");
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("BO", "DcDeletionBO.DeleteOrderItems", Excep);
+        }
+        finally {
+        }
+    }
+
+    this.GetDeleteQueryForFlightPreparationItemTables = function (TemplateNodeId,Id) {
+        try {
+            OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder Start", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+
+            var Query = "";     
+
+            if (TemplateNodeId == 3) {
+                Query = "DELETE FROM FlightBeltPlanDetails WHERE Status='2'";
+            }
+            else if (TemplateNodeId == 26) {
+                Query = "DELETE FROM FlightCellPlanDetails WHERE Status='2'";
+            }
+            else if (TemplateNodeId == 47) {
+                Query = "DELETE FROM PickListMasterDetails WHERE Status='2'";
+            }
+
+
+            return Query;
+
+            OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder End", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemInPurchaseOrder", Excep);
+        }
+        finally {
+            //GetDataFromMetaData = null;
+            DeletionData = null;
+            ConfigCount = null;
+            Query = null;
+            result = null;
+            oDcDAO = null;
+        }
+
+
+    }
+
+    this.DeleteExpiredFlightPreparationItemTables = function (TemplateNodeId, IdLst) {
+        try {
+            OneViewConsole.Debug("DeleteOrderItems start", "DcDeletionBO.DeleteOrderItems");
+
+
+
+            var Query = MyInstance.GetDeleteQueryForExpiredFlightPreparationItemTables(TemplateNodeId, IdLst);
+            if (Query != "") {
+                _OneViewSqlitePlugin.ExcecuteSql(Query);
+            }
+
+
+            OneViewConsole.Debug("DeleteOrderItems end", "DcDeletionBO.DeleteOrderItems");
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("BO", "DcDeletionBO.DeleteOrderItems", Excep);
+        }
+        finally {
+        }
+    }
+
+    this.GetDeleteQueryForExpiredFlightPreparationItemTables = function (TemplateNodeId, Id) {
+        try {
+            OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder Start", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+
+            var Query = "";
+
+            if (TemplateNodeId == 3) {
+                Query = "DELETE FROM FlightBeltPlanDetails WHERE Id in " + IdLst;
+            }
+            else if (TemplateNodeId == 26) {
+                Query = "DELETE FROM FlightCellPlanDetails WHERE  Id in " + IdLst;
+            }
+            else if (TemplateNodeId == 47) {
+                Query = "DELETE FROM FlightOALPlanDetails WHERE  Id in " + IdLst;
+            }
+
+
+            return Query;
+
+            OneViewConsole.Debug("DeleteCompletedItemInPurchaseOrder End", "DcDeletion.DeleteCompletedItemInPurchaseOrder");
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "DcDeletion.DeleteCompletedItemInPurchaseOrder", Excep);
+        }
+        finally {
+            //GetDataFromMetaData = null;
+            DeletionData = null;
+            ConfigCount = null;
+            Query = null;
+            result = null;
+            oDcDAO = null;
+        }
+
+
     }
 
 }

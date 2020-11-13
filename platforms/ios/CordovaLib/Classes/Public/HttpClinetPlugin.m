@@ -41,7 +41,92 @@
 
 - (NSString *)  DownloadFile : (NSString *)ServiceURL
 {
-    return @"OneViewAppInfo.DownloadFile : Not implemented exception";
+    //return @"{OneViewAppInfo.DownloadFile : Not implemented exception}";
+	
+	ServiceURL = [ServiceURL stringByReplacingOccurrencesOfString:@"//" withString:@"/"];
+	ServiceURL = [ServiceURL stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setHTTPMethod:@"GET"];
+    [request setURL:[NSURL URLWithString:ServiceURL]];
+
+    //set the content type to JSON
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+	
+	NSError *error = [[NSError alloc] init];
+    NSURLResponse __block *responseCode = nil;
+	NSString __block *localPath = nil;
+	
+    //NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    
+    //NSData *oResponseData = [HttpClinetPlugin sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+	
+	//----------------------
+	dispatch_group_t group = dispatch_group_create();
+    dispatch_group_enter(group);
+	
+	NSURLSessionDownloadTask *downloadTask = [[NSURLSession sharedSession] downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+		
+		//Save image
+		NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+		NSURL *documentsDirectoryURL = [NSURL fileURLWithPath:documentsPath];
+		NSURL *documentURL = [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+		BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:[documentURL path]];
+
+		 if (exists) {
+			NSLog(@"file already existed");
+		 } else {
+			 localPath = [documentURL absoluteString];
+			 responseCode = response;
+			 BOOL isMoved = [[NSFileManager defaultManager] moveItemAtURL:location toURL:documentURL error:nil];
+			 if (isMoved) {
+				 printf("file moved");
+			 }
+		}
+		
+		dispatch_group_leave(group);
+	}];
+	
+	[downloadTask resume];
+
+    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+	//----------------------
+	
+	
+    
+	if(localPath != nil) {
+		 NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+										[NSNumber numberWithInt:200], @"ResponseCode",
+										 @"false", @"IsAnyException",
+										 localPath, @"Response", nil];
+		 
+		 NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error:&error];
+		 NSString *HttpClientResponseDTO = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+		 
+        
+     //   [NSString stringWithFormat:@"{ \"ResponseCode\" : \"%i\" ,\"IsAnyException\" : \"%@\" ,\"Response\" : \"%@\" ",
+       //  [responseCode statusCode], @"true",@""];
+        
+		return HttpClientResponseDTO;
+    } else {
+        NSError *error = [[NSError alloc] init];
+        
+         NSNumber *errocode = @([(NSHTTPURLResponse *)responseCode statusCode]);
+       // NSString *errocode =[@([responseCode statusCode]) stringValue];
+        
+        NSDictionary *jsonDictionaryError = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       errocode, @"ResponseCode",
+                                        @"true", @"IsAnyException",
+                                        @"error", @"Response",nil];
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionaryError options:NSJSONWritingPrettyPrinted error:&error];
+        NSString *HttpClientResponseDTO = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+        
+        return HttpClientResponseDTO;
+    }
+	
 }
 - (NSString *)  Send_Get : (NSString *)url
 {
@@ -82,7 +167,8 @@
     NSString* const kFormBoundary = @"+++++org.apache.cordova.formBoundary";
     
     ////TODO:IOS Migr (Need to support with space)
-    upLoadServerUri = [upLoadServerUri stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //upLoadServerUri = [upLoadServerUri stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	upLoadServerUri = [upLoadServerUri stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     // sourceFileUri=[NSString stringByAddingPercentEscapesUsingEncoding:sourceFileUri];
     
@@ -182,8 +268,6 @@
                      : (NSString *)IpAddress : (NSString *)LoginUserName : (NSString *)VersionName : (NSString *)ServiceId :(NSString *)ServiceName
 {
     
- 
-    
     NSData *requestData = [NSData dataWithBytes:[ReqParm UTF8String] length:[ReqParm length]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -194,13 +278,34 @@
     //set the content type to JSON
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
-//    [request setValue:DeviceId forHTTPHeaderField:@"DeviceId"];
-//    [request setValue:LoginUserId forHTTPHeaderField:@"LoginUserId"];
-//    [request setValue:IpAddress forHTTPHeaderField:@"IpAddress"];
-//    [request setValue:LoginUserName forHTTPHeaderField:@"LoginUserName"];
-//    [request setValue:VersionName forHTTPHeaderField:@"VersionName"];
-//    [request setValue:ServiceId forHTTPHeaderField:@"ServiceId"];
-//    [request setValue:ServiceName forHTTPHeaderField:@"ServiceName"];
+	
+	if (DeviceId != NULL && DeviceId.length > 0 && [DeviceId.lowercaseString isEqualToString:@"null"] == false) {
+		[request setValue:DeviceId forHTTPHeaderField:@"DeviceId"];
+	}
+	
+	if (LoginUserId != NULL && LoginUserId.length > 0 && [LoginUserId.lowercaseString isEqualToString:@"null"] == false) {
+		[request setValue:LoginUserId forHTTPHeaderField:@"LoginUserId"];
+	}
+	
+	if (IpAddress != NULL && IpAddress.length > 0 && [IpAddress.lowercaseString isEqualToString:@"null"] == false) {
+		[request setValue:IpAddress forHTTPHeaderField:@"IpAddress"];
+	}
+	
+	if (LoginUserName != NULL && LoginUserName.length > 0 && [LoginUserName.lowercaseString isEqualToString:@"null"] == false) {
+		[request setValue:LoginUserName forHTTPHeaderField:@"LoginUserName"];
+	}
+	
+	if (VersionName != NULL && VersionName.length > 0 && [VersionName.lowercaseString isEqualToString:@"null"] == false) {
+		[request setValue:VersionName forHTTPHeaderField:@"VersionName"];
+	}
+	
+	if (ServiceId != NULL && ServiceId.length > 0 && [ServiceId.lowercaseString isEqualToString:@"null"] == false) {
+		[request setValue:ServiceId forHTTPHeaderField:@"ServiceId"];
+	}
+	
+	if (ServiceName != NULL && ServiceName.length > 0 && [ServiceName.lowercaseString isEqualToString:@"null"] == false) {
+		[request setValue:ServiceName forHTTPHeaderField:@"ServiceName"];
+	}
     
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *responseCode = nil;

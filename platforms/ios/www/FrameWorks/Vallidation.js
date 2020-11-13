@@ -42,12 +42,12 @@ function VallidationHandler() {
                             if (oDefaultValidationResponse.IsErrorMessageExecuted == false) {
 
                                 if (oDefaultValidationResponse.FinalFormatedMessage != undefined && oDefaultValidationResponse.FinalFormatedMessage != '') {
-                                    alert(xlatService.xlat(oDefaultValidationResponse.MessageKey));
+                                    navigator.notification.alert(xlatService.xlat(oDefaultValidationResponse.MessageKey), ['OK'], "");
                                    // toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat(oDefaultValidationResponse.MessageKey));
                                 }
 
                                 else {
-                                    alert(xlatService.xlat(oDefaultValidationResponse.MessageKey));
+                                    navigator.notification.alert(xlatService.xlat(oDefaultValidationResponse.MessageKey), ['OK'], "");
                                    // toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat(oDefaultValidationResponse.MessageKey));
                                 }
                                // $scope.$apply();

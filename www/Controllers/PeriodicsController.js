@@ -235,15 +235,15 @@ function PlatformPeriodicsFacade(param) {
             var Response = oPeriodicalWorkComponent.SaveTemplateWise('SaveValidationMetaData', IsSaveDraft);
             if (Response.IsSuccess == true) {
                 if (Response.NumOfRecordsSaved == 0) {
-                    alert(xlatService.xlat('No records to save'));
+                    navigator.notification.alert(xlatService.xlat('No records to save'), ['OK'], "");
                 }
                 else {
-                    alert(xlatService.xlat(Response.NumOfRecordsSaved) + " " + xlatService.xlat('Records Saved Successfully'));
+					navigator.notification.alert(xlatService.xlat(Response.NumOfRecordsSaved) + " " + xlatService.xlat('Records Saved Successfully'), ['OK'], "");
                 }
             }
             else {
                 if (Response.NumOfRecordsSaved == 0) {
-                    alert(xlatService.xlat('No records to save'));
+                    navigator.notification.alert(xlatService.xlat('No records to save'), ['OK'], "");
                 }
                 else {
                     alert(xlatService.xlat('Please enter ') + Response.Message);
@@ -302,15 +302,15 @@ function PlatformPeriodicsFacade(param) {
                 Response = oPeriodicalWorkComponent.SaveTemplateWise('SubmitValidationMetaData');
                 if (Response.IsSuccess == true) {
                     if (Response.NumOfRecordsSaved == 0) {
-                        alert(xlatService.xlat('No records to save'));
+                        navigator.notification.alert(xlatService.xlat('No records to save'), ['OK'], "");
                     }
                     else {
-                        alert(xlatService.xlat(Response.NumOfRecordsSaved) + " " + xlatService.xlat('Records Submit Successfully'));
+						navigator.notification.alert(xlatService.xlat(Response.NumOfRecordsSaved) + " " + xlatService.xlat('Records Submit Successfully'), ['OK'], "");
                     }
                 }
                 else {
                     //if (Response.NumOfRecordsSaved == 0) {
-                    //    alert(xlatService.xlat('No records to save'));
+                    //    navigator.notification.alert(xlatService.xlat('No records to save'), ['OK'], "");
                     //}
                     //else {
                         alert(xlatService.xlat('Please enter ') + Response.Message);
@@ -458,7 +458,7 @@ function PlatformPeriodicsFacade(param) {
                     }
                     else {
                         IsValid = false;
-                        alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"));
+                        navigator.notification.alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"), ['OK'], "");
                     }
                 }
 
@@ -468,7 +468,7 @@ function PlatformPeriodicsFacade(param) {
                 }
             }
             else {
-                alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"));
+                navigator.notification.alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"), ['OK'], "");
             }
 
             //alert(JSON.stringify(LVActionResult[RuleId]));

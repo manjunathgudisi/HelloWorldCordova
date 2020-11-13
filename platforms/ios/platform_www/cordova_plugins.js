@@ -397,6 +397,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "merges": [
         "navigator"
       ]
+    },
+    {
+      "id": "cordova-plugin-activityindicator.ActivityIndicator",
+      "file": "plugins/cordova-plugin-activityindicator/www/activityIndicator.js",
+      "pluginId": "cordova-plugin-activityindicator",
+      "clobbers": [
+        "ActivityIndicator"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -415,6 +423,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-network-information": "2.0.2",
     "cordova-plugin-splashscreen": "5.0.3",
     "cordova-plugin-vibration": "3.1.1",
-    "cordova-plugin-whitelist": "1.3.3"
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-activityindicator": "1.0.0"
   };
 });

@@ -63,6 +63,10 @@
             {
               "xml": "<feature name=\"NativeStorage\"><param name=\"android-package\" value=\"NativeStorage\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"ActivityIndicator\"><param name=\"android-package\" value=\"org.apache.cordova.plugin.ActivityIndicator\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -677,6 +681,9 @@
     },
     "cordova-plugin-nativestorage": {
       "PACKAGE_NAME": "org.winaim.oneview"
+    },
+    "cordova-plugin-activityindicator": {
+      "PACKAGE_NAME": "org.winaim.oneview"
     }
   },
   "dependent_plugins": {},
@@ -1066,6 +1073,14 @@
       "id": "cordova-plugin-nativestorage.NativeStorageError",
       "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
       "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
+      "id": "cordova-plugin-activityindicator.ActivityIndicator",
+      "file": "plugins/cordova-plugin-activityindicator/www/activityIndicator.js",
+      "pluginId": "cordova-plugin-activityindicator",
+      "clobbers": [
+        "ActivityIndicator"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -1083,6 +1098,7 @@
     "cordova-plugin-vibration": "3.1.1",
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-network-information": "2.0.2",
-    "cordova-plugin-nativestorage": "2.3.2"
+    "cordova-plugin-nativestorage": "2.3.2",
+    "cordova-plugin-activityindicator": "1.0.0"
   }
 }

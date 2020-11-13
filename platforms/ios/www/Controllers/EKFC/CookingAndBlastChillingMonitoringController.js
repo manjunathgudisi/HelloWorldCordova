@@ -140,7 +140,7 @@ MyApp.controller('CookingAndBlastChillingMonitoringController',
                 $location.url('/ViewRecords');
             }
             else {
-                alert(xlatService.xlat('No_Records_Available'));
+                navigator.notification.alert(xlatService.xlat('No_Records_Available'), ['OK'], "");
                // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('No_Records_Available'));
             }
         };
@@ -1007,7 +1007,7 @@ function CookingAndBlastChillingMonitoringFacade(parm) {
 
                 if (ActionResponseList != undefined) {
                     if (ActionResponseList.length > 1) {
-                        alert('More than one action for a single attribute : Not implemeneted');
+                        navigator.notification.alert(('More than one action for a single attribute : Not implemeneted'), ['OK'], "");
                     }
                     else {
                         for (var i = 0; i < ActionResponseList.length; i++) {
@@ -1322,7 +1322,7 @@ function CookingAndBlastChillingMonitoringFacade(parm) {
                 saveButton.addEventListener("click", function (event) {                
                     //alert(signaturePad.toDataURL().length);
                     if (signaturePad.isEmpty()) {
-                        alert("MN-RQ-NCF-001 :: Please provide signature first.");
+                        navigator.notification.alert("MN-RQ-NCF-001 :: Please provide signature first.", ['OK'], "");
                     } else {
                         MyInstance.SaveSignature('DCBoutNCSignature', signaturePad);
                     }
@@ -2249,14 +2249,14 @@ function CookingAndBlastChillingMonitoringFacade(parm) {
                             isNC = true;
                             //Pre-chiller Time In is expected to be 30 minutes less than Cooking Time 
                             if (SelectedControlId != 'DTBlastChillerTimeInControlId')
-                                alert(xlatService.xlat('Pre_CookingTimeNCMsg'));
+                                navigator.notification.alert(xlatService.xlat('Pre_CookingTimeNCMsg'), ['OK'], "");
                         }
                     }
                     else if (DTBlastChillerTimeIn != '') {
                         //Blast Chiller Time In is expected to be 30 minutes less than Cooking Time 
                         if (BlastIn_CookingTimeDiff > 30) {
                             isNC = true;
-                            alert(xlatService.xlat('BlastIn_CookingTimeNCMsg'));
+                            navigator.notification.alert(xlatService.xlat('BlastIn_CookingTimeNCMsg'), ['OK'], "");
                         }
                     }
                 }
@@ -2279,7 +2279,7 @@ function CookingAndBlastChillingMonitoringFacade(parm) {
         }
 
         var SHowNCMessage = function () {
-            alert('Max 30 mins allowed after time of cooking');
+            navigator.notification.alert('Max 30 mins allowed after time of cooking', ['OK'], "");
         }
 
 
@@ -2380,7 +2380,7 @@ function CookingAndBlastChillingMonitoringFacade(parm) {
                         //show message
                         //Pre-chiller Time Out is expected to be less than 4 hours 
                         if (SelectedControlId != 'DTBlastChillerTimeInControlId' && SelectedControlId != 'DTBlastChillerTimeOutControlId')
-                            alert(xlatService.xlat('Pre_InOutTimeNCMsg'));
+                            navigator.notification.alert(xlatService.xlat('Pre_InOutTimeNCMsg'), ['OK'], "");
                     }
 
                     else if (DTBlastChillerTimeOut != undefined && DTBlastChillerTimeOut != ''  && PreIn_BlastOutTimeDiff > 240) {
@@ -2389,7 +2389,7 @@ function CookingAndBlastChillingMonitoringFacade(parm) {
                         //show message
                         //Blast Chiller Time Out is expected to be less than 4 hours 
                         if (SelectedControlId != 'DTPreChillerTimeOutControlId' && SelectedControlId != 'DTBlastChillerTimeInControlId')
-                            alert(xlatService.xlat('PreIn_BlastOutTimeNCMsg'));
+                            navigator.notification.alert(xlatService.xlat('PreIn_BlastOutTimeNCMsg'), ['OK'], "");
 
                     }
                 }
@@ -2402,7 +2402,7 @@ function CookingAndBlastChillingMonitoringFacade(parm) {
                         //show message
                         //Blast Chiller Time Out is expected to be less than 4 hours 
                         if (SelectedControlId != 'DTPreChillerTimeInControlId' && SelectedControlId != 'DTPreChillerTimeOutControlId')
-                            alert(xlatService.xlat('Blast_InOutTimeNCMsg'));
+                            navigator.notification.alert(xlatService.xlat('Blast_InOutTimeNCMsg'), ['OK'], "");
                     }
                 }
 
@@ -2426,7 +2426,7 @@ function CookingAndBlastChillingMonitoringFacade(parm) {
         }
 
         var ShowPreBlastChillerNCMessage = function () {
-            alert('Max 4 hours allowed in pre/blast chiller');
+            navigator.notification.alert('Max 4 hours allowed in pre/blast chiller', ['OK'], "");
         }
 
 

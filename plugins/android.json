@@ -49,6 +49,9 @@
     },
     "cordova-plugin-nativestorage": {
       "PACKAGE_NAME": "org.winaim.oneview"
+    },
+    "cordova-plugin-activityindicator": {
+      "PACKAGE_NAME": "org.winaim.oneview"
     }
   },
   "dependent_plugins": {

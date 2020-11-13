@@ -171,7 +171,7 @@ function DcApprovalBO() {
                 var ApprovalProfileLst = _oDcApprovalProfileDAO.GetByAllDimensions(Req);
 
                 if (ApprovalProfileLst.length == 0) {
-                    //alert("Approval profile not exist");
+                    //navigator.notification.alert("Approval profile not exist", ['OK'], "");
                     Response = null;
                 }
                 else if (ApprovalProfileLst.length > 0) {
@@ -186,7 +186,7 @@ function DcApprovalBO() {
 
                 }
                 //else if (ApprovalProfileLst.length > 1) {
-                //    alert("More than one approve profile not implemented");
+                //    navigator.notification.alert("More than one approve profile not implemented", ['OK'], "");
                 //}
 
             }
@@ -215,18 +215,18 @@ function DcApprovalBO() {
          
                 //Req:{Userid,:13,TemplateNodeId:3,PlaceID:4,PlaceTypeID:201}
             ApprovalProfileLst = GetApprovalProfile({ UserId: Req.UserId, TemplateNodeId: Req.TemplateNodeId, PlaceID: Req.PlaceId, DCPlaceRCOType: Req.DCPlaceRCOType, ApprovalProfileLst: ApprovalProfileLst });
-            alert("ApprovalProfile : " + JSON.stringify(ApprovalProfile));
+            navigator.notification.alert(("ApprovalProfile : " + JSON.stringify(ApprovalProfile)), ['OK'], "");
             var Response = [];
 
             if (ApprovalProfileLst != null) {
 
                 if (Req.DcClientGuidLst.length > 1) {
 
-                    alert("More than one datacapture approve not implemented");
+                    navigator.notification.alert(("More than one datacapture approve not implemented"), ['OK'], "");
                 }
                 else if (Req.DcClientGuidLst.length == 0) {
 
-                    alert("Not implemented");
+                    navigator.notification.alert(("Not implemented"), ['OK'], "");
                 }
                 else {
 
@@ -239,7 +239,7 @@ function DcApprovalBO() {
 
             }
             else {
-                alert("Profile Not exist");
+                navigator.notification.alert("Profile Not exist", ['OK'], "");
             }
 
             OneViewConsole.Debug("GetApprovalInfo end", "DcApprovalBO.GetApprovalInfo");
@@ -298,7 +298,7 @@ function DcApprovalBO() {
 
 
             if (ApprovalProfile.length == 0) {
-                alert("Approval profile not exist");
+                navigator.notification.alert("Approval profile not exist", ['OK'], "");
 
             }
             else if (ApprovalProfile.length == 1) {
@@ -318,12 +318,12 @@ function DcApprovalBO() {
                 }
                 else {
 
-                    alert("Datacapture already approved");
+                    navigator.notification.alert("Datacapture already approved", ['OK'], "");
                 }
 
             }
             else if (ApprovalProfileLst.length > 1) {
-                alert("More than one approve profile not implemented");
+                navigator.notification.alert("More than one approve profile not implemented", ['OK'], "");
             }
 
 
@@ -401,7 +401,7 @@ function DcApprovalBO() {
             //var DCPlaceRCOType = Req.DCPlaceRCOType;       
             var DCPlaceRCOType = 201;
             var ApprovalProfileLst = Req.ApprovalProfileLst;
-            alert("Req : " + JSON.stringify(Req));
+            navigator.notification.alert(("Req : " + JSON.stringify(Req)), ['OK'], "");
             for (var i = 0; i < ApprovalProfileLst.length; i++) {
                 
                 if (ApprovalProfileLst[i].DcPlaceType == DCPlaceRCOType && ApprovalProfileLst[i].DcPlaceId == DcPlaceId && ApprovalProfileLst[i].TemplateNodeId == TemplateNodeId && ApprovalProfileLst[i].DcUserId == UserId) {
@@ -1193,7 +1193,7 @@ function DcApprovalBO() {
                     var currentoDcApprovalLevelInfoJSON = JSON.stringify(oDcApprovalLevelInfo);
                     if (currentoDcApprovalLevelInfoJSON != tempDcApprovalLevelInfo) {
                         ValidationFailed = true;
-                        alert("Approval Config mismatch");
+                        navigator.notification.alert("Approval Config mismatch", ['OK'], "");
                         break;
                     }
                 }
@@ -1241,7 +1241,7 @@ function DcApprovalBO() {
 
                         if (DcInfo.DcPlaceId != TempPlaceId) {
                             ValidationFailed = true;
-                            alert("Approval Config mismatch");
+                            navigator.notification.alert("Approval Config mismatch", ['OK'], "");
                             break;
                         }
                     }

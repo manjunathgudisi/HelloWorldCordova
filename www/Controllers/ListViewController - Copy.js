@@ -6525,7 +6525,7 @@
                 try {
                     OneViewConsole.Debug("Notify Start", "LVDefaultNotificationComponent.ShowDefaultJavaScriptAlert");
 
-                    alert(Msg);
+                    navigator.notification.alert(msg, ['OK'], "");
 
                     OneViewConsole.Debug("Notify End", "LVDefaultNotificationComponent.ShowDefaultJavaScriptAlert");
                 }

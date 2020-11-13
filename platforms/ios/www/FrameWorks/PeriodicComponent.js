@@ -27,8 +27,8 @@ function PeriodicalWorkComponent(xlatService) {
     var MyInstance = this;
     var oPeriodicalWorkHtmlComponent = new PeriodicalWorkHtmlComponent(xlatService);
     var oDOM = new DOM();
-    var DcPlaceId = OneViewSessionStorage.Get('DcPlaceId');    
-    var DcPlaceDimension = DATEntityType.OrganizationAssestsNode;   
+    var DcPlaceId = OneViewSessionStorage.Get('DcPlaceId');
+    var DcPlaceDimension = DATEntityType.OrganizationAssestsNode;
     var LoginUserId = OneViewSessionStorage.Get('LoginUserId');
     var ServiceId = OneViewSessionStorage.Get('ServiceId');
     var oModelOperationComponent = new ModelOperationComponent();
@@ -37,14 +37,14 @@ function PeriodicalWorkComponent(xlatService) {
         try {
             OneViewConsole.Debug("GetIsProfileValid Start", "PeriodicalWorkComponent.GetIsProfileValid");
             
-            var IsValid = false;           
+            var IsValid = false;
 
             CompleteDcStatusCountDict = MyInstance.GetDcStatusCountByTemplateGroup(MainGroupId);
 
             PeriodicPropertyToAccess = 'OverAllCompletedDCCount';
             if (IsPeriodicApprovalProfileExists == true) {
                 PeriodicPropertyToAccess = 'OverAllApprovedDCCount';
-            }            
+            }
 
             //alert('IsApprovalProfileExists : ' + IsApprovalProfileExists + ', OverAllApprovedDCCount : ' + CompleteDcStatusCountDict.OverAllApprovedDCCount +
             //    ' , OverAllCompletedDCCount : ' + CompleteDcStatusCountDict.OverAllCompletedDCCount + ' , Occurrence : ' + CompleteDcStatusCountDict.Occurrence);
@@ -52,7 +52,7 @@ function PeriodicalWorkComponent(xlatService) {
             if (IsPeriodicApprovalProfileExists == true) {
                 if (CompleteDcStatusCountDict.OverAllApprovedDCCount < CompleteDcStatusCountDict.Occurrence) {
                     IsValid = true;
-                }            
+                }
             }
             else {
                 if (CompleteDcStatusCountDict.OverAllCompletedDCCount < CompleteDcStatusCountDict.Occurrence) {
@@ -84,7 +84,7 @@ function PeriodicalWorkComponent(xlatService) {
                 //Compare the valid templates as the schedule and FullHierarchy
                 //and form the hierarchy
                 var FormedHierarchy = MyInstance.SetHierarchy(FullTemplateHierarchyist, ValidTemplatesResponse.ValidProfileList);
-                ValidatedHierarchyResponse = MyInstance.ValidateHierarchy(FormedHierarchy);               
+                ValidatedHierarchyResponse = MyInstance.ValidateHierarchy(FormedHierarchy);
             }
 
             OneViewConsole.Debug("LoadValidTemplates End", "PeriodicalWorkComponent.LoadValidTemplates");
@@ -147,7 +147,7 @@ function PeriodicalWorkComponent(xlatService) {
             var ParentNodeId=MainGroupData.ServerId;
 
             for (var i = 1; i < FullTemplateHierarchyist.length; i++) {
-                var Level = 1;               
+                var Level = 1;
                 var Element = FullTemplateHierarchyist[i];
                 ParentNodeId = Element.ServerId;
             }
@@ -215,7 +215,7 @@ function PeriodicalWorkComponent(xlatService) {
         try {
             OneViewConsole.Debug("FormHTML Start", "PeriodicalWorkComponent.FormHTML");
           
-            var Html = MyInstance.GetHTML(Childs);            
+            var Html = MyInstance.GetHTML(Childs);
             MyInstance.AppendHTML(Html,"TasksDivId");
 
             OneViewConsole.Debug("FormHTML End", "PeriodicalWorkComponent.FormHTML");
@@ -257,14 +257,14 @@ function PeriodicalWorkComponent(xlatService) {
             for (var i = 0; i < Childs.length; i++) {
                 var IsDisable = false;
                 var ElementDetails = Childs[i];
-                // alert('ElementDetails : ' + JSON.stringify(ElementDetails));     
+                // alert('ElementDetails : ' + JSON.stringify(ElementDetails));
                 var SubGroupData = CompleteDcStatusCountDict.TemplateInfo[ElementDetails.Id];
                 if (SubGroupData != undefined) {
                     //alert(PeriodicPropertyToAccess + ', SubGroupData : ' + JSON.stringify(SubGroupData) + " ," + JSON.stringify(ElementDetails));
                     if (ElementDetails.IsTemplate != true) {
                         if (SubGroupData.Occurrence <= SubGroupData[PeriodicPropertyToAccess]) {
                             IsDisable = true;
-                        }                        
+                        }
                         MyInstance.ShowHideDCButton(false);
                         Html += oPeriodicalWorkHtmlComponent.GetLevelWiseHtml(ElementDetails, SubGroupData, IsDisable);
                     }
@@ -336,8 +336,8 @@ function PeriodicalWorkComponent(xlatService) {
         try {
             OneViewConsole.Debug("UpdateHierachy Start", "PeriodicalWorkComponent.UpdateHierachy");
 
-            var Len = BreadCrumbs.length;         
-            BreadCrumbs.push(Index);            
+            var Len = BreadCrumbs.length;
+            BreadCrumbs.push(Index);
             //alert('BreadCrumbs push : ' + JSON.stringify(BreadCrumbs));
             OneViewConsole.Debug("UpdateHierachy End", "PeriodicalWorkComponent.UpdateHierachy");
 
@@ -389,7 +389,7 @@ function PeriodicalWorkComponent(xlatService) {
                     oScope.ShowBackDiv = true;
                     oScope.ShowFooterDiv = true;
                     oDOM.AddClass('MainContentDivId', 'has-header');
-                    oDOM.AddClass('MainContentDivId', 'has-footer');                  
+                    oDOM.AddClass('MainContentDivId', 'has-footer');
                 }
                 else {
                     oScope.ShowBackDiv = false;
@@ -400,8 +400,8 @@ function PeriodicalWorkComponent(xlatService) {
 
                 oScope.$apply();
                 MyInstance.LoadBlockerProfiles(TemplateNodeId);
-                MyInstance.LoadTemplateConfigMetadata(TemplateNodeId);                
-                MyInstance.LoadAttributeOtherConfig(TemplateNodeId);               
+                MyInstance.LoadTemplateConfigMetadata(TemplateNodeId);
+                MyInstance.LoadAttributeOtherConfig(TemplateNodeId);
                 MyInstance.LoadActionNCProfile(TemplateNodeId);
                 MyInstance.LoadTemplateValidationConfigMetaData(TemplateNodeId);
                 MyInstance.LoadTemplateUIEventJobConfigMetaData(TemplateNodeId)
@@ -429,7 +429,7 @@ function PeriodicalWorkComponent(xlatService) {
             
             if (BreadCrumbs.length > 0) {
                 IsSuccess = true;
-            }          
+            }
            
             OneViewConsole.Debug("ShowBackButton End", "PeriodicalWorkComponent.ShowBackButton");
 
@@ -451,7 +451,7 @@ function PeriodicalWorkComponent(xlatService) {
             if (IsShowDCButton == true) {
                 oScope.ShowSaveDiv = true;
                 oScope.ShowSubmitDiv = true;
-                oScope.ShowSearchDiv = true;                
+                oScope.ShowSearchDiv = true;
             }
             else {
                 oScope.ShowSaveDiv = false;
@@ -543,13 +543,13 @@ function PeriodicalWorkComponent(xlatService) {
 
     this.InitializeModel = function (Childs) {
         try {
-            OneViewConsole.Debug("InitializeModel Start", "PeriodicalWorkComponent.InitializeModel");           
+            OneViewConsole.Debug("InitializeModel Start", "PeriodicalWorkComponent.InitializeModel");
 
             for (var i = 0; i < Childs.length; i++) {
                 var ElementDetails = Childs[i];
                 if (ElementDetails.IsTemplate == true) {
                     var TemplateNodeId = ElementDetails.Id;
-                    var ValidProfileData = CompleteDcStatusCountDict.TemplateInfo[TemplateNodeId];                    
+                    var ValidProfileData = CompleteDcStatusCountDict.TemplateInfo[TemplateNodeId];
                     if (ValidProfileData != undefined) {
                         var TemplateConfigMetadata = MyInstance.GetTemplateConfigMetadata(TemplateNodeId);
                         if (TemplateConfigMetadata != undefined) {
@@ -558,7 +558,7 @@ function PeriodicalWorkComponent(xlatService) {
                             // var LastDcInfoList = MyInstance.GetLastDcInfo(LoginUserId, TemplateNodeId, DcPlaceId, DcPlaceDimension);
                             var TemplateDCStatus = MyInstance.GetTemplateDCStatus(LoginUserId, TemplateNodeId, DcPlaceId, DcPlaceDimension);
                             
-                            if (TemplateDCStatus != null) {                              
+                            if (TemplateDCStatus != null) {
                                 var LastDCInfo = TemplateDCStatus.LastDCInfo;
                                 var AnswerModes = TemplateChilds.AnswerModes;
                                 var _LVTemplateResult = {};
@@ -594,7 +594,7 @@ function PeriodicalWorkComponent(xlatService) {
                                         else if (DBAnswerList.length == 1) {
                                             DBAnswerList[0].ESTTime = TemplateChilds.ESTTime;
                                             DBAnswerList[0].IsNA = LastDCInfo.IsNA;
-                                            _LVTemplateResult = oModelOperationComponent.InitModel(TemplateNodeId, TemplateConfigMetadata.TemplateName, AttributeId, DBAnswerList[0], TemplateDCStatus.DcProfileServerId, AnswerModes[j].ControlId, _LVTemplateResult, AnswerMode);                                           
+                                            _LVTemplateResult = oModelOperationComponent.InitModel(TemplateNodeId, TemplateConfigMetadata.TemplateName, AttributeId, DBAnswerList[0], TemplateDCStatus.DcProfileServerId, AnswerModes[j].ControlId, _LVTemplateResult, AnswerMode);
                                             MyInstance.InitializeMultiMediaSubElementsModel(AnswerMode.Type,TemplateNodeId, AttributeId, AnswerModes[j].ControlId, DCResultId, DBAnswerList[0].DCResultDetailClientGuid);
                                         }
                                         //for (var k = 0; k < LastDcInfoList.length ; k++) {
@@ -733,7 +733,7 @@ function PeriodicalWorkComponent(xlatService) {
                // alert(PeriodicPropertyToAccess + ', TemplateDCStatus : ' + JSON.stringify(TemplateDCStatus));
                // alert('LVTemplateResult : ' + JSON.stringify(LVTemplateResult));
                 if ((TemplateDCStatus.Occurrence >= TemplateDCStatus[PeriodicPropertyToAccess]) && (LVTemplateResult != undefined && Object.keys(LVTemplateResult).length > 0)
-                && ((IsPeriodicApprovalProfileExists == true && (DcDetails.IsOnDeviceApprovalFinished != true && DcDetails.IsOnDeviceApprovalFinished != 'true')) || IsPeriodicApprovalProfileExists != true)) {//   
+                && ((IsPeriodicApprovalProfileExists == true && (DcDetails.IsOnDeviceApprovalFinished != true && DcDetails.IsOnDeviceApprovalFinished != 'true')) || IsPeriodicApprovalProfileExists != true)) {//
                     var ValidationResponse = MyInstance.CheckSaveSubmitValidation(OperationName, TemplateId);
                     //alert('ValidationResponse : ' + JSON.stringify(ValidationResponse));
                     if (ValidationResponse.IsSuccess == true) {
@@ -760,7 +760,7 @@ function PeriodicalWorkComponent(xlatService) {
 
                         //Save/Submit
                         if (DcDetails.DataCaptureId == 0) {
-                            var LVDcStartDate = new DateTime().GetDateAndTime();                          
+                            var LVDcStartDate = new DateTime().GetDateAndTime();
 
                             var TemplateWiseSaveResponse = oPeriodicLVDataCaptureBO.Save(LVTemplateResult, LVDcStartDate, IsCompleted, LVDCSummary, IsSubmit, MultiMediaSubElementsAnswerModeDict);
                             var DcInfo = TemplateWiseSaveResponse.DcInfo;
@@ -1094,7 +1094,7 @@ function PeriodicalWorkComponent(xlatService) {
                 var TemplateId = TemplateIdList[i];
                 if (CompletePeriodicActionNCProfileDict[TemplateId] == undefined) {
                    // alert('LoadActionNCProfile : '+ ServiceId + "," + LoginUserId + "," + TemplateId + "," + DcPlaceId + "," + DcPlaceDimension);
-                    var MetaData = GetActionNCMetaData(ServiceId, LoginUserId, TemplateId, DcPlaceId, DcPlaceDimension);                  
+                    var MetaData = GetActionNCMetaData(ServiceId, LoginUserId, TemplateId, DcPlaceId, DcPlaceDimension);
                     if (MetaData != null) {
                         CompletePeriodicActionNCProfileDict[TemplateId] = MetaData;
                     }
@@ -1204,7 +1204,7 @@ function PeriodicalWorkComponent(xlatService) {
                 "78": {
                     'ServiceId': 17,
                     'TemplateNodeId': 2,
-                    'AttributeWiseActionNCConfig': {                       
+                    'AttributeWiseActionNCConfig': {
                         "79": [
                                     {
                                         "Rule": null,
@@ -1363,14 +1363,14 @@ function PeriodicalWorkComponent(xlatService) {
             OneViewConsole.Debug("UpdatePeriodicTemplateResultModel Start", "PeriodicalWorkHtmlComponent.UpdatePeriodicTemplateResultModel");
 
             for (var itrAttributes in LVTemplateResult) {
-                //alert(JSON.stringify(LVTemplateResult[itrAttributes]));                                
+                //alert(JSON.stringify(LVTemplateResult[itrAttributes]));
                 var oAnswers = LVTemplateResult[itrAttributes].Answers;
                 for (var i = 0; i < oAnswers.length; i++) {
                     oAnswers[i].ClientId = DcInfo.DcResultDetails[oAnswers[i].ControlId].ClientId;
                     oAnswers[i].ClientGuid = DcInfo.DcResultDetails[oAnswers[i].ControlId].ClientGuid;
                     // oAnswers[i].IsModified = false;
                 }
-            }          
+            }
        
             OneViewConsole.Debug("UpdatePeriodicTemplateResultModel End", "PeriodicalWorkHtmlComponent.UpdatePeriodicTemplateResultModel");
             
@@ -1391,11 +1391,11 @@ function PeriodicalWorkComponent(xlatService) {
                 for (var ControlId in ControlWiseMultiMediaSubElementsAnswerModeDict) {
                     var MultiMediaSubElementsAnswerModeList = ControlWiseMultiMediaSubElementsAnswerModeDict[ControlId];
                     for (var i = 0; i < MultiMediaSubElementsAnswerModeList.length; i++) {
-                        for (var j = 0; j < CreatedMultiMediaSubElementsAnswerModeList.length; j++) {                            
+                        for (var j = 0; j < CreatedMultiMediaSubElementsAnswerModeList.length; j++) {
                             if (MultiMediaSubElementsAnswerModeList[i].LocalURL == CreatedMultiMediaSubElementsAnswerModeList[j].LocalURL) {
                                 MultiMediaSubElementsAnswerModeList[i].Id = CreatedMultiMediaSubElementsAnswerModeList[j].Id;
                                 MultiMediaSubElementsAnswerModeList[i].ServerId = (CreatedMultiMediaSubElementsAnswerModeList[j].ServerId != "INT" ? CreatedMultiMediaSubElementsAnswerModeList[j].ServerId : 0);
-                                MultiMediaSubElementsAnswerModeList[i].MappedEntityClientGuid = CreatedMultiMediaSubElementsAnswerModeList[j].MappedEntityClientGuid;                                
+                                MultiMediaSubElementsAnswerModeList[i].MappedEntityClientGuid = CreatedMultiMediaSubElementsAnswerModeList[j].MappedEntityClientGuid;
                                 break;
                             }
                         }
@@ -1530,7 +1530,7 @@ function PeriodicalWorkComponent(xlatService) {
             var TemplateIdList = MyInstance.GetProfiledTemplateNodeIdList(TemplateNodeId);
             //for (var TemplateId in CompleteDcStatusCountDict.TemplateInfo) {
             //    TemplateIdList.push(TemplateId);
-            //}           
+            //}
             var TemplateConfigMetadataList = new TemplateConfigDAO().GetMetaDataList(ServiceId, TemplateIdList);
 
             if (TemplateConfigMetadataList != null) {
@@ -1944,7 +1944,7 @@ function PeriodicalWorkComponent(xlatService) {
             OneViewConsole.Debug("GetProfiledTemplateNodeIdList Start", "PeriodicalWorkComponent.GetProfiledTemplateNodeIdList");
 
             var TemplateIdList = [];
-            for (var TemplateId in CompleteDcStatusCountDict.TemplateInfo) {            
+            for (var TemplateId in CompleteDcStatusCountDict.TemplateInfo) {
                 if (TemplateId != TemplateNodeId) {
                     TemplateIdList.push(TemplateId);
                 }
@@ -2061,7 +2061,7 @@ function PeriodicalWorkComponent(xlatService) {
                 if (PeriodicMandatoryMetadata[TemplateId] == undefined) {
                     var TemplateWiseMetadata = GetTemplateValidationMetaData(TemplateId);
                     if (TemplateWiseMetadata != null) {
-                        PeriodicMandatoryMetadata[TemplateId] = TemplateWiseMetadata;                     
+                        PeriodicMandatoryMetadata[TemplateId] = TemplateWiseMetadata;
                     }
                 }
             }
@@ -2328,7 +2328,7 @@ function PeriodicalWorkComponent(xlatService) {
     this.GraphSearch = function (scope) {
         try {
             
-            var TemplateNodeIdList = new DcDAO().GetDcTemplateIdsByTemplateGroupAndAttributeGroupType(PlatformPeriodicCurrentSubGroupId, 2);         
+            var TemplateNodeIdList = new DcDAO().GetDcTemplateIdsByTemplateGroupAndAttributeGroupType(PlatformPeriodicCurrentSubGroupId, 2);
             var SearchedName = scope.periodicsGraphSearchElement;
 
             for (var i = 0; i < TemplateNodeIdList.length; i++) {
@@ -2336,8 +2336,8 @@ function PeriodicalWorkComponent(xlatService) {
                 if (CompletePeriodicTemplateResult[TemplateId] != undefined) {
                     var AttributeDataDict = CompletePeriodicTemplateResult[TemplateId].LVTemplateResult;
                     if (AttributeDataDict != undefined) {
-                        for (var AttibuteId in AttributeDataDict) {                         
-                            var AttributeDetails = AttributeDataDict[AttibuteId];                            
+                        for (var AttibuteId in AttributeDataDict) {
+                            var AttributeDetails = AttributeDataDict[AttibuteId];
                             if (AttributeDetails.Name.indexOf(SearchedName) == -1) {
                                 document.getElementById("TemplateNodeBlock_" + AttibuteId).style.display = "none";
                             }
@@ -2430,7 +2430,7 @@ function PeriodicalWorkComponent(xlatService) {
                                             },
                                             "RefreshControls": null,
                                             "ClearControls" : {
-                                                "77" : [ 
+                                                "77" : [
                                                     "DropDownControlId_77"
                                                 ]
                                             },
@@ -2531,8 +2531,8 @@ function PeriodicalWorkComponent(xlatService) {
                     if (LVTemplateResult != undefined) {
                         for (var AttributeId in LVTemplateResult) {
                             var AttributeDataDict = LVTemplateResult[AttributeId];
-                            if (AttributeDataDict != undefined) {                               
-                                var Answers = AttributeDataDict.Answers;                               
+                            if (AttributeDataDict != undefined) {
+                                var Answers = AttributeDataDict.Answers;
                                 for (var j = 0; j < Answers.length; j++) {
                                     var ControlId = Answers[j].ControlId;
                                     var res = new PeriodicUIEventJobHandler(TemplateId, AttributeId, ControlId).PostControlEventsExecute(true);
@@ -2644,7 +2644,7 @@ function PeriodicalWorkComponent(xlatService) {
             CompleteDcStatusCountDict = {};
             CompleteDcStatusCountDict = MyInstance.GetDcStatusCountByTemplateGroup(TemplateGroupId);
 
-            var _oDOM = new DOM();           
+            var _oDOM = new DOM();
             for (var TemplateId in CompleteDcStatusCountDict.TemplateInfo) {
                 if (TemplateId != TemplateGroupId) {
                     var SubGroupData = CompleteDcStatusCountDict.TemplateInfo[TemplateId];
@@ -2712,7 +2712,7 @@ function PeriodicalWorkHtmlComponent(xlatService) {
             var Html = MyInstance.GetGroupBlockHtml(ElementDetails.Id, ElementDetails.Name, ActualVsPlannedHtml, ElementDetails.Index, IsDisable);
 
             //for (var i = 0; i < Childs.length; i++) {
-            //    var ElementDetails = Childs[i];                
+            //    var ElementDetails = Childs[i];
             //    if (ElementDetails.IsTemplate != true) {
             //        var ActualVsPlannedHtml = MyInstance.GetActualVsPlannedHtml(ElementDetails.Id, ElementDetails.CompletedCount, ElementDetails.TotalCount);
             //        Html += MyInstance.GetGroupBlockHtml(ElementDetails.Id, ElementDetails.Name, ActualVsPlannedHtml, ElementDetails.Index);
@@ -2740,8 +2740,8 @@ function PeriodicalWorkHtmlComponent(xlatService) {
         try {
             OneViewConsole.Debug("GetGroupBlockHtml Start", "PeriodicalWorkHtmlComponent.GetGroupBlockHtml");
           
-            var bgColor = "";          
-            if (IsDisable == true) {              
+            var bgColor = "";
+            if (IsDisable == true) {
                 bgColor="grey";
             }
             
@@ -2784,7 +2784,7 @@ function PeriodicalWorkHtmlComponent(xlatService) {
 
             var AppendClass = "";
 
-            var Html = '<div class="item attribute item-button-right item-button-l ' + AppendClass + '" style="border-color: #d4d9dc;' + background + ' margin:0px;" id="TemplateNodeBlock_' + TemplateNodeId + '">' +                                           
+            var Html = '<div class="item attribute item-button-right item-button-l ' + AppendClass + '" style="border-color: #d4d9dc;' + background + ' margin:0px;" id="TemplateNodeBlock_' + TemplateNodeId + '">' +
                                                 NAHtml +
                                                '<span>' + TemplateNodeName + '</span>' +
                                                 AnswerModesHtml +
@@ -2890,7 +2890,7 @@ function PeriodicDefaultAttributeComponent(TemplateId, AttributeId) {
             }
 
     
-            if (IsDisable == false) {               
+            if (IsDisable == false) {
                 AnswerModeHtml = GetAnswerModeHtml();
             }
             else {
@@ -2898,7 +2898,7 @@ function PeriodicDefaultAttributeComponent(TemplateId, AttributeId) {
                 if (CompletePeriodicTemplateResult[TemplateId] != undefined) {
                     var LVTemplateResult = CompletePeriodicTemplateResult[TemplateId].LVTemplateResult;
                     
-                    if (LVTemplateResult != undefined && LVTemplateResult[AttributeId] !=undefined) {                        
+                    if (LVTemplateResult != undefined && LVTemplateResult[AttributeId] !=undefined) {
                         Answers = LVTemplateResult[AttributeId].Answers;
                     }
 
@@ -2906,7 +2906,7 @@ function PeriodicDefaultAttributeComponent(TemplateId, AttributeId) {
                
                 if (Answers != null) { // Last DC Info
                     AnswerModeHtml = GetAnswerModeHtml();
-                }               
+                }
             }
             
             var DCBlockerHtml = GetDcBlockerHtml(IsDisable);
@@ -2940,7 +2940,7 @@ function PeriodicDefaultAttributeComponent(TemplateId, AttributeId) {
                                               DcTaskStatusHtml +
                                               DCBlockerHtml +
                                               AnswerModeHtml +
-                                              InfoHtml +                                          
+                                              InfoHtml +
                                          '</div>';
 
             //alert('Html: ' + Html);
@@ -2960,7 +2960,7 @@ function PeriodicDefaultAttributeComponent(TemplateId, AttributeId) {
     /// <summary>
     /// Get AnswerMode Html
     /// </summary>
-    /// <returns>Html</returns> 
+    /// <returns>Html</returns>
     var GetAnswerModeHtml = function () {
 
         try {
@@ -3072,7 +3072,7 @@ function PeriodicDefaultAttributeComponent(TemplateId, AttributeId) {
             var NAMetaDataDict = (CompletePeriodicAttributeOtherConfigDict[TemplateId] != undefined ? CompletePeriodicAttributeOtherConfigDict[TemplateId].NAMetaDataDict : null);
             
             if (NAMetaDataDict != null && Object.keys(NAMetaDataDict).length > 0 && NAMetaDataDict[AttributeId].IsNAEnabled == true) {
-                var LVTemplateResult = CompletePeriodicTemplateResult[TemplateId] !=undefined ? CompletePeriodicTemplateResult[TemplateId].LVTemplateResult : undefined;               
+                var LVTemplateResult = CompletePeriodicTemplateResult[TemplateId] !=undefined ? CompletePeriodicTemplateResult[TemplateId].LVTemplateResult : undefined;
                 if (LVTemplateResult != undefined) {
                     var IsNAselected = (LVTemplateResult[AttributeId] != undefined && LVTemplateResult[AttributeId].NA == true) ? true : false;
                     var _oPeriodicDefaultNAComponent = new PeriodicDefaultNAComponent(TemplateId);
@@ -3213,7 +3213,7 @@ function PeriodicDefaultAnswerModeComponent(TemplateId, AttributeId, ControlId) 
                 if (Answers[i].ControlId == ControlId) {
                     Answer = Answers[i].Answer;
                     break;
-                }            
+                }
             }
             
             OneViewConsole.Debug("GetAnswer End", "PeriodicDefaultAttributeComponent.GetAnswer");
@@ -3360,7 +3360,7 @@ function PeriodicDefaultListViewAnswerModeComponent(TemplateId, AttributeId, Con
                 var _oPeriodicDefaultDropDownListViewAnswerModeComponent = new PeriodicDefaultDropDownListViewAnswerModeComponent(TemplateId, AttributeId, ControlId);
                 _oPeriodicDefaultDropDownListViewAnswerModeComponent.AnswerModeConfig = MyInstance.AnswerModeConfig;
                 _oPeriodicDefaultDropDownListViewAnswerModeComponent.DataSourceLst = DataSourceLst;
-                Html = _oPeriodicDefaultDropDownListViewAnswerModeComponent.GetHtml();                
+                Html = _oPeriodicDefaultDropDownListViewAnswerModeComponent.GetHtml();
             }
 
             OneViewConsole.Debug("GetHtml End", "PeriodicDefaultListViewAnswerModeComponent.GetHtml");
@@ -3407,7 +3407,7 @@ function PeriodicDefaultListViewAnswerModeComponent(TemplateId, AttributeId, Con
            
             if (MyInstance.AnswerModeConfig.ListViewDisplay == 0) {
                 var _oPeriodicDefaultBandListViewAnswerModeComponent = new PeriodicDefaultBandListViewAnswerModeComponent(TemplateId, AttributeId, ControlId);
-                _oPeriodicDefaultBandListViewAnswerModeComponent.AnswerModeConfig = MyInstance.AnswerModeConfig;                
+                _oPeriodicDefaultBandListViewAnswerModeComponent.AnswerModeConfig = MyInstance.AnswerModeConfig;
                 _oPeriodicDefaultBandListViewAnswerModeComponent.Clear();
             }
 
@@ -3439,8 +3439,8 @@ function PeriodicDefaultListViewAnswerModeComponent(TemplateId, AttributeId, Con
                     //var DcPlaceId = 10004; //Todo : for testing purpose config hard coded
 
                     var _oDefaultTreeDAO = new DefaultTreeDAO();
-                    DataSourceLst = _oDefaultTreeDAO.GetAllChildsByParentNodeIdAndType(DcPlaceId, config.ChildDbElementTypeId, 'OrganizationAssetsNode');                                  
-                }               
+                    DataSourceLst = _oDefaultTreeDAO.GetAllChildsByParentNodeIdAndType(DcPlaceId, config.ChildDbElementTypeId, 'OrganizationAssetsNode');
+                }
             }
 
             else if (config.TreeDATEntityTypeId == 15) {
@@ -3735,8 +3735,8 @@ function PeriodicDefaultDateTimeListViewAnswerModeComponent(TemplateId, Attribut
         try {
             OneViewConsole.Debug("GetHtml Start", "PeriodicDefaultDateTimeListViewAnswerModeComponent.GetHtml");
             //alert('GetHtml : ' + MyInstance.AnswerModeConfig.DisplayMode);
-            var Html = '';          
-            Html = GeDateTimeHtml();        
+            var Html = '';
+            Html = GeDateTimeHtml();
 
             OneViewConsole.Debug("GetHtml End", "PeriodicDefaultDateTimeListViewAnswerModeComponent.GetHtml");
 
@@ -3754,7 +3754,7 @@ function PeriodicDefaultDateTimeListViewAnswerModeComponent(TemplateId, Attribut
             OneViewConsole.Debug("GeDateTimeHtml Start", "PeriodicDefaultDateTimeListViewAnswerModeComponent.GeDateTimeHtml");
             
             var AttributeNodeId = "'" + AttributeId + "'";
-            var Id = MyInstance.AnswerModeConfig.ControlId;           
+            var Id = MyInstance.AnswerModeConfig.ControlId;
             var ControlId = "'" + MyInstance.AnswerModeConfig.ControlId + "'";
 
             var InputType = GetInputType(MyInstance.AnswerModeConfig.DataType);
@@ -3766,13 +3766,13 @@ function PeriodicDefaultDateTimeListViewAnswerModeComponent(TemplateId, Attribut
             var Answerlst = MyInstance.GetAnswerList(TemplateId); //Get from model
             
             for (var j = 0; j < Answerlst.length; j++) {
-                if (Answerlst[j].Answer != "") {                    
+                if (Answerlst[j].Answer != "") {
                     Answer = GetFormatedValueForUI(MyInstance.AnswerModeConfig, Answerlst[j].Answer);
                 }
             }
 
             var Html = '<div class="row responsive-sm" id="Div_' + MyInstance.AnswerModeConfig.ControlId + '" ><div class="col"><div class="field-item with-icon">';
-            Html += '<label>';            
+            Html += '<label>';
             Html += '<input value="' + Answer + '" type="' + InputType + '" id="' + MyInstance.AnswerModeConfig.ControlId + '" oninput="new PeriodicDefaultDateTimeListViewAnswerModeComponent(' + TemplateId + ',' + AttributeNodeId + ',' + ControlId + ').UpdateAnswerModel(' + AttributeNodeId + ',' + ControlId + ',this,' + DataType + ');"/>';
             var Icon = (MyInstance.AnswerModeConfig.DataType == "TIME") ? "clock" : "calendar";
             Html += '<i class="icon icon-' + Icon + '-o"></i>';
@@ -3792,12 +3792,12 @@ function PeriodicDefaultDateTimeListViewAnswerModeComponent(TemplateId, Attribut
 
     this.UpdateAnswerModel = function (TemplateNodeId, ControlId, DOMObj,DataType) {
         try {
-            OneViewConsole.Debug("UpdateAnswerModel Start", "PeriodicDefaultDateTimeListViewAnswerModeComponent.UpdateAnswerModel");           
+            OneViewConsole.Debug("UpdateAnswerModel Start", "PeriodicDefaultDateTimeListViewAnswerModeComponent.UpdateAnswerModel");
 
             var ControlConfig = { DataType: DataType };
             var LVTemplateResult = CompletePeriodicTemplateResult[TemplateId].LVTemplateResult;
             var AttributeLVTemplateResult = LVTemplateResult[AttributeId];
-            if (AttributeLVTemplateResult != undefined && AttributeLVTemplateResult.NA != true && AttributeLVTemplateResult.IsBlocker != true) {   
+            if (AttributeLVTemplateResult != undefined && AttributeLVTemplateResult.NA != true && AttributeLVTemplateResult.IsBlocker != true) {
                 Answer = GetFormatedValue(ControlConfig, DOMObj);
                 MyInstance.UpdateAnswerUIAndModel(AttributeLVTemplateResult.Answers, Answer, "",  ControlId);
 
@@ -3808,7 +3808,7 @@ function PeriodicDefaultDateTimeListViewAnswerModeComponent(TemplateId, Attribut
 
             OneViewConsole.Debug("UpdateAnswerModel End", "PeriodicDefaultDateTimeListViewAnswerModeComponent.UpdateAnswerModel");
         }
-        catch (Excep) {            
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "PeriodicDefaultDateTimeListViewAnswerModeComponent.UpdateAnswerModel", Excep);
         }
 
@@ -3866,7 +3866,7 @@ function PeriodicDefaultDateTimeListViewAnswerModeComponent(TemplateId, Attribut
 
     this.ClearControl = function (ControlId) {
         try {
-            OneViewConsole.Debug("ClearControl Start", "PeriodicDefaultDateTimeListViewAnswerModeComponent.ClearControl");            
+            OneViewConsole.Debug("ClearControl Start", "PeriodicDefaultDateTimeListViewAnswerModeComponent.ClearControl");
 
             var _oDOM = new DOM();
             _oDOM.Clear(ControlId);
@@ -3958,9 +3958,9 @@ function PeriodicDefaultDateTimeListViewAnswerModeComponent(TemplateId, Attribut
     /// <summary>
     /// Check
     /// </summary>
-    /// <param name="ControlConfig">ControlConfig</param>   
+    /// <param name="ControlConfig">ControlConfig</param>
     /// <param name="DOMObj">DOMObj</param>
-    /// <returns>Formated Value</returns> 
+    /// <returns>Formated Value</returns>
     var GetFormatedValue = function (ControlConfig, DOMObj) {
 
         try {
@@ -4001,9 +4001,9 @@ function PeriodicDefaultDateTimeListViewAnswerModeComponent(TemplateId, Attribut
     /// <summary>
     /// Check
     /// </summary>
-    /// <param name="ControlConfig">ControlConfig</param>   
+    /// <param name="ControlConfig">ControlConfig</param>
     /// <param name="DOMObj">DOMObj</param>
-    /// <returns>Formated Value</returns> 
+    /// <returns>Formated Value</returns>
     var GetFormatedValueForUI = function (AnswerMode, Answer) {
 
         try {
@@ -4102,8 +4102,8 @@ function ModelOperationComponent() {
                     IsSubmitMandatoryExist: false,
                     IsSaveMandatoryExist: false,
                     SaveMandatoryInfo: {},
-                    SubmitMandatoryInfo: {},                 
-                //Multi :  { 
+                    SubmitMandatoryInfo: {},
+                //Multi :  {
                 //    ControlId : []
                 //        }
                 }
@@ -4151,7 +4151,7 @@ function ModelOperationComponent() {
                     "ActionInfo": {}
                 }
 
-                LVTemplateResult[TemplateNodeId].Answers.push(AnswerModeObj);                
+                LVTemplateResult[TemplateNodeId].Answers.push(AnswerModeObj);
             }
 
             OneViewConsole.Debug("CreateModel End", "ModelOperationComponent.CreateModel");
@@ -4239,7 +4239,7 @@ function PeriodicHierarchyComponent() {
                 var IsTemplate = false;
                 var Level = 1;
                 // alert('TemplateNodes[i] : ' + JSON.stringify(TemplateNodes[i]));
-                if (TemplateNodes[i].ParentNodeId == TemplateNodeId) {                                  
+                if (TemplateNodes[i].ParentNodeId == TemplateNodeId) {
                     var InProgressCount = 0;
                     var CompletedCount = 0;
                     var ApprovedCount = 0;
@@ -4269,8 +4269,8 @@ function PeriodicHierarchyComponent() {
     var AddChilds = function (Obj, Level, Index) {
         try {
             OneViewConsole.Debug("AddChilds Start", "PeriodicHierarchyComponent.AddChilds");
-            Level++;            
-            Obj["Childs"] = [];         
+            Level++;
+            Obj["Childs"] = [];
       
 
             for (var i = 0; i < TemplateNodes.length; i++) {
@@ -4280,14 +4280,14 @@ function PeriodicHierarchyComponent() {
                 var ApprovedCount = 0;
                 var TotalCount = 0;
                // alert('TemplateNodes[i] 22 : ' + JSON.stringify(TemplateNodes[i]));
-                if (TemplateNodes[i].ParentNodeId == Obj.Id && TemplateNodes[i].ChildDbElementType != 8) {                   
+                if (TemplateNodes[i].ParentNodeId == Obj.Id && TemplateNodes[i].ChildDbElementType != 8) {
                     // alert(Index + ',  jjj Level: ' + Level + ' , PeriodicTotalNoOfLevels: ' + PeriodicTotalNoOfLevels);
                     if (Level == (PeriodicTotalNoOfLevels - 1)) {
                         IsTemplate = true;
                     }
                     var RowData = GetStructure(TemplateNodes[i], true, IsTemplate, InProgressCount, CompletedCount, ApprovedCount, TotalCount, Index, Level);
                     Obj.Childs.push(RowData);
-                    Index++;                                               
+                    Index++;
                     AddChilds(RowData, Level, Index);
                 }
             }
@@ -4359,8 +4359,8 @@ function PeriodicDefaultNAComponent(TemplateId) {
     /// <summary>
     /// Get NA html
     /// </summary>
-    /// <param name="IsNAselected">NA will select or not</param>   
-    /// <returns>NA html</returns>  
+    /// <param name="IsNAselected">NA will select or not</param>
+    /// <returns>NA html</returns>
     this.GetHtml = function (AttributeId, IsNAselected) {
 
         try {
@@ -4391,8 +4391,8 @@ function PeriodicDefaultNAComponent(TemplateId) {
     /// <summary>
     /// Update Model
     /// </summary>
-    /// <param name="TemplateNodeId">Template Node Id</param>    
-    /// <param name="DOMObj">DOMObj</param>    
+    /// <param name="TemplateNodeId">Template Node Id</param>
+    /// <param name="DOMObj">DOMObj</param>
     this.UpdateModel = function (AttributeId, DOMObj) {
 
         try {
@@ -4584,7 +4584,7 @@ function PeriodicActionNCUIComponent($scope, xlatService, snapRemote, $compile) 
                             alert('PeriodicActionNCUIComponent Not implemented Exception');
                         }
                     }
-                    else {                       
+                    else {
                         UpdateModel(TemplateNodeId, AttributeId, ControlId, DataCaptureClientGuid, ActionNCConfigList[0].RuleId);
                         MyInstance.DeleteRule(TemplateNodeId, ActionNCConfigList[0].RuleId);
                     }
@@ -4842,7 +4842,7 @@ function PeriodicActionNCUIComponent($scope, xlatService, snapRemote, $compile) 
             var LVActionResult = CompletePeriodicActionResult[TemplateNodeId];
           
             if (LVActionResult != undefined) {
-                if (LVActionResult[RuleId] != undefined) {                    
+                if (LVActionResult[RuleId] != undefined) {
                     if (LVActionResult[RuleId].DCNCMappingClientId == "") {
                         delete LVActionResult[RuleId];
                     }
@@ -4890,7 +4890,7 @@ function PeriodicActionNCUIComponent($scope, xlatService, snapRemote, $compile) 
                     }
 
                     if (IsActionAvailable == false) {
-                        if (CompletePeriodicActionResult[CurrentTemplateNodeId] != undefined) {                           
+                        if (CompletePeriodicActionResult[CurrentTemplateNodeId] != undefined) {
                             // MyInstance.ClearRAGBand(CurrentTemplateNodeId, CurrentAttributeId);
                             var _oPeriodicDefaultAttributeComponent = new PeriodicDefaultAttributeComponent(CurrentTemplateNodeId, CurrentAttributeId);
                             _oPeriodicDefaultAttributeComponent.AttributeConfig = PTempMData[CurrentTemplateNodeId].TemplateConfigMetaDataDetails.Childs[0];
@@ -5093,8 +5093,8 @@ function PeriodicActionNCUIComponent($scope, xlatService, snapRemote, $compile) 
     /// <summary>
     /// Get NA html
     /// </summary>
-    /// <param name="AttributeNodeIds">Node id of the attribute</param>   
-    /// <returns>ActionNCConfig</returns> 
+    /// <param name="AttributeNodeIds">Node id of the attribute</param>
+    /// <returns>ActionNCConfig</returns>
     var CheckMultipleAttributeActionNCConfig = function (ActionNCProfile, TemplateId, AttributeId) {
 
         try {
@@ -5141,8 +5141,8 @@ function PeriodicActionNCUIComponent($scope, xlatService, snapRemote, $compile) 
     /// <summary>
     /// Validate Rule
     /// </summary>
-    /// <param name="Rule">Rule</param>   
-    /// <returns>true or false</returns> 
+    /// <param name="Rule">Rule</param>
+    /// <returns>true or false</returns>
     var ValidateRule = function (Rule, TemplateId, AttributeId) {
 
         try {
@@ -5162,7 +5162,7 @@ function PeriodicActionNCUIComponent($scope, xlatService, snapRemote, $compile) 
                 //    else {
                 //        Model[oAttribute.Answers[i].ControlId] = oAttribute.Answers[i].Answer;
                 //    }
-                //} 
+                //}
                 if (oAttribute.Answers.length > 1) {
                     //if ((oAttribute.Answers[1].AnswerMode == "DCListViewControlConfig" && oAttribute.Answers[1].Answer == "") || (oAttribute.Answers[0].AnswerMode == "DCListViewControlConfig" && oAttribute.Answers[0].Answer == "")) { // Need to change
                     //    return false;
@@ -5188,7 +5188,7 @@ function PeriodicActionNCUIComponent($scope, xlatService, snapRemote, $compile) 
                 }
                 if (Object.keys(Model).length > 0) {
                     Rule = Rule.replace(/#/g, "'");
-                    IsSuccess = eval(Rule);                  
+                    IsSuccess = eval(Rule);
                 }
             }
 
@@ -5412,7 +5412,7 @@ function PeriodicLVDataCaptureBO() {
                                 DeletedActionIndexLst.push(i);
                             }
                             else if (LVActionResult[itrLVActionResult].Actions[i].ActionDetailsClientId == "") {
-                                //alert(JSON.stringify(LVActionResult[itrLVActionResult].Actions[i]));                                      
+                                //alert(JSON.stringify(LVActionResult[itrLVActionResult].Actions[i]));
                                 var _oActionDetailsEntity = GetActionDetailsEntity(DataCaptureRequest, LVActionResult[itrLVActionResult].ActionClientGuid, "", LVActionResult[itrLVActionResult].Actions[i]);
                                 //alert(JSON.stringify(_oActionDetailsEntity));
 
@@ -6762,7 +6762,7 @@ function PeriodicLVDataCaptureBO() {
             }
 
             //alert(JSON.stringify(LVTemplateResult));
-            //alert(LVDcResultsId); 
+            //alert(LVDcResultsId);
 
             var _oActionDAO = new ActionDAO();
             var ActionDCNCMappings = _oActionDAO.GetAllActions(LVDataCaptureClientGuid);
@@ -7101,7 +7101,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
                                ' </div>'+
                             '</div>';
 
-            OneViewConsole.Debug("GetHtml End", "PeriodicDefaultCameraAnswerModeComponent.GetHtml");          
+            OneViewConsole.Debug("GetHtml End", "PeriodicDefaultCameraAnswerModeComponent.GetHtml");
             return Html;
         }
         catch (Excep) {
@@ -7128,7 +7128,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
                         if (MultiMediaSubElementsAnswerModeList.length > 1) {
                             for (var i = 0; i < MultiMediaSubElementsAnswerModeList.length ; i++) {
                                 if (MultiMediaSubElementsAnswerModeList[i].IsDisabled != true) {
-                                    Html += GetImageHtml(ControlId, MultiMediaSubElementsAnswerModeList[i].LocalURL);                                      
+                                    Html += GetImageHtml(ControlId, MultiMediaSubElementsAnswerModeList[i].LocalURL);
                                         break; //only image saved
                                 }
                             }
@@ -7136,7 +7136,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
                         else if (MultiMediaSubElementsAnswerModeList.length == 1) {
                             Html += GetImageHtml(ControlId, MultiMediaSubElementsAnswerModeList[0].LocalURL);
                         }
-                    }                   
+                    }
                 }
             }
          
@@ -7144,7 +7144,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
             //alert('Html : ' + Html);
             return Html;
         }
-        catch (Excep) {            
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "PeriodicDefaultCameraAnswerModeComponent.GetImageHtml", Excep);
         }
     }
@@ -7153,11 +7153,11 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
         try {
             OneViewConsole.Debug("GetImageHtml Start", "PeriodicDefaultCameraAnswerModeComponent.GetImageHtml");
            
-            var Html = ' <a id="Image_' + ControlId + '" href="' + LocalURL + '" class="angularbox" rel="' + LocalURL + '">' + 
+            var Html = ' <a id="Image_' + ControlId + '" href="' + LocalURL + '" class="angularbox" rel="' + LocalURL + '">' +
                                                      ' <img src="' + LocalURL + '" alt="No Image" style="margin: 0px 0px 0px 0px; border: 1px #ccc solid; padding: 0px;height:52px;width:52px"  />' +
                                                  ' </a>';
                        
-            // button no-padding" style="right: 145px; border:0px; 
+            // button no-padding" style="right: 145px; border:0px;
             OneViewConsole.Debug("GetImageHtml End", "PeriodicDefaultCameraAnswerModeComponent.GetImageHtml");
 
             return Html;
@@ -7173,13 +7173,13 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
             OneViewConsole.Debug("AttachImage Start", "PeriodicDefaultCameraAnswerModeComponent.AttachImage");
            
             var _oOneViewCordovaCameraPlugin = new OneViewCordovaCameraPlugin();
-            _oOneViewCordovaCameraPlugin.CaptureImage(function (_ImageURL) {              
+            _oOneViewCordovaCameraPlugin.CaptureImage(function (_ImageURL) {
                 MyInstance.UpdateAnswerModel(_ImageURL);
             });
 
             OneViewConsole.Debug("AttachImage End", "PeriodicDefaultCameraAnswerModeComponent.AttachImage");
         }
-        catch (Excep) {            
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "PeriodicDefaultCameraAnswerModeComponent.AttachImage", Excep);
         }
     }
@@ -7209,7 +7209,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
                             }
                             
                         }
-                        else if (SelectionType == 1) {                           
+                        else if (SelectionType == 1) {
                             alert("Multiple image capture not implemented");
                         }
                     }
@@ -7226,7 +7226,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
                 }
                 
             }
-            else {                
+            else {
                 var AttributeWiseMultiMediaSubElementsAnswerModeDict = {};
                 MultiMediaSubElementsAnswerMode = CreateMultiMediaElement(_ImageURL);
                 var MultiMediaSubElementsAnswerModeList = [];
@@ -7241,11 +7241,11 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
             var ImageDOM = document.getElementById("Image_" + TemplateId);
           
             if (ImageDOM != null) {
-                document.getElementById("Image_" + TemplateId).src = _ImageURL;                
+                document.getElementById("Image_" + TemplateId).src = _ImageURL;
             }
             else {
                 var Html = GetImageHtml(ControlId, _ImageURL);
-                var DivId = '' + 'DivImage_' + ControlId + '';                
+                var DivId = '' + 'DivImage_' + ControlId + '';
                 var Div = document.getElementById(DivId);
                 Div.innerHTML = "";
               //  Div.innerHTML = Html;
@@ -7297,7 +7297,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
 
             if (MultiMediaSubElements.Id == 0) {
                 IsUpdated = true;
-                MultiMediaSubElements.LocalURL = _ImageURL; //only image saving               
+                MultiMediaSubElements.LocalURL = _ImageURL; //only image saving
             }
             else if (MultiMediaSubElements.ServerId == 0) {
                 MultiMediaSubElements.IsDisabled = true; //disabling old images
@@ -7307,7 +7307,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
                 MultiMediaSubElementsAnswerModeList.push(CreateMultiMediaElement(_ImageURL));
             }
                        
-            OneViewConsole.Debug("UpdateMultiMediaElement End", "PeriodicDefaultCameraAnswerModeComponent.UpdateMultiMediaElement");            
+            OneViewConsole.Debug("UpdateMultiMediaElement End", "PeriodicDefaultCameraAnswerModeComponent.UpdateMultiMediaElement");
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "PeriodicDefaultCameraAnswerModeComponent.UpdateMultiMediaElement", Excep);
@@ -7329,7 +7329,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
                 });
             }
             else {
-                alert(oXlatService.xlat('No Image Available'));
+                navigator.notification.alert(xlatService.xlat('No Image Available'), ['OK'], "");
             }
             OneViewConsole.Debug("DeleteImage End", "PeriodicDefaultCameraAnswerModeComponent.DeleteImage");
         }
@@ -7446,8 +7446,8 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
 
     var GetSelectionType = function () {
         try {
-            OneViewConsole.Debug("GetSelectionType Start", "PeriodicDefaultCameraAnswerModeComponent.GetSelectionType");          
-            var Child = PTempMData[TemplateId].TemplateConfigMetaDataDetails.Childs[0];           
+            OneViewConsole.Debug("GetSelectionType Start", "PeriodicDefaultCameraAnswerModeComponent.GetSelectionType");
+            var Child = PTempMData[TemplateId].TemplateConfigMetaDataDetails.Childs[0];
             var SelectionType;
             for (var i = 0; i < Child.AnswerModes.length ; i++) {
                 var AnswerMode = Child.AnswerModes[i];
@@ -7766,7 +7766,7 @@ function PeriodicDefaultDropDownListViewAnswerModeComponent(TemplateId, Attribut
             
             for (var i = 0; i < MyInstance.DataSourceLst.length; i++) {
                 var IsCreated = false;
-                var DataSource = MyInstance.DataSourceLst[i];              
+                var DataSource = MyInstance.DataSourceLst[i];
                 for (var j = 0; j < Answerlst.length; j++) {
                     if (Answerlst[j].Answer == DataSource.Id) {
                         Html += MyInstance.GetOptionHtml(true, DataSource);
@@ -7816,9 +7816,9 @@ function PeriodicDefaultDropDownListViewAnswerModeComponent(TemplateId, Attribut
             OneViewConsole.Debug("GetOptionHtml Start", "PeriodicDefaultAttributeComponent.GetOptionHtml");
 
             var selected = '';
-            if (IsSelected == true) {                
+            if (IsSelected == true) {
                 selected = ' selected';
-            }           
+            }
             var Html = ' <option  value="' + DataSource.Id + '"' + selected + '>' + DataSource.Name + '</option>';
           
             OneViewConsole.Debug("GetOptionHtml End", "PeriodicDefaultAttributeComponent.GetOptionHtml");
@@ -7854,11 +7854,11 @@ function PeriodicDefaultDropDownListViewAnswerModeComponent(TemplateId, Attribut
             OneViewConsole.Debug("UpdateAnswerModel Start", "PeriodicDefaultDropDownListViewAnswerModeComponent.UpdateAnswerModel");
 
             if (DOMObj != null) {
-                var text = DOMObj.options[DOMObj.selectedIndex].text;                
+                var text = DOMObj.options[DOMObj.selectedIndex].text;
                 var LVTemplateResult = CompletePeriodicTemplateResult[TemplateId].LVTemplateResult;
                 var Answers = LVTemplateResult[AttributeId].Answers;
                 for (var i = 0; i < Answers.length ; i++) {
-                    if (Answers[i].ControlId == ControlId) {                        
+                    if (Answers[i].ControlId == ControlId) {
                         Answers[i].Answer= DOMObj.value;
                         Answers[i].AnswerValue = text;
                         break;
@@ -7917,15 +7917,15 @@ function PeriodicDefaultDropDownListViewAnswerModeComponent(TemplateId, Attribut
         try {
             OneViewConsole.Debug("ClearControl Start", "PeriodicDefaultDropDownListViewAnswerModeComponent.ClearControl");
 
-            var DOMObj = document.getElementById(ControlId);            
+            var DOMObj = document.getElementById(ControlId);
             if (DOMObj != null) {
-                DOMObj.selectedIndex = 0;                        
+                DOMObj.selectedIndex = 0;
             }
 
             OneViewConsole.Debug("ClearControl End", "PeriodicDefaultDropDownListViewAnswerModeComponent.ClearControl");
 
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "PeriodicDefaultDropDownListViewAnswerModeComponent.ClearControl", Excep);
         }
     }
@@ -7994,7 +7994,7 @@ function PeriodicUIEventJobHandler(TemplateId, AttributeId, ControlId) {
         try {
             var UIJobsEventArgs = null;
 
-            //todo : 
+            //todo :
             var ControlEventUIJobs = EventArgs.ControlEventUIJobs;
           
             var AttributeId = EventArgs.AttributeId;
@@ -8168,7 +8168,7 @@ function PeriodicUIEventJobHandler(TemplateId, AttributeId, ControlId) {
                                // MyInstance.RefreshControl(ControlData, oScope);
                             }
 
-                            else if (EventTodo == "6") {                                
+                            else if (EventTodo == "6") {
                                 MyInstance.ClearControl(TemplateId, attrId, ControlList[j]);
                             }
 
@@ -8247,7 +8247,7 @@ function PeriodicUIEventJobHandler(TemplateId, AttributeId, ControlId) {
 
     this.HideControl = function (ControlId, oScope) {
         try {
-            var DivId = 'Div_' + ControlId;            
+            var DivId = 'Div_' + ControlId;
             if (document.getElementById(DivId) != null) {
                 
                 document.getElementById(DivId).style.display = 'none';
@@ -8316,11 +8316,11 @@ function PeriodicUIEventJobHandler(TemplateId, AttributeId, ControlId) {
             var AttributeConfig = PTempMData[TemplateId].TemplateConfigMetaDataDetails.Childs[0];
             
             var AnswerModeConfig = null;
-            for (i = 0; i < AttributeConfig.AnswerModes.length; i++) {                
+            for (i = 0; i < AttributeConfig.AnswerModes.length; i++) {
                 if (AttributeConfig.AnswerModes[i].ControlId == ControlId) {
                     AnswerModeConfig = AttributeConfig.AnswerModes[i];
                     break;
-                }               
+                }
             }
                        
             var _oPeriodicDefaultAnswerModeComponent = new PeriodicDefaultAnswerModeComponent(TemplateId, AttributeId, ControlId);
@@ -8417,7 +8417,7 @@ function PlatformPeriodicsBlockerHandler(MainGroupId) {
                     }
                 };
                 PeriodicDCBlockerConfigProfile = DCBlockerConfigProfile;
-            }         
+            }
             
         
 
@@ -8437,8 +8437,8 @@ function PlatformPeriodicsBlockerHandler(MainGroupId) {
         try {
             OneViewConsole.Debug("GetBlockerProfile start", "PlatformPeriodicsBlockerHandler.GetBlockerProfile");
 
-            if (PeriodicDCBlockerConfigProfile != undefined) {               
-                var BlockerProfile = PeriodicDCBlockerConfigProfile[MainGroupId];                
+            if (PeriodicDCBlockerConfigProfile != undefined) {
+                var BlockerProfile = PeriodicDCBlockerConfigProfile[MainGroupId];
                 if (BlockerProfile == undefined) {
                     BlockerProfile = PeriodicDCBlockerConfigProfile[TemplateNodeId];
                 }
@@ -8486,7 +8486,7 @@ function PlatformPeriodicsBlockerUIComponent() {
             
             if (CompletePeriodicTemplateResult[TemplateId] != undefined) {
                
-                var _oDOM = new DOM();              
+                var _oDOM = new DOM();
                 var AttrDivId = "TemplateNodeBlock_" + AttributeId;
              
                 SetColor(TemplateId, DOMObj);
@@ -8589,7 +8589,7 @@ function PlatformPeriodicsBlockerUIComponent() {
 //                      'Childs': [
 //                          {
 //                              'Id': 13, 'Name': 'Wash all Tesco owned permanent car park signage including supporting poles (excluding any illuminated and JC decaux advertising signs) up to a height of 3 metres',
-//                              'Left': 6, 'Right': 9, 'ParentNodeId': 12, 'Level': 'L3', 'IsAttributeGroup': true, 'IsTemplate': true, 'IsNextLevelAttributeGroup': false, 'CompletedCount': 1, 'ApprovedCount': 0, 'TotalCount': 1, 'Index': 0,                             
+//                              'Left': 6, 'Right': 9, 'ParentNodeId': 12, 'Level': 'L3', 'IsAttributeGroup': true, 'IsTemplate': true, 'IsNextLevelAttributeGroup': false, 'CompletedCount': 1, 'ApprovedCount': 0, 'TotalCount': 1, 'Index': 0,
 //                              //'Childs': [
 //                              //                {
 //                              //                    'Id': 14, 'Name': 'Wash all Tesco owned permanent car park signage including supporting poles (excluding any illuminated and JC decaux advertising signs) up to a height of 3 metres',
@@ -8698,7 +8698,7 @@ var ValidationMetadata = {
     },
     'UIGridConfig': {
         'Type': 'Default',
-        'Equation': ''       
+        'Equation': ''
     }
         //{
         //        'Type': 'Advanced',
@@ -8767,9 +8767,10 @@ var ValidationMetadata = {
 //                        ]
 //            }
 //            ]
-//        }   
+//        }
     
 
 //};
+
 
 

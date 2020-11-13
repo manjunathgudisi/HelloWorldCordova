@@ -65,8 +65,13 @@ function OneViewCordovaProgressbarPlugin() {
             var Title_Msg = (Title == undefined || Title == "" ) ? OneViewGlobalization[OneViewGlobalcurrentLanguage].LoaderHeaderKey : Title;
             var Body_Msg = (Message == undefined || Message == "") ? OneViewGlobalization[OneViewGlobalcurrentLanguage].LoaderBodyKey : Message;
             //TODO:IOS Migr (ios not supporting ,need to find progress bar)
-            if(OSType != OSTypeEnum.IOS)
-            {
+			if(OSType == OSTypeEnum.IOS) {
+				//ProgressIndicator.showBarWithLabel(true, 50000, Body_Msg);
+				//ProgressIndicator.showSimple(true);
+				ActivityIndicator.show(Title_Msg);
+				//window.MyProgressHUD.ShowProgress();
+				//ProgressIndicatorshowBarWithLabel(dim, timeout, message);
+			} else {
             navigator.notification.progressStart(Title_Msg, Body_Msg);
             }
         }
@@ -83,8 +88,11 @@ function OneViewCordovaProgressbarPlugin() {
 
         try{
             //TODO:IOS Migr (ios not supporting ,need to find progress bar)
-            if(OSType != OSTypeEnum.IOS)
-            {
+			if(OSType == OSTypeEnum.IOS) {
+				ActivityIndicator.hide();
+				//ProgressIndicator.hide();
+				//window.MyProgressHUD.HideProgress();
+			} else {
             navigator.notification.progressStop();
             }
         }
@@ -97,8 +105,9 @@ function OneViewCordovaProgressbarPlugin() {
 
         try{
             //TODO:IOS Migr (ios not supporting ,need to find progress bar)
-            if(OSType != OSTypeEnum.IOS)
-            {
+			if(OSType == OSTypeEnum.IOS) {
+				//nothing
+			} else {
             navigator.notification.progressValue(Value);
             }
         }
@@ -114,7 +123,7 @@ function OneViewCordovaDialogs() {
     this.alert = function (Message, Title) {
 
         try{
-            var Title_Msg = (Title == undefined || Title == "") ? "Alert" : Title;        
+            var Title_Msg = (Title == undefined || Title == "") ? "Alert" : Title;
             navigator.notification.alert(Message, ['Ok'], Title_Msg);
         }
         catch (Excep) {
@@ -130,7 +139,7 @@ function OneViewCordovaDeviceInfo() {
 
     this.GetCordovaVersion = function () {
 
-        try {           
+        try {
             return device.cordova;
         }
         catch (Excep) {
@@ -259,7 +268,7 @@ function OneViewCordovaCameraPlugin() {
         IsAnyExceptionOnSave = true;
         // alert('Error while saving image, please try again');
         //  alert('Image capture failed, please try again');
-        alert(oxlatService.xlat('Image capture failed, please try again'));
+        navigator.notification.alert(xlatService.xlat('Image capture failed, please try again'), ['OK'], "");
     }
 
     var UploadSuccessCallBack = function (response) {
@@ -333,7 +342,7 @@ function OneViewCordovaCameraPlugin() {
         alert('Error downloading image' + JSON.stringify(code));
     }
 
-    //Updates images 
+    //Updates images
     this.UpdateImage = function (SourcePath, DestinationPath, IsOnline) {
         try {
             OneViewConsole.Debug("UpdateImage Start", "OneviewImageFramework.UpdateImage");
@@ -420,8 +429,8 @@ function OneViewCordovaCameraPlugin() {
     }
 
     this.BrowsePicture = function (BrowsePictureSuccess) {
-        try {                    
-            navigator.camera.getPicture(BrowsePictureSuccess, BrowsePictureFail, {              
+        try {
+            navigator.camera.getPicture(BrowsePictureSuccess, BrowsePictureFail, {
                 quality: 50,
                 targetWidth: 2058,
                 targetHeight: 1152,
@@ -553,7 +562,7 @@ function OneViewCordovaMediaCapturePlugin() {
         }
     }
 
-    //Updates images 
+    //Updates images
     this.UpdateVideo = function (SourcePath, DestinationPath, IsOnline) {
         try {
             OneViewConsole.Debug("UpdateImage Start", "OneviewImageFramework.UpdateImage");
@@ -782,7 +791,7 @@ function OneViewCordovaFilePlugin() {
     }
 
     var GetFSDeleteError = function (r) {
-        //alert('Image deleted locally');       
+        //alert('Image deleted locally');
     }
 
     var DeleteSuccess = function (r) {
@@ -795,5 +804,6 @@ function OneViewCordovaFilePlugin() {
     }
 
 }
+
 
 

@@ -57,7 +57,8 @@ function ViewRecordsBO(xlatService, toaster){
     this.ShowMsg = function (xlatService, toaster, Msgkey) {
         try {
             //toaster.pop('warning', xlatService.xlat('Notification'), xlatService.xlat(Msgkey));
-            alert(xlatService.xlat(Msgkey));
+            navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
+			navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
         }
         catch (Excep) {
 			throw oOneViewExceptionHandler.Create("BO", "ViewRecordsBO.ShowMsg", Excep);

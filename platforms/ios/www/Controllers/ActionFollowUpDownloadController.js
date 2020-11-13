@@ -226,7 +226,7 @@
 
                     //if (IsLoadView == false) {
                     //    $scope.ImmediateParentColumn = false;
-                    //    alert(xlatService.xlat('NoProfiles'));
+                    //    navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                     //}
                  LoadPlaceContentBlock($scope, OneViewSessionStorage.Get("LoginUserId"), OneViewSessionStorage.Get("ServiceId"), SpinService, toaster, xlatService);
                  
@@ -318,7 +318,7 @@
                 else {
                     return false;
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpDownloadFacade.LoadImmediateParentPlaces");
                 }
 
@@ -367,7 +367,7 @@
                 else {
                     return false;
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpDownloadFacade.LoadImmediateParentPlaces");
                 }
 
@@ -435,7 +435,7 @@
                             });
                         }
                         else {
-                            alert(xlatService.xlat('NoTemplatesSelected'));
+                            navigator.notification.alert(xlatService.xlat('NoTemplatesSelected'), ['OK'], "");
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoTemplatesSelected'));
                         }
                     }
@@ -453,12 +453,12 @@
                             });
                         }
                         else {
-                            alert(xlatService.xlat('NoPlacesSelected'));                            
+                            navigator.notification.alert(xlatService.xlat('NoPlacesSelected'), ['OK'], "");                            
                         }
                     }
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));                   
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");                   
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpDownloadFacade.DownLoadProfile");
                 }
 
@@ -695,7 +695,7 @@
                     }
                     else {
                         $scope.ImmediateParentColumn = false;
-                        //alert(xlatService.xlat('NoProfiles'));
+                        //navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                     }
                 }
                 else {                  
@@ -844,7 +844,7 @@
                         }
                         else {
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoProfiles'));
-                            alert(xlatService.xlat('NoProfiles'));
+                            navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                             OneViewConsole.Info("NoProfiles", "ActionFollowUpDownloadFacade.LoadTemplateContentBlock");
                         }
                     }
@@ -853,7 +853,7 @@
                 else {
 
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpDownloadFacade.LoadTemplateContentBlock");
                 }
 
@@ -912,7 +912,7 @@
                         }
                         else {
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoProfiles'));
-                            //alert(xlatService.xlat('NoProfiles'));
+                            //navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                             alert(xlatService.xlat('No Places available'));
                             OneViewConsole.Info("NoProfiles", "ActionFollowUpDownloadFacade.LoadPlaceContentBlock");
                         }
@@ -922,7 +922,7 @@
                 else {
 
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpDownloadFacade.LoadPlaceContentBlock");
                 }
 
@@ -1102,7 +1102,7 @@
                     //If no internet connection
                 else if (ShowExceptionMessage != false) {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ActionFollowUpDownloadFacade.DownloadActionFollowUpInfo");
                 }
             }

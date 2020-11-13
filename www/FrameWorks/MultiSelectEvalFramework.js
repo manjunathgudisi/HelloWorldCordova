@@ -43,13 +43,13 @@ function MultiSelectEvalFamework() {
                         }
                     }
                     else {
-                        alert("Not implemented exception  : ComparisonKey = " + ComparisonKey);
+                        navigator.notification.alert(("Not implemented exception  : ComparisonKey = " + ComparisonKey), ['OK'], "");
                     }
                 }
 
             }
             else {
-                alert("Not implemented exception : ControlType = " + ControlType);
+                navigator.notification.alert(("Not implemented exception : ControlType = " + ControlType), ['OK'], "");
             }
 
 

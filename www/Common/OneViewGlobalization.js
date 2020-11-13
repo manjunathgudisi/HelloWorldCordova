@@ -1,4 +1,4 @@
-﻿ var res = {
+ var res = {
  			
  			'Authentication_Page':{
  				'SignIn': { 'en-us': 'Sign In', 'es-mx': 'aaayudame' },
@@ -4219,7 +4219,7 @@
 
             xlatService.setCurrentPage('Authentication');
                 $scope.Authentication = function () {
-                    alert(xlatService.xlat('SavedSuccessfully'));
+                    navigator.notification.alert(xlatService.xlat('SavedSuccessfully'), ['OK'], "");
                 }
             }
         )*/
@@ -4311,7 +4311,7 @@
                         //alert("thjhdd");
                         return MessageKey;
                         if(IsDevelopementMode==true)
-                            alert('xlat exception : ' + Exep);
+                            navigator.notification.alert(('xlat exception : ' + Exep), ['OK'], "");
                         return MessageKey;
                     }
                 }
@@ -4326,7 +4326,7 @@
                     return xlatService.xlat(label, parameters);
                 }
                 catch (Exep) {
-                    alert('xlat filter : ' + Exep);
+					navigator.notification.alert(('xlat filter : ' + Exep), ['OK'], "");
                 }
             
             };
@@ -4334,9 +4334,9 @@
 
         MyApp.directive("xlatdiv", function () {
             return function (scope, element, attrs) {
-                alert('aaa');
-                alert(element[0].value);
-                alert(attrs.key);
+                //alert('aaa');
+                //alert(element[0].value);
+                //alert(attrs.key);
                 element[0].value = res['Authentication_Page'][attrs.key]['en-us'];
                 //element.html("sss");
             }

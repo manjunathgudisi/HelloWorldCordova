@@ -136,7 +136,7 @@ function Tesco17PeriodicLandingPageFacade($scope, xlatService, $location, snapRe
                 _oTesco17PeriodicLandingBO.DownloadDCProfile();               
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "Tesco17PeriodicLandingPageFacade.DownLoadProfile");
             }
 
@@ -166,11 +166,11 @@ function Tesco17PeriodicLandingPageFacade($scope, xlatService, $location, snapRe
                         _oTesco17PeriodicLandingBO.UploadDC();
                     }
                     else {
-                        alert(xlatService.xlat('Periodic_Upload_Validation_Message'));
+                        navigator.notification.alert(xlatService.xlat('Periodic_Upload_Validation_Message'), ['OK'], "");
                     }
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No internet connection", "Tesco17PeriodicLandingPageFacade.Upload");
                 }           
            
@@ -276,7 +276,7 @@ function Tesco17PeriodicLandingPageFacade($scope, xlatService, $location, snapRe
                 
                 if (ApprovalInfoResponse.length == 0) {
 
-                    alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"));
+                    navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"), ['OK'], "");
                 }
                 else if (ApprovalInfoResponse.length == 1) {
                     DcOnDeviceApprovalInfoLst = ApprovalInfoResponse;
@@ -294,7 +294,7 @@ function Tesco17PeriodicLandingPageFacade($scope, xlatService, $location, snapRe
 
             }
             else {
-                alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"));
+                navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"), ['OK'], "");
             }
 
             tempscope.$apply();
@@ -412,7 +412,7 @@ function Tesco17PeriodicLandingBO($scope, xlatService, $location, snapRemote, $c
                 OneViewLocalStorage.Save("PeriodicLandingPageLastSyncDate", new DateTime().GetDateAndTime());
 
                 if (IsShowDownloadSuccessMessage == true) {
-                    alert(xlatService.xlat('Periodic_Download_Success_Message'));
+                    navigator.notification.alert(xlatService.xlat('Periodic_Download_Success_Message'), ['OK'], "");
                 }
 
                 oSetDefaultSpinner.Start();
@@ -472,7 +472,7 @@ function Tesco17PeriodicLandingBO($scope, xlatService, $location, snapRemote, $c
                 }
             }
             else {
-                alert(xlatService.xlat('NoDataForUpload'));
+                navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                 OneViewConsole.Info("No dc available", "DasboardBO.UploadDcAndAction");
             }            
 
@@ -513,12 +513,12 @@ function Tesco17PeriodicLandingBO($scope, xlatService, $location, snapRemote, $c
                         IsSuccess = _oUploadBO.BatchUploadAdv(_oDcFilterParamRequest);
                     }
                     else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
-                        alert(xlatService.xlat('UploadFailed'));
+                        navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                         IsSuccess = false;
                     }
                 }
                 else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {
-                    alert(xlatService.xlat('UploadFailed'));
+                    navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     IsSuccess = false;
                 }
 

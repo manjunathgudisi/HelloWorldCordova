@@ -394,7 +394,7 @@ function Entities() {
 
         catch (Excep) {
 
-            alert("Error while excecuting GetEntityObject method in Table \n" + Excep);
+            navigator.notification.alert(("Error while excecuting GetEntityObject method in Table \n" + Excep), ['OK'], "");
         }
     }
 }

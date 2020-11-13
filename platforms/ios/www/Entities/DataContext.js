@@ -39,6 +39,13 @@ var SqliteDataContext = [
     "RcoAndLabelMapping",
     "OrderDetails",
     "PurchaseOrder",
+    "WorkOrderItemDetails",
+    "FlightBeltPlanDetails",
+    "FlightCellPlanDetails",
+    "FlightOALPlanDetails",
+    "PickListMasterDetails",
+    "ASOWorkOrderDetails",
+    "RFLWorkOrder",
 
     // Dc Profile tables
     "DcProfileEntity",
@@ -155,6 +162,13 @@ var NodeTables = [
     "RcoAndLabelMapping",
      "ItemProcessMappingEntity",
      "PurchaseOrder",
+     "WorkOrderItemDetails",
+     "FlightBeltPlanDetails",
+     "FlightCellPlanDetails",
+     "FlightOALPlanDetails",
+     "PickListMasterDetails",
+     "ASOWorkOrderDetails",
+     "RFLWorkOrder"
 ]
 
 var ProfileTables = [

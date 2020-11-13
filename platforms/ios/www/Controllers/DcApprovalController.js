@@ -3,7 +3,7 @@
 // Created User : Siva
 
 // Last Updated User : Siva
-// Last Updated Date : 26-09-2016 
+// Last Updated Date : 26-09-2016
 
 // ############################################################################################################## //
 
@@ -70,7 +70,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
 
     /// <summary>
     /// Init event registration
-    /// </summary>   
+    /// </summary>
     this.Init = function () {
 
         try {
@@ -90,7 +90,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
 
             OneViewConsole.Debug("Init End", "DcApprovalFacade.Init");
         }
-        catch (Excep) {           
+        catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "DcApprovalFacade.Init", xlatService);
         }
     }
@@ -98,7 +98,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
 
     /// <summary>
     /// Page load event registration
-    /// </summary>   
+    /// </summary>
     this.PageLoad = function () {
 
         try {
@@ -130,18 +130,18 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
                         _oDcApprovalDetailsUIComponent.LoadHtml(DcOnDeviceApprovalConfigControls);
                     }
                     else {
-                        alert("OnDevice approval configuration not found. Please contact administrator");
+                        navigator.notification.alert("OnDevice approval configuration not found. Please contact administrator", ['OK'], "");
                     }
                 }
                 else {
-                    // $location.url('/dashboard');    
+                    // $location.url('/dashboard');
                     var OperationKey = oPageNavigationFramework.GetOperationKey("Approve", "C");
                     oPageNavigationFramework.RedirectByPreference(OperationKey, $location, xlatService, $scope);
                 }
                 
             }
             else {
-                alert("OnDevice approval configuration not found. Please contact administrator");
+                navigator.notification.alert("OnDevice approval configuration not found. Please contact administrator", ['OK'], "");
             }
             
             OneViewConsole.Debug("PageLoad End", "DcApprovalFacade.PageLoad");
@@ -154,7 +154,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
 
     /// <summary>
     /// Destroy event registration
-    /// </summary>   
+    /// </summary>
     this.Destroy = function () {
 
         try {
@@ -193,7 +193,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
 
     /// <summary>
     /// Approve event registration
-    /// </summary>   
+    /// </summary>
     this.Approve = function () {
 
         try {
@@ -229,8 +229,8 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
                         }
 
                         if (DcOnDeviceApprovalInfo.NextApprovalIndex <= DcOnDeviceApprovalInfo.DcApprovalProfileInfo.DcApprovalProfile.OnDeviceApprovalLevels) {
-                            // alert("Level " + (DcOnDeviceApprovalInfo.NextApprovalIndex - 1) + " approved successfully. Click ok proceed the next level");                           
-                            alert(xlatService.xlat(ApprovalSuccessMessageKey));
+                            // alert("Level " + (DcOnDeviceApprovalInfo.NextApprovalIndex - 1) + " approved successfully. Click ok proceed the next level");
+                            navigator.notification.alert(xlatService.xlat(ApprovalSuccessMessageKey), ['OK'], "");
                             this.PageLoad();
                         }
                         else {
@@ -238,22 +238,22 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
                             _oDasboardBO.UpdateTaskStatus_ApproveDC(DcOnDeviceApprovalInfoLst.length);
 
                             //  alert("Approved successfully");
-                           //  alert(xlatService.xlat(ApprovalSuccessMessageKey));
+                           //  navigator.notification.alert(xlatService.xlat(ApprovalSuccessMessageKey), ['OK'], "");
                             // $location.url('/dashboard');
                             var OperationKey = oPageNavigationFramework.GetOperationKey("Approve", "C");
                             oPageNavigationFramework.RedirectByPreference(OperationKey, $location, xlatService, $scope);
                         }
                     }
                     else {
-                        alert("Error while approving");
+                        navigator.notification.alert("Error while approving", ['OK'], "");
                     }
                 }
                 else {
-                    alert(xlatService.xlat(BusinessValidationResponse.ErrorMessage));
+                    navigator.notification.alert(xlatService.xlat(BusinessValidationResponse.ErrorMessage), ['OK'], "");
                 }
             }
             else {
-                alert(xlatService.xlat(UIValidationResponse.ErrorMessage));
+                navigator.notification.alert(xlatService.xlat(UIValidationResponse.ErrorMessage), ['OK'], "");
             }
 
             OneViewConsole.Debug("Approve End", "DcApprovalFacade.Approve");
@@ -266,7 +266,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
 
     /// <summary>
     /// Reject event registration
-    /// </summary>   
+    /// </summary>
     this.Reject = function () {
 
         try {
@@ -282,7 +282,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
 
     /// <summary>
     /// PreviewDC event registration
-    /// </summary>  
+    /// </summary>
     this.PreviewDC = function (TemplateNodeId, DcId) {
 
         try {
@@ -301,7 +301,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
 
     /// <summary>
     /// Cancel event registration
-    /// </summary>   
+    /// </summary>
     this.Cancel = function () {
 
         try {
@@ -310,7 +310,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
             var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
             oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('Navigate_confirm_Title'), xlatService.xlat('Cancel_confirm_Message'), function (ConfirmationId) {
 
-                if (ConfirmationId == "2") {                   
+                if (ConfirmationId == "2") {
                     if (DcApprovalUIInfo.IsIndividualDcSummary == false) {
                         $location.url('/PlatformPeriodicsLandingPage?TemplateGroupId=2');
                     }
@@ -365,7 +365,7 @@ function DcApprovalDetailsUIComponent($scope, xlatService, $location, snapRemote
                 for (var i = 0; i < DcOnDeviceApprovalInfoLst.length; i++) {
 
                     var DcInfo = DcOnDeviceApprovalInfoLst[i].DcInfo;
-                    var TemplateId = DcOnDeviceApprovalInfoLst[i].DcInfo.TemplateNodeId;                        
+                    var TemplateId = DcOnDeviceApprovalInfoLst[i].DcInfo.TemplateNodeId;
                     DcSummaryHtml += _oDcSummaryUIComponent.GetHtml({ DcId: DcInfo.Id, TemplateId: TemplateId, DcSummaryConfig: ApprovalDcSummaryConfig, 'IsPreviewButtonEnable': true });
 
                 }
@@ -381,7 +381,7 @@ function DcApprovalDetailsUIComponent($scope, xlatService, $location, snapRemote
             oDOM.AddInnerHtml("DivHeader", xlatService.xlat(ApprovalHeaderMessageKey));
          
   
-            OneViewConsole.Debug("GetHtml End", "DcApprovalDetailsUIComponent.GetHtml");           
+            OneViewConsole.Debug("GetHtml End", "DcApprovalDetailsUIComponent.GetHtml");
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "DcApprovalDetailsUIComponent.Init", xlatService);
@@ -464,8 +464,8 @@ function DcApprovalDetailsUIComponent($scope, xlatService, $location, snapRemote
                         CombinedMessage = CombinedMessage + xlatService.xlat(MandatoryOnDeviceApprovalConfigControls[i].ErrorMessageKey);
                     }
 
-                    CountOfEmpty++;                      
-                }               
+                    CountOfEmpty++;
+                }
             }
 
             if (CountOfEmpty > 0) {
@@ -477,7 +477,7 @@ function DcApprovalDetailsUIComponent($scope, xlatService, $location, snapRemote
 
             return ValidationResponse;
         }
-        catch (Excep) {            
+        catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "DcApprovalDetailsUIComponent.Validate", xlatService);
         }
     }
@@ -517,7 +517,7 @@ function DcApprovalDetailsUIComponent($scope, xlatService, $location, snapRemote
                                         }
                                     }
                                 }
-                            }                           
+                            }
                         }
                     }
 
@@ -538,7 +538,7 @@ function DcApprovalDetailsUIComponent($scope, xlatService, $location, snapRemote
                         else if (Result[0].Password == Answers[1]) {
                             ValidationResponse.ApprovalUserId = Result[0].ServerId;
                             ValidationResponse.ApprovalUserName = Result[0].Name;
-                            ValidationResponse.IsSuccess = true;                           
+                            ValidationResponse.IsSuccess = true;
                         }
                     }
                     else {
@@ -638,7 +638,7 @@ function DcApprovalDetailsUIComponent($scope, xlatService, $location, snapRemote
 
                    
                    
-                } 
+                }
             }
 
             OneViewConsole.Debug("BusinessValidatation End", "DcApprovalDetailsUIComponent.BusinessValidatation");
@@ -660,7 +660,7 @@ function DcApprovalDetailsAnswerModeComponent() {
         try {
             OneViewConsole.Debug("GetHtml start", "DcApprovalDetailsAnswerModeComponent.GetHtml");
 
-            var Html = '';           
+            var Html = '';
 
             if (OnDeviceApprovalControlConfig.Type == "UserIdPasswordApprovalType") {
                 Html = new DcApprovalDetailsUserIdPasswordAnswerModeComponent().GetHtml(OnDeviceApprovalControlConfig);
@@ -756,7 +756,7 @@ function DcApprovalDetailsUserIdPasswordAnswerModeComponent() {
             else {
                 var Answers = DcApprovalModel[Type].Answer.split("$vn$");
                 if (Mode == "UserId") {
-                    DcApprovalModel[Type].Answer = Answer + "$vn$" + Answers[1]; 
+                    DcApprovalModel[Type].Answer = Answer + "$vn$" + Answers[1];
                 }
                 else if (Mode == "Password") {
                     DcApprovalModel[Type].Answer = Answers[0] + "$vn$" + Answer;
@@ -767,12 +767,12 @@ function DcApprovalDetailsUserIdPasswordAnswerModeComponent() {
                 DcApprovalModel[Type].Answer = "";
             }
             
-            OneViewConsole.Debug("Set End", "DcApprovalDetailsAnswerModeComponent.Set");           
+            OneViewConsole.Debug("Set End", "DcApprovalDetailsAnswerModeComponent.Set");
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "DcApprovalDetailsAnswerModeComponent.Set", oxlatService);
         }
-    } 
+    }
 }
 
 // DcApprovalDetailsPinApprovalTypeAnswerModeComponent
@@ -796,7 +796,7 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
                         '<label>' +
                         '<span>' + oxlatService.xlat(LabelName) + '</span>' +
                         '<input type="password" id="' + OnDeviceApprovalControlConfig.Type + 'ControlId" oninput="new DcApprovalDetailsPinApprovalTypeAnswerModeComponent().Set(this.value, ' + Type + ')">' +
-                        '</label>' +                       
+                        '</label>' +
                         '</div>' +
                         '</div>' +
                         ' </div>';
@@ -871,14 +871,14 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
 
             if (OnDeviceApprovalControlConfig.IsQRCodeReaderEnabled !=undefined &&OnDeviceApprovalControlConfig.IsQRCodeReaderEnabled == true) {
                 if (OnDeviceApprovalControlConfig.IsManualPINEnabled == true) {
-                    alert("Not Implemented");
+                    navigator.notification.alert(("Not implemented"), ['OK'], "");
                 }
                 else {
                     Html += '<input type="text" id="' + OnDeviceApprovalControlConfig.Type + 'ControlId" oninput="new DcApprovalDetailsPinApprovalTypeAnswerModeComponent().Set(this.value, ' + Type + ')" disabled>';
                 }
             }
             else {
-                Html += '<input type="password" id="' + OnDeviceApprovalControlConfig.Type + 'ControlId" oninput="new DcApprovalDetailsPinApprovalTypeAnswerModeComponent().Set(this.value, ' + Type + ')">';                       
+                Html += '<input type="password" id="' + OnDeviceApprovalControlConfig.Type + 'ControlId" oninput="new DcApprovalDetailsPinApprovalTypeAnswerModeComponent().Set(this.value, ' + Type + ')">';
             }
             Html +='</label>';
 
@@ -898,7 +898,7 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
             
             DcApprovalModel[Type].Answer = Answer;
             
-            OneViewConsole.Debug("Set End", "DcApprovalDetailsAnswerModeComponent.Set");            
+            OneViewConsole.Debug("Set End", "DcApprovalDetailsAnswerModeComponent.Set");
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "DcApprovalDetailsAnswerModeComponent.Set", oxlatService);
@@ -924,7 +924,7 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
                  },
           function (error) {
               // ReturnMessage.Text = "Scanning failed: " + error;
-              alert("Scanning failed: " + error);
+              navigator.notification.alert(("Scanning failed: " + error), ['OK'], "");
           },
           {
               "resultDisplayDuration": 0
@@ -935,7 +935,7 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "DcApprovalDetailsAnswerModeComponent.OpenBarcodeReader", oxlatService);
-        }      
+        }
     }
 
     this.BarcodeReaderEventHandler = function (Response) {
@@ -945,13 +945,13 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
             var oDOM = new DOM();
             MyInstance.Set(Response, "PinApprovalType");
             var ValidationResponse = MyInstance.PinValidatation();
-            if (ValidationResponse.IsSuccess == true) {                
+            if (ValidationResponse.IsSuccess == true) {
                 oDOM.SetValue("PinApprovalTypeControlId", oxlatService.xlat("Pin verified"));
                 oDOM.SetStyle('PinApprovalTypeControlId', 'color', 'green');
                 oGlobalOneviewBarcodeReaderPlugin.BarcodeReaderEventHandler = null;
             }
             else {
-                MyInstance.Set("", "PinApprovalType");                
+                MyInstance.Set("", "PinApprovalType");
                 oDOM.SetValue("PinApprovalTypeControlId", oxlatService.xlat(ValidationResponse.ErrorMessage));
                 oDOM.SetStyle('PinApprovalTypeControlId', 'color', 'red');
                 //alert(oxlatService.xlat(ValidationResponse.ErrorMessage));
@@ -961,7 +961,7 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "DcApprovalDetailsAnswerModeComponent.BarcodeReaderEventHandler", oxlatService);
-        }       
+        }
     }
 
 
@@ -1003,7 +1003,7 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
                     }
                     else if (DcApprovalModel[i].OnDeviceApprovalControlConfig.IsDCApprovalUserPin == true) {
                         var IsApprovalUserExist = false;
-                        var DcApproverPin = DcApprovalModel[i].Answer;                        
+                        var DcApproverPin = DcApprovalModel[i].Answer;
 
                         var ApproverUserIdList = [];
 
@@ -1029,14 +1029,14 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
                                 for (var i = 0; i < ApproverUserDataList.length ; i++) {
                                     var ApproverUserData = ApproverUserDataList[i];
                                     if (ApproverUserData.Pin == DcApproverPin) {
-                                        IsPinMatch = true;                                       
+                                        IsPinMatch = true;
                                         ValidationResponse.ApprovalUserId = ApproverUserData.ServerId;
                                         ValidationResponse.ApprovalUserName = ApproverUserData.Name;
                                         ValidationResponse.IsSuccess = true;
                                         break;
                                     }
                                     else {
-                                        IsPinMatch = false;                                       
+                                        IsPinMatch = false;
                                     }
                                 }
 
@@ -1065,7 +1065,7 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
                 }
             }
 
-            OneViewConsole.Debug("PinValidatation End", "DcApprovalDetailsPinApprovalTypeAnswerModeComponent.PinValidatation");           
+            OneViewConsole.Debug("PinValidatation End", "DcApprovalDetailsPinApprovalTypeAnswerModeComponent.PinValidatation");
             return ValidationResponse;
         }
         catch (Excep) {
@@ -1259,7 +1259,7 @@ function AnonymousApproverSignatureApprovalTypeComponent() {
                         '<input type="text" id="lblSignature" readonly>' +
                         '     </label>' +
                         '   </div>' +
-                        ' </div>      ' +      
+                        ' </div>      ' +
                         ' <div class="col col-10 no-padding no-margin text-center">' +
                         '   <a href="javascript:void(0)" onclick="new AnonymousApproverSignatureApprovalTypeComponent().Signature(' + Type + ')" class="button button-icon icon icon-pencil"></a>' +
                         ' </div>' +
@@ -1305,7 +1305,7 @@ function AnonymousApproverSignatureApprovalTypeComponent() {
 
             var ApproverSignature_DivSignature = document.getElementById("ApproverSignature_DivSignature");
 
-            ApproverSignature_DivSignature.style.display = "block";           
+            ApproverSignature_DivSignature.style.display = "block";
            
           //  $timeout(function () {
             SignatureContent(SignatureNameControlId, Type);
@@ -1353,7 +1353,7 @@ function AnonymousApproverSignatureApprovalTypeComponent() {
             saveButton.addEventListener("click", function (event) {
                 //alert(signaturePad.toDataURL().length);
                 if (signaturePad.isEmpty()) {
-                    alert("MN-RQ-NCF-001 :: Please provide signature first.");
+                    navigator.notification.alert("MN-RQ-NCF-001 :: Please provide signature first.", ['OK'], "");
                 } else {
                     SaveSignature(Type,SignatureNameControlId, signaturePad);
                 }
@@ -1374,7 +1374,7 @@ function AnonymousApproverSignatureApprovalTypeComponent() {
 
     var SaveSignature = function (Type,ControlId, signaturePad) {
         try {
-            OneViewConsole.Debug("SaveSignature Start", "DcApprovalDetailsAnswerModeComponent.SaveSignature");         
+            OneViewConsole.Debug("SaveSignature Start", "DcApprovalDetailsAnswerModeComponent.SaveSignature");
 
             DcApprovalModel[Type].Answer = signaturePad.toDataURL();
             var DivApproveContent = document.getElementById("DivApproveContent");
@@ -1543,13 +1543,13 @@ function DcSummaryUIComponent() {
                                     ListviewAnswermodeSummary["INCOMPLETE"].Name = "INCOMPLETE";
                                     ListviewAnswermodeSummary["INCOMPLETE"].Color = "red";
                                     ListviewAnswermodeSummary["INCOMPLETE"].Sequence = 1;
-                                }                                
+                                }
                                 if (k == "COMPLETE") {
 
                                     ListviewAnswermodeSummary["COMPLETE"].Name = "COMPLETE";
                                     ListviewAnswermodeSummary["COMPLETE"].Color = "green";
                                     ListviewAnswermodeSummary["COMPLETE"].Sequence = 3;
-                                }   
+                                }
                             }
                            
                             if (_oListviewAnswermodeSummary[k] == undefined) {
@@ -1559,14 +1559,14 @@ function DcSummaryUIComponent() {
                                 _oListviewAnswermodeSummary[k].Count = parseInt(_oListviewAnswermodeSummary[k].Count + ListviewAnswermodeSummary[k].Count);
                             }
                         }
-                    }                    
+                    }
                 }
 
                 _DcSummaryResponse.NCCount = parseInt(_DcSummaryResponse.NCCount + DcSummaryResponse.NCCount);
                 _DcSummaryResponse.ObservationCount = parseInt(_DcSummaryResponse.ObservationCount + DcSummaryResponse.ObservationCount);
                 _DcSummaryResponse.ActionCount = parseInt(_DcSummaryResponse.ActionCount + DcSummaryResponse.ActionCount);
                 _DcSummaryResponse.BlockerCount = parseInt(_DcSummaryResponse.BlockerCount + DcSummaryResponse.BlockerCount);
-                _DcSummaryResponse.NACount = parseInt(_DcSummaryResponse.NACount + DcSummaryResponse.NACount);              
+                _DcSummaryResponse.NACount = parseInt(_DcSummaryResponse.NACount + DcSummaryResponse.NACount);
                 _DcSummaryResponse.OtherAnswermodeSummary = parseInt(_DcSummaryResponse.OtherAnswermodeSummary + DcSummaryResponse.OtherAnswermodeSummary);
                 
                
@@ -1601,12 +1601,12 @@ function DcSummaryUIComponent() {
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DcSummaryUIComponent.GetHtml", Excep);
         }
-    }  
+    }
     ////Req : { DcId: DcIdLst, DcClientGuid: DcClientGuidLst, TemplateId: TemplateIdLst, DcSummaryConfig: ApprovalDcSummaryConfig, 'IsPreviewButtonEnable': true }
     this.GetHtmlOverAllForDcLst = function (Req) {
 
         try {
-            OneViewConsole.Debug("GetHtmlOverAllForDcLst start", "DcSummaryUIComponent.GetHtmlOverAllForDcLst");           
+            OneViewConsole.Debug("GetHtmlOverAllForDcLst start", "DcSummaryUIComponent.GetHtmlOverAllForDcLst");
             
 
             var Html = '';
@@ -1747,7 +1747,7 @@ function DcSummaryUIComponent() {
             var Html = '';
             var Header = '<div class="title-bar rounded" style="background:#b9c8d0; color:#000;">Score</div>';
 
-            if (DcSummaryConfig.IsScoreRequired == true) {               
+            if (DcSummaryConfig.IsScoreRequired == true) {
                 Html += GetBoxHtml("Score", DcSummaryResponse.Score, 'grey');
             }
 
@@ -1796,5 +1796,6 @@ function DcSummaryUIComponent() {
         }
     }
 }
+
 
 

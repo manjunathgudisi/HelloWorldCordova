@@ -182,20 +182,20 @@ function LoginFacade(xlatService) {
                                 }
                                 else {
                                     //toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('InvalidCredential'));
-                                    alert(xlatService.xlat('InvalidCredential'));
+                                    navigator.notification.alert(xlatService.xlat('InvalidCredential'), ['OK'], "");
                                     OneViewConsole.Info("Login Status : InvalidCredential", "LoginFacade.Login");
                                     FocusControl($scope, "txtUserName");
                                 }
                             }
                             else if (_oUserDTO != null && _oUserDTO.IsAnyException == true) {
                                 //toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('ServerError'));
-                                alert(xlatService.xlat('ServerError'));
+                                navigator.notification.alert(xlatService.xlat('ServerError'), ['OK'], "");
                                 OneViewConsole.Info("Login Status : Server Error", "LoginFacade.Login");
                             }
                         }
                         else {
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                            alert(xlatService.xlat('NoInternetConnection'));
+                            navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                             OneViewConsole.Info("No Internet Connection", "LoginFacade.Login");
                         }
 
@@ -209,7 +209,7 @@ function LoginFacade(xlatService) {
                        // if (EncryptedPassword != "") {
                             if (_oUserEntity[0].Password != $scope.User.Password) {
                                 // toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('PasswordMismatch'));
-                                alert(xlatService.xlat('PasswordMismatch'));
+                                navigator.notification.alert(xlatService.xlat('PasswordMismatch'), ['OK'], "");
                                 OneViewConsole.Info("Password Mismatch", "LoginFacade.Login");
                                 FocusControl($scope, "txtPassword");
                             }
@@ -252,7 +252,7 @@ function LoginFacade(xlatService) {
                 }
                 else {                    
                     //toaster.pop('error', xlatService.xlat('Title_Error'), oDefaultValidationResponse.MessageKey);
-                    alert(oDefaultValidationResponse.MessageKey);
+                    navigator.notification.alert(xlatService.xlat(oDefaultValidationResponse.MessageKey), ['OK'], "");
                     OneViewConsole.Info(oDefaultValidationResponse.MessageKey, "LoginFacade.Login");
                     FocusControl($scope, "txtUserName");
                 }

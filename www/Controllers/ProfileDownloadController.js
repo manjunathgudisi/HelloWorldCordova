@@ -101,7 +101,7 @@
                                 alert(NewUpdateMsg);
                                 var IsOperationAccessAllowed = oAPKUpgradeProcessBO.ValidationForAPKUpgradeProcess("IsAllowDcProfileDownload");
                                 if (IsOperationAccessAllowed == true) {
-                                    alert('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.');
+                                    navigator.notification.alert(('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.'), ['OK'], "");
                                 }
                                 else {
                                     //navigate to upgrade
@@ -300,7 +300,7 @@
 
                     if (IsLoadView == false) {
                         $scope.ImmediateParentColumn = false;
-                        alert(xlatService.xlat('NoProfiles'));
+                        navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                     }
                 }
 
@@ -391,7 +391,7 @@
                 else {
                     return false;
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.LoadImmediateParentPlaces");
                 }
 
@@ -441,7 +441,7 @@
                 else {
                     return false;
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.LoadImmediateParentPlaces");
                 }
 
@@ -514,7 +514,7 @@
                             });
                         }
                         else {
-                            alert(xlatService.xlat('NoTemplatesSelected'));
+                            navigator.notification.alert(xlatService.xlat('NoTemplatesSelected'), ['OK'], "");
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoTemplatesSelected'));
                         }
                     }
@@ -532,12 +532,12 @@
                             });
                         }
                         else {
-                            alert(xlatService.xlat('NoPlacesSelected'));                            
+                            navigator.notification.alert(xlatService.xlat('NoPlacesSelected'), ['OK'], "");                            
                         }
                     }
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));                   
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");                   
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownLoadProfile");
                 }
 
@@ -1336,7 +1336,7 @@
                     }
                     else {
                         $scope.ImmediateParentColumn = false;
-                        //alert(xlatService.xlat('NoProfiles'));
+                        //navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                     }
                 }
                 else {                  
@@ -1604,7 +1604,7 @@
                 //If no internet connection
                 else {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownLoadProfile");
                 }
                 OneViewConsole.Debug("DownLoadProfile end", "ProfileDownloadFacade.DownLoadProfile");
@@ -1707,7 +1707,7 @@
                 //If no internet connection
                 else {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownLoadProfile");
                 }
             }
@@ -1807,7 +1807,7 @@
                 //If no internet connection
                 else {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownLoadProfile");
                 }
             }
@@ -1866,7 +1866,7 @@
                 //If no internet connection
                 else {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownLoadProfile");
                 }
             }
@@ -2105,7 +2105,7 @@
                         }
                         else {
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoProfiles'));
-                            alert(xlatService.xlat('NoProfiles'));
+                            navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                             OneViewConsole.Info("NoProfiles", "ProfileDownloadFacade.LoadContentBlock");
                         }
                     }                    
@@ -2114,7 +2114,7 @@
                 else {
 
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.LoadContentBlock");
                 }
 
@@ -2172,7 +2172,7 @@
                         }
                         else {
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoProfiles'));
-                            alert(xlatService.xlat('NoProfiles'));
+                            navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
                             OneViewConsole.Info("NoProfiles", "ProfileDownloadFacade.LoadContentBlock");
                         }
                     }
@@ -2181,7 +2181,7 @@
                 else {
 
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.LoadContentBlock");
                 }
 
@@ -2238,8 +2238,8 @@
                         }
                         else {
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoProfiles'));
-                            //alert(xlatService.xlat('NoProfiles'));
-                            alert(xlatService.xlat('No Flights available'));
+                            //navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
+                            navigator.notification.alert(xlatService.xlat('No Flights available'), ['OK'], "");
                             OneViewConsole.Info("NoProfiles", "ProfileDownloadFacade.LoadContentBlock");
                         }
                     }
@@ -2248,7 +2248,7 @@
                 else {
 
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.LoadContentBlock");
                 }
 
@@ -2351,7 +2351,7 @@
                 //If no internet connection
                 else {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownLoadProfile");
                 }
             }
@@ -2409,7 +2409,7 @@
                 // If no internet connection
                 else {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadTemplateConfigMetaData");
                 }
             }
@@ -2465,7 +2465,7 @@
                     //If no internet connection
                 else {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadDCDisplayMetaData");
                 }
             }
@@ -2519,7 +2519,7 @@
                     //If no internet connection
                 else {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadRouterMetaData");
                 }
             }
@@ -2574,7 +2574,7 @@
                     //If no internet connection
                 else {
                     IsDownLoadProfileSuccess = false;
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadTemplatValidationConfigMetaData");
                 }
             }
@@ -2628,7 +2628,7 @@
                 }
                 //If no internet connection
                 else {                  
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadTemplateUIEventJobConfigMetaData");
                 }
             }
@@ -2682,7 +2682,7 @@
                 }
                 //If no internet connection
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadMobileViewRecordsMetadata");
                 }
             }
@@ -2736,7 +2736,7 @@
                 }
                     //If no internet connection
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadGarbageCollectorMetadata");
                 }
             }
@@ -2812,7 +2812,7 @@
                 }
                     //If no internet connection
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadDcCustomPageHtml");
                 }
             }
@@ -2883,7 +2883,7 @@
                 }
                 //If no internet connection
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadDcCustomPageHtmlUsingHttpGet");
                     return null;
                 }
@@ -2952,7 +2952,7 @@
                 }
                     //If no internet connection
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadMobileDcPreviewMetadata");
                 }
             }
@@ -3004,7 +3004,7 @@
                 }
                     //If no internet connection
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.DownloadMobileDcPreviewMetadata");
                 }
             }

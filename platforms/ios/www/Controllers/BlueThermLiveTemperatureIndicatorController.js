@@ -121,7 +121,7 @@ function BlueThermLiveTemperatureIndicatorFacade(parm) {
                         
                             ProbeDetails = _oOneViewAppInfoPlugin.ConnectNewProbe(ProbeName);
                             if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {
-                                alert(xlatService.xlat('ProbeConnectedSuccesfully'));                              
+                                navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");                              
                                 ConnectedProbe[0] = { "Index": 1, "Id": ProbeName, "Name": ProbeName };
                                 DeleteProbeDetails();
 
@@ -129,18 +129,18 @@ function BlueThermLiveTemperatureIndicatorFacade(parm) {
 
                         }
                         else if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {
-                            alert(xlatService.xlat('ProbeConnectedSuccesfully'));
+                            navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
                             ConnectedProbe[0] = { "Index": 1, "Id": ProbeName, "Name": ProbeName };
                            
                             DeleteProbeDetails();
                         }
                         else if (ProbeDetails.ConnectionState.toUpperCase().trim() == "DISCONNECTED") {
-                            alert(xlatService.xlat('IN-MG-MSE-004 :: Probe is in Disconnceted status.Please open the probe and connect'));
+                            navigator.notification.alert(xlatService.xlat('IN-MG-MSE-004 :: Probe is in Disconnceted status.Please open the probe and connect'), ['OK'], "");
                         }
                         else {
                           
                             DeleteProbeDetails();
-                            alert(xlatService.xlat('IN-MG-MSE-004 :: Probe Connection failed please go to settings page and reconnect the probe '));
+                            navigator.notification.alert(xlatService.xlat('IN-MG-MSE-004 :: Probe is in Disconnceted status.Please open the probe and connect'), ['OK'], "");
                            
 
                         }
@@ -154,7 +154,7 @@ function BlueThermLiveTemperatureIndicatorFacade(parm) {
         catch (Excep) {
             oSetDefaultSpinner.Stop();
             DeleteProbeDetails();
-            alert(xlatService.xlat('IN-MG-MSE-004 :: Probe Connection failed please go to settings page and reconnect the probe '));
+            navigator.notification.alert(xlatService.xlat('IN-MG-MSE-004 :: Probe is in Disconnceted status.Please open the probe and connect'), ['OK'], "");
       
             oOneViewExceptionHandler.Catch(Excep, "BlueThermLiveTemperatureIndicatorFacade.ConnectProbe", xlatService);
         }

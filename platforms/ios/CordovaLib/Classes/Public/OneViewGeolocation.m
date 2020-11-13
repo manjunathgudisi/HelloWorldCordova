@@ -8,19 +8,15 @@
 
 #import "OneViewGeolocation.h"
 #import <JavaScriptCore/JavaScriptCore.h>
-#import <Foundation/Foundation.h>
-#import <CoreLocation/CLAvailability.h>
-#import <Foundation/Foundation.h>
-#import <CoreLocation/CLAvailability.h>
-#import <CoreLocation/CLLocation.h>
-#import <CoreLocation/CLRegion.h>
-#import <CoreLocation/CLLocationManager.h>
+
 
 @protocol JS_OOneViewGeolocationController <JSExport>
 
 -(NSString *)CheckGeolocation;
 -(NSString *)OpenGPSSettings;
 -(NSString *)GetLatitudeAndLangtitude;
+- (void)RemoveLocationUpdates;
+
 @end
 
 
@@ -44,13 +40,13 @@
 //TODO:IOS Migr (Need to test this code)
 -(NSString *)GetLatitudeAndLangtitude
 {
-    CLLocationCoordinate2D coordinate = [self getLocation];
+    CLLocationCoordinate2D coordinate = [self getLocationCoordinates];
     NSString *latitude = [NSString stringWithFormat:@"%f", coordinate.latitude];
     NSString *longitude = [NSString stringWithFormat:@"%f", coordinate.longitude];
     return [NSString stringWithFormat:@"%@, %@", latitude, longitude];
 }
 
--(CLLocationCoordinate2D) getLocation{
+-(CLLocationCoordinate2D) getLocationCoordinates {
     
     CLLocationManager *locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -61,6 +57,10 @@
     CLLocationCoordinate2D coordinate = [location coordinate];
     
     return coordinate;
+}
+
+- (void)RemoveLocationUpdates {
+    
 }
 
 @end

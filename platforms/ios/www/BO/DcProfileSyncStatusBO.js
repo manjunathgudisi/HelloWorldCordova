@@ -46,7 +46,7 @@ function DcProfileSyncStatusBO(xlatService) {
                     "StartDate": CurrentDate,
                     "EndDate": CurrentDate
                 }
-                //alert("Req : " + JSON.stringify(Req));
+                //navigator.notification.alert(("Req : " + JSON.stringify(Req)), ['OK'], "");
 
                 var DcProfileLst = _oDcProfileSyncStatusDAO.GetByAllDcProfilesWithPeriodDetails(Req);
                 //alert("DcProfileLst : " + JSON.stringify(DcProfileLst));
@@ -72,7 +72,7 @@ function DcProfileSyncStatusBO(xlatService) {
                 }
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "DcProfileSyncStatusBO.Download");
             }
 

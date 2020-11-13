@@ -178,17 +178,17 @@ function ActionBO(InputParm)
     }
 
     this.GetFormDCActionMapping = function (oTemplateNodes) {
-        alert('GetFormDCActionMapping :not implemented exception');
+        navigator.notification.alert(('GetFormDCActionMapping :not implemented exception'), ['OK'], "")
     }
 
     //return ActionEntity
     this.GetPreDefinedDCActionMapping = function () {
-        alert('GetPreDefinedDCActionMapping :not implemented exception');
+        navigator.notification.alert(('GetPreDefinedDCActionMapping :not implemented exception'), ['OK'], "")
     }
 
     //return ActionEntity
     this.GetCustomeDCActionMapping = function () {
-        alert('GetCustomeDCActionMapping :not implemented exception');
+        navigator.notification.alert(('GetCustomeDCActionMapping :not implemented exception'), ['OK'], "")
     }
 
    
@@ -272,10 +272,10 @@ function ActionBO(InputParm)
     }
     
     var GetPreDefinedActionDetailsEntityList = function () {
-        alert('GetPreDefinedActionDetailsEntityList :not implemented exception');
+        navigator.notification.alert(('GetPreDefinedActionDetailsEntityList :not implemented exception'), ['OK'], "")
     }
     var GetCustomeActionDetailsEntityList = function () {
-        alert('GetCustomeActionDetailsEntityList :not implemented exception');
+        navigator.notification.alert(('GetCustomeActionDetailsEntityList :not implemented exception'), ['OK'], "")
     }
 
 

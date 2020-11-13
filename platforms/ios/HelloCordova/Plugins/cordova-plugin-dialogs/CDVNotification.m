@@ -82,8 +82,12 @@ static NSMutableArray *alertList = nil;
                 {
                     result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int)(n  + 1)];
                 }
+				
+				dispatch_async(dispatch_get_main_queue(), ^{
+				   [weakNotif.commandDelegate sendPluginResult:result callbackId:callbackId];
+				});
 
-                [weakNotif.commandDelegate sendPluginResult:result callbackId:callbackId];
+                
             }]];
         }
         

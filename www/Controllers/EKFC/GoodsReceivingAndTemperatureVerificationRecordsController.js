@@ -95,7 +95,7 @@ MyApp.controller('GoodsReceivingAndTemperatureVerificationRecordsController',
             $location.url('/ViewRecords');
         }
         else {
-            alert(xlatService.xlat('No_Records_Available'));
+            navigator.notification.alert(xlatService.xlat('No_Records_Available'), ['OK'], "");
            // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('No_Records_Available'));
         }
     };
@@ -1251,7 +1251,7 @@ function GoodsReceivingAndTemperatureVerificationRecordsFacade(parm) {
 
                 if (ActionResponseList != undefined) {
                     if (ActionResponseList.length > 1) {
-                        alert('More than one action for a single attribute : Not implemeneted');
+                        navigator.notification.alert('More than one action for a single attribute : Not implemeneted', ['OK'], "");
                     }
                     else {
                         for (var i = 0; i < ActionResponseList.length; i++) {
@@ -1301,7 +1301,7 @@ function GoodsReceivingAndTemperatureVerificationRecordsFacade(parm) {
                             //alert('NC ChilledRule:');
                             DCNCMappingData.NCRuleId = '401';
                             DCNCMappingData.IsNC = 'true';
-                            alert(xlatService.xlat('ChilledRuleMsg'));
+                            navigator.notification.alert(xlatService.xlat('ChilledRuleMsg'), ['OK'], "");
                         }
                         else {
                             DCNCMappingData.NCRuleId = '401';
@@ -1315,7 +1315,7 @@ function GoodsReceivingAndTemperatureVerificationRecordsFacade(parm) {
                             //alert('NC FrozenRule:');
                             DCNCMappingData.NCRuleId = '402';
                             DCNCMappingData.IsNC = 'true';
-                            alert(xlatService.xlat('FrozenRuleMsg'));
+                            navigator.notification.alert(xlatService.xlat('FrozenRuleMsg'), ['OK'], "");
                         }
                         else {
                             DCNCMappingData.NCRuleId = '402';
@@ -1443,7 +1443,7 @@ function GoodsReceivingAndTemperatureVerificationRecordsFacade(parm) {
                     else {
                         DCNCMappingData.NCRuleId = '403';
                         DCNCMappingData.IsNC = 'true';
-                        alert(xlatService.xlat('ExpiryDateNCMsg'));
+                        navigator.notification.alert(xlatService.xlat('ExpiryDateNCMsg'), ['OK'], "");
                     }
                 }
 
@@ -1505,7 +1505,7 @@ function GoodsReceivingAndTemperatureVerificationRecordsFacade(parm) {
 
 
                 if (FormedPDDate != undefined && FormedExpiryDate != undefined && FormedPDDate > FormedExpiryDate) {
-                    alert(xlatService.xlat('PDExpiryValidationMsg'));
+                    navigator.notification.alert(xlatService.xlat('PDExpiryValidationMsg'), ['OK'], "");
                   //  $scope.NewDCModel[ControlId] = '';
                 }
 

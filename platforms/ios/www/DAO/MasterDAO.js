@@ -10,12 +10,12 @@ function UserMasterDAO() {
     /// OneView local authentication
     /// TODO (Siva, 24-07-2014) : Need to add projection
     /// </summary>
-    /// <param name="UserName">User name of the user</param> 
+    /// <param name="UserName">User name of the user</param>
     /// <returns>User details ( mobile user entity fromat)</returns>
     this.GetUserDetails = function (UserName, OrganizationName) {
        
         try {
-            OneViewConsole.Debug("GetUserDetails start", "UserMasterDAO.GetUserDetails");            
+            OneViewConsole.Debug("GetUserDetails start", "UserMasterDAO.GetUserDetails");
 
             var Query = "SELECT usr.* FROM UserMasterEntity usr INNER JOIN OrganizationMasterEntity org ON usr.OrganizationMasterId = org.ServerId  WHERE usr.UserName='" + UserName + "' COLLATE NOCASE and org.Name='" + OrganizationName + "' COLLATE NOCASE";
 
@@ -40,10 +40,10 @@ function UserMasterDAO() {
 
 
     /// <summary>
-    /// Reset Password  
+    /// Reset Password
     /// </summary>
-    /// <param name="UserId">Id of the user</param> 
-    /// <param name="NewPassword">New Password</param>   
+    /// <param name="UserId">Id of the user</param>
+    /// <param name="NewPassword">New Password</param>
     this.ResetPassword = function (UserId, NewPassword) {
 
         try {
@@ -61,7 +61,7 @@ function UserMasterDAO() {
             throw oOneViewExceptionHandler.Create("DAO", "UserMasterDAO.ResetPassword", Excep);
         }
         finally {
-            Query = null;          
+            Query = null;
         }
     }
 
@@ -177,12 +177,25 @@ function MultiMediaBlobSubElementsDAO() {
 
         try {
             OneViewConsole.Debug("GetAll_UnSync_MultiMediaBlobSubElements start", "MultiMediaBlobSubElements.GetAll_UnSync_MultiMediaBlobSubElements");
-
+            
             var Query = "SELECT * FROM MultiMediaBlobSubElements WHERE IsSynchronized = 'false'";
+			
+//			var Query = "SELECT Id,ServerId ,ClientGuid ,MobileVersionId ,OVGuid,ServiceId,Type,MappedEntityClientGuid ,Dimension ,MultiMediaType ,FileName,DataURL,Comments ,ProcessCount , CreatedDate ,TimeStamp,LastsyncDate ,IsSynchronized  FROM MultiMediaBlobSubElements WHERE IsSynchronized = 'false'";
+
 
             OneViewConsole.Debug("Requested Query : " + Query, "MultiMediaBlobSubElements.GetAll_UnSync_MultiMediaBlobSubElements");
 
             var BlobSubElements = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            if (BlobSubElements.length > 0) {
+                for (var i = 0; i < BlobSubElements.length; i++) {
+                    if (BlobSubElements[i].BlobFile != undefined) {
+                        if (BlobSubElements[i].BlobFile == 0 || BlobSubElements[i].BlobFile == "" || BlobSubElements[i].BlobFile == undefined) {
+                            BlobSubElements[i].BlobFile = null;
+                        }
+                    }
+                }
+            }
 
             OneViewConsole.DataLog("Response from db : " + BlobSubElements, "MultiMediaBlobSubElements.GetAll_UnSync_MultiMediaBlobSubElements");
             OneViewConsole.Debug("GetAll_UnSync_MultiMediaBlobSubElements end", "MultiMediaBlobSubElements.GetAll_UnSync_MultiMediaBlobSubElements");
@@ -351,7 +364,7 @@ function DcProfileDAO() {
 
             return Result;
         }
-        catch (Excep) {          
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DcProfileDAO.GetByAllDimensions", Excep);
         }
         finally {
@@ -432,7 +445,7 @@ function DcProfileDAO() {
             throw oOneViewExceptionHandler.Create("DAO", "DcProfileDAO.DeleteById", Excep);
         }
         finally {
-            Query = null;         
+            Query = null;
         }
     }
 
@@ -550,7 +563,7 @@ function DcProfileDAO() {
             EndDate = oDateTime.ConvertDateTimeToInteger(EndDate);
 
 
-            var ProfileValidityResponse = {             
+            var ProfileValidityResponse = {
                 IsProfileValid: false,
                 Occurence: 0,
                 TotalDc:0,
@@ -566,9 +579,22 @@ function DcProfileDAO() {
                            "(SUBSTR(DefaultScheduleEntity.FromTime, 1, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 4, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 7, 2) ) AS FT, ( SUBSTR(DefaultScheduleEntity.ToTime, 1, 2) || " +
                           " SUBSTR(DefaultScheduleEntity.ToTime, 4, 2) || SUBSTR(DefaultScheduleEntity.ToTime, 7, 2) ) AS TT , DefaultScheduleEntity.* FROM DcProfileEntity " +
                            "INNER JOIN  DefaultScheduleEntity on DcProfileEntity.Id=DefaultScheduleEntity.DcProfileId  WHERE DcUserId=" + UserId + " and " +
-                           "DcProfileEntity.ServiceId=" + ServiceId + " and DcProfileEntity.DcPlaceDimension = " + DcPlaceDimension + 
+                           "DcProfileEntity.ServiceId=" + ServiceId + " and DcProfileEntity.DcPlaceDimension = " + DcPlaceDimension +
                            " AND  DcProfileEntity.TemplateNodeId=" + TemplateNodeId + " AND DcProfileEntity.DcPlaceId=" + PlaceId +
                             " and SD <=  '" + StartDate + "' and ( '" + EndDate + "'  <=  ED or  '' = ED )";
+
+            if (OneViewSessionStorage.Get("ServiceId") == 52 && TemplateNodeId==3) {
+                Query = "SELECT DefaultScheduleEntity.Occurence,DefaultScheduleEntity.ReccurenceId,DcProfileEntity.ServerId DcProfileServerId,DefaultScheduleEntity.StartDate,DefaultScheduleEntity.EndDate," +
+                            "(SUBSTR(DefaultScheduleEntity.StartDate, 7, 4) || SUBSTR(DefaultScheduleEntity.StartDate, 4, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 1, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 12, 2) || " +
+                           " SUBSTR(DefaultScheduleEntity.StartDate, 15, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 18, 2) ) AS SD ,(SUBSTR(DefaultScheduleEntity.EndDate, 7, 4) ||SUBSTR(DefaultScheduleEntity.EndDate, 4, 2) ||" +
+                           "SUBSTR(DefaultScheduleEntity.EndDate, 1, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 12, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 15, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 18, 2) ) AS ED," +
+                           "(SUBSTR(DefaultScheduleEntity.FromTime, 1, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 4, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 7, 2) ) AS FT, ( SUBSTR(DefaultScheduleEntity.ToTime, 1, 2) || " +
+                          " SUBSTR(DefaultScheduleEntity.ToTime, 4, 2) || SUBSTR(DefaultScheduleEntity.ToTime, 7, 2) ) AS TT , DefaultScheduleEntity.* FROM DcProfileEntity " +
+                           "INNER JOIN  DefaultScheduleEntity on DcProfileEntity.Id=DefaultScheduleEntity.DcProfileId  WHERE DcUserId=" + UserId + " and " +
+                           "DcProfileEntity.ServiceId=" + ServiceId + " and DcProfileEntity.DcPlaceDimension = " + DcPlaceDimension +
+                           " AND  DcProfileEntity.TemplateNodeId=" + TemplateNodeId + " AND DcProfileEntity.DcPlaceId=" + PlaceId;
+                        //    " and SD <=  '" + StartDate + "' and ( '" + EndDate + "'  <=  ED or  '' = ED )";
+            }
 
             OneViewConsole.DataLog("Requested Query : " + Query, "DcProfileDAO.GetProfileDetails");
           
@@ -601,7 +627,7 @@ function DcProfileDAO() {
                             InprogressServerIds = (InprogressServerIds.length && InprogressServerIds[0] == ',') ? InprogressServerIds.slice(1) : InprogressServerIds;
                             ServerIds.push(InprogressServerIds);
                         }
-                        if (_oDcProfileSyncStatusResult[0]["CompletedServerIds"] != "") {                        
+                        if (_oDcProfileSyncStatusResult[0]["CompletedServerIds"] != "") {
                             var CompletedServerIds = _oDcProfileSyncStatusResult[0]["CompletedServerIds"];
                             CompletedServerIds = (CompletedServerIds.length && CompletedServerIds[0] == ',') ? CompletedServerIds.slice(1) : CompletedServerIds;
                             ServerIds.push(CompletedServerIds);
@@ -612,7 +638,7 @@ function DcProfileDAO() {
                     if (Result[0].ReccurenceId > 0) {
                                           
                         StartDate = oDateTime.ConvertDateTimeToInteger(currentDateTime);
-                        EndDate = oDateTime.ConvertDateTimeToInteger(currentDateTime);                        
+                        EndDate = oDateTime.ConvertDateTimeToInteger(currentDateTime);
                         var CurrentPeriod = MyInstance.GetCurrentPeriod({ PeriodTypeServerId: Result[0].ReccurenceId, StartDate: StartDate, EndDate: EndDate });
                         if (CurrentPeriod.length > 0) {
                             ProfileValidityResponse.IsProfileValid = true;
@@ -627,7 +653,7 @@ function DcProfileDAO() {
                     }
                     else {
                         Req.StartDate = Result[0].StartDate;
-                        Req.EndDate = Result[0].EndDate;                      
+                        Req.EndDate = Result[0].EndDate;
                     }
                   
                 }
@@ -676,7 +702,7 @@ function DcProfileDAO() {
 
             var oDateTime = new DateTime();
             StartDate = oDateTime.ConvertDateTimeToInteger(StartDate);
-            EndDate = oDateTime.ConvertDateTimeToInteger(EndDate);  
+            EndDate = oDateTime.ConvertDateTimeToInteger(EndDate);
           
             var IsSubmit = '';
             if (Req.IsSubmit == undefined) {
@@ -689,16 +715,16 @@ function DcProfileDAO() {
             var ServerCondition = "";
 
             if (Req.ServerIds != undefined) {
-                var ServerIdList = FomatForListInCondition(Req.ServerIds);              
+                var ServerIdList = FomatForListInCondition(Req.ServerIds);
                 ServerCondition = " And Dc.ServerId NOT IN " + ServerIdList;
-            }          
+            }
          
            
             var Query = "SELECT Dc.IsCompleted as IsCompleted,Dc.IsSubmit as IsSubmit,(SUBSTR(Dc.DcStartDate, 7, 4) || SUBSTR(Dc.DcStartDate, 4, 2) || SUBSTR(Dc.DcStartDate, 1, 2) || SUBSTR(Dc.DcStartDate, 12, 2) || " +
                            "SUBSTR(Dc.DcStartDate, 15, 2) || SUBSTR(Dc.DcStartDate, 18, 2) ) AS DcSD " +
                            "FROM DataCaptureEntity Dc " +
                            "INNER JOIN  DcResultsEntity DcR on Dc.Id=DcR.DataCaptureId " +
-                           "Where Dc.ServiceId=" + ServiceId + " And DcR.SystemUserId=" + UserId +                         
+                           "Where Dc.ServiceId=" + ServiceId + " And DcR.SystemUserId=" + UserId +
                            " And  DcSD <= '" + EndDate + "'  And DcSD >= '" + StartDate + "' " +
                            " And Dc.DcPlaceDimension = '" + DcPlaceDimension + "' And Dc.DcPlaceId = " + Req.PlaceId + "  And Dc.TemplateNodeId=" + TemplateNodeId + " And ('-1'='" + IsCompleted + "' or  Dc.IsCompleted = '" + IsCompleted + "')" +
                            " And Dc.IsBlocker!='true' " + ServerCondition + " And ('-1'='" + IsSynchronized + "' or  Dc.IsSynchronized = '" + IsSynchronized + "')   And ('-1'='" + IsSubmit + "' or  Dc.IsSubmit = '" + IsSubmit + "')";
@@ -821,7 +847,7 @@ function DcProfileDAO() {
             var StartDate = Req.StartDate;
             var EndDate = Req.EndDate;
       
-            var PlaceIdList = FomatForPlaceIdInCondition(PlaceId);        
+            var PlaceIdList = FomatForPlaceIdInCondition(PlaceId);
             InCondition = "DcProfileEntity.DcPlaceId IN " + PlaceIdList;
 
             var oDateTime = new DateTime();
@@ -838,6 +864,18 @@ function DcProfileDAO() {
                            "DcProfileEntity.ServiceId=" + ServiceId + " and DcProfileEntity.DcPlaceDimension = " + DcPlaceDimension +
                            " AND  DcProfileEntity.TemplateNodeId=" + TemplateNodeId + " AND " +
             "SD <=  '" + StartDate + "' and ( '" + EndDate + "'  <=  ED or  '' = ED ) AND " + InCondition;
+
+            if (OneViewSessionStorage.Get("ServiceId") == 52 && TemplateNodeId == 3) {
+                Query = "SELECT  DcProfileEntity.*,DefaultScheduleEntity.Occurence, DcProfileEntity.ServerId AS DcProfileServerId ,DefaultScheduleEntity.StartDate as StartDate,DefaultScheduleEntity.EndDate as EndDate," +
+                           "(SUBSTR(DefaultScheduleEntity.StartDate, 7, 4) || SUBSTR(DefaultScheduleEntity.StartDate, 4, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 1, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 12, 2) || " +
+                          " SUBSTR(DefaultScheduleEntity.StartDate, 15, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 18, 2) ) AS SD ,(SUBSTR(DefaultScheduleEntity.EndDate, 7, 4) ||SUBSTR(DefaultScheduleEntity.EndDate, 4, 2) ||" +
+                          "SUBSTR(DefaultScheduleEntity.EndDate, 1, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 12, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 15, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 18, 2) ) AS ED," +
+                          "(SUBSTR(DefaultScheduleEntity.FromTime, 1, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 4, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 7, 2) ) AS FT, ( SUBSTR(DefaultScheduleEntity.ToTime, 1, 2) || " +
+                         " SUBSTR(DefaultScheduleEntity.ToTime, 4, 2) || SUBSTR(DefaultScheduleEntity.ToTime, 7, 2) ) AS TT , DefaultScheduleEntity.* FROM DcProfileEntity " +
+                          "INNER JOIN  DefaultScheduleEntity on DcProfileEntity.Id=DefaultScheduleEntity.DcProfileId  WHERE DcUserId=" + UserId + " and " +
+                          "DcProfileEntity.ServiceId=" + ServiceId + " and DcProfileEntity.DcPlaceDimension = " + DcPlaceDimension +
+                          " AND  DcProfileEntity.TemplateNodeId=" + TemplateNodeId;
+            }
 
             OneViewConsole.DataLog("Requested Query : " + Query, "DcProfileDAO.GetProfileDetails");
           
@@ -900,6 +938,17 @@ function DcProfileDAO() {
                         " DcProfileEntity.ServiceId=" + Req.ServiceId + " And DcProfileEntity.DcPlaceDimension = " + Req.DcPlaceDimension +
                         " And SD <=  '" + StartDate + "' And ( '" + EndDate + "'  <=  ED Or  '' = ED ) ";
 
+            if (OneViewSessionStorage.Get("ServiceId") == 52) {
+                Query = "Select  DcProfileEntity.*,DefaultScheduleEntity.Occurence, DcProfileEntity.ServerId As DcProfileServerId ,DcProfileEntity.DcPlaceId As DcPlaceId,DefaultScheduleEntity.StartDate As StartDate,DefaultScheduleEntity.EndDate As EndDate," +
+                        "(SUBSTR(DefaultScheduleEntity.StartDate, 7, 4) || SUBSTR(DefaultScheduleEntity.StartDate, 4, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 1, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 12, 2) || " +
+                        " SUBSTR(DefaultScheduleEntity.StartDate, 15, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 18, 2) ) As SD ,(SUBSTR(DefaultScheduleEntity.EndDate, 7, 4) ||SUBSTR(DefaultScheduleEntity.EndDate, 4, 2) ||" +
+                        " SUBSTR(DefaultScheduleEntity.EndDate, 1, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 12, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 15, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 18, 2) ) As ED," +
+                        " (SUBSTR(DefaultScheduleEntity.FromTime, 1, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 4, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 7, 2) ) As FT, ( SUBSTR(DefaultScheduleEntity.ToTime, 1, 2) || " +
+                        " SUBSTR(DefaultScheduleEntity.ToTime, 4, 2) || SUBSTR(DefaultScheduleEntity.ToTime, 7, 2) ) As TT , DefaultScheduleEntity.* From DcProfileEntity " +
+                        " Inner Join  DefaultScheduleEntity On DcProfileEntity.Id=DefaultScheduleEntity.DcProfileId  Where DcUserId=" + Req.UserId + " And" +
+                        " DcProfileEntity.ServiceId=" + Req.ServiceId + " And DcProfileEntity.DcPlaceDimension = " + Req.DcPlaceDimension;
+                //    " and SD <=  '" + StartDate + "' and ( '" + EndDate + "'  <=  ED or  '' = ED )";
+            }
 
             if (Req.DCPlaceKeyElementIsGroup == true && Req.DcPlaceExp != "") {
                 Query += " And (DcProfileEntity.DcPlaceId In " + Req.DcPlaceExp + ")";
@@ -1038,7 +1087,7 @@ function DcProfileDAO() {
                            "SUBSTR(Dc.DcStartDate, 15, 2) || SUBSTR(Dc.DcStartDate, 18, 2) ) AS DcSD " +
                            "FROM DataCaptureEntity Dc " +
                            "INNER JOIN  DcResultsEntity DcR on Dc.Id=DcR.DataCaptureId " +
-                           "Where Dc.ServiceId=" + ServiceId + " And DcR.SystemUserId=" + UserId +                         
+                           "Where Dc.ServiceId=" + ServiceId + " And DcR.SystemUserId=" + UserId +
                            " And  DcSD <= '" + EndDate + "'  And DcSD >= '" + StartDate + "' " +
                            " And Dc.DcPlaceDimension = '" + DcPlaceDimension + "' " + PlaceIdInCondition + "  And Dc.TemplateNodeId=" + TemplateNodeId + " And ('-1'='" + IsCompleted + "' or  Dc.IsCompleted = '" + IsCompleted + "')" +
                            " And Dc.IsBlocker!='true' " + ServerCondition + " And ('-1'='" + IsSynchronized + "' or  Dc.IsSynchronized = '" + IsSynchronized + "')  And ('-1'='" + IsSubmit + "' or  Dc.IsSubmit = '" + IsSubmit + "')";
@@ -1128,7 +1177,7 @@ function DcProfileDAO() {
             throw oOneViewExceptionHandler.Create("DAO", "DcProfileDAO.GetCurrentPeriod", Excep);
         }
        
-    }    
+    }
 
     //TODO:Aiswarya (Remove the code)
     this.GetDcProfileSyncStatus_old = function (Req) {
@@ -1137,9 +1186,9 @@ function DcProfileDAO() {
 
 
             var Query = "Select * "+
-                        "From DcProfileSyncStatus " +                       
+                        "From DcProfileSyncStatus " +
                         "Where ServiceId=" + Req.ServiceId + " And DcUserId=" + Req.UserId +
-                        " And DcPlaceDimension = '" + Req.DcPlaceDimension + "' And TemplateNodeId=" + Req.TemplateNodeId + 
+                        " And DcPlaceDimension = '" + Req.DcPlaceDimension + "' And TemplateNodeId=" + Req.TemplateNodeId +
                        " And DcPlaceId=" + Req.PlaceId + "  And DcProfileId='" + Req.DcProfileServerId + "'";
 
             OneViewConsole.DataLog("Requested Query : " + Query, "DcProfileDAO.GetProfileDetails");
@@ -1233,7 +1282,7 @@ function DcProfileDAO() {
 
             var oDateTime = new DateTime();
             StartDate = oDateTime.ConvertDateTimeToInteger(StartDate);
-            EndDate = oDateTime.ConvertDateTimeToInteger(EndDate);     
+            EndDate = oDateTime.ConvertDateTimeToInteger(EndDate);
 
             var Query = "SELECT DefaultScheduleEntity.Occurence,DefaultScheduleEntity.ReccurenceId,DcProfileEntity.ServerId DcProfileServerId," +
                         "(SUBSTR(DefaultScheduleEntity.StartDate, 7, 4) || SUBSTR(DefaultScheduleEntity.StartDate, 4, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 1, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 12, 2) || " +
@@ -1245,6 +1294,17 @@ function DcProfileDAO() {
                         "DcProfileEntity.ServiceId=" + ServiceId + " and DcProfileEntity.DcPlaceDimension = " + DcPlaceDimension +
                         " AND  DcProfileEntity.TemplateNodeId=" + TemplateNodeId + " AND DcProfileEntity.DcPlaceId=" + PlaceId +
                         " AND SD <=  '" + StartDate + "' AND ( '" + EndDate + "'  <=  ED or  '' = ED )";
+            if (OneViewSessionStorage.Get("ServiceId") == 52 && TemplateNodeId == 3) {
+                Query = "SELECT DefaultScheduleEntity.Occurence,DefaultScheduleEntity.ReccurenceId,DcProfileEntity.ServerId DcProfileServerId," +
+                        "(SUBSTR(DefaultScheduleEntity.StartDate, 7, 4) || SUBSTR(DefaultScheduleEntity.StartDate, 4, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 1, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 12, 2) || " +
+                        " SUBSTR(DefaultScheduleEntity.StartDate, 15, 2) || SUBSTR(DefaultScheduleEntity.StartDate, 18, 2) ) AS SD ,(SUBSTR(DefaultScheduleEntity.EndDate, 7, 4) ||SUBSTR(DefaultScheduleEntity.EndDate, 4, 2) ||" +
+                        "SUBSTR(DefaultScheduleEntity.EndDate, 1, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 12, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 15, 2) || SUBSTR(DefaultScheduleEntity.EndDate, 18, 2) ) AS ED," +
+                        "(SUBSTR(DefaultScheduleEntity.FromTime, 1, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 4, 2) || SUBSTR(DefaultScheduleEntity.FromTime, 7, 2) ) AS FT, ( SUBSTR(DefaultScheduleEntity.ToTime, 1, 2) || " +
+                        " SUBSTR(DefaultScheduleEntity.ToTime, 4, 2) || SUBSTR(DefaultScheduleEntity.ToTime, 7, 2) ) AS TT , DefaultScheduleEntity.* FROM DcProfileEntity " +
+                        "INNER JOIN  DefaultScheduleEntity on DcProfileEntity.Id=DefaultScheduleEntity.DcProfileId  WHERE DcUserId=" + UserId + " and " +
+                        "DcProfileEntity.ServiceId=" + ServiceId + " and DcProfileEntity.DcPlaceDimension = " + DcPlaceDimension +
+                        " AND  DcProfileEntity.TemplateNodeId=" + TemplateNodeId + " AND DcProfileEntity.DcPlaceId=" + PlaceId;
+            }
 
             OneViewConsole.DataLog("Requested Query : " + Query, "DcProfileDAO.GetDcScheduleDetails");
 
@@ -1306,7 +1366,7 @@ function DcProfileDAO() {
             //            "Inner Join  DcResultsEntity DcR on Dc.Id=DcR.DataCaptureId " +
             //            "Where Dc.ServiceId=" + Req.ServiceId + " AND DcR.SystemUserId=" + Req.UserId +
             //            " And  DcSD <= '" + EndDate + "' " + " And  DcSD >= '" + StartDate + "' " +
-            //             "And Dc.DcPlaceDimension = '" + Req.DcPlaceDimension + "'  AND Dc.TemplateNodeId=" + Req.TemplateNodeId + 
+            //             "And Dc.DcPlaceDimension = '" + Req.DcPlaceDimension + "'  AND Dc.TemplateNodeId=" + Req.TemplateNodeId +
             //            " And Dc.IsSubmit!='true' " + ServerCondition + " order by DcRCreatedDate desc Limit 1";
 
             OneViewConsole.DataLog("Requested Query : " + Query, "DcProfileDAO.GetProfileValidityByServiceUserIdTemplatePlaceIDAndDate");
@@ -1444,7 +1504,7 @@ function DcProfileDAO() {
     this.GetDcDetailsByServiceUserIdPlaceIdDateAndTemplateLst = function (Req) {
 
         try {
-            OneViewConsole.Debug("GetDcDetailsByServiceUserIdPlaceIdDateAndTemplateLst start", "DcProfileDAO.GetDcDetailsByServiceUserIdPlaceIdDateAndTemplateLst");           
+            OneViewConsole.Debug("GetDcDetailsByServiceUserIdPlaceIdDateAndTemplateLst start", "DcProfileDAO.GetDcDetailsByServiceUserIdPlaceIdDateAndTemplateLst");
          
             var TemplateNodeId = Req.TemplateNodeId;
             var IsSynchronized = Req.IsSynchronized;
@@ -1460,7 +1520,7 @@ function DcProfileDAO() {
                            "SUBSTR(Dc.DcStartDate, 15, 2) || SUBSTR(Dc.DcStartDate, 18, 2) ) AS DcSD " +
                            "FROM DataCaptureEntity Dc " +
                            "INNER JOIN  DcResultsEntity DcR on Dc.Id=DcR.DataCaptureId " +
-                           "Where Dc.ServiceId=" + Req.ServiceId + " And DcR.SystemUserId=" + Req.UserId +  
+                           "Where Dc.ServiceId=" + Req.ServiceId + " And DcR.SystemUserId=" + Req.UserId +
                            " And Dc.DcPlaceDimension = '" + Req.DcPlaceDimension + "' And Dc.DcPlaceId = " + Req.PlaceId +" "+ TemplateNodeIdLstCondition + " And ('-1'='" + Req.IsCompleted + "' or  Dc.IsCompleted = '" + Req.IsCompleted + "')" +
                            " And Dc.IsBlocker!='true'  And ('-1'='" + IsSynchronized + "' or  Dc.IsSynchronized = '" + IsSynchronized + "') And ('-1'='" + Req.IsSubmit + "' or  Dc.IsSubmit = '" + Req.IsSubmit + "')";
 
@@ -1529,7 +1589,7 @@ function DcProfileDAO() {
                         "SUBSTR(EndDate, 1, 2) || SUBSTR(EndDate, 12, 2) || SUBSTR(EndDate, 15, 2) || SUBSTR(EndDate, 18, 2) ) As ED " +
                         "From DcProfileSyncStatus " +
                         "Where ServiceId=" + Req.ServiceId + " And DcUserId=" + Req.UserId +
-                        " And DcPlaceDimension = '" + Req.DcPlaceDimension + "'"+ 
+                        " And DcPlaceDimension = '" + Req.DcPlaceDimension + "'"+
                         " And SD<='" + StartDate + "' And ED>='" + EndDate + "' And (CompletedServerIds!='' or  InprogressServerIds!='')";
 
             if (Req.DCPlaceKeyElementIsGroup == true && Req.DcPlaceExp != "") {
@@ -1609,7 +1669,7 @@ function DcProfileDAO() {
             //            "Inner Join  DcResultsEntity DcR on Dc.Id=DcR.DataCaptureId " +
             //            "Where Dc.ServiceId=" + Req.ServiceId + " AND DcR.SystemUserId=" + Req.UserId +
             //            " And  DcSD <= '" + EndDate + "' " + " And  DcSD >= '" + StartDate + "' " +
-            //             "And Dc.DcPlaceDimension = '" + Req.DcPlaceDimension + "'  AND Dc.TemplateNodeId=" + Req.TemplateNodeId + 
+            //             "And Dc.DcPlaceDimension = '" + Req.DcPlaceDimension + "'  AND Dc.TemplateNodeId=" + Req.TemplateNodeId +
             //            " And Dc.IsSubmit!='true' " + ServerCondition + " order by DcRCreatedDate desc Limit 1";
 
             OneViewConsole.DataLog("Requested Query : " + Query, "DcProfileDAO.GetProfileValidityByServiceUserIdTemplatePlaceIDAndDate");
@@ -1651,11 +1711,11 @@ function DefaultScheduleDAO() {
 
             OneViewConsole.Debug("GetByAllDimensions end", "DcProfileDAO.DeleteById");
         }
-        catch (Excep) {         
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DcProfileDAO.DeleteById", Excep);
         }
         finally {
-            Query = null;          
+            Query = null;
         }
     }
 }
@@ -1673,7 +1733,7 @@ function DcApprovalProfileDAO() {
 
             var oDateTime = new DateTime();
             CurrentDateAndTime = oDateTime.GetDateAndTime();
-            CurrentDateAndTime = oDateTime.ConvertDateTimeToInteger(CurrentDateAndTime);           
+            CurrentDateAndTime = oDateTime.ConvertDateTimeToInteger(CurrentDateAndTime);
 
             var Query = "SELECT *," +
                          "(SUBSTR(DcApprovalProfileEntity.ValidityStartDate, 7, 4) || SUBSTR(DcApprovalProfileEntity.ValidityStartDate, 4, 2) || SUBSTR(DcApprovalProfileEntity.ValidityStartDate, 1, 2) || SUBSTR(DcApprovalProfileEntity.ValidityStartDate, 12, 2) || " +
@@ -1753,7 +1813,7 @@ function DcApprovalProfileDAO() {
 
             OneViewConsole.DataLog("Response from db : " + JSON.stringify(Result), "DcApprovalProfileDAO.GetDcInfoByDcClientGuid");
 
-            OneViewConsole.Debug("IsApproved end", "DcApprovalProfileDAO.GetDcInfoByDcClientGuid");          
+            OneViewConsole.Debug("IsApproved end", "DcApprovalProfileDAO.GetDcInfoByDcClientGuid");
             return Result;
         }
         catch (Excep) {
@@ -1806,7 +1866,7 @@ function DcApprovalProfileDAO() {
                         " From DataCaptureEntity" +
                         " Inner Join DcResultsEntity" +
                         " On DcResultsEntity.DataCaptureId=DataCaptureEntity.Id " +
-                        " Where DataCaptureEntity.ServiceId =" + Req.ServiceId + " And DcResultsEntity.SystemUserId=" + Req.UserId + 
+                        " Where DataCaptureEntity.ServiceId =" + Req.ServiceId + " And DcResultsEntity.SystemUserId=" + Req.UserId +
                         " And DataCaptureEntity.ApprovalStatus=0 And DataCaptureEntity.IsCompleted='true'" +
                         " And DataCaptureEntity.IsOnDeviceApprovalFinished !='true'" +
                         " And " + PlaceIdLstInCondition + " And " + TemplateIdLstInCondition;
@@ -1855,7 +1915,7 @@ function DcApprovalProfileDAO() {
             throw oOneViewExceptionHandler.Create("DAO", "DcApprovalProfileDAO.DeleteById", Excep);
         }
         finally {
-            Query = null;        
+            Query = null;
         }
     }
 
@@ -1934,7 +1994,7 @@ function DcApprovalProfileDAO() {
                     Incondition += Info[i];
                 }
                 else {
-                    Incondition += Info[i].ServerId;                 
+                    Incondition += Info[i].ServerId;
                 }
                
                 Incondition += (i <= Info.length - 2) ? "," : ")";
@@ -2128,7 +2188,7 @@ function DcApprovalLevelInfoDAO() {
             throw oOneViewExceptionHandler.Create("DAO", "DcApprovalLevelInfoDAO.DeleteByDcApprovalProfileId", Excep);
         }
         finally {
-            Query = null;         
+            Query = null;
         }
     }
 }
@@ -2221,7 +2281,7 @@ function MultiMediaSubElementsDAO() {
 
             if (MappedEntityLst.length > 0) {
 
-                var Exp = FomatForInConditionByClientGuid(MappedEntityLst);              
+                var Exp = FomatForInConditionByClientGuid(MappedEntityLst);
                 var Query = "SELECT LocalURL FROM MultiMediaSubElements WHERE MappedEntityClientGuid IN " + Exp;
               
                 OneViewConsole.Debug("Requested Query : " + Query, "MultiMediaSubElementsDAO.Delete");
@@ -2232,7 +2292,7 @@ function MultiMediaSubElementsDAO() {
                 }
 
                 for (var i = 0; i < Result.length; i++) {
-                    var oOneViewCordovaFilePlugin = new OneViewCordovaFilePlugin();                 
+                    var oOneViewCordovaFilePlugin = new OneViewCordovaFilePlugin();
                     oOneViewCordovaFilePlugin.DeleteFile(Result[i].LocalURL);
                 }
             }
@@ -2252,7 +2312,7 @@ function MultiMediaSubElementsDAO() {
         try {
             OneViewConsole.Debug("DeleteByMappedEntityClientGuid start", "MultiMediaSubElementsDAO.DeleteByMappedEntityClientGuid");
 
-            var Query = "DELETE FROM MultiMediaSubElements WHERE MappedEntityClientGuid = '" + MappedEntityClientGuid + "'";          
+            var Query = "DELETE FROM MultiMediaSubElements WHERE MappedEntityClientGuid = '" + MappedEntityClientGuid + "'";
             OneViewConsole.Debug("Requested Query : " + Query, "MultiMediaSubElementsDAO.DeleteByMappedEntityClientGuid");
 
             _OneViewSqlitePlugin.ExcecuteSql(Query);
@@ -2263,7 +2323,7 @@ function MultiMediaSubElementsDAO() {
             throw oOneViewExceptionHandler.Create("DAO", "MultiMediaSubElementsDAO.DeleteByMappedEntityClientGuid", Excep);
         }
         finally {
-            Query = null;       
+            Query = null;
         }
     }
 
@@ -2325,7 +2385,7 @@ function MultiMediaSubElementsDAO() {
             var Result = new Array();
 
             if (DcInfo.length > 0) {
-                var Exp = FomatForInConditionByClientGuid(DcInfo);               
+                var Exp = FomatForInConditionByClientGuid(DcInfo);
                 Result = Result.concat(GetUnSyncMultiMediaSubElementsByExp(Exp, DATEntityType.DataCapture));
                 //alert("DcInfo Result : " + JSON.stringify(Result));
             }
@@ -2797,3 +2857,4 @@ function TaskSyncLogDAO() {
 
 }
               
+

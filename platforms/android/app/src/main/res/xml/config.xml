@@ -60,4 +60,7 @@
     <feature name="NativeStorage">
         <param name="android-package" value="NativeStorage" />
     </feature>
+    <feature name="ActivityIndicator">
+        <param name="android-package" value="org.apache.cordova.plugin.ActivityIndicator" />
+    </feature>
 </widget>

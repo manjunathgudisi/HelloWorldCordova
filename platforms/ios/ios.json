@@ -63,6 +63,10 @@
             {
               "xml": "<feature name=\"Vibration\"><param name=\"ios-package\" value=\"CDVVibration\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"ActivityIndicator\"><param name=\"ios-package\" value=\"ActivityIndicator\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -116,6 +120,9 @@
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+    },
+    "cordova-plugin-activityindicator": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
@@ -518,6 +525,14 @@
       "merges": [
         "navigator"
       ]
+    },
+    {
+      "id": "cordova-plugin-activityindicator.ActivityIndicator",
+      "file": "plugins/cordova-plugin-activityindicator/www/activityIndicator.js",
+      "pluginId": "cordova-plugin-activityindicator",
+      "clobbers": [
+        "ActivityIndicator"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -536,6 +551,7 @@
     "cordova-plugin-network-information": "2.0.2",
     "cordova-plugin-splashscreen": "5.0.3",
     "cordova-plugin-vibration": "3.1.1",
-    "cordova-plugin-whitelist": "1.3.3"
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-activityindicator": "1.0.0"
   }
 }

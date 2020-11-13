@@ -40,7 +40,7 @@ function BandConverterBO() {
                 MyInstance.CreateDict(BandDetails, BandId);
             }
             else {
-                alert("No BandDetails exist for the band = " + BandId);
+                navigator.notification.alert(("No BandDetails exist for the band = " + BandId), ['OK'], "");
             }
             OneViewConsole.Debug("CreateBandDetails End", "BandConverterBO.CreateBandDetails");
         }

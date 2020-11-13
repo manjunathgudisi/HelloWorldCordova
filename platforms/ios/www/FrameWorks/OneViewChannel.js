@@ -24,6 +24,14 @@ function OneViewChannel() {
             this.SourceObj = "";
             //this.toaster = null;
 
+		this.ShowProgress = function() {
+			window.MyProgressHUD.ShowProgress();
+		}
+		
+		this.HideProgress = function() {
+			window.MyProgressHUD.HideProgress();
+		}
+		
             this.Send = function (args) {
                 try {
                     OneViewConsole.Debug("Send Start", "OneViewChannel.Send");
@@ -185,7 +193,7 @@ function OneViewChannel() {
                             CloseProgressbarAndLoader();
                             // MyInstance.toaster.pop('error', 'Error :', 'Service Unavailable');
                             //alert("IN-ER-ALP-001 :: Service Unavailable");
-                            alert(OneViewGlobalization[CurrentLanguage].ServiceUnavailable_Message);
+                            navigator.notification.alert((OneViewGlobalization[CurrentLanguage].ServiceUnavailable_Message), ['OK'], "");
 
                             return null;
 
@@ -260,7 +268,7 @@ function OneViewChannel() {
                 try {
                     OneViewConsole.Debug("htttpNativeGet Start", "OneViewChannel.htttpNativeGet");
                     
-                    var oHttpClientResponse = window.HttpClinetPlugin.Get(url);
+                    var oHttpClientResponse = window.HttpClinetPlugin.Send_Get(url);
 
                     if (oHttpClientResponse != null) {
                         return oHttpClientResponse;

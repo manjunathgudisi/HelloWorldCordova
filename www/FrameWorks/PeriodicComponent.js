@@ -7329,7 +7329,7 @@ function PeriodicDefaultCameraAnswerModeComponent(TemplateId, AttributeId, Contr
                 });
             }
             else {
-                alert(oXlatService.xlat('No Image Available'));
+                navigator.notification.alert(xlatService.xlat('No Image Available'), ['OK'], "");
             }
             OneViewConsole.Debug("DeleteImage End", "PeriodicDefaultCameraAnswerModeComponent.DeleteImage");
         }

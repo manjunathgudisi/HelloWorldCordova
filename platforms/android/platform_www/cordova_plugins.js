@@ -385,6 +385,22 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "id": "cordova-plugin-nativestorage.NativeStorageError",
       "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
       "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
+      "id": "org.pbernasconi.progressindicator.ProgressIndicator",
+      "file": "plugins/org.pbernasconi.progressindicator/www/progressIndicator.js",
+      "pluginId": "org.pbernasconi.progressindicator",
+      "clobbers": [
+        "ProgressIndicator"
+      ]
+    },
+    {
+      "id": "cordova-plugin-activityindicator.ActivityIndicator",
+      "file": "plugins/cordova-plugin-activityindicator/www/activityIndicator.js",
+      "pluginId": "cordova-plugin-activityindicator",
+      "clobbers": [
+        "ActivityIndicator"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -402,6 +418,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-vibration": "3.1.1",
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-network-information": "2.0.2",
-    "cordova-plugin-nativestorage": "2.3.2"
+    "cordova-plugin-nativestorage": "2.3.2",
+    "org.pbernasconi.progressindicator": "1.1.0",
+    "cordova-plugin-activityindicator": "1.0.0"
   };
 });

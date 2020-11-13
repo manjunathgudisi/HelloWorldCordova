@@ -137,7 +137,7 @@ MyApp.controller('NewTemperatureVerificationofDispatchingController',
             $location.url('/ViewRecords');
         }
         else {
-            alert(xlatService.xlat('No_Records_Available'));
+            navigator.notification.alert(xlatService.xlat('No_Records_Available'), ['OK'], "");
             //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('No_Records_Available'));
         }
     };
@@ -1105,7 +1105,7 @@ function NewTemperatureVerificationofDispatchingController(parm) {
 
             if (ActionResponseList != undefined) {
                 if (ActionResponseList.length > 1) {
-                    alert('More than one action for a single attribute : Not implemeneted');
+                    navigator.notification.alert(('More than one action for a single attribute : Not implemeneted'), ['OK'], "");
                 }
                 else {
                     for (var i = 0; i < ActionResponseList.length; i++) {
@@ -2187,7 +2187,7 @@ function NewTemperatureVerificationofDispatchingController(parm) {
 
             saveButton.addEventListener("click", function (event) {
                 if (signaturePad.isEmpty()) {
-                    alert("MN-RQ-NCF-001 :: Please provide signature first.");
+                    navigator.notification.alert("MN-RQ-NCF-001 :: Please provide signature first.", ['OK'], "");
                 } else {
                     MyInstance.SaveSignature('DCBoutNCSignature', signaturePad);
                 }
@@ -2246,7 +2246,7 @@ function NewTemperatureVerificationofDispatchingController(parm) {
 
             saveButton.addEventListener("click", function (event) {
                 if (signaturePad.isEmpty()) {
-                    alert("MN-RQ-NCF-001 :: Please provide signature first.");
+                    navigator.notification.alert("MN-RQ-NCF-001 :: Please provide signature first.", ['OK'], "");
                 } else {
                     MyInstance.SaveSignature('DCBoutNCActionSignature', signaturePad, true);
                 }

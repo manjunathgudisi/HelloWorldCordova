@@ -382,7 +382,7 @@ function ActionFollowUpApprovalFacade(parm) {
                 IsSuccess = _oActionFollowupApprovalBO.Approve(Req);
 
                 if(IsSuccess==true){
-                    alert(xlatService.xlat("Approved Successfully"));
+                    navigator.notification.alert(xlatService.xlat("Approved Successfully"), ['OK'], "");
                    // $location.url('/ActionFollowUpApprovalSelection');
                 }
         
@@ -967,7 +967,7 @@ function ActionFollowUpApprovalDetailsAnswerModeComponent(parm) {
              
             }
            else{
-             //  alert("Not Implemented");
+             //  navigator.notification.alert(("Not implemented"), ['OK'], "");
            }
 
             OneViewConsole.Debug("GetHtml End", "ActionFollowUpApprovalDetailsAnswerModeComponent.GetHtml");

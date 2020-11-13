@@ -41,25 +41,29 @@ function UserMasterBO(xlatService) {
                             IsSuccess = true;
                         }
                         else if (_oResetPasswordresponse != null && _oResetPasswordresponse.ExceptionMessage == "Old Password is not correct.") {
-                            alert(xlatService.xlat('VL-CU-MSE-004 :: Old Password is not matched'));
+                            //alert(xlatService.xlat('VL-CU-MSE-004 :: Old Password is not matched'));
+							navigator.notification.alert(xlatService.xlat('VL-CU-MSE-004 :: Old Password is not matched'), ['OK'], "");
                         }
                         else if (_oResetPasswordresponse != null && _oResetPasswordresponse.isAnyException == true) {
-                            alert(xlatService.xlat('ER-CU-MSE-001 ::Server error, Please contact Administrator'));
+                            //alert(xlatService.xlat('ER-CU-MSE-001 ::Server error, Please contact Administrator'));
+							navigator.notification.alert(xlatService.xlat('ER-CU-MSE-001 ::Server error, Please contact Administrator'), ['OK'], "");
                         }
 
                         oSetDefaultSpinner.Stop();
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                         OneViewConsole.Info("No Internet Connection", "UserMasterBO.ResetPassword");
                     }
                 }
                 else {
-                    alert(xlatService.xlat('VL-CU-MSE-005 :: New Password and Confirm Passwords are not matched'));
+                    //alert(xlatService.xlat('VL-CU-MSE-005 :: New Password and Confirm Passwords are not matched'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-005 :: New Password and Confirm Passwords are not matched'), ['OK'], "");
                 }
             }
             else {
-                alert(xlatService.xlat('VL-CU-MSE-006 :: Old Password and New Passwords are same'));
+                //alert(xlatService.xlat('VL-CU-MSE-006 :: Old Password and New Passwords are same'));
+				navigator.notification.alert(xlatService.xlat('VL-CU-MSE-006 :: Old Password and New Passwords are same'), ['OK'], "");
             }
 
             OneViewConsole.Debug("ResetPassword end", "UserMasterBO.ResetPassword");

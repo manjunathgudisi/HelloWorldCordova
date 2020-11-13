@@ -410,6 +410,33 @@ function DateTime() {
         }
     }
 
+    this.ConvertDateToIntegerFormat = function (oDate) {
+        try {
+            var FinalDateTimeString = "";
+
+            if (oDate != undefined && oDate != "" && oDate != null) {
+                //var oDateTimeSplitted = oDateTime.split(" ");
+                var oDateArr = oDate.split("-");
+               // var oTimeArr = oDateTimeSplitted[1].split(":");
+
+                if (oDateArr != undefined && oDateArr != "" && oDateArr != null) {
+                   // if (oTimeArr != undefined && oTimeArr != "" && oTimeArr != null) {
+                        FinalDateTimeString = oDateArr[2] + oDateArr[1] + oDateArr[0];// + oTimeArr[0] + oTimeArr[1] + oTimeArr[2];
+                   // }
+                }
+            }
+
+            //alert('FinalDateTimeString : ' + FinalDateTimeString);
+            return FinalDateTimeString;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "DateTime.ConvertDateToIntegerFormat", Excep);
+        }
+        finally {
+
+        }
+    }
+
    
     this.GetMonthYearByControlId = function (ControlId) {
         try {

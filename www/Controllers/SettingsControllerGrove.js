@@ -384,7 +384,7 @@ function SettingsFacade() {
                         _oOneViewAppConfig.CheckForNewUpdates(toaster, true);
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                        // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
@@ -412,7 +412,7 @@ function SettingsFacade() {
                             $scope.PasswordUpdateButton = true;
                         }
                         else {
-                            alert(xlatService.xlat('NoInternetConnection'));
+                            navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                             OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                         }
@@ -476,7 +476,8 @@ function SettingsFacade() {
                         $scope.NewPassword = "";
                         $scope.ConfirmPassword = "";
 
-                        alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'));
+                        //alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'));
+						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'), ['OK'], "");
 
                         $location.url('/login');
 
@@ -484,14 +485,17 @@ function SettingsFacade() {
                         ClearGlobalVariable();
                     }
                 }
-                else if ($scope.OldPassword == undefined || $scope.OldPassword == "") {
-                    alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'));
+				else if ($scope.OldPassword == undefined || $scope.OldPassword == "") {
+                    //alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'), ['OK'], "");
                 }
                 else if ($scope.NewPassword == undefined || $scope.NewPassword == "") {
-                    alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'));
+                    //alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'), ['OK'], "");
                 }
                 else if ($scope.ConfirmPassword == undefined || $scope.ConfirmPassword == "") {
-                    alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'));
+                    //alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'), ['OK'], "");
                 }
                
                 OneViewConsole.Debug("ResetPassword End", "SettingsFacade.ResetPassword");
@@ -533,7 +537,7 @@ function SettingsFacade() {
                         _oSettingsPresenter.UpdateProbeDisconnectStatus($scope, probeObj);
                     
                         //  toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('DisconnectExistingProbe'));
-                        alert(xlatService.xlat('DisconnectExistingProbe'));
+                        navigator.notification.alert(xlatService.xlat('DisconnectExistingProbe'), ['OK'], "");
                     }
                         //Disconnect the connected probe
                     else if (ConnectedProbe[0] != undefined && ConnectedProbe[0].Name == probeObj.Name) {
@@ -600,7 +604,7 @@ function SettingsFacade() {
                     }
                         // If no devices available
                     else {
-                        alert(xlatService.xlat('Nodevicesfound'));
+                        navigator.notification.alert(xlatService.xlat('Nodevicesfound'), ['OK'], "");
                        // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('Nodevicesfound'));
                     }
                 }
@@ -648,7 +652,7 @@ function SettingsFacade() {
                         var IsConnectionAlive = oBluetoothTemperatureLoggerBO.IsConnectionAlive(probeObj.Name);
                         
                         if (IsConnectionAlive) {
-                            alert(xlatService.xlat('ProbeConnectedSuccesfully'));
+                            navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
                           //  toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectedSuccesfully'));
                             $scope.probes[probeObj.Index].selected = true;                            
                             //Save selected probe information
@@ -657,7 +661,7 @@ function SettingsFacade() {
                         }
                         else {                        
                             // toaster.pop('error', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectionFailed'));
-                            alert(xlatService.xlat('ProbeConnectionFailed'));
+                            navigator.notification.alert(xlatService.xlat('ProbeConnectionFailed'), ['OK'], "");
                             $scope.probes[probeObj.Index].selected = '';
                            //// alert('Connection failed try again');
                             oOneViewBluetoothTemperatureLoggerPlugin.DisConnect("BlueThermProbe");
@@ -749,7 +753,7 @@ function SettingsFacade() {
                     $scope.probes[probeObj.Index].selected = '';
 
                     // toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " disconnected successfully");
-                    alert(probeObj.Name + " disconnected successfully");
+                    navigator.notification.alert((probeObj.Name + " disconnected successfully"), ['OK'], "");
                 }
                 else {
                     // Update model with connection status
@@ -1031,20 +1035,20 @@ function SettingsBO() {
                     //// alert("Probe" + ConnectedProbe[0].Name + " is disconnected ,please go to  settings page and reconnect the probe");
                     var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnectionLost');
                     // toaster.pop('info', xlatService.xlat('Title_Notification'), msg);
-                    alert(msg);
+                    navigator.notification.alert(msg, ['OK'], "");
                 }
                 else {
                     //// alert("Probe" + ConnectedProbe[0].Name + " is connected , go ahead");
                     var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnected');
                    // toaster.pop('success', xlatService.xlat('Title_Success'), msg);
-                    alert(msg);
+                    navigator.notification.alert(msg, ['OK'], "");
                 }
             }
             else {
                 ////alert("No Probe is connected ,please go to  settings page and connect the probe");
                 var msg = xlatService.xlat('ProbeConnectionLostOrNoProbe');
                 // toaster.pop('warning', xlatService.xlat('Title_Notification'), msg);
-                alert(msg);
+                navigator.notification.alert(msg, ['OK'], "");
 
                 var obj = document.getElementById('txtTemperatureLoggerControlId');
                 if (obj != null) {

@@ -196,7 +196,7 @@ function BusinessEventFramework() {
                                 oBusinessEventDefinitionObj = new window[oBusinessEventDefinition.Type]();
                             }
                             catch (Excep) {
-                                alert("Error while creating the object : " + oBusinessEventDefinition.Type);
+                                navigator.notification.alert(("Error while creating the object : " + oBusinessEventDefinition.Type), ['OK'], "");
                             }
 
                             if (oBusinessEventDefinitionObj != undefined) {
@@ -309,7 +309,7 @@ function BusinessEventFramework() {
                             var BusinessEventHandlerObject = new window[_oBusinessEventHandler.BusinessEventHandlerObjectKeys[j]]();
                         }
                         catch (Excep) {
-                            alert("Error while creating the BusinessEventHandlerObject : " + _oBusinessEventHandler.BusinessEventHandlerObjectKeys[j]);
+                            navigator.notification.alert(("Error while creating the BusinessEventHandlerObject : " + _oBusinessEventHandler.BusinessEventHandlerObjectKeys[j]), ['OK'], "");
                         }
 
                         if (BusinessEventHandlerObject != null) {
@@ -356,7 +356,7 @@ function BusinessEventFramework() {
                         oBusinessEventDefinitionObj = new window[oBusinessEventDefinition.Type]();
                     }
                     catch (Excep) {
-                        alert("Error while creating the object : " + oBusinessEventDefinition.Type);
+                        navigator.notification.alert(("Error while creating the object : " + oBusinessEventDefinition.Type), ['OK'], "");
                     }
 
                     if (oBusinessEventDefinitionObj != undefined) {
@@ -1110,7 +1110,7 @@ function AutoActionFollowUpUpload_BusinessEventHandler() {
                 }
 
                 if (TemplateFilterParam.DCTemplateList != null && TemplateFilterParam.DCTemplateList.length > 0) {
-                    alert("Upload ActionFollowUp as per templates not implemented");
+                    navigator.notification.alert("Upload ActionFollowUp as per templates not implemented", ['OK'], "");
                 }
             }
 

@@ -5,16 +5,30 @@ function ShowMessage() {
     this.Error = function (MessageKey) {
         //find the localised message from messagekey
         //show it to the client
-        alert(MessageKey);
+		
+		var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+		oOneViewCordovaPlugin.DefaultConfirmBox("Error", MessageKey, function (ConfirmationId) {
+		});
+												
+        //alert(MessageKey);
     }
     this.Warning = function (MessageKey) {
         //find the localised message from messagekey
         //show it to the client
-        alert(MessageKey);
+		
+		var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+		oOneViewCordovaPlugin.DefaultConfirmBox("Warning", MessageKey, function (ConfirmationId) {
+		});
+		
+        //alert(MessageKey);
     }
     //ex:Saved successfuly
     this.Info = function (MessageKey) {
-        alert(MessageKey);
+		var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+		oOneViewCordovaPlugin.DefaultConfirmBox("Info", MessageKey, function (ConfirmationId) {
+		});
+		
+        //alert(MessageKey);
     }
 }
 
@@ -80,7 +94,7 @@ function OneViewLocalStorage() {
 
                 window.localStorage.setItem(Key, Value);
 
-                //Save in Android Local Storage                
+                //Save in Android Local Storage
                 if (Key == "CloudManagerServiceInfo" || Key == "DeviceId" || Key == "LoginUserId" || Key == "LoginUserName") {
                     //oOneviewAndroidLocalStoragePlugin.Save(Key, Value);
                     NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
@@ -182,7 +196,7 @@ function OneViewSessionStorage() {
 
                 window.sessionStorage.setItem(Key, Value);
 
-                //Save in Android Local Storage               
+                //Save in Android Local Storage
                 if (Key == "CloudManagerServiceInfo" || Key == "DeviceId" || Key == "LoginUserId" || Key == "LoginUserName") {
                     //oOneviewAndroidLocalStoragePlugin.Save(Key, Value);
                     NativeStorage.setItem(Key, Value, OneViewNativeStorage.setSuccess, OneViewNativeStorage.setError);
@@ -317,8 +331,12 @@ function ProcessIndicator() {
                 var Message = (Message != undefined) ? Message : OneViewGlobalization[OneViewGlobalcurrentLanguage].LoaderBodyKey;
                 
                 //TODO:IOS Migr (ios not supporting ,need to find progress bar)
-                if(OSType != OSTypeEnum.IOS)
-                {
+				if(OSType == OSTypeEnum.IOS) {
+					//navigator.notification.alert("Loading", [], "");
+					ActivityIndicator.show(Title);
+					//ProgressIndicator.showSimple(true);
+					//window.MyProgressHUD.ShowProgress();
+				} else {
                   navigator.notification.activityStart(Title, Message);
                 }
               
@@ -341,8 +359,12 @@ function ProcessIndicator() {
                 OneViewConsole.Debug("CustomStart Start", "ProcessIndicator.CustomStart");
                 
                 //TODO:IOS Migr (ios not supporting ,need to find progress bar)
-                if(OSType != OSTypeEnum.IOS)
-                {
+				if(OSType == OSTypeEnum.IOS) {
+					//navigator.notification.alert("Loading", [], "");
+					ActivityIndicator.show(Title);
+					//ProgressIndicator.showSimple(true);
+					//window.MyProgressHUD.ShowProgress();
+				} else {
                     navigator.notification.activityStart(Title, Message);
                 }
                     StartTime = new Date().getTime();
@@ -367,8 +389,12 @@ function ProcessIndicator() {
                         SleepFor(timeTosleep);
                     }
                 //TODO:IOS Migr (ios not supporting ,need to find progress bar)
-                if(OSType != OSTypeEnum.IOS)
-                {
+				if(OSType == OSTypeEnum.IOS) {
+					//navigator.notification.alert("Loading", [], "");
+					ActivityIndicator.hide();
+					//ProgressIndicator.hide();
+					//window.MyProgressHUD.HideProgress();
+				} else {
                     navigator.notification.activityStop();
                 }
                     StartTime = '';
@@ -426,12 +452,12 @@ function OneViewExceptionHandler() {
 
             var Message = "DevMessage : " + Excep.DevMessage + "\nClientMessage : " + xlatService.xlat('DefaultException');
             OneViewConsole.Error(Message, "OneViewExceptionHandler.Catch");
-            if (IsDevelopementMode == true) {           
+            if (IsDevelopementMode == true) {
                 alert(Message);
             }
             else {
                
-                alert(xlatService.xlat('DefaultException'));
+                navigator.notification.alert(xlatService.xlat('DefaultException'), ['OK'], "");
             }
             OneViewConsole.Error(Message, Source);
         }
@@ -445,7 +471,7 @@ function OneViewExceptionHandler() {
                     alert(Message);
                 }
                 else {
-                    alert(xlatService.xlat('DefaultException'));
+                    navigator.notification.alert(xlatService.xlat('DefaultException'), ['OK'], "");
                 }
             }
             OneViewConsole.Error(Message, Source);
@@ -469,7 +495,7 @@ function OneViewExceptionHandler() {
             _oOneViewException.DevMessage = (DevMessage != "" && DevMessage != undefined) ? DevMessage : (Exception + "\nSource : " + Source);
 
             return _oOneViewException;
-        } 
+        }
     }
 }
 
@@ -516,7 +542,7 @@ function OneViewSidePanel() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "OneViewSidePanel.Close", Excep);
-        }        
+        }
     }
 
     // Toggle the side panel
@@ -528,13 +554,13 @@ function OneViewSidePanel() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "OneViewSidePanel.Toggle", Excep);
-        }        
+        }
     }
 }
 
 function OneViewCompiler() {
 
-    // Parse HTML into DOM element    
+    // Parse HTML into DOM element
     this.ParseHTML = function (Html) {
 
         try {
@@ -609,15 +635,15 @@ function OneViewCompiler() {
 // For sorting the array
 var OneViewArraySorting = function(field, reverse, primer){
 
-   var key = primer ? 
-       function(x) {return primer(x[field])} : 
+   var key = primer ?
+       function(x) {return primer(x[field])} :
        function(x) {return x[field]};
 
    reverse = [-1, 1][+!!reverse];
 
    return function (a, b) {
        return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-     } 
+     }
 }
 
 // OnewViewEventListener
@@ -662,9 +688,9 @@ function OnewViewEventListener(Key) {
 function JavaScriptEventListener() {
 
     /// <summary>
-    /// RegisterSelectedFieldEvent   
+    /// RegisterSelectedFieldEvent
     /// For current attribute selection
-    /// </summary>    
+    /// </summary>
     this.RegisterSelectedFieldEvent = function () {
 
         try {
@@ -687,8 +713,8 @@ function JavaScriptEventListener() {
     /// <summary>
     /// AddClassEvent
     /// </summary>
-    /// <param name="selementold">Current attribute cell</param> 
-    /// <param name="colelements">All attribute cells</param> 
+    /// <param name="selementold">Current attribute cell</param>
+    /// <param name="colelements">All attribute cells</param>
     var AddClassEvent = function (selementold, colelements) {
 
         try {
@@ -706,7 +732,7 @@ function JavaScriptEventListener() {
     /// <summary>
     /// RemoveAll
     /// RemoveAll selected colours from current page (For clear controls)
-    /// </summary>  
+    /// </summary>
     this.RemoveAll = function () {
 
         try {
@@ -734,12 +760,12 @@ function NCColorComponent() {
     /// Show
     /// Show the nc colour for current attribute column
     /// </summary>
-    /// <param name="AttributeId">AttributeId</param> 
+    /// <param name="AttributeId">AttributeId</param>
     this.Show = function (AttributeId) {
 
-        try {                                
+        try {
             var AttributeColumn = angular.element(document.querySelector('#Column_' + AttributeId));
-            if (AttributeColumn.length > 0) {               
+            if (AttributeColumn.length > 0) {
                 AttributeColumn.removeClass('current-attr');
                 AttributeColumn.addClass('alert-nc');
             }
@@ -753,7 +779,7 @@ function NCColorComponent() {
     /// Remove
     /// Remove the nc colour for current attribute column
     /// </summary>
-    /// <param name="AttributeId">AttributeId</param> 
+    /// <param name="AttributeId">AttributeId</param>
     this.Remove = function (AttributeId) {
 
         try {
@@ -771,7 +797,7 @@ function NCColorComponent() {
     /// <summary>
     /// RemoveAll
     /// RemoveAll nc colours from current page (For clear controls)
-    /// </summary>  
+    /// </summary>
     this.RemoveAll = function () {
 
         try {
@@ -824,7 +850,7 @@ function OneViewSampleGenerator() {
     /// <returns>ClientDocId</returns>
     var GetClientDocId = function () {
 
-        try {                      
+        try {
             var ClientDocId = OneViewLocalStorage.Get("ClientDocId");
 
             if (ClientDocId == null) {
@@ -848,12 +874,12 @@ function OneViewDateTimeFormater() {
     /// <summary>
     /// GetClientDocId
     /// <param name="DateTime">DD-MM-YYYY HH:MM:SS / DD-MM-YYYY HH:MM</param>
-    /// <param name="Format">DD-MM-YYYY / MM-DD-YYYY / YYYY-MM-DD / YYYY-DD-MM / DD-MM / DD-YYYY / MM-YYYY / HH:MM:SS / HH:MM / HH:SS / MM:SS</param>   
+    /// <param name="Format">DD-MM-YYYY / MM-DD-YYYY / YYYY-MM-DD / YYYY-DD-MM / DD-MM / DD-YYYY / MM-YYYY / HH:MM:SS / HH:MM / HH:SS / MM:SS</param>
     /// </summary>
-    /// <returns>Converted Format</returns>  
+    /// <returns>Converted Format</returns>
     this.Format = function (DateTime, Format) {
 
-        try {                      
+        try {
             var ConvertedFormat = DateTime;
 
             var oDateAndTime = new Array();
@@ -938,8 +964,10 @@ function GetOneViewClientDocId() {
     }
     catch (Excep) {
         throw oOneViewExceptionHandler.Create("FrameWork", "GetOneViewDeviceId", Excep);
-    }  
+    }
 }
+
+
 
 
 

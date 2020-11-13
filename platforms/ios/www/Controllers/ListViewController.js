@@ -691,8 +691,10 @@
 
                     if (IsPreEventSuccess == true) {
                         IsSaveSuccess = Save(IsSubmit);
-                        if (IsSaveSuccess == true && EnableAutoUpload == true) {                          
-                            window.OneViewAutoUpload.Start();
+                        if (IsSaveSuccess == true && EnableAutoUpload == true) {
+							if (window.OneViewAutoUpload) {
+								window.OneViewAutoUpload.Start();
+							}
                         }
                     }
 
@@ -6264,7 +6266,7 @@
                 try {
                     OneViewConsole.Debug("Notify Start", "LVDefaultNotificationComponent.ShowDefaultJavaScriptAlert");
 
-                    alert(Msg);
+                    navigator.notification.alert(Msg, ['OK'], "");
 
                     OneViewConsole.Debug("Notify End", "LVDefaultNotificationComponent.ShowDefaultJavaScriptAlert");
                 }
@@ -13154,13 +13156,13 @@
                         }
                         $rootScope.PopUpExcludedAttributeDetails = false;
                   
-                        alert(xlatService.xlat("Attribute Added successfully.."));
+                        navigator.notification.alert(xlatService.xlat("Attribute Added successfully.."), ['OK'], "");
 
                         UpdateUI();
                     }
                     else {
            
-                        alert(xlatService.xlat("Please Select Attribute"));
+                        navigator.notification.alert(xlatService.xlat("Please Select Attribute"), ['OK'], "");
                     }
 
 

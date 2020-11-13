@@ -5,7 +5,7 @@ var LandingPageViewInfo = {
     LandingPageViewName: "",
     ParentIndex: 0,
     ChildIndex: 0,
-    BackRouteKey: "",    
+    BackRouteKey: "",
     SelectedTab: ""
 };
 
@@ -42,7 +42,7 @@ MyApp.controller('LandingPageController', function ($scope, $document, xlatServi
     }
 
     $scope.$watch('MyAudit', function (TabIndex) {
-        _oLandingPageFacade.WatchMyAudit(TabIndex);      
+        _oLandingPageFacade.WatchMyAudit(TabIndex);
     });
 
     $scope.BackgroundVisble = function () {
@@ -71,7 +71,7 @@ MyApp.controller('LandingPageController', function ($scope, $document, xlatServi
 
     PageViewChangeEvent = function () {
         _oLandingPageFacade.PageViewChangeEvent();
-    }    
+    }
 });
 
 // LandingPageFacade
@@ -119,7 +119,7 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "LandingPageFacade.PreInit", xlatService);
-        }        
+        }
     }
 
     this.Init = function () {
@@ -130,7 +130,7 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
             xlatService.setCurrentPage('15');
             document.getElementById('PageTitle').innerHTML = xlatService.xlat('PageTitle');
            
-            $scope.ActionSheet = false;           
+            $scope.ActionSheet = false;
          
             $scope.MyAuditTab = ["Past", "Today", "Future"];
             $scope.MyAudit = "Today";
@@ -280,13 +280,13 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
                     MyInstance.UpdateBackRouteKey(oChild.DCStartRouteKey);
                 }
 
-                $location.url(oChild.DCStartRouteKey);               
+                $location.url(oChild.DCStartRouteKey);
             }
             else if (ProfileDetails != null && ProfileDetails.IsProfileValid == true && ProfileDetails.Occurence == oChild.DCStatusInfo.OverallCount) {
-                alert("IN-NF-LDP-010 :: Task already completed");
+                navigator.notification.alert("IN-NF-LDP-010 :: Task already completed", ['OK'], "");
             }
             else {
-                alert("IN-NF-LDP-001 :: No Profile(s) are available. Please download the profile(s) and continue");
+                navigator.notification.alert("IN-NF-LDP-001 :: No Profile(s) are available. Please download the profile(s) and continue", ['OK'], "");
             }
 
             OneViewConsole.Debug("LoadNewDC end", "LandingPageFacade.LoadNewDC");
@@ -325,14 +325,14 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
 
                     $location.url('/ViewRecords');
                 }
-                else {                    
+                else {
                     MyInstance.UpdateBackRouteKey(oChild.DCViewRouteKey);
 
                     $location.url(oChild.DCViewRouteKey);
                 }
             }
             else {
-                alert("IN-NF-LDP-001 :: No data available for View or Edit");
+                navigator.notification.alert("IN-NF-LDP-001 :: No data available for View or Edit", ['OK'], "");
             }
 
             OneViewConsole.Debug("LoadViewDC end", "LandingPageFacade.LoadViewDC");
@@ -364,7 +364,7 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "LandingPageFacade.WatchMyAudit", xlatService);
-        }       
+        }
     }
 
     this.ViewChange = function (ViewName) {
@@ -379,7 +379,7 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "LandingPageFacade.ViewChange", xlatService);
-        }       
+        }
     }
 
     this.DownloadDCProfile = function () {
@@ -458,10 +458,10 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
                             MyInstance.Init();
                             MyInstance.PageLoad();
 
-                            alert("IN-NF-LDP-002 :: Task synchronized succsessfully");
+                            navigator.notification.alert("IN-NF-LDP-002 :: Task synchronized succsessfully", ['OK'], "");
                         }
                         else if (IsSuccess != null && IsSuccess == false) {
-                            alert("IN-NF-LDP-003 :: Task synchronization failed");
+                            navigator.notification.alert("IN-NF-LDP-003 :: Task synchronization failed", ['OK'], "");
                         }
 
                         oSetDefaultSpinner.Stop();
@@ -469,7 +469,7 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
                 });
             }
             else {
-                alert("IN-NF-LDP-004 :: Please upload the all data captures and try again");
+                navigator.notification.alert("IN-NF-LDP-004 :: Please upload the all data captures and try again", ['OK'], "");
             }
 
             OneViewConsole.Debug("SyncTask end", "LandingPageFacade.SyncTask");
@@ -548,7 +548,7 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "LandingPageBO.LoadHtml", Excep);
         }
-        finally {          
+        finally {
         }
     }
 
@@ -615,7 +615,7 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
                 LandingPageViewName = LandingPageViewInfo.LandingPageViewName;
             }
             
-            var LandingPageViewLst = _oLandingPageViewReponseDAO.GetAllViewsByServiceAndUserId(ServiceId, LoginUserId);            
+            var LandingPageViewLst = _oLandingPageViewReponseDAO.GetAllViewsByServiceAndUserId(ServiceId, LoginUserId);
 
             var OptionsHtml = '';
 
@@ -747,7 +747,8 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
 
                         if (IsDefaultProfiledownloadSuccess == true) {
 
-                            alert("IN-SU-LNP-001 :: Profile(s) downloaded successfully");
+                            //alert("IN-SU-LNP-001 :: Profile(s) downloaded successfully");
+							navigator.notification.alert(xlatService.xlat("IN-SU-LNP-001 :: Profile(s) downloaded successfully"), ['Ok'], "");
 
                             MyInstance.SetByView(LandingPageViewInfo.LandingPageViewName);
                             MyInstance.UpdateTaskStatus(DCTaskViewInfoDTO);
@@ -755,7 +756,7 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
                         }
                     }
                 });
-            }            
+            }
 
             OneViewConsole.Debug("DownloadDCProfile end", "LandingPageBO.DownloadDCProfile");
         }
@@ -783,7 +784,7 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
 
                 if (oChild.DCPlaceKeyElementIsGroup == false && oChild.TemplateKeyElementIsGroup == false) {
 
-                    _oDcFilterParamRequest = MakeDcFilterRequestForPlaceAndTemplate(oChild);                    
+                    _oDcFilterParamRequest = MakeDcFilterRequestForPlaceAndTemplate(oChild);
                     MyAuditTotalDCCountForUpload = _oDcDAO.GetDCCountWithFilters(_oDcFilterParamRequest);
                 }
                 else if (oChild.DCPlaceKeyElementIsGroup == true && oChild.TemplateKeyElementIsGroup == false) {
@@ -799,7 +800,7 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
 
                 if (MyAuditTotalDCCountForUpload > 0) {
 
-                    var IsSuccess = UploadDC(_oDcFilterParamRequest);                    
+                    var IsSuccess = UploadDC(_oDcFilterParamRequest);
 
                     if (IsSuccess == true) {
 
@@ -827,14 +828,14 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
                 }
                 else {
                     //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoDataForUpload'));
-                    alert(xlatService.xlat('NoDataForUpload'));
+                    navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                     OneViewConsole.Info("No dc available", "LandingPageBO.UploadDcAndAction");
                 }
             }
 
             OneViewConsole.Debug("UploadDC end", "LandingPageBO.UploadDC");
         }
-        catch (Excep) {            
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "LandingPageBO.UploadDC", Excep);
         }
         finally {
@@ -921,12 +922,12 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
                         IsSuccess = true;
                     }
                     else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
-                        alert(xlatService.xlat('UploadFailed'));
+                        navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                         IsSuccess = false;
                     }
                 }
                 else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {
-                    alert(xlatService.xlat('UploadFailed'));
+                    navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     IsSuccess = false;
                 }
 
@@ -1034,11 +1035,11 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
 
             if (oChild.DCPlaceKeyElementIsGroup == false && oChild.TemplateKeyElementIsGroup == false) {
 
-                ProfileDetails = _oDcProfileDAO.GetProfileDetails(RequestParam);               
+                ProfileDetails = _oDcProfileDAO.GetProfileDetails(RequestParam);
             }
             else if (oChild.DCPlaceKeyElementIsGroup == true && oChild.TemplateKeyElementIsGroup == false) {
 
-                ProfileDetails = _oDcProfileDAO.GetProfileDetailsByPlaceGroupId(RequestParam);                
+                ProfileDetails = _oDcProfileDAO.GetProfileDetailsByPlaceGroupId(RequestParam);
             }
 
             OneViewConsole.Debug("GetProfileDetails end", "LandingPageBO.GetProfileDetails");
@@ -1199,7 +1200,7 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
 
             var DownloadStatusHtml = ProfileDetails.IsProfileValid == true
                 ? '<i class="icon icon-social13 synced-color"></i>'
-                : '<i class="icon icon-social13 icon-disabled"></i>';                   
+                : '<i class="icon icon-social13 icon-disabled"></i>';
 
             var CompletedStatusHtml = ProfileDetails.IsProfileValid == true &&
                 ((oChild.Occurence != -1 && oChild.DCStatusInfo.OverallCount > 0 && oChild.DCStatusInfo.NotStartedCount == 0 && oChild.DCStatusInfo.OverallCount == oChild.DCStatusInfo.CompletedCount) ||
@@ -1208,7 +1209,7 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
                 : '<i class="icon icon-checkmark icon-disabled"></i>';
 
             //var ApprovedStatusHtml = ProfileDetails.IsProfileValid == true
-            //? '<i class="icon icon-thumb-up-outline-symbol"></i>' 
+            //? '<i class="icon icon-thumb-up-outline-symbol"></i>'
             //: '<i class="icon icon-thumb-up-outline-symbol icon-disabled"></i>';
             var ApprovedStatusHtml = '<i class="icon icon-thumb-up-outline-symbol icon-disabled"></i>';
 
@@ -1244,7 +1245,7 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
                                         '<div class="heading">' + oChild.TaskHeader + '</div>' +
                                         '<div class="second-txt">' + TaskDetails + '</div>' +
                                     '</div>' +
-                                    '<div class="col col-20 no-margin col-center no-padding text-right">' +                                       
+                                    '<div class="col col-20 no-margin col-center no-padding text-right">' +
                                         DownloadStatusHtml +
                                         CompletedStatusHtml +
                                         ApprovedStatusHtml +
@@ -1490,4 +1491,5 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
         }
     }
 }
+
 

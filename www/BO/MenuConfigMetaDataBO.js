@@ -45,7 +45,7 @@ function MenuConfigMetaDataBO(xlatService) {
                 }
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "MenuConfigMetaDataBO.Download");
             }
 

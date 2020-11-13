@@ -199,7 +199,7 @@ function MitmarkLandingPageFacade($scope, $document, xlatService, $timeout, $loc
                 //alert('IsSuccess : ' + IsSuccess);
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "MitmarkLandingPageFacade.DownloadProfile");
             }
             OneViewConsole.Debug("DownloadProfile end", "MitmarkLandingPageFacade.DownloadProfile");
@@ -223,7 +223,7 @@ function MitmarkLandingPageFacade($scope, $document, xlatService, $timeout, $loc
                     $location.url(URL);
                 }
                 else {
-                    alert(xlatService.xlat('No Valid Profiles'));
+                    navigator.notification.alert(xlatService.xlat('No Valid Profiles'), ['OK'], "");
                 }
             }
 
@@ -290,7 +290,7 @@ function MitmarkLandingPageFacade($scope, $document, xlatService, $timeout, $loc
 
             UpdateCloudManagerUserServiceMapping(ServiceInfo);
 
-            alert(xlatService.xlat('IN-SU-MDB-001 :: Service Changed successfully.Please login to Continue.'));
+            navigator.notification.alert(xlatService.xlat('IN-SU-MDB-001 :: Service Changed successfully.Please login to Continue.'), ['OK'], "");
             $location.url('/login');
 
             OneViewSessionStorage.Clear();
@@ -371,7 +371,7 @@ function MitmarkLandingPageFacade($scope, $document, xlatService, $timeout, $loc
                 //}
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No internet connection", "LandingPageFacade.Upload");
             }
 

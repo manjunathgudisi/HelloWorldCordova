@@ -313,35 +313,43 @@
               if (MessageKey.indexOf('Approve') != -1) {
                   if (MessageKey.indexOf('LC') != -1) {
                       if (MsgString == undefined || MsgString == null || MsgString == "") {
-                          alert(xlatService.xlat("IN-SU-LVI-001 :: Record approved successfully"));
+                          //alert(xlatService.xlat("IN-SU-LVI-001 :: Record approved successfully"));
+						  navigator.notification.alert(xlatService.xlat("IN-SU-LVI-001 :: Record approved successfully"), ['OK'], "");
                       }
                       else {
-                          alert(xlatService.xlat(MsgKey));
+                          //navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
+						  navigator.notification.alert(xlatService.xlat(MsgKey), ['OK'], "");
                       }
                   }
               }
               else if (MessageKey.indexOf('Update') != -1) {
                   if (MsgString == undefined || MsgString == null || MsgString == "") {
-                      alert(xlatService.xlat("IN-SU-LVI-004 :: Record updated successfully"));
+                      //alert(xlatService.xlat("IN-SU-LVI-004 :: Record updated successfully"));
+					  navigator.notification.alert(xlatService.xlat("IN-SU-LVI-004 :: Record updated successfully"), ['OK'], "");
                   }
                   else {
-                      alert(xlatService.xlat(MsgKey));
+                      //navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
+					  navigator.notification.alert(xlatService.xlat(MsgKey), ['OK'], "");
                   }
               }
               else if (MessageKey.indexOf('Save') != -1) {
                   if (MsgString == undefined || MsgString == null || MsgString == "") {
-                      alert(xlatService.xlat("IN-SU-LVI-002 :: Record saved successfully"));
+                      //alert(xlatService.xlat("IN-SU-LVI-002 :: Record saved successfully"));
+					  navigator.notification.alert(xlatService.xlat("IN-SU-LVI-002 :: Record saved successfully"), ['OK'], "");
                   }
                   else {
-                      alert(xlatService.xlat(MsgKey));
+                      //navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
+					  navigator.notification.alert(xlatService.xlat(MsgKey), ['OK'], "");
                   }
               }
               else if (MessageKey.indexOf('Submit') != -1) {
                   if (MsgString == undefined || MsgString == null || MsgString == "") {
-                      alert(xlatService.xlat("IN-SU-LVI-003 :: Record saved successfully"));
+                      //alert(xlatService.xlat("IN-SU-LVI-003 :: Record saved successfully"));
+					  navigator.notification.alert(xlatService.xlat("IN-SU-LVI-003 :: Record saved successfully"), ['OK'], "");
                   }
                   else {
-                      alert(xlatService.xlat(MsgKey));
+                      //navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
+					  navigator.notification.alert(xlatService.xlat(MsgKey), ['OK'], "");
                   }
               }              
               else {

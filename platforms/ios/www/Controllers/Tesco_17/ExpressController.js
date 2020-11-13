@@ -21,7 +21,7 @@ MyApp.controller("ExpressController", function ($scope, $location, xlatService, 
     var WeeklyNodeId = 340;
     var MonthlyNodeId = 341;
     var TemplateGroupId = $location.search().TemplateGroupId;
-    var TemplateGroupType = $location.search().TemplateGroupType;   
+    var TemplateGroupType = $location.search().TemplateGroupType;
     
     CompleteLVTemplateResult = {};
     $scope.MyAuditTab = ["Daily", "Weekly", "Monthly"];
@@ -104,15 +104,15 @@ MyApp.controller("ExpressController", function ($scope, $location, xlatService, 
         oExpressFacade.UpdateTimeMode(TemplateNodeId, AttributeId, ControlId);
     }
 
-    AttachImage = function (TemplateId) {      
+    AttachImage = function (TemplateId) {
         oExpressFacade.AttachImage(TemplateId);
     }
 
-    DeleteImage = function (TemplateId) {     
+    DeleteImage = function (TemplateId) {
         oExpressFacade.DeleteImage(TemplateId);
     }
 
-    ShowInfo = function (AttributeNodeId) {       
+    ShowInfo = function (AttributeNodeId) {
         oExpressFacade.ShowInfo(AttributeNodeId);
     }
 
@@ -245,7 +245,7 @@ function ExpressFacade(param) {
                 OneViewConsole.Debug("Init End", "ExpressFacade.Init");
             //}
         }
-        catch (Excep) {         
+        catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "ExpressFacade.Init", xlatService);
         }
     }
@@ -322,7 +322,7 @@ function ExpressFacade(param) {
         try {
            
             OneViewConsole.Debug("LoadSubGroup Start", "ExpressFacade.LoadSubGroup");
-            CurrentSubGroupId = AttributeSubGroupId;           
+            CurrentSubGroupId = AttributeSubGroupId;
 
             oExpressComponent.LoadSubGroup(AttributeSubGroupId);
 
@@ -439,7 +439,7 @@ function ExpressFacade(param) {
 
               
                 if (CompleteLVTemplateResult[TemplateId].DCImages.length == 0) {
-                    CompleteLVTemplateResult[TemplateId].DCImages.push(MultiMediaElement);                   
+                    CompleteLVTemplateResult[TemplateId].DCImages.push(MultiMediaElement);
                 }
                 else {
                     for (var i = 0; i < CompleteLVTemplateResult[TemplateId].DCImages.length ; i++) {
@@ -520,19 +520,19 @@ function ExpressFacade(param) {
            
             var _oDOM = new DOM();
 
-            if (TabIndex == "Daily") {                
+            if (TabIndex == "Daily") {
                 _oDOM.AddClass('BtnDaily', 'activated');
 
                 _oDOM.RemoveClass('BtnWeekly', 'activated');
                 _oDOM.RemoveClass('BtnMonthly', 'activated');
             }
-            else if (TabIndex == "Weekly") {                
+            else if (TabIndex == "Weekly") {
                 _oDOM.AddClass('BtnWeekly', 'activated');
 
                 _oDOM.RemoveClass('BtnDaily', 'activated');
                 _oDOM.RemoveClass('BtnMonthly', 'activated');
             }
-            else if (TabIndex == "Monthly") {                
+            else if (TabIndex == "Monthly") {
                 _oDOM.AddClass('BtnMonthly', 'activated');
 
                 _oDOM.RemoveClass('BtnDaily', 'activated');
@@ -599,7 +599,7 @@ function ExpressFacade(param) {
                 CustomAction = _oLVSpecialCharacterValidationComponent.RemoveSpecialCharacters(CustomAction);
 
                 if (CompleteLVActionResult_Tesco_17[TemplateNodeId] == undefined) {
-                    CompleteLVActionResult_Tesco_17[TemplateNodeId] = {};                    
+                    CompleteLVActionResult_Tesco_17[TemplateNodeId] = {};
                 }
 
                 var LVActionResult = CompleteLVActionResult_Tesco_17[TemplateNodeId];
@@ -651,7 +651,7 @@ function ExpressFacade(param) {
                     }
                     else {
                         IsValid = false;
-                        alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"));
+                        navigator.notification.alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"), ['OK'], "");
                     }
                 }
 
@@ -661,7 +661,7 @@ function ExpressFacade(param) {
                 }
             }
             else {
-                alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"));
+                navigator.notification.alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"), ['OK'], "");
             }
 
             //alert(JSON.stringify(LVActionResult[RuleId]));
@@ -669,7 +669,7 @@ function ExpressFacade(param) {
 
             OneViewConsole.Debug("AddCustomAction End", "ActionNCUIComponent_Tesco_17.AddCustomAction");
         }
-        catch (Excep) {         
+        catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "ActionNCUIComponent_Tesco_17.AddCustomAction", xlatService);
         }
     }
@@ -696,7 +696,7 @@ function ExpressFacade(param) {
 
                 if (LVActionResult[CustomAction.RuleId].Actions[i].Name == CustomAction.label) {
 
-                    if (LVActionResult[CustomAction.RuleId].Actions[i].ActionDetailsClientId == "") { //if (LVIsEdit == false) {                              
+                    if (LVActionResult[CustomAction.RuleId].Actions[i].ActionDetailsClientId == "") { //if (LVIsEdit == false) {
                         LVActionResult[CustomAction.RuleId].Actions.splice(i, 1);
                     }
                     else {
@@ -822,7 +822,7 @@ function ExpressFacade(param) {
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "ExpressFacade.SnapRemoteClose", xlatService);
         }
-    }   
+    }
 }
 
 
@@ -1111,7 +1111,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                 var AreaListhtml = '';
                
                 //get AreaSubList
-                CurrentTemplateSubGroupConfigList = MyInstance.GetSubGroup(AttributeSubGroupId, PeriodicTemplateConfigMetadata);               
+                CurrentTemplateSubGroupConfigList = MyInstance.GetSubGroup(AttributeSubGroupId, PeriodicTemplateConfigMetadata);
                 for (var i = 0; i < CurrentTemplateSubGroupConfigList.length; i++) {
                    
                     var TemplateSubGroupConfig = CurrentTemplateSubGroupConfigList[i];
@@ -1121,7 +1121,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
 
                     var Occurrence = TemplateGroupWiseStatusDict.TemplateInfo[TemplateSubGroupConfig.TemplateGroupNodeId].Occurrence;
                     
-                    if (Occurrence != 0) {                        
+                    if (Occurrence != 0) {
                         var IsPartialApprovedDcAvailable = MyInstance.GetAnyPartialApprovedDcAvailable(TemplateSubGroupConfig.TemplateGroupNodeId);
                         
                         if (IsPartialApprovedDcAvailable != true) {
@@ -1162,7 +1162,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                         alert(oxlatService.xlat("Periodic_PartialApprove_Validation_Message"));
                     }
                     else {
-                        alert(oxlatService.xlat('No Valid Profiles'));
+                        navigator.notification.alert(xlatService.xlat('No Valid Profiles'), ['OK'], "");
                     }
                 }
             }
@@ -1227,7 +1227,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             //}
             return PeriodicTemplateConfigMetadata.TemplateSubGroupConfigMetaDataDetails;
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "ExpressComponent.GetSubGroup", Excep);
         }
     }
@@ -1272,7 +1272,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                     var NAHtml = "";
                     var IsDisableDC = false;
 
-                    if (TemplateDCStatus.LastDCInfo != null) {                                       
+                    if (TemplateDCStatus.LastDCInfo != null) {
                         if (TemplateDCStatus.LastDCInfo.DataCaptureClientGuid != undefined) {
                             IsDisableDC = MyInstance.CheckIsDcApproved(TemplateDCStatus.LastDCInfo.DataCaptureClientGuid);
                         }
@@ -1336,7 +1336,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                         TaskListhtml = TaskListhtml + Labelhtml;
                     }
 
-                    //else //Disable HTML 
+                    //else //Disable HTML
                     //{
                     //    alert('hi for diable');
                     //    IsDisableDC=true;
@@ -1403,7 +1403,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                 var DOMdivAreaList = document.getElementById('divAreaList');
                 DOMdivAreaList.innerHTML = '';
             }
-            else {              
+            else {
                 return true;
             }
             
@@ -1690,7 +1690,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             //                                  AnswerModeHtml +
             //                                  '<button class="button more-btn" onclick="ShowInfo(' + AttributeNodeId + ')">' +
             //                                '<i class="icon icon-info-circle" style="margin-left: -12px; color:#b3b3b3;"></i>' +
-            //                                '</button>' +                                             
+            //                                '</button>' +
             //                              '</div>';
             var background = "";
             
@@ -1708,7 +1708,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                     background = "background:#F2F6F7;";
                 }
 
-                if (IsNAselected == true || IsNAselected == "true") {                    
+                if (IsNAselected == true || IsNAselected == "true") {
                     AppendClass = "na";
                 }
             }
@@ -1760,7 +1760,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
     }
 
     this.GetDateTimeHtml = function (TemplateNodeId, AttributeId, ControlId, LastDCInfo) {
-        try {           
+        try {
             var Answer = '';
             var isHide = "none";
             if (LastDCInfo != null && LastDCInfo.Time != '' &&  LastDCInfo.Time != undefined) {
@@ -1904,7 +1904,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
     //Daiy 5 Task, Status 2/5 ,Task due on : 10/Jan/2016 , 2 Hours more to finish the task.
     this.GetDCTaskStatusHTML = function (TemplateDCStatus, ViewDueStatus) {
         try {
-            //var TaskEndDate = new Date(TemplateDCStatus.PeriodTypeEndDate); //dd/mm/yyyy 
+            //var TaskEndDate = new Date(TemplateDCStatus.PeriodTypeEndDate); //dd/mm/yyyy
             var _DateArray = TemplateDCStatus.PeriodTypeEndDate.split(' ')[0].split('-');
             var _TimeArray = TemplateDCStatus.PeriodTypeEndDate.split(' ')[1].split(':');
 
@@ -1965,7 +1965,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             //alert('Html : ' + Html);
             return Html;
         }
-        catch (Excep) {          
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "ExpressComponent.GetActualVsPlanHtml", Excep);
         }
     }
@@ -1976,7 +1976,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             var ASelected = '';
             var GSelected = '';
             if (LastDCInfo != null && LastDCInfo.BandControlAnswer == 'INCOMPLETE')
-                RSelected = "background-color: #ff0000 ;color:white";           
+                RSelected = "background-color: #ff0000 ;color:white";
             else if (LastDCInfo != null && LastDCInfo.BandControlAnswer == 'COMPLETE')
                 GSelected = "background-color: #008000 ;color:white";
 
@@ -2000,8 +2000,8 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
     /// <summary>
     /// Get NA html
     /// </summary>
-    /// <param name="IsNAselected">NA will select or not</param>   
-    /// <returns>NA html</returns>  
+    /// <param name="IsNAselected">NA will select or not</param>
+    /// <returns>NA html</returns>
     this.GetNAHtml = function (TemplateNodeId,AttributeId, IsNAselected) {
 
         try {
@@ -2386,11 +2386,11 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             //TODO:check old value and new value
             CompleteLVTemplateResult[TemplateNodeId].IsUpdated = true;
             
-            var oDOM = new DOM();            
+            var oDOM = new DOM();
             var Id = "NA_" + AttributeId;
             var ClassName = "active";
             var IsNAselected;
-            if (CompleteLVTemplateResult[TemplateNodeId] != undefined && CompleteLVTemplateResult[TemplateNodeId].LVTemplateResult !=undefined) {            
+            if (CompleteLVTemplateResult[TemplateNodeId] != undefined && CompleteLVTemplateResult[TemplateNodeId].LVTemplateResult !=undefined) {
                 IsNAselected = CompleteLVTemplateResult[TemplateNodeId].LVTemplateResult[AttributeId].NA;
                 
                 if (IsNAselected == true || IsNAselected == 'true') {
@@ -2398,7 +2398,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                 }
                 else {
                     IsNAselected = true;
-                }                
+                }
                 CompleteLVTemplateResult[TemplateNodeId].LVTemplateResult[AttributeId].NA = IsNAselected;
             }
             var OuterDivId = 'TemplateNodeBlock_' + TemplateNodeId;
@@ -2470,7 +2470,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             }
             return RedirectPage;
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "ExpressComponent.Back", Excep);
         }
     }
@@ -2559,7 +2559,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                         var oTesco17_LVDataCaptureBO = new Tesco17_LVDataCaptureBO();
                       
                         var response = oTesco17_LVDataCaptureBO.Update(DCData.LVTemplateResult, DCData.DataCaptureId, DCData.DCResultId, true, IsCompleted, LVDCSummary, IsSubmit);
-                        response.DcInfo = { 'ClientGuid': DataCaptureClientGuid };                       
+                        response.DcInfo = { 'ClientGuid': DataCaptureClientGuid };
                         MyInstance.SaveDCImages(response.DcInfo, DCData.DCImages, key);
 
                         DCData.IsUpdated = false;
@@ -2604,23 +2604,23 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                            }
                        }
 
-                       //MyInstance.ReloadtheModel(OneViewSessionStorage.Get('LoginUserId'), DCData.TemplateNodeId, DCData.TemplateNodeName, AttributeId, OneViewSessionStorage.Get("DcPlaceId"), 16);                    
+                       //MyInstance.ReloadtheModel(OneViewSessionStorage.Get('LoginUserId'), DCData.TemplateNodeId, DCData.TemplateNodeName, AttributeId, OneViewSessionStorage.Get("DcPlaceId"), 16);
                         //response { "DcInfo": DcInfo, "AttributeActionInfo": AttributeActionInfo }
                        // alert('Save successfully');
                     }
-                }  
+                }
             }
             if (i == 0) {
                 oSetDefaultSpinner.Stop();
-                alert(oxlatService.xlat('VL-CU-PWT-004 :: There is no record to Save'));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-004 :: There is no record to Save'), ['OK'], "");
             }
             else {
                // MyInstance.ReloadStatus();
-                //reload the page     
+                //reload the page
                 MyInstance.LoadTemplateList(CurrentArea_TemplateGroupNodeId);
                 MyInstance.GraphSearch(oscope);
                 oSetDefaultSpinner.Stop();
-                alert(oxlatService.xlat('VL-CU-PWT-005 :: Saved successfully'));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-005 :: Saved successfully'), ['OK'], "");
 
                 var SubmitValidationResponse = MyInstance.GetDcSubmitStatus();
                 if (SubmitValidationResponse.IsSubmit == true) {
@@ -2651,7 +2651,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
     // DCImages : {MultiMediaSubElementsId:1, ImageURL:'11'}
     // DcInfo   :
     this.SaveDCImages = function (DcInfo, DCImages, TemplateId) {
-        try {           
+        try {
             if (DCImages.length > 1) {
                 for (var i = 0; i < DCImages.length ; i++) {
                     var ImageData = DCImages[i];
@@ -2673,7 +2673,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                     //}
                 }
             }
-            else if (DCImages.length == 1) {             
+            else if (DCImages.length == 1) {
                 if (DCImages[0].IsDeleted == true) {
                     oExpressDcMultimediaEventHandler.Update(DCImages[0]);
                     CompleteLVTemplateResult[TemplateId].DCImages.splice(0, 1);
@@ -2702,7 +2702,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                 //if (TaskStatus == 'R' || TaskStatus == 'A' || TaskStatus == 'G' || LVTemplateResult[attrId].NA == true){
                 //    IsCompleted = true;
                 //    break;
-                //}    
+                //}
 
                 if (TaskStatus == 'COMPLETE' || TaskStatus == 'INCOMPLETE' || LVTemplateResult[attrId].NA == true) {
                     IsCompleted = true;
@@ -2736,7 +2736,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
     }
 
     this.ShowImage = function (DCImages) {
-        try {          
+        try {
             var response = null;
             if (DCImages.length > 1) {
                 for (var i = 0; i < DCImages.length ; i++) {
@@ -2764,7 +2764,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             var SubmitValidationResponse = MyInstance.GetDcSubmitStatus();
             if (SubmitValidationResponse.IsAnyDcSubmitted == false) {
                 oSetDefaultSpinner.Stop();
-                alert(oxlatService.xlat('VL-CU-PWT-002 :: No records for Submit'));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-002 :: No records for Submit'), ['OK'], "");
             }
             else if (SubmitValidationResponse.IsSubmit == true) {
                 var IsCompleted = true;
@@ -2785,7 +2785,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                         LVActionResult = CompleteLVActionResult_Tesco_17[DCData.TemplateNodeId]
                     }
 
-                    ////if (IsSaveRequired == true) {                
+                    ////if (IsSaveRequired == true) {
                     //var AttributeNodeId = 0
                     //for (var attrId in LVTemplateResult) {
                     //    AttributeNodeId = attrId;
@@ -2847,7 +2847,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
 
                         //alert('IsCompleted :  ' + IsCompleted + ', IsSubmit :  ' + IsSubmit)
                         //if (IsSubmit == true) {
-                            //Submit after validation success  
+                            //Submit after validation success
 
                             OneViewSessionStorage.Save("TemplateId", DCData.TemplateNodeId);
                             OneViewSessionStorage.Save("TemplateName", DCData.TemplateNodeName);
@@ -2944,7 +2944,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
 
                 //    // MyInstance.ReloadStatus();
                 //    oSetDefaultSpinner.Stop();
-                //    //reload the page     
+                //    //reload the page
                 //    MyInstance.LoadTemplateList(CurrentArea_TemplateGroupNodeId);
                 //    MyInstance.GraphSearch(oscope);
                 //    alert('VL-CU-PWT-001 :: Submitted Successfully');
@@ -2953,10 +2953,10 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
 
                 // MyInstance.ReloadStatus();
                 oSetDefaultSpinner.Stop();
-                //reload the page     
+                //reload the page
                 MyInstance.LoadTemplateList(CurrentArea_TemplateGroupNodeId);
                 MyInstance.GraphSearch(oscope);
-                alert(oxlatService.xlat('VL-CU-PWT-001 :: Submitted Successfully'));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-001 :: Submitted Successfully'), ['OK'], "");
                 
                 TemplateGroupWiseStatusDict = MyInstance.GetTemplateGroupWiseStatus(TemplateGroupId);
                 MyInstance.LoadSubGroup(CurrentSubGroupId);
@@ -2964,7 +2964,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
 
             else {
                 oSetDefaultSpinner.Stop();
-                alert(oxlatService.xlat('VL-CU-PWT-003 :: ' + SubmitValidationResponse.Message));
+                navigator.notification.alert(xlatService.xlat('VL-CU-PWT-003 :: ' + SubmitValidationResponse.Message), ['OK'], "");
                 
             }
 
@@ -3010,7 +3010,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
 
 
     this.DeleteDCImageEvent = function (TemplateId) {
-        try {          
+        try {
             var SelectedImageDOM = document.getElementById("Image_" + TemplateId);
             var SelectedImageUrl = SelectedImageDOM.src;
             //IsDeleted
@@ -3023,7 +3023,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                 for (var i = 0; i < DCImages.length ; i++) {
                     var ImageData = DCImages[i];
                     if (ImageData.LocalURL == SelectedImageUrl) {
-                        if (ImageData.Id == 0) {                          
+                        if (ImageData.Id == 0) {
                             CompleteLVTemplateResult[TemplateId].DCImages.splice(i, 1);
                         }
                         else {
@@ -3039,7 +3039,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                 }
             }
             else if (DCImages.length == 1) {
-                if (DCImages[0].Id == 0) {                 
+                if (DCImages[0].Id == 0) {
                     CompleteLVTemplateResult[TemplateId].DCImages.splice(0, 1);
                 }
                 else {
@@ -3107,7 +3107,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             var ApprovedDcData = new DcDAO().GetApprovedDcByDataCaptureClientGuid(DataCaptureClientGuid);
             if (ApprovedDcData != null && ApprovedDcData.length >0) {
                 IsApproved = true;
-            }           
+            }
             return IsApproved;
         }
         catch (Excep) {
@@ -3165,7 +3165,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
 
             return result;
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "ExpressComponent.GetOrganizationAssetsNodeByParentNode_DAO", Excep);
         }
     }
@@ -3241,7 +3241,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
         try {
             
             var SearchedName = scope.periodicsGraphSearchElement;
-            var CurrentTemplateGroupData = CompleteLVTemplateResult[CurrentSubGroupId];            
+            var CurrentTemplateGroupData = CompleteLVTemplateResult[CurrentSubGroupId];
             for (var TGId in CompleteLVTemplateResult) {
                 var TGDataDict = CompleteLVTemplateResult[TGId];
                 // alert('TGDataDict.TemplateNodeName : ' + TGDataDict.TemplateNodeName);
@@ -3307,7 +3307,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
     this.GetNAStatus = function (TemplateNodeId, AttributeId) {
         try {
 
-            var IsNAselected = false;           
+            var IsNAselected = false;
             var LVTemplateResult = CompleteLVTemplateResult[TemplateNodeId].LVTemplateResult;
             var IsNAselected = (LVTemplateResult != undefined && LVTemplateResult[AttributeId] != undefined && (LVTemplateResult[AttributeId].NA == "true" || LVTemplateResult[AttributeId].NA == true)) ? true : false;
            
@@ -3328,10 +3328,10 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
             var IsAnyDcSubmitted = false;
             var Message = " Please enter ";
             var Count = 0;
-            var len = Object.keys(CompleteLVTemplateResult).length;           
+            var len = Object.keys(CompleteLVTemplateResult).length;
             for (var TemplateNodeId in CompleteLVTemplateResult) {
                 Count++;
-                var DCData = CompleteLVTemplateResult[TemplateNodeId];                
+                var DCData = CompleteLVTemplateResult[TemplateNodeId];
                 
                     var LVTemplateResult = DCData.LVTemplateResult;
                     for (var attrId in LVTemplateResult) {
@@ -3372,7 +3372,7 @@ function ExpressComponent(vxlatService, TemplateGroupId) {
                     }
                 
                
-            }            
+            }
             Response.Message = Message;
             //alert('Response : ' + JSON.stringify(Response));
             return Response;
@@ -3434,8 +3434,8 @@ function ExpressBO() {
     //    }
     // };
     /// </summary>
-    /// <param name="Req">Req</param> 
-    /// <returns>Response</returns>  
+    /// <param name="Req">Req</param>
+    /// <returns>Response</returns>
     this.Get = function (Req) {
 
         try {
@@ -3477,7 +3477,7 @@ function ExpressBO() {
                 var CurrentPeriod = [];
 
                 //******** Recurrence validation exclude sunday kind of use cases
-                //TODO : Code make it neat 
+                //TODO : Code make it neat
                 if (Result[0].ReccurenceId > 0) {
 
                     var StartDate = _DateTime.ConvertDateTimeToInteger(Req.StartDate);
@@ -3896,7 +3896,7 @@ function ExpressBO() {
                 }
             }
 
-            alert("Response : " + JSON.stringify(Response));       
+            alert("Response : " + JSON.stringify(Response));
             */
    
             
@@ -4009,7 +4009,7 @@ function ExpressBO() {
 
                 }
 
-            }          
+            }
            
             return Response;
 
@@ -4019,7 +4019,7 @@ function ExpressBO() {
            // alert("GetByTemplateLst : " + ex + "..." + JSON.stringify(ex));
             throw oOneViewExceptionHandler.Create("DAO", "ExpressBO.GetByTemplateLst", Excep);
         }
-    }   
+    }
 
     var GetAttributeGroupWiseCount = function (TemplateGroup, TemplateGroupType) {
         try {
@@ -4078,9 +4078,9 @@ function ExpressBO() {
             var IsDcResultExist = false;
 
             var DcResultList = Request.DcResultList;
-            var ScheduleSearchKey = Request.ScheduleSearchKey;           
+            var ScheduleSearchKey = Request.ScheduleSearchKey;
             var PeriodStartDateToInteger = Request.PeriodStartDateToInteger;
-            var PeriodEndDateToInteger = Request.PeriodEndDateToInteger;           
+            var PeriodEndDateToInteger = Request.PeriodEndDateToInteger;
 
             var Response = {OverAllCompletedDCCount: 0, OverAllInProgressDCCount: 0 };
 
@@ -4101,14 +4101,14 @@ function ExpressBO() {
                     
                     }
                     else if (_oDcProfileSyncStatusDetails.InProgressServerIds.length > 0 && _oDcProfileSyncStatusDetails.InProgressServerIds.indexOf(DcResultList[j].ServerId) != -1 && DcResultList[j].IsCompleted != "true") {
-                        Response.OverAllInProgressDCCount += parseInt(_oDcProfileSyncStatusDetails.OverAllInProgressDCCount);                       
+                        Response.OverAllInProgressDCCount += parseInt(_oDcProfileSyncStatusDetails.OverAllInProgressDCCount);
                     }
                     else {
                         if (DcResultList[j].IsCompleted == "true") {
-                            Response.OverAllCompletedDCCount += parseInt(1);                            
+                            Response.OverAllCompletedDCCount += parseInt(1);
                         }
                         else {
-                            Response.OverAllInProgressDCCount += parseInt(1);                          
+                            Response.OverAllInProgressDCCount += parseInt(1);
                         }
                     }
                     */
@@ -4262,6 +4262,7 @@ function ExpressDcMultimediaEventHandler() {
 }
 
 ////////////////**************** ExpressDcMultimediaEventHandler END *******************//////////////////////////////
+
 
 
 

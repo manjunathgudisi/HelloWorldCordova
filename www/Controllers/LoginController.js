@@ -33,8 +33,8 @@ MyApp.controller('LoginController', function ($scope, $location, $timeout, xlatS
     /// <summary>
     /// To trigger the validation after providing user credentials.
     /// </summary>
-    $scope.Login = function () {                 
-        oLoginFacade.Login($scope, $location, '', '');       
+    $scope.Login = function () {
+        oLoginFacade.Login($scope, $location, '', '');
     };
 
     $scope.CopyDbAcrossServiceEvent = function () {
@@ -155,14 +155,14 @@ function LoginFacade(xlatService, $timeout) {
         try {
             OneViewConsole.Debug("Login Start", "LoginFacade.Login");
         
-            oSetDefaultSpinner.Start();            
+            oSetDefaultSpinner.Start();
             SchemaUpdation();
            
            // IsGlobalMobileAutoSyncEnabled = OneViewLocalStorage.Get("IsGlobalMobileAutoSyncEnabled");
           
             //CheckForNewUpdates();
 
-            // Description      : Initialize the objects; 
+            // Description      : Initialize the objects;
             var _oShowMessage = new ShowMessage();
             var _oLoginDAO = new LoginDAO();
             var _oLoginPresenter = new LoginPresenter();
@@ -189,7 +189,7 @@ function LoginFacade(xlatService, $timeout) {
 
                 else if (IsUserExist == false && NetworkStatus.IsNetworkAvailable == false) {
 
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "LoginFacade.Login");
                 }
 
@@ -345,20 +345,20 @@ function LoginFacade(xlatService, $timeout) {
                                 }
                                 else {
                                     //toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('InvalidCredential'));
-                                    alert(xlatService.xlat('InvalidCredential'));
+                                    navigator.notification.alert(xlatService.xlat('InvalidCredential'), ['OK'], "");
                                     OneViewConsole.Info("Login Status : InvalidCredential", "LoginFacade.Login");
                                     FocusControl($scope, "txtUserName");
                                 }
                             }
                             else if (_oUserDTO != null && _oUserDTO.IsAnyException == true) {
                                 //toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('ServerError'));
-                                alert(xlatService.xlat('ServerError'));
+                                navigator.notification.alert(xlatService.xlat('ServerError'), ['OK'], "");
                                 OneViewConsole.Info("Login Status : Server Error", "LoginFacade.Login");
                             }
                         }
                         else {
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                            alert(xlatService.xlat('NoInternetConnection'));
+                            navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                             OneViewConsole.Info("No Internet Connection", "LoginFacade.Login");
                         }
 
@@ -371,7 +371,7 @@ function LoginFacade(xlatService, $timeout) {
                         // if (EncryptedPassword != "") {
                         if (_oUserEntity[0].Password != $scope.User.Password) {
                             // toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('PasswordMismatch'));
-                            alert(xlatService.xlat('PasswordMismatch'));
+                            navigator.notification.alert(xlatService.xlat('PasswordMismatch'), ['OK'], "");
                             OneViewConsole.Info("Password Mismatch", "LoginFacade.Login");
                             FocusControl($scope, "txtPassword");
                         }
@@ -408,7 +408,7 @@ function LoginFacade(xlatService, $timeout) {
                                     var _oGlobalizationMetadataBO = new GlobalizationMetadataBO(xlatService);
                                     var _IsExistGlobalizationMetdata = _oGlobalizationMetadataBO.IsExistGlobalizationMetdata();
                                     
-                                    if (_IsExistGlobalizationMetdata == false) {                                        
+                                    if (_IsExistGlobalizationMetdata == false) {
                                         _oGlobalizationMetadataBO.DownloadPageWiseMetadata(false);
                                     }
 
@@ -528,14 +528,14 @@ function LoginFacade(xlatService, $timeout) {
             }
             else {
                 //toaster.pop('error', xlatService.xlat('Title_Error'), oDefaultValidationResponse.MessageKey);
-                alert(oDefaultValidationResponse.MessageKey);
+                navigator.notification.alert(xlatService.xlat(oDefaultValidationResponse.MessageKey), ['OK'], "");
                 OneViewConsole.Info(oDefaultValidationResponse.MessageKey, "LoginFacade.Login");
                 FocusControl($scope, "txtUserName");
             }
 
             if (SpinnerlastTimeOutId != null)
                 $timeout.cancel(SpinnerlastTimeOutId);
-                SpinnerlastTimeOutId = $timeout(function () {                   
+                SpinnerlastTimeOutId = $timeout(function () {
                     oSetDefaultSpinner.Stop();
                 }, SpinnerTimeout);
             
@@ -562,7 +562,7 @@ function LoginFacade(xlatService, $timeout) {
     var RedirectToNextPage = function ($location, SpinService, _oLoginPresenter, $scope, _oUserDTO) {
         try {
 
-            //Todo : Added By Sangeeta Bhatt (07-03-2017), temporary added for Hyde Housing client 
+            //Todo : Added By Sangeeta Bhatt (07-03-2017), temporary added for Hyde Housing client
             if (OneViewSessionStorage.Get("ServiceName") == "QaaS") {
                 //Action follow-up download by default download true enabled for QaaS client
                 AutoActionFollowupDownloadEnabledStatus = true;
@@ -572,27 +572,32 @@ function LoginFacade(xlatService, $timeout) {
                 OneViewGlobalConflictResolveMode = 2;
                 OneViewLocalStorage.Save("OneViewGlobalConflictResolveMode", 2);
             }
-
-            if (oAPKUpgradeProcessStatus != null) {
-                oAPKUpgradeProcessBO.SetUpgradeStepCompleted(oOneViewAppInfoPlugin.GetLocalAppInfo().VersionName, oAPKUpgradeProcessStatus.LatestVersion);               
-                oAPKUpgradeProcessStatus = OneViewLocalStorage.Get("APKUpgradeProcessStatus");
+            
+            //Description: Login and show dash board
+            if(OSType == OSTypeEnum.IOS) {
+                _oLoginPresenter.LoadDashBoard($location, SpinService, $scope);
+            } else {
                 if (oAPKUpgradeProcessStatus != null) {
-                    oAPKUpgradeProcessStatus = JSON.parse(oAPKUpgradeProcessStatus);;
-                }
-                if (oAPKUpgradeProcessStatus.IsAPKUpgradeCompleted != true) {
-                    SavenUserCredentialsForAPKUpgradeProcess($scope, _oUserDTO, oAPKUpgradeProcessStatus);
-                    _oLoginPresenter.LoadAPKUpgradePage($location, $scope);
+                    oAPKUpgradeProcessBO.SetUpgradeStepCompleted(oOneViewAppInfoPlugin.GetLocalAppInfo().VersionName, oAPKUpgradeProcessStatus.LatestVersion);
+                    oAPKUpgradeProcessStatus = OneViewLocalStorage.Get("APKUpgradeProcessStatus");
+                    if (oAPKUpgradeProcessStatus != null) {
+                        oAPKUpgradeProcessStatus = JSON.parse(oAPKUpgradeProcessStatus);;
+                    }
+                    if (oAPKUpgradeProcessStatus.IsAPKUpgradeCompleted != true) {
+                        SavenUserCredentialsForAPKUpgradeProcess($scope, _oUserDTO, oAPKUpgradeProcessStatus);
+                        _oLoginPresenter.LoadAPKUpgradePage($location, $scope);
+                    }
+                    else {
+                        MyInstance.AfterAPKUpgradeProcessCompleted($scope, $location);
+                        MyInstance.ShowAPKUpgradeProcessCompleted();
+                        OneViewLocalStorage.Remove("APKUpgradeProcessStatus");
+                        oAPKUpgradeProcessStatus = OneViewLocalStorage.Get("APKUpgradeProcessStatus");
+                        CheckForAPKUpdateAndRedirect($location, SpinService, _oLoginPresenter, $scope, _oUserDTO, oAPKUpgradeProcessStatus);
+                    }
                 }
                 else {
-                    MyInstance.AfterAPKUpgradeProcessCompleted($scope, $location);
-                    MyInstance.ShowAPKUpgradeProcessCompleted();                   
-                    OneViewLocalStorage.Remove("APKUpgradeProcessStatus");
-                    oAPKUpgradeProcessStatus = OneViewLocalStorage.Get("APKUpgradeProcessStatus");
                     CheckForAPKUpdateAndRedirect($location, SpinService, _oLoginPresenter, $scope, _oUserDTO, oAPKUpgradeProcessStatus);
                 }
-            }
-            else {
-                CheckForAPKUpdateAndRedirect($location, SpinService, _oLoginPresenter, $scope, _oUserDTO, oAPKUpgradeProcessStatus);
             }
         }
         catch (Excep) {
@@ -674,7 +679,7 @@ function LoginFacade(xlatService, $timeout) {
                 }
                 //else stay in login page  don't allow to login
             }
-            else {                
+            else {
                // // if (IsGlobalMobileAutoSyncEnabled == true || IsGlobalMobileAutoSyncEnabled == 'true') {
                // if (IsExist == true) {
                //     var _oBusinessEventFramework = new BusinessEventFramework();
@@ -734,7 +739,7 @@ function LoginFacade(xlatService, $timeout) {
             }
 
             if (OneViewLocalStorage.Get("IsGlobalOVGuidCheckingEnabled") != null) {
-                IsGlobalOVGuidCheckingEnabled = (OneViewLocalStorage.Get("IsGlobalOVGuidCheckingEnabled") == 'false') ? false : true;                
+                IsGlobalOVGuidCheckingEnabled = (OneViewLocalStorage.Get("IsGlobalOVGuidCheckingEnabled") == 'false') ? false : true;
             }
 
             if (OneViewLocalStorage.Get("DeviceSerialNo") == null) {
@@ -795,7 +800,7 @@ function LoginFacade(xlatService, $timeout) {
                            
                             //if (WorkflowStatus[i] !=undefined && (WorkflowStatus[i].IsCompleted == true ||
                             //    (WorkflowStatus[i].Name == "Upload" && WorkflowStatus[i][LoginUserId] != undefined &&
-                            //    WorkflowStatus[i][LoginUserId].IsCompleted == true))) {                              
+                            //    WorkflowStatus[i][LoginUserId].IsCompleted == true))) {
                             //    if (i != WorkflowStatusLength && WorkflowStatus[i + 1].Name == "Refresh" && WorkflowStatus[i + 1].IsCompleted != true) {
                             //        IsAutoLoginRequired = true;
                             //        break;
@@ -805,11 +810,11 @@ function LoginFacade(xlatService, $timeout) {
                             if (WorkflowStatus[i].Name == "Refresh" && WorkflowStatus[i].IsCompleted != true) {
                                 //alert('APKUpgradeMetadataForCurrentVersion.WorkflowConfig : ' + JSON.stringify(APKUpgradeMetadataForCurrentVersion.WorkflowConfig));
                                 var RefreshMetadata = APKUpgradeMetadataForCurrentVersion.WorkflowConfig["Refresh"];
-                                if (RefreshMetadata.IsAutoLogin == true) {//  if (RefreshMetadata.IsAutoRefresh == true) { 
+                                if (RefreshMetadata.IsAutoLogin == true) {//  if (RefreshMetadata.IsAutoRefresh == true) {
                                     IsAutoLoginRequired = true;
                                     break;
                                 }
-                            }                            
+                            }
                         }
                         //alert('IsAutoLoginRequired : ' + IsAutoLoginRequired);
                         if (IsAutoLoginRequired == true) {
@@ -819,13 +824,13 @@ function LoginFacade(xlatService, $timeout) {
                                     LoginUserCredentials = JSON.parse(LoginUserCredentials);
                                     $scope.User.UserName = LoginUserCredentials.LoginUserName;
                                     $scope.User.Password = LoginUserCredentials.Password;
-                                    $scope.User.OrganizationName = LoginUserCredentials.LoginUserOrgName;                                 
+                                    $scope.User.OrganizationName = LoginUserCredentials.LoginUserOrgName;
                                     MyInstance.Login($scope, $location, '', '');
                                 }
                             }
                         }
                     }
-                }               
+                }
             }
             
             OneViewConsole.Debug("AutoLoginAndRefresh End", "LoginFacade.AutoLoginAndRefresh");
@@ -849,8 +854,8 @@ function LoginFacade(xlatService, $timeout) {
                         LoginUserCredentials = JSON.parse(LoginUserCredentials);
                         $scope.User.UserName = LoginUserCredentials.LoginUserName;
                         $scope.User.Password = LoginUserCredentials.Password;
-                        $scope.User.OrganizationName = LoginUserCredentials.LoginUserOrgName;                    
-                        MyInstance.Login($scope, $location, '', '');                       
+                        $scope.User.OrganizationName = LoginUserCredentials.LoginUserOrgName;
+                        MyInstance.Login($scope, $location, '', '');
                         //UpdateAppDetails to server
                         oAPKUpgradeProcessBO.UpdateAppDetails();
                     }
@@ -921,7 +926,7 @@ function LoginFacade(xlatService, $timeout) {
                 _oDbStructureController.UploadDbAcrossService(xlatService);
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "LoginFacade.UploadDbAcrossService");
             }
             OneViewConsole.Debug("UploadDbAcrossService End", "LoginFacade.UploadDbAcrossService");
@@ -943,12 +948,12 @@ function LoginFacade(xlatService, $timeout) {
             OneViewConsole.Debug("NetworkDetails : " + JSON.stringify(NetworkDetails), "LoginFacade.UploadImagesAndDbAcrossService");
 
             // If network is available
-            if (NetworkDetails.IsNetworkAvailable == true) {                
+            if (NetworkDetails.IsNetworkAvailable == true) {
                 var _oDbStructureController = new DbStructureController();
                 _oDbStructureController.UploadImagesAndDbAcrossService(xlatService);
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "LoginFacade.UploadImagesAndDbAcrossService");
             }
             OneViewConsole.Debug("UploadImagesAndDbAcrossService End", "LoginFacade.UploadImagesAndDbAcrossService");
@@ -998,7 +1003,7 @@ function LoginFacade(xlatService, $timeout) {
             
             OneViewConsole.Debug("SchemaUpdation End", "LoginFacade.SchemaUpdation");
         }
-        catch (Excep) {            
+        catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "LoginFacade.SchemaUpdation", xlatService);
         }
         finally {
@@ -1113,7 +1118,7 @@ function AuthenticationServiceIL(toaster) {
     /// </summary>
     /// <param name="UserName">Provided UserName</param>
     /// <param name="Password">Provided Password</param>
-    /// <returns>User Details : It returns the true if it is valid and other information like (ServerId,UserName,OrganizationName ...) 
+    /// <returns>User Details : It returns the true if it is valid and other information like (ServerId,UserName,OrganizationName ...)
     ///and returns false if the User credentials is invalid</returns>
     this.GetUserDetails = function (UserName, Password, OrganizationName) {
         try {
@@ -1129,7 +1134,7 @@ function AuthenticationServiceIL(toaster) {
             //_oOneViewChannel.toaster = toaster;
             if (oneViewGlobalVariables.RegistryURl == "") {
              
-                var _oRegistryURL = OneViewLocalStorage.Get("OneViewGlobalRegistryURL");                
+                var _oRegistryURL = OneViewLocalStorage.Get("OneViewGlobalRegistryURL");
                 oneViewGlobalVariables.RegistryURl = _oRegistryURL;
             }
             _oOneViewChannel.url = oneViewGlobalVariables.RegistryURl + "OneViewTokenFacedService.svc/GetUserDetails";
@@ -1159,7 +1164,7 @@ function AuthenticationServiceIL(toaster) {
     /// GetServiceDetails : Get the Service Details for the authenticate user.
     /// </summary>
     /// <param name="UserId">Logged in userid</param>
-    /// <returns>Service Details : It returns the information like (ServiceId,ServiceName,ServiceOMGuid) 
+    /// <returns>Service Details : It returns the information like (ServiceId,ServiceName,ServiceOMGuid)
     /// if service is avilable for logged in user</returns>
     this.GetServiceDetails = function (UserId) {
         try {
@@ -1353,14 +1358,14 @@ function RefreshMetadataHandler(xlatService) {
             OneViewConsole.Debug("Refresh Start", "RefreshMetadataHandler.Refresh");
 
    
-            var _oServiceId = OneViewSessionStorage.Get("ServiceId");    
-            var _LoginUserId = OneViewSessionStorage.Get("LoginUserId");   
+            var _oServiceId = OneViewSessionStorage.Get("ServiceId");
+            var _LoginUserId = OneViewSessionStorage.Get("LoginUserId");
 
 
             TempServiceId = _oServiceId;
             RefreshACLMetadata(_oServiceId, _LoginUserId)
 
-            OneViewGlobalServiceType = "Service_" + _oServiceId;      
+            OneViewGlobalServiceType = "Service_" + _oServiceId;
             //alert(OneViewGlobalServiceTypeEnum[OneViewGlobalServiceType]);
 
 
@@ -1442,7 +1447,7 @@ function RefreshMetadataHandler(xlatService) {
             else {
                 DATEntityTypeList = null;
             }
-            if (DATEntityTypeList != null) {                
+            if (DATEntityTypeList != null) {
                 DATEntityType = DATEntityTypeList;
                
             }
@@ -1493,3 +1498,4 @@ function LoginBO() {
 
 
    
+

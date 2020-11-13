@@ -569,7 +569,7 @@ function DefaultActionNCRightPanelPresenter() {
                             LoadPredefinedActions(ActionNCConfigLst[0], PredefinedActions, TemplateNodeId, ControlId);
                         }
                         if (FormActionActions.length > 0) {
-                            alert("Not Implemented");
+                            navigator.notification.alert(("Not implemented"), ['OK'], "");
                         }
                         if (IsCustomActionEnabled == true) {
                             LoadCustomActions(ActionNCConfigLst[0], TemplateNodeId, ControlId);

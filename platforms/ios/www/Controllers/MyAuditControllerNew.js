@@ -375,7 +375,7 @@ function MyAuditFacade($scope, $location, xlatService, toaster) {
             }
             else {
                 // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No internet connection", "UploadDcFacade.Upload");
             }
 
@@ -412,7 +412,7 @@ function MyAuditFacade($scope, $location, xlatService, toaster) {
             }
             else {
                 //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No internet connection", "UploadDcFacade.Upload");
             }
 
@@ -626,11 +626,11 @@ function MyAuditBO($scope, $location, xlatService, toaster) {
                                 //_oOneViewAppConfig.CheckForNewUpdates(toaster);
                             }
                             else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
-                                alert(xlatService.xlat('UploadFailed'));
+                                navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                             }
                         }
                         else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {                           
-                            alert(xlatService.xlat('UploadFailed'));
+                            navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                         }
 
                         ClearTabs();
@@ -641,13 +641,13 @@ function MyAuditBO($scope, $location, xlatService, toaster) {
                 }
                 else {
                     //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoDataForUpload'));
-                    alert(xlatService.xlat('NoDataForUpload'));
+                    navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                     OneViewConsole.Info("No dc available", "UploadDcFacade.UploadDcAndAction");
                 }
             }
             else {
                 //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('AlreadyUpload'));
-                alert(xlatService.xlat('AlreadyUpload'));
+                navigator.notification.alert(xlatService.xlat('AlreadyUpload'), ['OK'], "");
                 OneViewConsole.Info("This records already uploaded", "UploadDcFacade.UploadDcAndAction");
             }
 

@@ -69,7 +69,7 @@ function DataCaptureBO(InputParm) {
         this.ModelIdForAutoTemperatureUpdation;
         this.ModelIdForAutoTimeUpdation;
 
-        this.AutoTemperatureUpdationReqObj;        
+        this.AutoTemperatureUpdationReqObj;
 
         var oDataCaptureDAO = new DcDAO();
 
@@ -191,10 +191,10 @@ function DataCaptureBO(InputParm) {
                 else if (_oPrimarayAnswerModeInfo.Type == 'DCListViewControlConfig'
                         && (_oPrimarayAnswerModeInfo.ListViewDisplay == 2 || _oPrimarayAnswerModeInfo.ListViewDisplay == 1)) {
 
-                    var DataSourceModelName = _oPrimarayAnswerModeInfo.ControlId + "DataSource";                    
+                    var DataSourceModelName = _oPrimarayAnswerModeInfo.ControlId + "DataSource";
                     var _oCheckBoxAnswerModeFramework = new CheckBoxAnswerModeFramework(itrAttrId, _oPrimarayAnswerModeInfo.ControlId);
                     _oCheckBoxAnswerModeFramework.Clear(oScope, DataSourceModelName);
-                    oScope[DataSourceModelName + "_OLD"] = [];                    
+                    oScope[DataSourceModelName + "_OLD"] = [];
                 }
                 else if (_oPrimarayAnswerModeInfo.Type == 'Band') {
                     //alert('_oPrimarayAnswerModeInfo ddl :' + JSON.stringify(_oPrimarayAnswerModeInfo));
@@ -462,9 +462,9 @@ function DataCaptureBO(InputParm) {
 
     var ClearControlsForCMFT = function () {
         try {
-            if (TemplateId == 3) { // 
+            if (TemplateId == 3) { //
                 scope.Div_AwareofProcedure = false;
-                scope.Div_Location = false;                
+                scope.Div_Location = false;
             }
             else if (TemplateId == 91) { // Pre Acceptance Composition Analysis
                 oScope.SharpsBinShow = false;
@@ -543,7 +543,7 @@ function DataCaptureBO(InputParm) {
                
 
 
-                //Rigid Container Card                
+                //Rigid Container Card
                 Clear({ Type: "Band", ControlId: "chkRigidCardContainerTypeControlId" });
                 Clear({ Type: "DDL", ControlId: "AddlRigidCardSizeControlId" });
                 Clear({ Type: "DDL", ControlId: "AddlRigidCardColourCodeControlId" });
@@ -692,12 +692,12 @@ function DataCaptureBO(InputParm) {
     
     var ClearControlsForTCFM = function () {
         try {
-            if (TemplateId == 3) { // 
+            if (TemplateId == 3) { //
                 scope.DivInduction = false;
                 scope.DivTask = false;
                 scope.DivEquipment = false;
-            }            
-            else if (TemplateId == 160) { // 
+            }
+            else if (TemplateId == 160) { //
                 scope.DivInduction = false;
                 scope.DivTask = false;
                 scope.DivEquipment = false;
@@ -708,7 +708,7 @@ function DataCaptureBO(InputParm) {
         }
 
     }
-    //############## Load Edit Page  Start ################ 
+    //############## Load Edit Page  Start ################
  
     //Step 1:Take DC d
 
@@ -736,7 +736,7 @@ function DataCaptureBO(InputParm) {
     }
 
     var SaveObservation = function (AryDcResultDetails) {
-        try {            
+        try {
             //if ((OneViewSessionStorage.Get("ServiceName") == "Food Safety Service") && TemplateId == 483) {
             if ((OneViewGlobalServiceTypeEnum[OneViewGlobalServiceType] == 1) && TemplateId == 483) {
                 var DcResultId = oDataCaptureDAO.GetDcResultId_DAO(DcId, LoginUserId);
@@ -903,7 +903,7 @@ function DataCaptureBO(InputParm) {
             //        MyInstance.CorrectiveActionEventHandler();
             //}
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.SaveObservation", Excep);
         }
         finally {
@@ -911,7 +911,7 @@ function DataCaptureBO(InputParm) {
     }
 
     var UpdateObservation = function (AryDcResultDetails) {
-        try {            
+        try {
             //if ((OneViewSessionStorage.Get("ServiceName") == "Food Safety Service") && TemplateId == 483) {
             if ((OneViewGlobalServiceTypeEnum[OneViewGlobalServiceType] == 1) && TemplateId == 483) {
 
@@ -928,7 +928,7 @@ function DataCaptureBO(InputParm) {
                 ObservationIndex += 1;
                 //alert(ObservationIndex);
                 for (var i = 0; i < oScope.ObservationList.length; i++) {
-                    if (oScope.ObservationList[i].selected == "selected" && oScope.ObservationList[i].id == 0) {                       
+                    if (oScope.ObservationList[i].selected == "selected" && oScope.ObservationList[i].id == 0) {
                         var _oDCResultDetailEntity = GetDcResultDetailsForMulti(AryDcResultDetails, oScope.ObservationList[i].Answer, oScope.ObservationList[i].label, TemplateNodes[491], DcResultId, ObservationIndex);
                         var _oDcResultDetailsEntityDAO = new DefaultMasterDAO("DcResultDetailsEntity");
                         _oDcResultDetailsEntityDAO.CreateMaster(_oDCResultDetailEntity);
@@ -1316,7 +1316,7 @@ function DataCaptureBO(InputParm) {
             //    return true;
             //}
         }
-        catch (Excep) {            
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.UpdateObservation", Excep);
             return false;
         }
@@ -1428,7 +1428,7 @@ function DataCaptureBO(InputParm) {
                        
                         LoadAssignedToList(AnswerList);
 
-                       /* 
+                       /*
                         if (oScope.AssignedToList.length > 0) {
                             for (var i = 0; i < AnswerList.length; i++) {
                                 for (var j = 0; j < oScope.AssignedToList.length; j++) {
@@ -1457,7 +1457,7 @@ function DataCaptureBO(InputParm) {
                         }
                         */
                         oScope.PreAssignedToList = AnswerList;
-                    }                   
+                    }
                 }
                 else {
                     var AnswerList = [];
@@ -1609,7 +1609,7 @@ function DataCaptureBO(InputParm) {
 
             var AssignedToList = [];
             if (oScope.AssignedToList.length > 0) {
-                AssignedToList = oScope.AssignedToList;               
+                AssignedToList = oScope.AssignedToList;
             }
             else {
                 var Query = "SELECT ServerId,ChildDbElementName FROM OrganizationAssetsNode WHERE ChildDbElementType = " + DATEntityType.RCOMaster_AssignedTo;
@@ -1751,7 +1751,7 @@ function DataCaptureBO(InputParm) {
 
             return _DcResultDetailsEntity;
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.GetDcResultDetailsForMulti", Excep);
         }
         finally {
@@ -1770,7 +1770,7 @@ function DataCaptureBO(InputParm) {
             var DCDetailFromDB = GetDCByDCId(DCId);
             MyInstance.DCDetailFromDBList = DCDetailFromDB;
            
-            for (NodeId in oTemplateNodes) {                
+            for (NodeId in oTemplateNodes) {
                 if (typeof (oTemplateNodes[NodeId]) != 'function') {
 
                     var TemplateNodeObject = oTemplateNodes[NodeId];
@@ -1779,12 +1779,12 @@ function DataCaptureBO(InputParm) {
                         if (typeof (TemplateNodeObject.AnswerMode[itrAnswerMode]) != 'function') {
                             var PreEditControlValues = {};
                             var AnswerModeObject = TemplateNodeObject.AnswerMode[itrAnswerMode];
-                            var ControlId = AnswerModeObject.ControlId;                           
-                            var AttributeAnswers = DCDetailFromDB.AttributeAnswers[NodeId];                            
+                            var ControlId = AnswerModeObject.ControlId;
+                            var AttributeAnswers = DCDetailFromDB.AttributeAnswers[NodeId];
                             if (AttributeAnswers != undefined) {
                               
                                 //Checkboxlist
-                                if (TemplateNodeObject.AnswerMode[0].Type == "DCListViewControlConfig" 
+                                if (TemplateNodeObject.AnswerMode[0].Type == "DCListViewControlConfig"
                                        && (TemplateNodeObject.AnswerMode[0].ListViewDisplay == 2 && TemplateNodeObject.AnswerMode[0].SelectionType == 1) || (TemplateNodeObject.AnswerMode[0].ListViewDisplay == 1)) {
                                     
                                     if (AttributeAnswers[ControlId] != undefined) {
@@ -1805,7 +1805,7 @@ function DataCaptureBO(InputParm) {
                                                     scope[DataSourceModelName][i].Selected = true;
                                                 }
                                             }
-                                        }                                      
+                                        }
                                         //alert(DataSourceModelName + ', scope[DataSourceModelName] : ' + JSON.stringify(scope[DataSourceModelName]));
                                     }
                                 }
@@ -1814,7 +1814,7 @@ function DataCaptureBO(InputParm) {
                                         var AnswerList = AttributeAnswers[ControlId];
                                         //TODO:This logic may change,need remove coupling between this logic (for ex:Clinet need his own data to view),now couple with LastUpdated Answer
 
-                                        var AnswerToBind = GetLastUpdatedAnswer(AnswerList);                                      
+                                        var AnswerToBind = GetLastUpdatedAnswer(AnswerList);
                                         //alert('AnswerToBind :' + JSON.stringify(AnswerToBind));
                                         MyInstance.SetEditValuesInControls(scope, AnswerModeObject, AnswerToBind);
                                         PreEditControlValues[ControlId] = { Answer: AnswerToBind.Answer }
@@ -1873,26 +1873,26 @@ function DataCaptureBO(InputParm) {
                
                 if (AnswerToBind.Answer != "") {
                     var Colour = AnswerModeObject.BandInfo[AnswerToBind.Answer];
-                    if (AnswerModeObject.IsStaticDataSource == undefined || AnswerModeObject.IsStaticDataSource == false) {                     
+                    if (AnswerModeObject.IsStaticDataSource == undefined || AnswerModeObject.IsStaticDataSource == false) {
                         scope[AnswerModeObject.ControlId].Set({ Id: AnswerToBind.Answer, Name: AnswerToBind.AnswerValue, ColourIndex: Colour.ColourIndex, selected: true });
                     }
                     else if (AnswerModeObject.IsStaticDataSource == true) {
                         //alert(AnswerToBind.Answer + " : " + AnswerModeObject.BandInfo[AnswerToBind.Answer]);
                         scope[AnswerModeObject.ControlId].Set({ Id: AnswerToBind.Answer, Name: AnswerToBind.Answer, ColourIndex: Colour.ColourIndex, selected: true });
                     }
-                }             
+                }
             }
             else if (AnswerModeObject.DataType == "FLOAT") {
-                if (AnswerToBind.Answer == "") {                 
+                if (AnswerToBind.Answer == "") {
                     scope.NewDCModel[AnswerModeObject.ControlId] = AnswerToBind.Answer;
                 }
                 else {
                     scope.NewDCModel[AnswerModeObject.ControlId] = parseFloat(AnswerToBind.Answer);
                 }
             }
-            else if (AnswerModeObject.Type == "DATE" && AnswerToBind.Answer != '') {               
-                var date = AnswerToBind.Answer.split('-');              
-                scope.NewDCModel[AnswerModeObject.ControlId] = new Date(date[2], date[1]-1, date[0]);                
+            else if (AnswerModeObject.Type == "DATE" && AnswerToBind.Answer != '') {
+                var date = AnswerToBind.Answer.split('-');
+                scope.NewDCModel[AnswerModeObject.ControlId] = new Date(date[2], date[1]-1, date[0]);
             }
             else if (AnswerModeObject.Type == "MonthYear" && AnswerToBind.Answer != '') {
                 document.getElementById(AnswerModeObject.ControlId).value = AnswerToBind.Answer;
@@ -1901,7 +1901,7 @@ function DataCaptureBO(InputParm) {
             else if (AnswerModeObject.Type == "TIME") {
                 
                // var Time = AnswerToBind.Answer.split(':');
-                //scope.NewDCModel[AnswerModeObject.ControlId] = new Date(0, 0, 0, Time[0], Time[1]);   
+                //scope.NewDCModel[AnswerModeObject.ControlId] = new Date(0, 0, 0, Time[0], Time[1]);
 
                 if (AnswerToBind.Answer != "") {
                     //its wokaround for date time controller issue
@@ -1910,7 +1910,7 @@ function DataCaptureBO(InputParm) {
 
                     var AnswerModeDOMobj = document.getElementById(AnswerModeObject.ControlId);
                     if (AnswerModeDOMobj != null) {
-                        AnswerModeDOMobj.value = AnswerToBind.Answer.split(" ")[1]; //take time 
+                        AnswerModeDOMobj.value = AnswerToBind.Answer.split(" ")[1]; //take time
                         scope.NewDCModel[AnswerModeObject.ControlId] = AnswerModeDOMobj.value;
                         //scope.NewDCModel[AnswerModeObject.ControlId] = new Date(0, 0, 0, Time[0], Time[1]);
                     }
@@ -1992,7 +1992,7 @@ function DataCaptureBO(InputParm) {
             else {
                 if (AnswerModeObject.DataType == "INTEGER") {
                    
-                    if (AnswerToBind.Answer != "") 
+                    if (AnswerToBind.Answer != "")
                         scope.NewDCModel[AnswerModeObject.ControlId] = parseInt(AnswerToBind.Answer);
                     
                     else
@@ -2255,7 +2255,7 @@ function DataCaptureBO(InputParm) {
 
     var SetEditValueForCMFT = function (AnswerModeObject, AnswerToBind) {
         try {
-            if (TemplateId == 3) {             
+            if (TemplateId == 3) {
                 // SetEditValuesForPreAcceptanceQuestionnaire(AnswerModeObject, AnswerToBind);
                 //alert('while edit GlobalTemplateUIEventJobConfigMetaData : ' + JSON.stringify(GlobalTemplateUIEventJobConfigMetaData));
                 if (GlobalTemplateUIEventJobConfigMetaData != null) {
@@ -2293,7 +2293,7 @@ function DataCaptureBO(InputParm) {
                     var _oUIEventJobHandler = new UIEventJobHandler();
                     var oDefaultValidationResponse = _oUIEventJobHandler.EvaluatePostControlUIJobs(EventArgs);
                 }
-            }            
+            }
             else if (TemplateId == 743) {
                 SetEditValuesForSingleDepartmentQuestionnaire(AnswerModeObject, AnswerToBind);
             }
@@ -2353,10 +2353,10 @@ function DataCaptureBO(InputParm) {
         try {
             if (TemplateId == 3) {
                 SetEditValuesForTescoTraning(AnswerModeObject, AnswerToBind);
-            }   
+            }
             else if (TemplateId == 160) {
                 SetEditValuesForTravisPerkinsTraningModule(AnswerModeObject, AnswerToBind);
-            } 
+            }
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.SetEditValueForTCFM", Excep);
@@ -2374,7 +2374,7 @@ function DataCaptureBO(InputParm) {
                     scope.DishwashMachineReadOnly = false;
                     scope["AddlTrolleyMachineControlId"].Clear();
                     scope["AddlDishwashMachineControlId"].Clear();
-                    scope.NewDCModel.AddlPotMachineControlId = "";                    
+                    scope.NewDCModel.AddlPotMachineControlId = "";
                 }
                 else if (AnswerToBind.Answer == 61) {
                     scope.PotMachineReadOnly = false;
@@ -2562,7 +2562,7 @@ function DataCaptureBO(InputParm) {
                 if (AnswerToBind.Answer == 78) {
                     scope.DivECServiceProvider = true;
                     scope.DivECCaliberationDueDate = true;
-                    //  scope.NewDCModel.AddlParameterControlId = "";                
+                    //  scope.NewDCModel.AddlParameterControlId = "";
 
                 }
                 else {
@@ -2575,7 +2575,7 @@ function DataCaptureBO(InputParm) {
                     scope.DivPMServiceProvider = true;
                     scope.DivPMS1stpreventiveMaintainence = true;
                     scope.DivPMS2ndpreventiveMaintainence = true;
-                    //  scope.NewDCModel.AddlParameterControlId = "";                
+                    //  scope.NewDCModel.AddlParameterControlId = "";
 
                 }
                 else {
@@ -2601,34 +2601,34 @@ function DataCaptureBO(InputParm) {
                     ShowHideSamplingSheetAndFoodAnalysisinBO('TVBShow');
 
                 }
-                else if (AnswerToBind.Answer == 123) {//Coliforms              
+                else if (AnswerToBind.Answer == 123) {//Coliforms
                     ShowHideSamplingSheetAndFoodAnalysisinBO('ColiformsShow');
                 }
-                else if (AnswerToBind.Answer == 124) {//E.coll              
+                else if (AnswerToBind.Answer == 124) {//E.coll
                     ShowHideSamplingSheetAndFoodAnalysisinBO('EcollShow');
                 }
-                else if (AnswerToBind.Answer == 125) {//S.aureus              
+                else if (AnswerToBind.Answer == 125) {//S.aureus
                     ShowHideSamplingSheetAndFoodAnalysisinBO('SaureusShow');
                 }
-                else if (AnswerToBind.Answer == 126) {//B.cereus             
+                else if (AnswerToBind.Answer == 126) {//B.cereus
                     ShowHideSamplingSheetAndFoodAnalysisinBO('BcereusShow');
                 }
-                else if (AnswerToBind.Answer == 127) {//V.parahaemolyticus              
+                else if (AnswerToBind.Answer == 127) {//V.parahaemolyticus
                     ShowHideSamplingSheetAndFoodAnalysisinBO('VparahaemolyticusShow');
                 }
-                else if (AnswerToBind.Answer == 128) {//Salmonella             
+                else if (AnswerToBind.Answer == 128) {//Salmonella
                     ShowHideSamplingSheetAndFoodAnalysisinBO('SalmonellaShow');
                 }
-                else if (AnswerToBind.Answer == 129) {//Listeria monocytogenes           
+                else if (AnswerToBind.Answer == 129) {//Listeria monocytogenes
                     ShowHideSamplingSheetAndFoodAnalysisinBO('ListeriaShow');
                 }
-                else if (AnswerToBind.Answer == 130) {//Clostridium perfringens              
+                else if (AnswerToBind.Answer == 130) {//Clostridium perfringens
                     ShowHideSamplingSheetAndFoodAnalysisinBO('ClostridiumShow');
                 }
-                else if (AnswerToBind.Answer == 131) {//YMC              
+                else if (AnswerToBind.Answer == 131) {//YMC
                     ShowHideSamplingSheetAndFoodAnalysisinBO('YMCShow');
                 }
-                else if (AnswerToBind.Answer == 132) {//Campylobacter              
+                else if (AnswerToBind.Answer == 132) {//Campylobacter
                     ShowHideSamplingSheetAndFoodAnalysisinBO('CampylobacterShow');
                 }
             }
@@ -2788,7 +2788,7 @@ function DataCaptureBO(InputParm) {
                 if (AnswerToBind.Answer == 145) {//Staph
                     ParameterTested = "StaphShow";
                 }
-                else if (AnswerToBind.Answer == 146) {//Ecoli              
+                else if (AnswerToBind.Answer == 146) {//Ecoli
                     ParameterTested = "EcoliShow";
                 }
                 scope.StaphShow = false;
@@ -2853,19 +2853,19 @@ function DataCaptureBO(InputParm) {
                 if (AnswerToBind.Answer == 133) {//TVB
                     EditShowHideSamplingSheetAndWaterAnalysis('TVBShow');
                 }
-                else if (AnswerToBind.Answer == 134) {//Coliforms              
+                else if (AnswerToBind.Answer == 134) {//Coliforms
                     EditShowHideSamplingSheetAndWaterAnalysis('ColiformsShow');
                 }
-                else if (AnswerToBind.Answer == 135) {//E.coll              
+                else if (AnswerToBind.Answer == 135) {//E.coll
                     EditShowHideSamplingSheetAndWaterAnalysis('EcollShow');
                 }
-                else if (AnswerToBind.Answer == 136) {//Pseudomonas             
+                else if (AnswerToBind.Answer == 136) {//Pseudomonas
                     EditShowHideSamplingSheetAndWaterAnalysis('PseudomonasShow');
                 }
-                else if (AnswerToBind.Answer == 137) {//Enterococcus      
+                else if (AnswerToBind.Answer == 137) {//Enterococcus
                     EditShowHideSamplingSheetAndWaterAnalysis('EnterococcusShow');
                 }
-                else if (AnswerToBind.Answer == 138) {//SalmonellaShow          
+                else if (AnswerToBind.Answer == 138) {//SalmonellaShow
                     EditShowHideSamplingSheetAndWaterAnalysis('SalmonellaShow');
                 }
 
@@ -2960,7 +2960,7 @@ function DataCaptureBO(InputParm) {
                     scope.OthersSampleAnalysisShow = false;
                 }
             }
-            else if (AnswerModeObject.ControlId == "chkNAControlId") {               
+            else if (AnswerModeObject.ControlId == "chkNAControlId") {
                 if (AnswerToBind.Answer == "NA") {
                     scope.Div_txtNARemarksControlId = true;
                     //scope.NewDCModel.txtNARemarksControlId = "No FSS on duty";
@@ -3009,19 +3009,19 @@ function DataCaptureBO(InputParm) {
                 if (AnswerToBind.Answer == 133) {//TVB
                     EditShowHideSamplingSheetAndIceAnalysis('TVBShow');
                 }
-                else if (AnswerToBind.Answer == 134) {//Coliforms              
+                else if (AnswerToBind.Answer == 134) {//Coliforms
                     EditShowHideSamplingSheetAndIceAnalysis('ColiformsShow');
                 }
-                else if (AnswerToBind.Answer == 135) {//E.coll              
+                else if (AnswerToBind.Answer == 135) {//E.coll
                     EditShowHideSamplingSheetAndIceAnalysis('EcollShow');
                 }
-                else if (AnswerToBind.Answer == 136) {//Pseudomonas             
+                else if (AnswerToBind.Answer == 136) {//Pseudomonas
                     EditShowHideSamplingSheetAndIceAnalysis('PseudomonasShow');
                 }
-                else if (AnswerToBind.Answer == 137) {//Enterococcus      
+                else if (AnswerToBind.Answer == 137) {//Enterococcus
                     EditShowHideSamplingSheetAndIceAnalysis('EnterococcusShow');
                 }
-                else if (AnswerToBind.Answer == 138) {//SalmonellaShow          
+                else if (AnswerToBind.Answer == 138) {//SalmonellaShow
                     EditShowHideSamplingSheetAndIceAnalysis('SalmonellaShow');
                 }
 
@@ -3101,7 +3101,7 @@ function DataCaptureBO(InputParm) {
             }
             else if (AnswerModeObject.ControlId == "AddlSampleConditionUnsatisfactoryControlId") {
                 //if (scope.AddlSampleConditionUnsatisfactoryControlId.GetSelectedValue() == 65702) {
-                if (AnswerToBind.AnswerValue == "Others") { 
+                if (AnswerToBind.AnswerValue == "Others") {
                     scope.OthersSampleReceiptShow = true;
                 }
                 else {
@@ -3149,10 +3149,10 @@ function DataCaptureBO(InputParm) {
                 if (AnswerToBind.Answer == 142) {//TVB
                     ParameterTested = "TVBShow";
                 }
-                else if (AnswerToBind.Answer == 143) {//Coliforms              
+                else if (AnswerToBind.Answer == 143) {//Coliforms
                     ParameterTested = "ColiformsShow";
                 }
-                else if (AnswerToBind.Answer == 144) {//YeasAndMould           
+                else if (AnswerToBind.Answer == 144) {//YeasAndMould
                     ParameterTested = "YeasAndMouldShow";
                 }
 
@@ -3177,7 +3177,7 @@ function DataCaptureBO(InputParm) {
                     document.getElementById('lblTVBActualValue').innerHTML = "Actual Value CFU / m&#179";
                     document.getElementById('lblYMCActualValue').innerHTML = "Actual Value CFU / m&#179";
                 }
-                else if (AnswerToBind.Answer == 69) {//Open Plate              
+                else if (AnswerToBind.Answer == 69) {//Open Plate
                     scope.ExposureShow = true;
                     scope.VolumeOfAirShow = false;
                     scope.DivDTTimeControlIdShow = false;
@@ -3234,16 +3234,16 @@ function DataCaptureBO(InputParm) {
                 if (AnswerToBind.Answer == 147) {//TVB
                     ParameterTested = "TVBShow";
                 }
-                else if (AnswerToBind.Answer == 148) {//Coliforms              
+                else if (AnswerToBind.Answer == 148) {//Coliforms
                     ParameterTested = "ColiformsShow";
                 }
-                else if (AnswerToBind.Answer == 149) {//Ecoli              
+                else if (AnswerToBind.Answer == 149) {//Ecoli
                     ParameterTested = "EcoliShow";
                 }
-                else if (AnswerToBind.Answer == 150) {//Listeria              
+                else if (AnswerToBind.Answer == 150) {//Listeria
                     ParameterTested = "ListeriaShow";
                 }
-                else if (AnswerToBind.Answer == 151) {//YeasAndMould           
+                else if (AnswerToBind.Answer == 151) {//YeasAndMould
                     ParameterTested = "YeasAndMouldShow";
                 }
 
@@ -3299,27 +3299,27 @@ function DataCaptureBO(InputParm) {
             OneViewConsole.Debug("SetEditValuesForSamplingSheetAndAllergenAnalysis Start", "AnswerMode.SetEditValuesForSamplingSheetAndAllergenAnalysis");
             var ParameterTested = "";
 
-            if (AnswerModeObject.ControlId == "chkParameterTested") {                
+            if (AnswerModeObject.ControlId == "chkParameterTested") {
 
                 if (AnswerToBind.Answer == 152) {//Total Milk Allergen
                     ParameterTested = "DivMilkShow";
                 }
-                else if (AnswerToBind.Answer == 153) {//Egg Allergen              
+                else if (AnswerToBind.Answer == 153) {//Egg Allergen
                     ParameterTested = "DivEggShow";
                 }
-                else if (AnswerToBind.Answer == 154) {//Almond Allergen              
+                else if (AnswerToBind.Answer == 154) {//Almond Allergen
                     ParameterTested = "DivAlmondShow";
                 }
-                else if (AnswerToBind.Answer == 155) {//Peanut Allergen              
+                else if (AnswerToBind.Answer == 155) {//Peanut Allergen
                     ParameterTested = "DivPeanutShow";
                 }
-                else if (AnswerToBind.Answer == 156) {//Gladin Allergen           
+                else if (AnswerToBind.Answer == 156) {//Gladin Allergen
                     ParameterTested = "DivGladinShow";
                 }
-                else if (AnswerToBind.Answer == 157) {//Mustard Allergen           
+                else if (AnswerToBind.Answer == 157) {//Mustard Allergen
                     ParameterTested = "DivMustardShow";
                 }
-                else if (AnswerToBind.Answer == 158) {//Soy Allergen           
+                else if (AnswerToBind.Answer == 158) {//Soy Allergen
                     ParameterTested = "DivSoyShow";
                 }
 
@@ -3397,7 +3397,7 @@ function DataCaptureBO(InputParm) {
                     document.getElementById('lblTVBColonyCount').innerHTML = "Colony Count CFU / m&#179";
                     document.getElementById('lblYMCColonyCount').innerHTML = "Colony Count CFU / m&#179";
                 }
-                else if (AnswerToBind.Answer == 69) {//Open Plate              
+                else if (AnswerToBind.Answer == 69) {//Open Plate
                     scope.AirSamplerDetailsShow = false;
                     scope.OpenPlateDetailsShow = true;
 
@@ -3460,7 +3460,7 @@ function DataCaptureBO(InputParm) {
                     scope.ValidatorMethodShow = true;
                     scope.OtherhermometerStatusShow = false;
                 }
-            }           
+            }
 
             OneViewConsole.Debug("SetEditValuesForMonthlyVerificationofIR End", "AnswerMode.SetEditValuesForMonthlyVerificationofIR");
         }
@@ -3670,7 +3670,7 @@ function DataCaptureBO(InputParm) {
             var result = oDataCaptureDAO.GetDCResultDetailsByDCId_DAO(DCId);
 
             if (result.length > 0) {
-                MyInstance.CurrentDcClientGuid = result[0].DataCaptureClientGuid;                
+                MyInstance.CurrentDcClientGuid = result[0].DataCaptureClientGuid;
             }
 
             if (result.length != 0) {
@@ -3763,7 +3763,7 @@ function DataCaptureBO(InputParm) {
             OneViewConsole.Debug("SaveDC start", "DataCaptureBO.SaveDC");
 
             try
-            {              
+            {
                 //if (MyInstance.BeforeSaveDCEventHandler != undefined)
                 //  MyInstance.BeforeSaveDCEventHandler(this);
 
@@ -3806,14 +3806,14 @@ function DataCaptureBO(InputParm) {
                     if (CustomValidations(IsSubmit,IsAutoSubmit)) {
                         if (ValidateNCAndComments()) {
 
-                            //EKFC 
+                            //EKFC
                             if (OneViewGlobalServiceTypeEnum[OneViewGlobalServiceType] == 1) {
                                 if (TemplateId != 535 && TemplateId != 8272) {
                                     // alert('in' + TemplateId);
                                     MyInstance.ReCheckDCNCMapping();
                                 }
                             }
-                            //EKFC 
+                            //EKFC
                            else if (OneViewGlobalServiceTypeEnum[OneViewGlobalServiceType] == 2) {
                                if (TemplateId != 8272 && TemplateId != 12208) {
                                     // alert('in' + TemplateId);
@@ -3860,7 +3860,7 @@ function DataCaptureBO(InputParm) {
                             var _oDasboardBO = new DasboardBO(oScope, '', oxlatService, '', '', '', '');
                             _oDasboardBO.UpdateTaskStatus_NewDC(_oDataCaptureEntity.IsCompleted);
 
-                            OneViewSessionStorage.Save("IsDcCompletedBeforeEdit", _oDataCaptureEntity.IsCompleted);                            
+                            OneViewSessionStorage.Save("IsDcCompletedBeforeEdit", _oDataCaptureEntity.IsCompleted);
                             OneViewSessionStorage.Save("IsDcSynchronizedBeforeEdit", 'false');
 
                             CreateMultiMediaSubElements(_oDataCaptureEntity.Id);
@@ -3889,7 +3889,7 @@ function DataCaptureBO(InputParm) {
                             //Todo :: (Sangeeta Bhatt : 06-10-2017) : Need to remove , temporarily kept for hiding two saved messages
                             if (OneViewSessionStorage.Get("ServiceId") == 23) {
                                 if (OneViewSessionStorage.Get("TemplateId") != 3) {
-                                    alert(xlatService.xlat('SavedSuccessfully'));
+                                    navigator.notification.alert(xlatService.xlat('SavedSuccessfully'), ['OK'], "");
                                 }
                             }
                             else {
@@ -3897,7 +3897,7 @@ function DataCaptureBO(InputParm) {
                                     //No alert
                                 }
                                 else {
-                                    alert(xlatService.xlat('SavedSuccessfully'));
+                                    navigator.notification.alert(xlatService.xlat('SavedSuccessfully'), ['OK'], "");
                                 }
                             }
                             // oToaster.pop('success', xlatService.xlat('Title_Success'), xlatService.xlat('SavedSuccessfully'));
@@ -3994,7 +3994,7 @@ function DataCaptureBO(InputParm) {
                     oScope.NewDCModel[ControlId] = xlatService.xlat("Last updated on ") + new DateTime().GetDateAndTime();
                     oScope.$apply();
                 }
-            });           
+            });
         }
         catch (Excep) {
             oOneViewExceptionHandler.Catch(Excep, "DataCaptureBO.DCImageCaptureAnswerModeEventHandler", xlatService);
@@ -4020,7 +4020,7 @@ function DataCaptureBO(InputParm) {
                             oScope.$apply();
                         }
                     });
-                }               
+                }
             }
             else {
                 //alert("Not implemented exception DCImageCaptureControlConfig multi selection, SelectionType = " + SelectionType + ", DataCaptureBO.DCImageCaptureAnswerModeDeleteEventHandler");
@@ -4049,7 +4049,7 @@ function DataCaptureBO(InputParm) {
 
     this.MultiMediaDeleteEventHandler = function (ControlId, LocalURL) {
 
-        try {           
+        try {
             for (var i = 0; i < MyInstance.MultiMediaSubElementsList.length; i++) {
                 
                 if (MyInstance.MultiMediaSubElementsList[i].ControlId == ControlId && MyInstance.MultiMediaSubElementsList[i].LocalURL == LocalURL) {
@@ -4110,7 +4110,7 @@ function DataCaptureBO(InputParm) {
                     }
                 }
             }
-            else {                
+            else {
                 for (var i = 0; i < MyInstance.MultiMediaSubElementsList.length; i++) {
 
                     if (MyInstance.MultiMediaSubElementsList[i].AttributeNodeId == AttributeNodeId && MyInstance.MultiMediaSubElementsList[i].ControlId == ControlId) {
@@ -4120,10 +4120,10 @@ function DataCaptureBO(InputParm) {
 
                         if (MyInstance.MultiMediaSubElementsList[i].Id == 0) {
                             MyInstance.MultiMediaSubElementsList.splice(i, 1);
-                            i--;                            
+                            i--;
                         }
                         else {
-                            MyInstance.MultiMediaSubElementsList[i].IsDisabled = true;                           
+                            MyInstance.MultiMediaSubElementsList[i].IsDisabled = true;
                         }
                     }
                 }
@@ -4199,8 +4199,8 @@ function DataCaptureBO(InputParm) {
                         var UpdateQuery = "UPDATE MultiMediaSubElements SET TimeStamp='" + CurrenntDateAndTime + "',IsSynchronized='false',IsDisabled='true' WHERE Id = " + MyInstance.MultiMediaSubElementsList[i].Id;
                         window.OneViewSqlite.excecuteSql(UpdateQuery);
                     }
-                    else {                    
-                        var DeleteQuery = "DELETE FROM MultiMediaSubElements WHERE Id = " + MyInstance.MultiMediaSubElementsList[i].Id;                        
+                    else {
+                        var DeleteQuery = "DELETE FROM MultiMediaSubElements WHERE Id = " + MyInstance.MultiMediaSubElementsList[i].Id;
                         window.OneViewSqlite.excecuteSql(DeleteQuery);
                     }
                 }
@@ -4229,7 +4229,7 @@ function DataCaptureBO(InputParm) {
                     else if (TemplateId == 711) { IsSuccess = TempMonitoringReportofLabEquipmentVallidation(undefined, true) }
                     else if (TemplateId == 609) { IsSuccess = LaminarAirFlowMonitoringValidation(undefined, true) }
                     else if (TemplateId == 923) { IsSuccess = MonthlyVerificationofProbeThermometerValidation(undefined, true) }
-                    else if (TemplateId == 937) { IsSuccess = MonthlyVerificationofIRThermometerValidation(undefined, true) }                    
+                    else if (TemplateId == 937) { IsSuccess = MonthlyVerificationofIRThermometerValidation(undefined, true) }
                     else if (TemplateId == 12606) { IsSuccess = CustomerComplaintMonitoringFormVallidation(undefined, true) }
 
 
@@ -4248,7 +4248,7 @@ function DataCaptureBO(InputParm) {
                     //if (TemplateId == 1655) { IsSuccess = MyInstance.SampleSheetAndIceAnalysisValidation(undefined, true); };//Ice analysis
                     if (TemplateId == 1529) { IsSuccess = MyInstance.WaterAnalysisValidation(undefined, true); };//water analysis
                     if (TemplateId == 1655) { IsSuccess = MyInstance.IceAnalysisValidation(undefined, true); };//Ice analysis
-                    //if (TemplateId == 1778) { IsSuccess = MyInstance.SampleSheetAndAirAnalysisValidation(undefined, true); };//Air analysis   
+                    //if (TemplateId == 1778) { IsSuccess = MyInstance.SampleSheetAndAirAnalysisValidation(undefined, true); };//Air analysis
                     if (TemplateId == 575) { IsSuccess = MyInstance.MicrobiologyLaboratoryEquipmentCalibration(undefined, true) }
                 }
             }
@@ -4414,25 +4414,25 @@ function DataCaptureBO(InputParm) {
             //    IsSuccess = false;
             //}
             if (CookingTemp != "" && PreTempIn != "" && CookingTemp < PreTempIn) {
-                alert(xlatService.xlat('CookingTempPreTempInMsg'));
+                navigator.notification.alert(xlatService.xlat('CookingTempPreTempInMsg'), ['OK'], "");
                 IsSuccess = false;
             }
             else if (CookingTemp != "" && BcTempIn != "" && CookingTemp < BcTempIn) {
-                alert(xlatService.xlat('CookingTempBTempInMsg'));
+                navigator.notification.alert(xlatService.xlat('CookingTempBTempInMsg'), ['OK'], "");
                 IsSuccess = false;
             }
             else if (BcTempOut != "" && PreTempIn != "" && BcTempOut > PreTempIn) {
-                alert(xlatService.xlat('PreTempInBTempOutMsg'));
+                navigator.notification.alert(xlatService.xlat('PreTempInBTempOutMsg'), ['OK'], "");
                 IsSuccess = false;
             }
             else if (PreTempIn != "" && PreTempOut != "" && PreTempOut > PreTempIn) {
-                alert(xlatService.xlat('PreTempInPreTempOutMsg'));
+                navigator.notification.alert(xlatService.xlat('PreTempInPreTempOutMsg'), ['OK'], "");
                 IsSuccess = false;
             }
             else if (BcTempIn != "" && BcTempOut != "" && BcTempOut > BcTempIn) {
-                alert(xlatService.xlat('BTempInBTempOutMsg'));
+                navigator.notification.alert(xlatService.xlat('BTempInBTempOutMsg'), ['OK'], "");
                 IsSuccess = false;
-            }           
+            }
             
             return IsSuccess;
         }
@@ -4443,7 +4443,7 @@ function DataCaptureBO(InputParm) {
 
     var GoodsReceivingVallidationOLD = function () {
 
-        try {          
+        try {
             var GoodsType = oScope["chkGoodsType"].GetSelectedValue();
             var FrozenState = oScope["chkFrozenType"].GetSelectedValue();
             var DMVechicleTag = oScope["chkVehicleApprovalTag"].GetSelectedValue();
@@ -4457,91 +4457,92 @@ function DataCaptureBO(InputParm) {
 
             if (GoodsType == 4 && DMVechicleTag == 1 && ProductStatus == 22) {
                 if (FrozenState == '' && ApprovalTag == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-004 :: Please select Frozen State, Approval Tag No and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-004 :: Please select Frozen State, Approval Tag No and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '' && ApprovalTag == '') {
-                    alert("MN-RQ-GRV-005 :: Please select Frozen State and Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-005 :: Please select Frozen State and Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-006 :: Please select Frozen State and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-006 :: Please select Frozen State and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (ApprovalTag == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-007 :: Please select Approval Tag No and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-007 :: Please select Approval Tag No and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '') {
-                    alert("MN-RQ-GRV-008 :: Please select Frozen State");
+                    navigator.notification.alert("MN-RQ-GRV-008 :: Please select Frozen State", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (ApprovalTag == '') {
-                    alert("MN-RQ-GRV-009 :: Please select Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-009 :: Please select Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (SNCNo == '') {
-                    alert("MN-RQ-GRV-010 :: Please select SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-010 :: Please select SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (GoodsType == 4 && DMVechicleTag == 1) {
                 if (FrozenState == '' && ApprovalTag == '') {
-                    alert("MN-RQ-GRV-005 :: Please select Frozen State and Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-005 :: Please select Frozen State and Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '') {
-                    alert("MN-RQ-GRV-008 :: Please select Frozen State");
+                    navigator.notification.alert("MN-RQ-GRV-008 :: Please select Frozen State", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (ApprovalTag == '') {
-                    alert("MN-RQ-GRV-009 :: Please select Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-009 :: Please select Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (GoodsType == 4 && ProductStatus == 22) {
                 if (FrozenState == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-006 :: Please select Frozen State and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-006 :: Please select Frozen State and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '') {
-                    alert("MN-RQ-GRV-008 :: Please select Frozen State");
+                    navigator.notification.alert("MN-RQ-GRV-008 :: Please select Frozen State", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (SNCNo == '') {
-                    alert("MN-RQ-GRV-010 :: Please select SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-010 :: Please select SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (DMVechicleTag == 1 && ProductStatus == 22) {
                 if (ApprovalTag == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-007 :: Please select Approval Tag No and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-007 :: Please select Approval Tag No and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (ApprovalTag == '') {
-                    alert("MN-RQ-GRV-009 :: Please select Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-009 :: Please select Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (SNCNo == '') {
-                    alert("MN-RQ-GRV-010 :: Please select SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-010 :: Please select SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (GoodsType == 4) {
                 if (FrozenState == '') {
-                    alert("MN-RQ-GRV-008 :: Please select Frozen State");
+                    navigator.notification.alert("MN-RQ-GRV-008 :: Please select Frozen State", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (DMVechicleTag == 1) {
                 if (ApprovalTag == '') {
-                    alert("MN-RQ-GRV-009 :: Please select Approval Tag");
+                    navigator.notification.alert("MN-RQ-GRV-009 :: Please select Approval Tag", ['OK'], "");
+					
                     IsSuccess = false;
                 }
             }
             else if (ProductStatus == 22) {
                 if (SNCNo == '') {
-                    alert("MN-RQ-GRV-010 :: Please select SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-010 :: Please select SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
@@ -4577,7 +4578,8 @@ function DataCaptureBO(InputParm) {
 
             //alert(' ProductionDateMode : ' + ProductionDateMode + " , PDDate : " + PDDate + " , PDMonthYear :" + PDMonthYear + " , ExpiryDateMode :" + ExpiryDateMode + " , ExDate :" + ExDate + " , ExUseBy :" + ExUseBy + " , ExUseBefore :" + ExUseBefore);
 
-            alert(' ProductionDateMode : ' + ProductionDateMode +  " , ExpiryDateMode :" + ExpiryDateMode  );
+			navigator.notification.alert((' ProductionDateMode : ' + ProductionDateMode +  " , ExpiryDateMode :" + ExpiryDateMode  ), ['OK'], "");
+			
             var msg = "MN-RQ-GRV-001 :: Please select";
             if (GoodsType == 4 && FrozenState == '') {
                 if (msg != "MN-RQ-GRV-001 :: Please select") {
@@ -4668,7 +4670,7 @@ function DataCaptureBO(InputParm) {
             }
 
             if (IsSuccess == false) {
-                alert(msg);
+                navigator.notification.alert(msg, ['OK'], "");
             }
 
             return IsSuccess;
@@ -4681,49 +4683,49 @@ function DataCaptureBO(InputParm) {
 
     var CurrentStockofLaboratoryMediaVallidation = function () {
 
-        try {         
+        try {
 
             var oStocktype = oScope["chkStocktype"].GetSelectedValue();
 
             var IsSuccess = true;
 
             
-            if (oStocktype == 72) {//GlassWare                  
+            if (oStocktype == 72) {//GlassWare
                 if (scope.NewDCModel.AddlGlasswareControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Glassware");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Glassware", ['OK'], "");
                     IsSuccess = false;
                   }
              }
-            else if (oStocktype == 73) {//Media                  
+            else if (oStocktype == 73) {//Media
                 if (scope.NewDCModel.AddlParameterControlId == "" && scope.NewDCModel.AddlMediaorReagentsControlId == "" && scope.NewDCModel.AddlBrandNameControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Parameter,Media or Reagents and Brand Name");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Parameter,Media or Reagents and Brand Name", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlParameterControlId == "" && scope.NewDCModel.AddlMediaorReagentsControlId == "" && scope.NewDCModel.AddlBrandNameControlId != "") {
-                    alert("MN-RQ-CST-008 :: Please select Parameter and Media or Reagents");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Parameter and Media or Reagents", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlParameterControlId == "" && scope.NewDCModel.AddlMediaorReagentsControlId != "" && scope.NewDCModel.AddlBrandNameControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Parameter and Brand Name");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Parameter and Brand Name", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlParameterControlId != "" && scope.NewDCModel.AddlMediaorReagentsControlId == "" && scope.NewDCModel.AddlBrandNameControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Media or Reagents and Brand Name");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Media or Reagents and Brand Name", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlParameterControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Parameter");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Parameter", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlMediaorReagentsControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Media or Reagents");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Media or Reagents", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlBrandNameControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Brand Name");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Brand Name", ['OK'], "");
                     IsSuccess = false;
                 }
-             }            
+             }
 
             return IsSuccess;
         }
@@ -4744,27 +4746,27 @@ function DataCaptureBO(InputParm) {
 
             if (oExternalCaliberation == 78 && oPreventionMaintanence == 78) {
                 if (scope.NewDCModel.txtECServiceProviderControlId == "" && scope.NewDCModel.txtPMServiceProviderControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider and Preventive Maintanance Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider and Preventive Maintanance Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.txtECServiceProviderControlId == "" && scope.NewDCModel.txtPMServiceProviderControlId != "") {
-                    alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.txtECServiceProviderControlId != "" && scope.NewDCModel.txtPMServiceProviderControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please enter Preventive Maintanance Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter Preventive Maintanance Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
             }
-           else if (oExternalCaliberation == 78) {                  
+           else if (oExternalCaliberation == 78) {
                 if (scope.NewDCModel.txtECServiceProviderControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
             }
            else if (oPreventionMaintanence == 78) {
                 if (scope.NewDCModel.txtPMServiceProviderControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please enter Preventive Maintanance Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter Preventive Maintanance Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
             }
@@ -4789,7 +4791,7 @@ function DataCaptureBO(InputParm) {
 
             var IsSuccess = true;
 
-            if (oThermometerType == 75) { //probe    
+            if (oThermometerType == 75) { //probe
                 if (ProbeThermometerSerialNo == "") {
                     if (ErrorMessage != "") {
                         ErrorMessage = ErrorMessage + ",";
@@ -5087,11 +5089,11 @@ function DataCaptureBO(InputParm) {
                     }
                     if (AryDcResultDetails[itr2].ControlId == 'AddlThermometerCodeControlId') {
                         ThermometerCode = valueFromPage;
-                    }                   
-                    if (AryDcResultDetails[itr2].ControlId == 'AddlThermometerSerialNoControlId') {                       
+                    }
+                    if (AryDcResultDetails[itr2].ControlId == 'AddlThermometerSerialNoControlId') {
                         ThermometerSerialNumber = valueFromPage;
-                    }                  
-                    if (AryDcResultDetails[itr2].ControlId == 'AddlThermometerModelNoControlId') {                     
+                    }
+                    if (AryDcResultDetails[itr2].ControlId == 'AddlThermometerModelNoControlId') {
                         ThermometerModelNo = valueFromPage;
                     }
                     if (AryDcResultDetails[itr2].ControlId == 'DTDDateOfCalibrationControlId') {
@@ -5290,16 +5292,16 @@ function DataCaptureBO(InputParm) {
 
             var IsSuccess = true;
 
-            if (oType == 18) { //Chiller    
+            if (oType == 18) { //Chiller
                 if (MachineChiller == "") {
                     if (ErrorMessage != "") {
                         ErrorMessage = ErrorMessage + ",";
                     }
                     ErrorMessage = ErrorMessage + "Machine-Chiller";
                     IsSuccess = false;
-                }            
+                }
             }
-            else if (oType == 19) { //Freezer    
+            else if (oType == 19) { //Freezer
                 if (MachineFreezer == "") {
                     if (ErrorMessage != "") {
                         ErrorMessage = ErrorMessage + ",";
@@ -5482,7 +5484,7 @@ function DataCaptureBO(InputParm) {
                 }
                 ErrorMessage = ErrorMessage + "Date of Reciept";
                 IsSuccess = false;
-            }           
+            }
             if (scope.AddlOverAllEvaluationControlId.GetSelectedText() == "") {
                 if (ErrorMessage != "") {
                     ErrorMessage = ErrorMessage + ",";
@@ -5647,7 +5649,7 @@ function DataCaptureBO(InputParm) {
                 }
                 ErrorMessage = ErrorMessage + "AnalysisReason";
                 IsSuccess = false;
-            }           
+            }
             //if ((scope["chkNAControlId"].GetSelectedText() == "") && (scope.NewDCModel.DTDateofRecieptControlId == "" || scope.NewDCModel.DTDateofRecieptControlId == null || scope.NewDCModel.DTDateofRecieptControlId == undefined)) {
             if ((scope["chkNAControlId"].GetSelectedText() == "") && (document.getElementById("DTDateofRecieptControlId").value == "" || document.getElementById("DTDateofRecieptControlId").value == null)) {
                 if (ErrorMessage != "") {
@@ -5655,7 +5657,7 @@ function DataCaptureBO(InputParm) {
                 }
                 ErrorMessage = ErrorMessage + "Date of Reciept";
                 IsSuccess = false;
-            }          
+            }
             //if (scope.NewDCModel.DTTimeofRecieptControlId == "" || scope.NewDCModel.DTTimeofRecieptControlId == null || scope.NewDCModel.DTTimeofRecieptControlId == undefined) {
             //    if (ErrorMessage != "") {
             //        ErrorMessage = ErrorMessage + ",";
@@ -5709,12 +5711,12 @@ function DataCaptureBO(InputParm) {
     this.SampleSheetAndWaterAnalysisValidation = function (AryDcResultDetails, IsAlertMessageEnabled) {
         try{
 
-        var IsSuccess = true;       
+        var IsSuccess = true;
         var ErrorMessage = "";
         var Result = { IsSuccess: true, ErrorMessage: "" };
         IsSuccess = SampleSheetAndWaterAnalysisCustomValidation();
         Result.IsSuccess = IsSuccess;
-        if (IsSuccess==true){       
+        if (IsSuccess==true){
 
         if (AryDcResultDetails != undefined) {
 
@@ -6157,7 +6159,7 @@ function DataCaptureBO(InputParm) {
                     }
                     ErrorMessage = ErrorMessage + ParameterType + "-ActualValue";
                     IsSuccess = false;
-                }                
+                }
             }
             ResultMessage.ErrorMessage = ErrorMessage;
             ResultMessage.IsSuccess = IsSuccess;
@@ -6179,7 +6181,7 @@ function DataCaptureBO(InputParm) {
             ErrorMessage = ResultMessage.ErrorMessage;
             IsSuccess = ResultMessage.IsSuccess;
 
-            if (oScope.NewDCModel[ActualValue] != "" || oScope[Evaluation].GetSelectedText() != "") 
+            if (oScope.NewDCModel[ActualValue] != "" || oScope[Evaluation].GetSelectedText() != "")
             {
 
                 if (oScope.NewDCModel[ActualValue] == "") {
@@ -6188,7 +6190,7 @@ function DataCaptureBO(InputParm) {
                     }
                     ErrorMessage = ErrorMessage + ParameterType + "-ActualValue";
                     IsSuccess = false;
-                }             
+                }
                 if (oScope[Evaluation].GetSelectedText() == "") {
                     if (ErrorMessage != "") {
                         ErrorMessage = ErrorMessage + ",";
@@ -6283,22 +6285,22 @@ function DataCaptureBO(InputParm) {
                                 //Result = ParameterTestedAllergenAnalysisValidation(Result, "Soy Allergen", "txtCriticalValue7ControlId", "AddlUnitFirst7ControlId", "txtDetectionLimit7ControlId", "txtDetectedValue7ControlId", "AddlUnitSecond7ControlId", "txtDeviatedValue7ControlId", "AddlEvaluation7ControlId");
                                 //*****************Change Request -----remove critical value and Unit ,Evaluation is not mandatory *************
                                 //*****************Change Request 05-10-2015-----All parameters are not tested at a time. It should not mandatory for all the parameter .Any one parameter test only is mandatory*************
-                                Result = ParameterTestedAllergenAnalysisValidation(Result, "Total Milk Allergen", "txtDetectionLimit1ControlId", "txtDetectedValue1ControlId", "AddlUnitSecond1ControlId");                                
+                                Result = ParameterTestedAllergenAnalysisValidation(Result, "Total Milk Allergen", "txtDetectionLimit1ControlId", "txtDetectedValue1ControlId", "AddlUnitSecond1ControlId");
                                 if (Result.IsSuccess ==false){
                                     Result = ParameterTestedAllergenAnalysisValidation(Result, "Egg Allergen", "txtDetectionLimit2ControlId", "txtDetectedValue2ControlId", "AddlUnitSecond2ControlId");
-                                }                                
+                                }
                                 if (Result.IsSuccess == false) {
                                     Result = ParameterTestedAllergenAnalysisValidation(Result, "Almond Allergen", "txtDetectionLimit3ControlId", "txtDetectedValue3ControlId", "AddlUnitSecond3ControlId");
-                                }                                
+                                }
                                 if (Result.IsSuccess == false) {
                                     Result = ParameterTestedAllergenAnalysisValidation(Result, "Peanut Allergen", "txtDetectionLimit4ControlId", "txtDetectedValue4ControlId", "AddlUnitSecond4ControlId");
-                                }                                
+                                }
                                 if (Result.IsSuccess == false) {
                                     Result = ParameterTestedAllergenAnalysisValidation(Result, "Gladin Allergen", "txtDetectionLimit5ControlId", "txtDetectedValue5ControlId", "AddlUnitSecond5ControlId");
-                                }                                
+                                }
                                 if (Result.IsSuccess == false) {
                                     Result = ParameterTestedAllergenAnalysisValidation(Result, "Mustard Allergen", "txtDetectionLimit6ControlId", "txtDetectedValue6ControlId", "AddlUnitSecond6ControlId");
-                                }                                
+                                }
                                 if (Result.IsSuccess == false) {
                                     Result = ParameterTestedAllergenAnalysisValidation(Result, "Soy Allergen", "txtDetectionLimit7ControlId", "txtDetectedValue7ControlId", "AddlUnitSecond7ControlId");
                                 }
@@ -6666,7 +6668,7 @@ function DataCaptureBO(InputParm) {
                 IsSuccess = false;
             }
 
-            ////bc in 
+            ////bc in
             ////if prein and preout entered,BC in is not mandatory
             //if (DTBlastChillerTimeInControlId == '' && DTPreChillerTimeInControlId == '' && DTPreChillerTimeInControlId == '' ) {
             //    finalMesg = finalMesg + ' ,Blast chiller Time in / Pre Chiller Time in';
@@ -6711,7 +6713,7 @@ function DataCaptureBO(InputParm) {
             //}
 
 
-            //bc out 
+            //bc out
             //if prein and preout entered,BC out is not mandatory
             //if (DTBlastChillerTimeOutControlId == '' && DTPreChillerTimeOutControlId == '') {
             //    finalMesg = finalMesg + ' ,Blast chiller Time Out / Pre chiller Time out';
@@ -6799,16 +6801,16 @@ function DataCaptureBO(InputParm) {
             var finalMesg = "";
 
             var AddlPurchaseOrderNoControlId = '';
-            var AddlProductControlId = '';            
+            var AddlProductControlId = '';
             var AddlSupplierControlId = '';
-            var chkGoodsType = '';           
-            var AddlReceivingUnitControlId = '';           
+            var chkGoodsType = '';
+            var AddlReceivingUnitControlId = '';
             var ATSurfaceTempControlId = '';
-            var DTTimeControlId = '';            
+            var DTTimeControlId = '';
             var chkPestSignToggle = '';
-            var chkPackagingIntegrity = '';           
+            var chkPackagingIntegrity = '';
             var chkRefStatus = '';
-            var ATTruckTempControlId = '';            
+            var ATTruckTempControlId = '';
             var chkTruckStripCurtains = '';
             var chkTruckCleanliness = '';
             var chkVehicleApprovalTag = '';
@@ -6957,7 +6959,7 @@ function DataCaptureBO(InputParm) {
                         txtApprovalTagNo = valueFromPage;
 
                     else if (AryDcResultDetails[itr2].ControlId == 'txtSNCNo')
-                        txtSNCNo = valueFromPage;                  
+                        txtSNCNo = valueFromPage;
                 }
 
             }
@@ -6983,7 +6985,7 @@ function DataCaptureBO(InputParm) {
             }
             else if (chkGoodsType == 4 && chkFrozenType == '') {
                 finalMesg = finalMesg + ' ,Frozen State';
-                IsSuccess = false;                
+                IsSuccess = false;
             }
 
             if (AddlReceivingUnitControlId == '') {
@@ -7031,7 +7033,7 @@ function DataCaptureBO(InputParm) {
                 finalMesg = finalMesg + ' ,DM Vehicle Approval Tag';
                 IsSuccess = false;
             }
-            else if (chkVehicleApprovalTag == 1 && txtApprovalTagNo == '') {               
+            else if (chkVehicleApprovalTag == 1 && txtApprovalTagNo == '') {
                 finalMesg = finalMesg + ' ,Approval Tag No';
                 IsSuccess = false;
             }
@@ -7093,7 +7095,7 @@ function DataCaptureBO(InputParm) {
             
             if (IsSuccess == false && IsAlertMessageEnabled == true) {
                 finalMesg = finalMesg.substring(2)
-                finalMesg = 'MN-RQ-CBM-002 :: Please enter ' + finalMesg;            
+                finalMesg = 'MN-RQ-CBM-002 :: Please enter ' + finalMesg;
                 alert(finalMesg);
             }
            
@@ -7106,7 +7108,7 @@ function DataCaptureBO(InputParm) {
     }
 
     var PotTrolleyDishwashVallidationOLD = function () {
-        try {          
+        try {
             var TestType = oScope["chkTestType"].GetSelectedValue();
             var ThermoLabel = oScope["chkThermoLabel"].GetSelectedValue();
             var QuadTest = oScope.NewDCModel["txtQuadTestControlId"];
@@ -7130,12 +7132,12 @@ function DataCaptureBO(InputParm) {
             if (TestType == 63) {
                 if (ThermoLabel == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-002 :: Please select ThermoLabel");
+                    navigator.notification.alert("MN-RQ-DPT-002 :: Please select ThermoLabel", ['OK'], "");
                 }
 
                 else if (DcPlaceId !=3 && ThermoLabel == 67 && (WashType == 60 || (WashType == 61 && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (1)" && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (2)") || (WashType == 62 && DishwashMachine != "HOBART   CR 1" && DishwashMachine != "HOBART   TC 1" && DishwashMachine != "HOBART   C 10")) && QuadTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-003 :: Please select QuadTest");
+                    navigator.notification.alert("MN-RQ-DPT-003 :: Please select QuadTest", ['OK'], "");
                 }
                 //else if (ThermoLabel == 67 && QuadTest == '') {
                 //    IsSuccess = false;
@@ -7147,7 +7149,7 @@ function DataCaptureBO(InputParm) {
             else if (TestType == 64) {
                 if (QuadTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-003 :: Please select QuadTest");
+                    navigator.notification.alert("MN-RQ-DPT-003 :: Please select QuadTest", ['OK'], "");
                 }
             }
 
@@ -7155,23 +7157,23 @@ function DataCaptureBO(InputParm) {
             else if (TestType == 64) {
                 if (ChlorineTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-004 :: Please select ChlorineTest");
+                    navigator.notification.alert("MN-RQ-DPT-004 :: Please select ChlorineTest", ['OK'], "");
                 }
             }
 
 
             if (WashType == 60 && PotMachineNo == '' ){
                 IsSuccess = false;
-                alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
             }
 
             else if (WashType == 61 && TrolleyMachineNo == '') {
                 IsSuccess = false;
-                alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
             }
             else if (WashType == 62 && DishwashMachineNo == '') {
                 IsSuccess = false;
-                alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
             }
 
 
@@ -7210,13 +7212,13 @@ function DataCaptureBO(InputParm) {
             if (TestType == 63) {
                 if (ThermoLabel == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-002 :: Please select ThermoLabel");
+                    navigator.notification.alert("MN-RQ-DPT-002 :: Please select ThermoLabel", ['OK'], "");
                 }
 
                 //else if (DcPlaceId != 3 && ThermoLabel == 67 && (WashType == 60 || (WashType == 61 && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (1)" && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (2)") || (WashType == 62 && DishwashMachine != "HOBART   CR 1" && DishwashMachine != "HOBART   TC 1" && DishwashMachine != "HOBART   C 10")) && QuadTest == '') {
                 else if (DcPlaceId != 3 && ThermoLabel == 67 && ((WashType == 61 && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (1)" && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (2)") || (WashType == 62 && DishwashMachine != "HOBART   CR 1" && DishwashMachine != "HOBART   TC 1" && DishwashMachine != "HOBART   C 10")) && QuadTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-003 :: Please select QuadTest");
+                    navigator.notification.alert("MN-RQ-DPT-003 :: Please select QuadTest", ['OK'], "");
                 }
                 //else if (ThermoLabel == 67 && QuadTest == '') {
                 //    IsSuccess = false;
@@ -7228,7 +7230,7 @@ function DataCaptureBO(InputParm) {
             else if (TestType == 64) {
                 if (QuadTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-003 :: Please select QuadTest");
+                    navigator.notification.alert("MN-RQ-DPT-003 :: Please select QuadTest", ['OK'], "");
                 }
             }
 
@@ -7236,7 +7238,7 @@ function DataCaptureBO(InputParm) {
             else if (TestType == 65) {
                 if (ChlorineTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-004 :: Please select ChlorineTest");
+                    navigator.notification.alert("MN-RQ-DPT-004 :: Please select ChlorineTest", ['OK'], "");
                 }
             }
 
@@ -7244,36 +7246,36 @@ function DataCaptureBO(InputParm) {
             if (WashType == 60){
                 if (TestType == '' && PotMachineNo == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Test Type and Machine No.");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Test Type and Machine No.", ['OK'], "");
                 }
 
                 else if (PotMachineNo == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
                 }
 
                 else if (TestType == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Test Type");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Test Type", ['OK'], "");
                 }
             }
 
             else if (WashType == 61 && TrolleyMachineNo == '') {
                 IsSuccess = false;
-                alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
             }
             else if (WashType == 62){
                 if (TestType == '' && DishwashMachineNo == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Test Type and Machine No.");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Test Type and Machine No.", ['OK'], "");
                 }
                 else if (TestType == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Test Type");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Test Type", ['OK'], "");
                 }
                 else if (DishwashMachineNo == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
                 }
             }
 
@@ -7304,7 +7306,7 @@ function DataCaptureBO(InputParm) {
                     }
                     ErrorMessage = ErrorMessage + "Others";
                     IsSuccess = false;
-                }              
+                }
             }
             if ((oSampleSource == 167)&&(scope.NewDCModel.txtForwardingtoCPDControlId == "")) {//Supplier
                 if (ErrorMessage != "") {
@@ -8088,7 +8090,7 @@ function DataCaptureBO(InputParm) {
                             }
                             ErrorMessage = ErrorMessage + "Min Set Temperature";
                             IsSuccess = false;
-                        }                        
+                        }
               
                     
                 }
@@ -8375,7 +8377,7 @@ function DataCaptureBO(InputParm) {
 
     var CustomerComplaintMonitoringFormVallidation = function (AryDcResultDetails, IsAlertMessageEnabled) {
 
-        try {            
+        try {
             var oScope = scope;
             var Response = { "IsSuccess": true, ErrorMessage: "" };
             var IsSuccess = true;
@@ -8497,7 +8499,7 @@ function DataCaptureBO(InputParm) {
    //                 IsSuccess = false;
    //             }
    //         }
-			//else if (AddlTypeOfComplaintControlId == "Quality Defect") {                
+			//else if (AddlTypeOfComplaintControlId == "Quality Defect") {
    //             if (AddlTypeOfQualityDefectControlId == "") {
    //                 if (GlobalMessage != "") {
    //                     GlobalMessage += ",";
@@ -8547,7 +8549,7 @@ function DataCaptureBO(InputParm) {
             return Response.IsSuccess;
         }
 
-        catch (Excep) {            
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "CustomerComplaintMonitoringFormVallidation", Excep);
         }
     }
@@ -8715,7 +8717,7 @@ function DataCaptureBO(InputParm) {
                     var oResDCNCMapping = _oDCNCMappingDefaultDAO.CreateMaster(oNCMapping);
                 }
                 else
-                {                 
+                {
                     //UpdateNCDCMapping('', _oDataCaptureEntity.ClientGuid, oNCMapping.NCRuleId, oNCMapping.IsNC, true, oNCMapping.Comments, oNCMapping.IsObservation, oNCMapping.AttributeGroupId);
                     UpdateNCDCMapping('', _oDataCaptureEntity.ClientGuid, oNCMapping.NCRuleId, oNCMapping.IsNC, true, oNCMapping.Comments, oNCMapping.IsObservation, oNCMapping.AttributeGroupId, oNCMapping);
                 }
@@ -8753,7 +8755,7 @@ function DataCaptureBO(InputParm) {
                                 //  update ActionId
                                 oActionEntityDetailsList[itr].ActionClientGuid = oResActionEntity.ClientGuid;
                                 oActionEntityDetailsList[itr].ActionRaisedBySystemUserId = OneViewSessionStorage.Get("LoginUserId");
-                                oActionEntityDetailsList[itr].ActionRaisedByUserName = OneViewSessionStorage.Get("LoginUserName");                               
+                                oActionEntityDetailsList[itr].ActionRaisedByUserName = OneViewSessionStorage.Get("LoginUserName");
                             }
                         }
                         else  //(For Predefined action or Custom Action)
@@ -8762,7 +8764,7 @@ function DataCaptureBO(InputParm) {
                                 //  update ActionId
                                 oActionEntityDetailsList[itr].ActionClientGuid = oResActionEntity.ClientGuid;
                                 oActionEntityDetailsList[itr].ActionRaisedBySystemUserId = OneViewSessionStorage.Get("LoginUserId");
-                                oActionEntityDetailsList[itr].ActionRaisedByUserName = OneViewSessionStorage.Get("LoginUserName");                                
+                                oActionEntityDetailsList[itr].ActionRaisedByUserName = OneViewSessionStorage.Get("LoginUserName");
                             }
                         }
 
@@ -8831,7 +8833,7 @@ function DataCaptureBO(InputParm) {
 
                 Query = "UPDATE DCNCMapping SET NCRuleId=" + NCRuleId + ", RuleName='" + oNCMapping.RuleName + "', Deviatedby='" + oNCMapping.Deviatedby + "', ExpectedValue='" + oNCMapping.ExpectedValue
                     + "', RuleDescription='" + oNCMapping.RuleDescription + "', RuleCode='" + oNCMapping.RuleCode + "',Comments = '"
-                    + Comments_DCNCMapping + "',AttributeGroupId = " + AttributeGroupId + ", ActionClientGuid='" + ActionClientGuid + "',DataCaptureClientGuid='" + DataCaptureClientGuid + "'" 
+                    + Comments_DCNCMapping + "',AttributeGroupId = " + AttributeGroupId + ", ActionClientGuid='" + ActionClientGuid + "',DataCaptureClientGuid='" + DataCaptureClientGuid + "'"
                      + " ,Deviatedby ='" + oNCMapping.Deviatedby + "',ExpectedValue ='" + oNCMapping.ExpectedValue + "' ,ActualValue ='"
                      + oNCMapping.ActualValue + "' , TemplateNodeIds ='" + oNCMapping.TemplateNodeIds + "'"
                      + "WHERE RuleGroup='" + oNCMapping.RuleGroup + "' AND DataCaptureClientGuid='" + DataCaptureClientGuid + "'";
@@ -9208,7 +9210,7 @@ function DataCaptureBO(InputParm) {
     this.UpdateDC = function (DCId, AttributesList, PreEditData, IsSubmit, IsAutoSubmit, ScoreDetails, ReqDetails) {
         try {
             OneViewConsole.Debug("UpdateDC start", "DataCaptureBO.UpdateDC");
-            OneViewConsole.DataLog("DCId :" + DCId, "DataCaptureBO.UpdateDC");            
+            OneViewConsole.DataLog("DCId :" + DCId, "DataCaptureBO.UpdateDC");
             
            // alert('DCId: ' + DCId + ", AttributesList" + AttributesList);
            // alert('PreEditData:' + "," + JSON.stringify(PreEditData))
@@ -9227,7 +9229,7 @@ function DataCaptureBO(InputParm) {
             }
 
             var oDefaultValidationResponse = null;
-            if (MyInstance.SaveDCValidatorConfigList != null && MyInstance.SaveDCValidatorConfigList.length > 0) {               
+            if (MyInstance.SaveDCValidatorConfigList != null && MyInstance.SaveDCValidatorConfigList.length > 0) {
                 var parm = { DataCaptureEntity: DCResultDetailEntityLstFromForm, scope: oScope, toaster: oToaster, xlatService: oxlatService, ClientValidatorConfigList: MyInstance.SaveDCValidatorConfigList, Operation: OperationName, 'IsEnableMandatoryStyle': MyInstance.IsEnableMandatoryStyle, 'IsPageLoad': false, 'PageLoadMandatoryOperation': MyInstance.PageLoadMandatoryOperation, 'IsAutoSave': IsAutoSave }
                 var _oVallidationHandler = new VallidationHandler();
                 oDefaultValidationResponse = _oVallidationHandler.Validate(parm);
@@ -9272,7 +9274,7 @@ function DataCaptureBO(InputParm) {
                             //Todo :: (Sangeeta Bhatt : 06-10-2017) : Need to remove , temporarily kept for hiding two saved messages
                             if (OneViewSessionStorage.Get("ServiceId") == 23) {
                                 if (OneViewSessionStorage.Get("TemplateId") != 3) {
-                                    alert(xlatService.xlat('UpdatedSuccessfully'));
+                                    navigator.notification.alert(xlatService.xlat('UpdatedSuccessfully'), ['OK'], "");
                                 }
                             }
                             else {
@@ -9280,7 +9282,7 @@ function DataCaptureBO(InputParm) {
                                     //No alert
                                 }
                                 else {
-                                    alert(xlatService.xlat('UpdatedSuccessfully'));
+                                    navigator.notification.alert(xlatService.xlat('UpdatedSuccessfully'), ['OK'], "");
                                 }
                             }
                         }
@@ -9357,7 +9359,7 @@ function DataCaptureBO(InputParm) {
             
             //alert('UpdateDCRecords :' + DCId + ", " + JSON.stringify(AttributesList));
             OneViewConsole.Debug("UpdateDCRecords start", "DataCaptureBO.UpdateDCRecords");
-            OneViewConsole.DataLog("DCId :" + DCId, "DataCaptureBO.UpdateDCRecords");         
+            OneViewConsole.DataLog("DCId :" + DCId, "DataCaptureBO.UpdateDCRecords");
 
             var DataCaptureResult = oDataCaptureDAO.GetDataCaptureByDcId(DCId);
             var NCDCId = MyInstance.GetNCDcID(DCId);
@@ -9412,7 +9414,7 @@ function DataCaptureBO(InputParm) {
 
             OneViewConsole.Debug("UpdateDC end", "DataCaptureBO.UpdateDCRecords");
         }
-        catch (Excep) {          
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.UpdateDCRecords", Excep);
         }
         finally {
@@ -9476,7 +9478,7 @@ function DataCaptureBO(InputParm) {
                 }
                 else {
                   
-                    //IsSaved = NormalizeAndUpdateDcResultDetailsRecords(ModifiedDCResultDetailEntityLst, DCId, LoginUserId, AttributesList, IsSaved);                 
+                    //IsSaved = NormalizeAndUpdateDcResultDetailsRecords(ModifiedDCResultDetailEntityLst, DCId, LoginUserId, AttributesList, IsSaved);
                     var Response = NormalizeAndUpdateDcResultDetailsRecords(ModifiedDCResultDetailEntityLst, DCId, LoginUserId, AttributesList, IsSaved, DCResultId,TemplateNodes);
                     //alert('Response.DcResultDetailsEntityList :' + JSON.stringify(Response.DcResultDetailsEntityList));
                     IsSaved = Response.IsSaved;
@@ -9501,7 +9503,7 @@ function DataCaptureBO(InputParm) {
                 }
                 _oOneViewSqlitePlugin.EndTransaction();
             }
-            catch (Excep) {                
+            catch (Excep) {
                 OneViewConsole.Error("Error in UpdateDC in SaveNCMapping", "DataCaptureBO.UpdateNormalizeCode");
                 _oOneViewSqlitePlugin.Rollback();
             }
@@ -9532,13 +9534,13 @@ function DataCaptureBO(InputParm) {
 
     var UpdateComments = function () {
 
-        try {           
+        try {
             if (OneViewSessionStorage.Get("TemplateId") == 44) {
                 var _OneViewSqlitePlugin = new OneViewSqlitePlugin();
                 var DcId = OneViewSessionStorage.Get("DcId");
                 for (var itrAttribue in ObservationResult) {
 
-                    var DCNCMappingQuery = "UPDATE DcResultDetailsEntity SET Comments = '" + ObservationResult[itrAttribue].Comments + "' WHERE AttributeNodeId = '" + itrAttribue + "' AND DataCaptureId = " + DcId;                  
+                    var DCNCMappingQuery = "UPDATE DcResultDetailsEntity SET Comments = '" + ObservationResult[itrAttribue].Comments + "' WHERE AttributeNodeId = '" + itrAttribue + "' AND DataCaptureId = " + DcId;
                     _OneViewSqlitePlugin.ExcecuteSql(DCNCMappingQuery);
                 }
             }
@@ -9572,7 +9574,7 @@ function DataCaptureBO(InputParm) {
                 // ModifiedList = AttributesList;
             }
             else {
-                ModifiedList = AttributesList; 
+                ModifiedList = AttributesList;
             }
 
           //  alert('ModifiedList : ' + JSON.stringify(ModifiedList));
@@ -9671,8 +9673,8 @@ function DataCaptureBO(InputParm) {
             OneViewConsole.DataLog("ModifiedDCResultDetailEntityLst :" + JSON.stringify(ModifiedDCResultDetailEntityLst), "DataCaptureBO.NormalizeAndUpdateDcResultDetailsRecords");
             OneViewConsole.DataLog("LoginUserId :" + LoginUserId, "DataCaptureBO.NormalizeAndUpdateDcResultDetailsRecords");
             var _oDcResultDetailsEntityDAO = new DefaultMasterDAO("DcResultDetailsEntity");
-            var Response = { 'DcResultDetailsEntityList': [], 'IsSaved': false }; 
-            if (ModifiedDCResultDetailEntityLst.length > 0) {             
+            var Response = { 'DcResultDetailsEntityList': [], 'IsSaved': false };
+            if (ModifiedDCResultDetailEntityLst.length > 0) {
                 
                 var DcResultDetailsEntityLstFromDB = oDataCaptureDAO.GetDcResultDetails_DAO(DCId, LoginUserId);
                // alert('DcResultDetailsEntityLstFromDB :' + JSON.stringify(DcResultDetailsEntityLstFromDB));
@@ -9680,7 +9682,7 @@ function DataCaptureBO(InputParm) {
                 var FinalDCResultDetailEntityToUpdate = [];
                 for (var i = 0; i < ModifiedDCResultDetailEntityLst.length; i++) {
                     var AttributeNodeId = ModifiedDCResultDetailEntityLst[i].AttributeNodeId;
-                    var ControlId = ModifiedDCResultDetailEntityLst[i].ControlId;                    
+                    var ControlId = ModifiedDCResultDetailEntityLst[i].ControlId;
                     var IsCheckBoxList = MyInstance.CheckIsMultiSelectCheckBox(AttributeNodeId, ControlId, TemplateNodes);
                   //  alert(AttributeNodeId + "," + ControlId + "," + IsCheckBoxList);
                     var DCResultDetailId;
@@ -9689,7 +9691,7 @@ function DataCaptureBO(InputParm) {
                     if (IsCheckBoxList != true) {
                         DCResultDetailId = GetDCResultDetailId(DcResultDetailsEntityLstFromDB, AttributeNodeId, ControlId);
                     }
-                    else {                      
+                    else {
                         var Answer = ModifiedDCResultDetailEntityLst[i].Answer;
                         IsDisable = ModifiedDCResultDetailEntityLst[i].IsDisable;
                         DCResultDetail = GetDCResultDetailIdForCheckBoxList(DcResultDetailsEntityLstFromDB, AttributeNodeId, ControlId, Answer);
@@ -9702,7 +9704,7 @@ function DataCaptureBO(InputParm) {
                         //Update case for single select answermodes
                         ModifiedDCResultDetailEntityLst[i].Id = DCResultDetailId;
                         var IndexToUpdate = 0;
-                        FinalDCResultDetailEntityToUpdate.push({ Id: DCResultDetailId, AnswerValue: ModifiedDCResultDetailEntityLst[i].AnswerValue, Answer: ModifiedDCResultDetailEntityLst[i].Answer, AnswerFKType: ModifiedDCResultDetailEntityLst[i].AnswerFKType, Latitude: ModifiedDCResultDetailEntityLst[i].Latitude, Longitude: ModifiedDCResultDetailEntityLst[i].Longitude, 'IsDisable': IsDisable, 'IndexId': IndexToUpdate });                        
+                        FinalDCResultDetailEntityToUpdate.push({ Id: DCResultDetailId, AnswerValue: ModifiedDCResultDetailEntityLst[i].AnswerValue, Answer: ModifiedDCResultDetailEntityLst[i].Answer, AnswerFKType: ModifiedDCResultDetailEntityLst[i].AnswerFKType, Latitude: ModifiedDCResultDetailEntityLst[i].Latitude, Longitude: ModifiedDCResultDetailEntityLst[i].Longitude, 'IsDisable': IsDisable, 'IndexId': IndexToUpdate });
                     }
                     else if (IsCheckBoxList == true && DCResultDetail != null) {
                         //Update case for multi select answermodes
@@ -9727,20 +9729,20 @@ function DataCaptureBO(InputParm) {
                 //alert('FinalDCResultDetailEntityToCreate : ' + JSON.stringify(FinalDCResultDetailEntityToCreate));
                 //alert('FinalDCResultDetailEntityToUpdate : ' + JSON.stringify(FinalDCResultDetailEntityToUpdate));
 
-                if (FinalDCResultDetailEntityToCreate.length > 0) {                   
+                if (FinalDCResultDetailEntityToCreate.length > 0) {
                     for (var i = 0; i < FinalDCResultDetailEntityToCreate.length; i++) {
                         if (FinalDCResultDetailEntityToCreate[i].AnswerFKType == DATEntityType.MultiMediaBlobSubElements) {
                             var oMultiMediaBlobSubElementEntity = FinalDCResultDetailEntityToCreate[i].Answer;
-                            CreateMultiMediaBlobSubElements(oMultiMediaBlobSubElementEntity);                          
+                            CreateMultiMediaBlobSubElements(oMultiMediaBlobSubElementEntity);
                             FinalDCResultDetailEntityToCreate[i].Answer = oMultiMediaBlobSubElementEntity.ClientGuid;
-                        }                       
+                        }
                         _oDcResultDetailsEntityDAO.CreateMaster(FinalDCResultDetailEntityToCreate[i]);
                         IsSaved = true;
                     }
                 }
                // alert('FinalDCResultDetailEntityToCreate : ' + JSON.stringify(FinalDCResultDetailEntityToCreate))
                // alert('FinalDCResultDetailEntityToUpdate : ' + JSON.stringify(FinalDCResultDetailEntityToUpdate))
-                if (FinalDCResultDetailEntityToUpdate.length > 0) {                    
+                if (FinalDCResultDetailEntityToUpdate.length > 0) {
                     for (var i = 0; i < FinalDCResultDetailEntityToUpdate.length; i++) {
                         if (FinalDCResultDetailEntityToUpdate[i].AnswerFKType == DATEntityType.MultiMediaBlobSubElements) {
                             var oMultiMediaBlobSubElementEntity = FinalDCResultDetailEntityToUpdate[i].Answer;
@@ -9796,7 +9798,7 @@ function DataCaptureBO(InputParm) {
         if (AttributesList == undefined) {
             ObjDcResultDetails = DCResultDetailEntityLstFromForm;
         }
-        else {           
+        else {
             ObjDcResultDetails = MyInstance.GetLastUpdatedDcResultDetailsForViewRecordsInlineEdit(DCId);
         }
         UpdateDCIsCompletedStatus(DCId, ObjDcResultDetails, IsAutoSubmit);
@@ -9829,7 +9831,7 @@ function DataCaptureBO(InputParm) {
 
                 var CurrentResultDetail = DCResultDetails[0];
 
-                for (var i = 1; i < DCResultDetails.length; i++) {                    
+                for (var i = 1; i < DCResultDetails.length; i++) {
                     if (CurrentResultDetail.AttributeNodeId == DCResultDetails[i].AttributeNodeId && CurrentResultDetail.ControlId == DCResultDetails[i].ControlId) {
                         if (_DateTime.GetDateByString(CurrentResultDetail.LastUpdatedDate) < _DateTime.GetDateByString(DCResultDetails[i].LastUpdatedDate)) {
                             CurrentResultDetail = DCResultDetails[i];
@@ -9837,8 +9839,8 @@ function DataCaptureBO(InputParm) {
                     }
                     else {
                         Result.push(CurrentResultDetail);
-                        CurrentResultDetail = DCResultDetails[i];                      
-                    }                  
+                        CurrentResultDetail = DCResultDetails[i];
+                    }
                     if (i == DCResultDetails.length - 1) {
                         Result.push(CurrentResultDetail);
                     }
@@ -9994,7 +9996,7 @@ function DataCaptureBO(InputParm) {
                 var oDCResultDetailEntity = DCResultDetailEntityLstFrom[i];
 
                 if (oDCResultDetailEntity.AnswerDataType == "DATAURL") {
-                    if (oDCResultDetailEntity.Answer != "") {                        
+                    if (oDCResultDetailEntity.Answer != "") {
                         if (oDCResultDetailEntity.Answer.Id != undefined) {
                          
                             var oMultiMediaBlobSubElementEntity = oDCResultDetailEntity.Answer;
@@ -10004,7 +10006,7 @@ function DataCaptureBO(InputParm) {
                         }
                        
                     }
-                }               
+                }
             }
           
         }
@@ -10026,7 +10028,7 @@ function DataCaptureBO(InputParm) {
             OneViewConsole.DataLog("DCResultDetailEntityLstFrom :" + JSON.stringify(DCResultDetailEntityLstFrom), "DataCaptureBO.GetModifiedDCResultDetailHistoryWithParentId");
             OneViewConsole.DataLog("PreEditData :" + JSON.stringify(PreEditData), "DataCaptureBO.GetModifiedDCResultDetailHistoryWithParentId");
             var DcResultDetailsHistoryList = [];
-            var OldValue = [];           
+            var OldValue = [];
             for (var i = 0; i < DCResultDetailEntityLstFrom.length; i++) {
                 var oDCResultDetailEntity = DCResultDetailEntityLstFrom[i];
                 if (PreEditData[oDCResultDetailEntity.AttributeNodeId] != undefined && PreEditData[oDCResultDetailEntity.AttributeNodeId][oDCResultDetailEntity.ControlId] != undefined && PreEditData[oDCResultDetailEntity.AttributeNodeId].AttributeNodeId == oDCResultDetailEntity.AttributeNodeId) {
@@ -10228,7 +10230,7 @@ function DataCaptureBO(InputParm) {
                 var ShiftList = _oShiftMasterDAO.GetValidShiftByService(ServiceId, DCDateTime);
                 if (ShiftList.length > 0) {
                     GlobalShiftId = ShiftList[0].ServerId;
-                    OneViewLocalStorage.Save("GlobalShiftId", GlobalShiftId);                   
+                    OneViewLocalStorage.Save("GlobalShiftId", GlobalShiftId);
                 }
             }
 
@@ -10292,7 +10294,7 @@ function DataCaptureBO(InputParm) {
         }
     }
 
-    //Support method for 'SetShift' 
+    //Support method for 'SetShift'
     this.GetCurrentShiftInfoOLD = function () {
         try {
             OneViewConsole.Debug("GetCurrentShiftInfo start", "DataCaptureBO.GetCurrentShiftInfo");
@@ -10401,7 +10403,7 @@ function DataCaptureBO(InputParm) {
                     }
                 }
 
-                    ///case 2-  StartTime < EndTime (08 > 14 )    
+                    ///case 2-  StartTime < EndTime (08 > 14 )
                 else if (StartTime <= CurrentTime && CurrentTime <= EndTime) {
                     IsCurrentShift = true;             //////// return true;
                 }
@@ -10491,7 +10493,7 @@ function DataCaptureBO(InputParm) {
                     }
                 }
 
-                    ///case 2-  StartTime < EndTime (08 > 14 )    
+                    ///case 2-  StartTime < EndTime (08 > 14 )
                 else if (StartTime <= CurrentTime && CurrentTime <= EndTime) {
                     IsCurrentShift = true;             //////// return true;
                 }
@@ -10762,7 +10764,7 @@ function DataCaptureBO(InputParm) {
                 Day = Day.slice(-2);
                 var Month = (dateArr[1] <= 9) ? ("0" + dateArr[1]) : dateArr[1];
                 Month = Month.slice(-2);
-                date = Day + "-" + Month + "-" + dateArr[0];               
+                date = Day + "-" + Month + "-" + dateArr[0];
             }
             OneViewConsole.Debug("Dateformat end", "DataCaptureBO.Dateformat");
             return date;
@@ -10851,7 +10853,7 @@ function DataCaptureBO(InputParm) {
                             }
                             else if (_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].IsStaticDataSource == true) {
                                 //alert(_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId + " : " + $scope[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId].GetSelectedText())
-                                Answer = $scope[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId].GetSelectedText();                              
+                                Answer = $scope[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId].GetSelectedText();
                             }
                         }
                         else if (_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].Type == 'SignaturePad') {
@@ -10900,7 +10902,7 @@ function DataCaptureBO(InputParm) {
                                 //oMultiMediaBlobSubElements.MappedEntityClientGuid
                             }
                         }
-                        else if (_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].Type == 'DCImageCaptureControlConfig') {                            
+                        else if (_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].Type == 'DCImageCaptureControlConfig') {
                             AnswerFKType = DATEntityType.MultiMediaSubElements;
                         }
 
@@ -10913,7 +10915,7 @@ function DataCaptureBO(InputParm) {
                             if (temp != null) {
                                 var date = temp.value;
                                 Answer = Dateformat(date);
-                            }                            
+                            }
                            
                             if (Answer == null || Answer == undefined) {
                                 Answer = '';
@@ -10933,9 +10935,9 @@ function DataCaptureBO(InputParm) {
 
                             Answer = "";
                                                           
-                            //    var temp = document.getElementById(_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId);//$scope.NewDCModel[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId];                           
+                            //    var temp = document.getElementById(_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId);//$scope.NewDCModel[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId];
                             //    if (temp != null) {
-                            //        var Time = temp.value;                                    
+                            //        var Time = temp.value;
                             //        if (Time != "") {
                             //            Time = Time.split(':');
                             //            Answer = Time[0] + ":" + Time[1];
@@ -10950,8 +10952,8 @@ function DataCaptureBO(InputParm) {
                             if (document.getElementById(_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId) != null) {
                                 Answer = document.getElementById(_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId).value;
                                 if(Answer == ""){
-                                    if ($scope.NewDCModel[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId] != undefined) {                                       
-                                        Answer = $scope.NewDCModel[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId];                                                                         
+                                    if ($scope.NewDCModel[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId] != undefined) {
+                                        Answer = $scope.NewDCModel[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId];
                                     }
                                 }
                             }
@@ -11017,7 +11019,7 @@ function DataCaptureBO(InputParm) {
                         }
                         else if (_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].Type == 'DCListViewControlConfig'
                         && (_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ListViewDisplay == 0 && _oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].SelectionType == 'MULTI')) {
-                            IsMulti = true;                          
+                            IsMulti = true;
                         }
                         else if (_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].Type == 'ScrollList') {
                            // alert('in ScrollList');
@@ -11263,9 +11265,9 @@ function DataCaptureBO(InputParm) {
     }
     var SetComments = function (_DcResultDetailsEntity) {
 
-        try {                                
+        try {
               var Comments = (ObservationResult[_DcResultDetailsEntity.AttributeNodeId] != undefined) ? ObservationResult[_DcResultDetailsEntity.AttributeNodeId].Comments : "";
-              _DcResultDetailsEntity.Comments = Comments;            
+              _DcResultDetailsEntity.Comments = Comments;
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.SetComments", Excep);
@@ -11578,8 +11580,8 @@ function DataCaptureBO(InputParm) {
             OneViewConsole.Debug("SetTime start", "DataCaptureBO.SetTime");
             if ($scope.NewDCModel[ControlId] != "" && $scope.NewDCModel[ControlId] != null && document.getElementById(RefreshcontrolId) != null) {
 
-                var SetDateandTime = new DateTime().GetDate() + " " + new DateTime().GetHoursAndMinutes() + ":00";               
-                //$scope[RefreshcontrolId + "_DateTime"] = SetDateandTime;             
+                var SetDateandTime = new DateTime().GetDate() + " " + new DateTime().GetHoursAndMinutes() + ":00";
+                //$scope[RefreshcontrolId + "_DateTime"] = SetDateandTime;
                 $scope.NewDCModel[RefreshcontrolId] = new DateTime().GetDateByString(SetDateandTime);
                 //alert("RefreshcontrolId : " + RefreshcontrolId + "," + $scope.NewDCModel[RefreshcontrolId]);
              
@@ -11649,7 +11651,7 @@ function DataCaptureBO(InputParm) {
                 }
                 OneViewConsole.Debug("SetControlEnableStatus end", "DataCaptureBO.SetControlEnableStatus");
             }
-        } 
+        }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.SetControlEnableStatus", Excep);
         }
@@ -11731,7 +11733,7 @@ function DataCaptureBO(InputParm) {
                     }
                     else if (TemplateId == 12606) {
                         IsCompletedStatus = CustomerComplaintMonitoringFormVallidation(_oDcResultDetailsEntityList, false)
-                    }                   
+                    }
                     else {
                         var IsCompletedStatus = IsCompleted(_oDcResultDetailsEntityList, MetDataForSubmit);
                     }
@@ -11802,7 +11804,7 @@ function DataCaptureBO(InputParm) {
             var TemplateId = OneViewSessionStorage.Get("TemplateId");
 
             //if (TemplateId == 3 ) {
-            //    IsCompletedStatus = PreAcceptanceQuestionnaireValidation(_oDcResultDetailsEntityList, false);             
+            //    IsCompletedStatus = PreAcceptanceQuestionnaireValidation(_oDcResultDetailsEntityList, false);
             //}
             if (TemplateId == 91) {
                 IsCompletedStatus = PreAcceptanceCompositionAnalysisValidation(_oDcResultDetailsEntityList, false);
@@ -11816,12 +11818,12 @@ function DataCaptureBO(InputParm) {
             else if (TemplateId == 830) {
                 IsCompletedStatus = SingleDepartmentCompositionAnalysisValidation(_oDcResultDetailsEntityList, false);
             }
-            else  if (TemplateId == 946) { 
+            else  if (TemplateId == 946) {
                 IsCompletedStatus = SingleDepartmentLocalWasteStorageValidation(_oDcResultDetailsEntityList, false);
             }
             else if (TemplateId == 1462) {
                 IsCompletedStatus = IncidentInvestigationElementsQuestionnaireValidation(_oDcResultDetailsEntityList, false);
-            }            
+            }
             else if (TemplateId == 1554) {
                 IsCompletedStatus = IncidentInvestigationElementsLocalWasteStorageValidation(_oDcResultDetailsEntityList, false);
             }
@@ -11865,7 +11867,7 @@ function DataCaptureBO(InputParm) {
             }
             else if (TemplateId == 160) {
                 IsCompletedStatus = TravisPerkinsTraningModuleValidation(_oDcResultDetailsEntityList, false);
-            }          
+            }
             else {
                 IsCompletedStatus = IsCompleted(_oDcResultDetailsEntityList, MetDataForSubmit);
             }
@@ -11897,7 +11899,7 @@ function DataCaptureBO(InputParm) {
             OneViewConsole.Debug("SetIsCompletedStatus start", "DataCaptureBO.SetIsCompletedStatus");
             OneViewConsole.DataLog("DataCaptureEntity :" + JSON.stringify(_oDataCaptureEntity), "DataCaptureBO.SetIsCompletedStatus");
 
-            var MetDataForSubmit = getMetDataForSubmit();           
+            var MetDataForSubmit = getMetDataForSubmit();
             var isCompleted = false;
             if (MetDataForSubmit.IsAgainstDC == true) {
                 var TemplateId = OneViewSessionStorage.Get("TemplateId");
@@ -11957,7 +11959,7 @@ function DataCaptureBO(InputParm) {
                     }
                     else if (TemplateId == 738) {
                         isCompleted = YearlyVerificationforProbeThermometerValidation(_oDataCaptureEntity.DcResultsEntitylist[0].DcResultDetailsEntityList, false)
-                    } 
+                    }
                     else if (TemplateId == 12606) {
                         isCompleted = CustomerComplaintMonitoringFormVallidation(_oDataCaptureEntity.DcResultsEntitylist[0].DcResultDetailsEntityList, false)
                     }
@@ -12215,7 +12217,7 @@ function DataCaptureBO(InputParm) {
 
                                 MetDataForSubmit.DCValidationRuleMetaData[i].FinalJavaScriptEquation = MetDataForSubmit.DCValidationRuleMetaData[i].FinalJavaScriptEquation.replace(/#/g, "'");
                                // alert('MetDataForSubmit.DCValidationRuleMetaData[i] :' + JSON.stringify(MetDataForSubmit.DCValidationRuleMetaData[i]));
-                                if (eval(MetDataForSubmit.DCValidationRuleMetaData[i].FinalJavaScriptEquation) == false) {                                  
+                                if (eval(MetDataForSubmit.DCValidationRuleMetaData[i].FinalJavaScriptEquation) == false) {
                                     IsCompleted = false;
                                     break;
                                 }
@@ -12397,7 +12399,7 @@ function DataCaptureBO(InputParm) {
                                     MyInstance.SetHygAvgrageReading();
                                 }
                             }
-                            else if (TemplateId == 77) {//ThawingVerification                      
+                            else if (TemplateId == 77) {//ThawingVerification
                                 if (Model == "txtTempControlId") {
                                     MyInstance.TemperatureNgKeyUpEventHandler(84, 'txtTempControlId', 'DTTimeCheckedControlId', false, 85);
                                 }
@@ -12419,7 +12421,7 @@ function DataCaptureBO(InputParm) {
                                     MyInstance.SetHygAvgrageReading();
                                 }
                             }
-                            else if (TemplateId == 293) {//AircraftLoadingVerification   
+                            else if (TemplateId == 293) {//AircraftLoadingVerification
                                 if (Model == "AircraftLoadingTempControlId") {
                                     MyInstance.TemperatureNgKeyUpEventHandler(299, 'AircraftLoadingTempControlId', 'TMAircraftLoadingTimeControlId', false);
                                 }
@@ -12427,7 +12429,7 @@ function DataCaptureBO(InputParm) {
                                     MyInstance.TemperatureNgKeyUpEventHandler(302, 'TempControlId', '', false);
                                 }
                             }
-                            else if (TemplateId == 44) {//GoodsReceiving 
+                            else if (TemplateId == 44) {//GoodsReceiving
                                 if (Model == "ATSurfaceTempControlId") {
                                     MyInstance.TemperatureNgKeyUpEventHandler(61, 'ATSurfaceTempControlId', 'DTTimeControlId', true);
                                 }
@@ -12485,7 +12487,7 @@ function DataCaptureBO(InputParm) {
                                     MyInstance.TemperatureNgKeyUpEventHandler(469, 'ATTempControlId', 'DTStartingTimeInControlId', false);
                                 }
                             }
-                            else if (TemplateId == 452) {//Dispatch Temperature Verification of Food Products EKFC to EKFC  
+                            else if (TemplateId == 452) {//Dispatch Temperature Verification of Food Products EKFC to EKFC
                                 if (Model == "ATLoadingTempControlId") {
                                     MyInstance.TemperatureNgKeyUpEventHandler(456, 'ATLoadingTempControlId', 'DTLoadingTimeControlId', false);
                                 }
@@ -12604,7 +12606,7 @@ function DataCaptureBO(InputParm) {
                                 }
                                 if(ReqObj.ControlId !=undefined && ReqObj.ControlId !=""){
                                     _ControlId=ReqObj.ControlId;
-                                }  
+                                }
                                 if(ReqObj.RefreshcontrolId !=undefined && ReqObj.RefreshcontrolId !=""){
                                     _RefreshcontrolId=ReqObj.RefreshcontrolId;
                                 }
@@ -12613,7 +12615,7 @@ function DataCaptureBO(InputParm) {
                                 }
                                 if(ReqObj.IsNc !=undefined && ReqObj.IsNc !=""){
                                     IsNc=ReqObj.IsNc;
-                                }                                
+                                }
                               
                                 MyInstance.TemperatureNgKeyUpEventHandler(_AttributeId, _ControlId,_RefreshcontrolId, _IsNc, _RefreshAttributeId);
                             }
@@ -12921,12 +12923,12 @@ function DataCaptureBO(InputParm) {
 
                     if (ActionNCConfigSettingList[i].ActionNCConfigSetting.IsActionEnable == true && ActionNCConfigSettingList[i].ActionNCConfigSetting.IsNC == true) {
 
-                        if (ActionNCConfigSettingList[i].IsRuleViolated == true) {                            
+                        if (ActionNCConfigSettingList[i].IsRuleViolated == true) {
                             IsAnyNC = true;
                             if (IsSaveNCCrossValidation != true) {
                               //  alert('ActionNCConfigSettingList[i] : ' + JSON.stringify(ActionNCConfigSettingList[i]));
                               MyInstance.DisplayNCMessage(ActionNCConfigSettingList[i].ActionNCConfigSetting.CriteriaDisplayLabelKey);
-                            } 
+                            }
 
                             ActionResponse = _oCPActionNCComponent.EvaluateAction(ActionNCConfigSettingList[i], ActionNCConfigSettingList[i].IsRuleViolated);
                             //alert('ActionResponse' + JSON.stringify(ActionResponse));
@@ -12947,7 +12949,7 @@ function DataCaptureBO(InputParm) {
 
                         }
 
-                        var DCNCMappingListData = new Array();           
+                        var DCNCMappingListData = new Array();
                         DCNCMappingListData[0] = {
                             'NCRuleId': ActionNCConfigSettingList[i].ActionNCConfigSetting.RuleId,
                             'IsNC': ActionNCConfigSettingList[i].IsRuleViolated,
@@ -12969,7 +12971,7 @@ function DataCaptureBO(InputParm) {
                     }
 
                     else if (ActionNCConfigSettingList[i].ActionNCConfigSetting.IsActionEnable == false && ActionNCConfigSettingList[i].ActionNCConfigSetting.IsNC == true) {
-                        if (ActionNCConfigSettingList[i].IsRuleViolated == true) {                          
+                        if (ActionNCConfigSettingList[i].IsRuleViolated == true) {
                             IsAnyNC = true;
                             if (IsSaveNCCrossValidation != true) {
                                 MyInstance.DisplayNCMessage(ActionNCConfigSettingList[i].ActionNCConfigSetting.CriteriaDisplayLabelKey);
@@ -13113,7 +13115,7 @@ function DataCaptureBO(InputParm) {
                 _oNCColorComponent.Remove(AttributeId);
             }
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.UpdateNCColors", Excep);
         }
     }
@@ -13439,7 +13441,7 @@ function DataCaptureBO(InputParm) {
 
                     if (ActionDetails != undefined) {
                         if (MyInstance.NCTemplateId != 0) {
-                            //alert(itrAction  + 'ActionDetails' + JSON.stringify(ActionDetails));                           
+                            //alert(itrAction  + 'ActionDetails' + JSON.stringify(ActionDetails));
                             var TempOutNCTemplate = TemplateMetaData[ServiceId][MyInstance.NCTemplateId];
                             var ActionContext = DATActionContext.DataCapture;
                             var oDCNCMappingBO = new DCNCMappingBO({ 'scope': oScope, 'TemplateNodes': TempOutNCTemplate, 'xlatService': xlatService, 'toaster': '', 'TemplateId': MyInstance.NCTemplateId, 'TemplateName': MyInstance.NCTemplateName });
@@ -13506,7 +13508,7 @@ function DataCaptureBO(InputParm) {
                     TemplateNodeIds = ActionDetails[0].TemplateNodeIds;
                 }
                 else {
-                    //Inline Edit Case need to send RuleGroup and RuleCode from DAO 
+                    //Inline Edit Case need to send RuleGroup and RuleCode from DAO
                     if (RuleId != 0) {
                        // alert('from view records when already nc exists');
                         NcRuleId = RuleId;
@@ -13539,7 +13541,7 @@ function DataCaptureBO(InputParm) {
                // alert('RuleGroup : ' + RuleGroup + 'RuleName : ' + RuleName + 'RuleDescription : ' + RuleDescription + 'NcRuleId : ' + NcRuleId);
                 //alert(NcRuleId);
                // alert(JSON.stringify(MyInstance.DCNCMappingList));
-                //alert(itrAction  + 'ActionDetails' + JSON.stringify(ActionDetails));   
+                //alert(itrAction  + 'ActionDetails' + JSON.stringify(ActionDetails));
                 var TempOutNCTemplate;
                 if (ServiceId == 39) {
                     var _oTemplateConfigDAO = new TemplateConfigDAO();
@@ -14042,7 +14044,7 @@ function DataCaptureBO(InputParm) {
 
                             Answer = "";
 
-                            var temp = document.getElementById(_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId);//oScope.NewDCModel[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId];                           
+                            var temp = document.getElementById(_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId);//oScope.NewDCModel[_oAttributeInfo.AnswerMode[_oPrimarayAnswerModeInfo].ControlId];
                             if (temp != null) {
                                 var Time = temp.value;
                                 if (Time != "") {
@@ -14338,7 +14340,7 @@ function DataCaptureBO(InputParm) {
 
             OneViewConsole.Debug("LoadNCOptions start", "DataCaptureBO.LoadNCOptions");
             
-            var oNC = new AnswerModeUserControl({ 'Scope': oScope, 'ControlId': 'chkNC', 'DataSourceModelName': 'NCOptions', 'DisplayElementModelName': 'NewDCModel.chkNC' });            
+            var oNC = new AnswerModeUserControl({ 'Scope': oScope, 'ControlId': 'chkNC', 'DataSourceModelName': 'NCOptions', 'DisplayElementModelName': 'NewDCModel.chkNC' });
             oNC.LoadNCOptions();
 
             OneViewConsole.Debug("LoadNCOptions end", "DataCaptureBO.LoadNCOptions");
@@ -14456,7 +14458,7 @@ function DataCaptureBO(InputParm) {
                         else {
                             oScope.NCOptions[i].Selected = false;
                         }
-                    }                    
+                    }
                 }
             }
             else {
@@ -14464,7 +14466,7 @@ function DataCaptureBO(InputParm) {
                 //oScope.NewDCModel.IsNC = false;
                 //oScope.NewDCModel.IsObservation = false;
 
-                //for (var i = 0; i < oScope.NCOptions.length; i++) {                
+                //for (var i = 0; i < oScope.NCOptions.length; i++) {
                 //    if (oScope.NCOptions[i].Id == 1)
                 //        oScope.NCOptions[i].Selected = true;
                 //    else
@@ -14601,7 +14603,7 @@ function DataCaptureBO(InputParm) {
 
                 if (CommentsResult[RuleGroup] == undefined) {
                     CommentsResult[RuleGroup] = {
-                        'Comments': NCComments, 
+                        'Comments': NCComments,
                         "IsNC": IsNC,
                         "IsObservation": IsObservation,
                         "IsNCOrObservationMandatory": MyInstance.IsNCOrObservationMandatory,
@@ -14666,13 +14668,13 @@ function DataCaptureBO(InputParm) {
 
                     ObservationResult[NCSelectedAttributeId] = {
                         "Comments": Comments,
-                        "IsCommentsMandatory": MyInstance.IsCommentsMandatory                      
+                        "IsCommentsMandatory": MyInstance.IsCommentsMandatory
                     };
                 }
                 else {
                     Comments = removeSpecialCharacter(Comments);
                     ObservationResult[NCSelectedAttributeId].Comments = Comments;
-                    ObservationResult[NCSelectedAttributeId].IsCommentsMandatory = MyInstance.IsCommentsMandatory;                  
+                    ObservationResult[NCSelectedAttributeId].IsCommentsMandatory = MyInstance.IsCommentsMandatory;
                 }
 
                 oScope.NewDCModel.NCComments = "";
@@ -14709,7 +14711,7 @@ function DataCaptureBO(InputParm) {
             var ValidationMessage = "******** Mandatory Comments ********\n";
 
             for (var itrObservationResult in ObservationResult) {
-                if (ObservationResult[itrObservationResult].IsNCOrObservationMandatory == true && ObservationResult[itrObservationResult].IsNC == false && ObservationResult[itrObservationResult].IsObservation == false) {                                     
+                if (ObservationResult[itrObservationResult].IsNCOrObservationMandatory == true && ObservationResult[itrObservationResult].IsNC == false && ObservationResult[itrObservationResult].IsObservation == false) {
                     ValidationMessage += "\nRuleId : " + ObservationResult[itrObservationResult].RuleId + ", RuleName : " + ObservationResult[itrObservationResult].RuleName + ", RuleDescription : " + ObservationResult[itrObservationResult].RuleDescription;
                     IsVallidationSuccess = false;
                 }
@@ -14770,7 +14772,7 @@ function DataCaptureBO(InputParm) {
                     "RuleName": DCNCMappingResult[i].RuleName,
                     "RuleDescription": DCNCMappingResult[i].RuleDescription,
                     "AttributeGroupId": DCNCMappingResult[i].AttributeGroupId
-                };               
+                };
                 //if (DCNCMappingResult[i].IsNC == "true") {
                 //    _oNCColorComponent.Show(DCNCMappingResult[i].AttributeGroupId);
                 //}
@@ -14779,7 +14781,7 @@ function DataCaptureBO(InputParm) {
             for (var i = 0; i < DcResultDetailsResult.length; i++) {
                 ObservationResult[DcResultDetailsResult[i].AttributeNodeId] = {
                     'Comments': DcResultDetailsResult[i].Comments,
-                    "IsCommentsMandatory": false                  
+                    "IsCommentsMandatory": false
                 };
             }
 
@@ -14816,7 +14818,7 @@ function DataCaptureBO(InputParm) {
 
             OneViewConsole.Debug("AttachPicture End", "DataCaptureBO.AttachPicture");
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.AttachPicture", Excep);
         }
     }
@@ -14855,7 +14857,7 @@ function DataCaptureBO(InputParm) {
             }
 
             if (AverageCount > 0) {
-                var Average = (Reading1 + Reading2 + Reading3 + Reading4 + Reading5) / AverageCount;               
+                var Average = (Reading1 + Reading2 + Reading3 + Reading4 + Reading5) / AverageCount;
                 //oScope.NewDCModel.AverageTempControlId = Average
                 oScope.NewDCModel.AverageTempControlId = Average.toFixed(1);
             }
@@ -14869,7 +14871,7 @@ function DataCaptureBO(InputParm) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.SetHygAvgrageReading", Excep);
         }
         finally {
-        }       
+        }
     }
 
     this.PreControlEventsOLD = function (AttributeId, ControlId, $event) {
@@ -14880,16 +14882,16 @@ function DataCaptureBO(InputParm) {
             //alert(oScope.NewDCModel.ATPreChillerTempInControlId);
              var oDefaultValidationResponse = new DefaultValidationResponse();
              oDefaultValidationResponse.IsSuccess = true;
-             if (TemplateNodes[AttributeId] != undefined){          
+             if (TemplateNodes[AttributeId] != undefined){
             for (var i = 0; i < TemplateNodes[AttributeId].AnswerMode.length; i++) {
 
                 if (TemplateNodes[AttributeId].AnswerMode[i].ControlId == ControlId) {
                     if (TemplateNodes[AttributeId].AnswerMode[i].PreControlEvents != undefined) {
                         var EventArgs = { ControlEvents: TemplateNodes[AttributeId].AnswerMode[i].PreControlEvents, EventType: 'PreControlEvent', AnswerMode: TemplateNodes[AttributeId].AnswerMode[i], oScope: oScope, $event: $event };
-                        oDefaultValidationResponse = new RunTimeEventHandler().handleEventJob(EventArgs);                        
+                        oDefaultValidationResponse = new RunTimeEventHandler().handleEventJob(EventArgs);
                         break;
                     }
-                }         
+                }
              }
           }
             return oDefaultValidationResponse;
@@ -15059,7 +15061,7 @@ function DataCaptureBO(InputParm) {
         if (AnswerMode.PostControlEvents != undefined) {
             var EventArgs = { ControlEvents: AnswerMode.PostControlEvents, EventType: 'PostControlEvent', AnswerMode: AnswerMode, oScope: oScope };
             oDefaultValidationResponse = new RunTimeEventHandler().handleEventJob(EventArgs);
-        }   
+        }
         return oDefaultValidationResponse;
     }
     var RefreshControls = function (AnswerMode)
@@ -15072,7 +15074,7 @@ function DataCaptureBO(InputParm) {
               //  alert("RefreshControlInfo" + JSON.stringify(RefreshControlInfo))
                 var RefreshControlAnswerModeInfo = GetAnswerMode(RefreshControlInfo.AttributeId, RefreshControlInfo.ControlId);
                // alert("RefreshControlAnswerModeInfo" + JSON.stringify(RefreshControlAnswerModeInfo));
-                if (RefreshControlAnswerModeInfo.Type == "TEXTBOX" && (RefreshControlAnswerModeInfo.DataType == 'FLOAT' || RefreshControlAnswerModeInfo.DataType == 'INTEGER')) {                    
+                if (RefreshControlAnswerModeInfo.Type == "TEXTBOX" && (RefreshControlAnswerModeInfo.DataType == 'FLOAT' || RefreshControlAnswerModeInfo.DataType == 'INTEGER')) {
 
                     var oDefaultNumericTextBoxControl = new DefaultNumericTextBoxControl();
                     oDefaultNumericTextBoxControl.Refresh(RefreshControlAnswerModeInfo, oScope);
@@ -15181,9 +15183,9 @@ function DataCaptureBO(InputParm) {
                 else if (Model == "DTAmbientTempControlId") {
                     oDefaultValidationResponse = MyInstance.PreControlEvents(119, 'DTAmbientTempControlId', "");
                 }
-            }           
-            else if (TemplateId == 77) {//ThawingVerification              
-                if (Model == "txtTempControlId") {                   
+            }
+            else if (TemplateId == 77) {//ThawingVerification
+                if (Model == "txtTempControlId") {
                     oDefaultValidationResponse = MyInstance.PreControlEvents(84, 'txtTempControlId', "");
                 }
             }
@@ -15191,10 +15193,10 @@ function DataCaptureBO(InputParm) {
                 if (Model == "AmbientTempControlId") {
                     oDefaultValidationResponse = MyInstance.PreControlEvents(297, 'AmbientTempControlId', "");
                 }
-               else if (Model == "AircraftLoadingTempControlId") {                 
+               else if (Model == "AircraftLoadingTempControlId") {
                     oDefaultValidationResponse = MyInstance.PreControlEvents(299, 'AircraftLoadingTempControlId', "");
                 }
-                else if (Model == "TempControlId") {                  
+                else if (Model == "TempControlId") {
                     oDefaultValidationResponse = MyInstance.PreControlEvents(302, 'TempControlId', "");
                 }
             }
@@ -15224,7 +15226,7 @@ function DataCaptureBO(InputParm) {
                     oDefaultValidationResponse = MyInstance.PreControlEvents(469, 'ATTempControlId', '');
                 }
             }
-            else if (TemplateId == 452) {//Dispatch Temperature Verification of Food Products EKFC to EKFC  
+            else if (TemplateId == 452) {//Dispatch Temperature Verification of Food Products EKFC to EKFC
                 if (Model == "ATLoadingTempControlId") {
                     oDefaultValidationResponse = MyInstance.PreControlEvents(456, 'ATLoadingTempControlId', '');
                 }
@@ -15420,7 +15422,7 @@ function DataCaptureBO(InputParm) {
             //    }
             //    ErrorMessage = ErrorMessage + "Remarks";
             //    IsSuccess = false;
-            //}          
+            //}
             //if (scope.NewDCModel.DTDateofAnalysisControlId == "") {
             if (document.getElementById("DTDateofAnalysisControlId").value == "" || document.getElementById("DTDateofAnalysisControlId").value == null) {
                 if (ErrorMessage != "") {
@@ -15552,7 +15554,7 @@ function DataCaptureBO(InputParm) {
             //    }
             //    ErrorMessage = ErrorMessage + "Remarks";
             //    IsSuccess = false;
-            //}         
+            //}
             //if (scope.NewDCModel.DTDateofAnalysisControlId == "" || scope.NewDCModel.DTDateofAnalysisControlId == null) {
             if (document.getElementById("DTDateofAnalysisControlId").value == "" || document.getElementById("DTDateofAnalysisControlId").value == null) {
                 if (ErrorMessage != "") {
@@ -15624,7 +15626,7 @@ function DataCaptureBO(InputParm) {
                 var IsSuccess = true;
                 var ErrorMessage = "";
 
-                var Result = { IsSuccess: true, ErrorMessage: "" };               
+                var Result = { IsSuccess: true, ErrorMessage: "" };
                 Result.IsSuccess = SamplingSheetAndLinenCustomValidation();
               
                 if (IsSuccess == true) {
@@ -15654,13 +15656,13 @@ function DataCaptureBO(InputParm) {
                                         }
                                     }
                                 }
-                                else {                                    
+                                else {
                                     Result.ErrorMessage = "Parameter Tested";
                                     Result.IsSuccess = false;
                                 }
                             }
                         }
-                    }                   
+                    }
                 }
                 IsSuccess = Result.IsSuccess;
 
@@ -15672,9 +15674,9 @@ function DataCaptureBO(InputParm) {
               
                 return IsSuccess;
             }
-            catch (Excep) {              
+            catch (Excep) {
                 throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.SamplingSheetAndHandSwabAnalysisValidation", Excep);
-            }      
+            }
     }
 
     var SamplingSheetAndLinenCustomValidation = function () {
@@ -15692,14 +15694,14 @@ function DataCaptureBO(InputParm) {
                 }
                 ErrorMessage = ErrorMessage + "Sampling Description";
                 IsSuccess = false;
-            }                    
+            }
             //if (scope.NewDCModel.txtRemarksControlId == "") {
             //    if (ErrorMessage != "") {
             //        ErrorMessage = ErrorMessage + ",";
             //    }
             //    ErrorMessage = ErrorMessage + "Remarks";
             //    IsSuccess = false;
-            //}         
+            //}
             //if (scope.NewDCModel.DTDateofAnalysisControlId == "") {
             if (document.getElementById("DTDateofAnalysisControlId").value == "" || document.getElementById("DTDateofAnalysisControlId").value == null) {
                 if (ErrorMessage != "") {
@@ -16165,14 +16167,14 @@ function DataCaptureBO(InputParm) {
                     else if (oScope["AddlCriteriaControlId"].GetSelectedText() == "01 Bottled Water / Ice / Tap Water") {
 
                         var ColiformsControlInfo = MyInstance.GetWaterAnalysisControlInfo("Coliforms");
-                        var EcollControlInfo = MyInstance.GetWaterAnalysisControlInfo("Ecoll");                       
+                        var EcollControlInfo = MyInstance.GetWaterAnalysisControlInfo("Ecoll");
                         var PseudomonasControlInfo = MyInstance.GetWaterAnalysisControlInfo("Pseudomonas");
 
                         if (ColiformsControlInfo != null && EcollControlInfo != null && PseudomonasControlInfo != null) {
 
-                            var ColiformsResponse = ValidateFoodAnalysis(oScope, ColiformsControlInfo, "Coliforms");                           
-                            var EcollResponse = ValidateFoodAnalysis(oScope, EcollControlInfo, "Ecoll");                           
-                            var PseudomonasResponse = ValidateFoodAnalysis(oScope, PseudomonasControlInfo, "Pseudomonas");                         
+                            var ColiformsResponse = ValidateFoodAnalysis(oScope, ColiformsControlInfo, "Coliforms");
+                            var EcollResponse = ValidateFoodAnalysis(oScope, EcollControlInfo, "Ecoll");
+                            var PseudomonasResponse = ValidateFoodAnalysis(oScope, PseudomonasControlInfo, "Pseudomonas");
 
 
 
@@ -21001,7 +21003,7 @@ function DataCaptureBO(InputParm) {
                         var EcollResponse = ValidateFoodAnalysis(oScope, EcollControlInfo, "Ecoll");
                         var ColiformsResponse = ValidateFoodAnalysis(oScope, ColiformsControlInfo, "Coliforms");
                         var SaureusResponse = ValidateFoodAnalysis(oScope, SaureusControlInfo, "Saureus");
-                        var BcereusResponse = ValidateFoodAnalysis(oScope, BcereusControlInfo, "Bcereus");                        
+                        var BcereusResponse = ValidateFoodAnalysis(oScope, BcereusControlInfo, "Bcereus");
                         var ListeriaResponse = ValidateFoodAnalysis(oScope, ListeriaControlInfo, "Listeria");
                         var ClostridiumResponse = ValidateFoodAnalysis(oScope, ClostridiumControlInfo, "Clostridium");
                         var YmcResponse = ValidateFoodAnalysis(oScope, YmcControlInfo, "Ymc");
@@ -23027,7 +23029,7 @@ function DataCaptureBO(InputParm) {
 
             return { "IsSuccess": IsValidationsuccess, "Message": Message }
         }
-        catch (Excep) {        
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "FoodAnalysysValidationComponent.ValidateFoodAnalysis", Excep);
         }
         finally {
@@ -23036,7 +23038,7 @@ function DataCaptureBO(InputParm) {
 
     var GetFoodAnalysisControlInfo = function (Type) {
 
-        try {        
+        try {
             var ControlInfo = null;
             
             if (Type == "Tvb") {
@@ -23074,7 +23076,7 @@ function DataCaptureBO(InputParm) {
                     { "ControlId": "txtMediaUsed3ControlId", "MessageKey": "MediaUsed", 'Type': 'TEXTBOX' },
                     { "ControlId": "txtIncubationTimeTemp3ControlId", "MessageKey": "IncubationTimeTemp", 'Type': 'TEXTBOX' },
                     //{ "ControlId": "txtEquipmentUsed3ControlId", "MessageKey": "EquipmentUsed", 'Type': 'TEXTBOX' },
-                    { "ControlId": "txtEquipmentUsed3ControlId", "MessageKey": "EquipmentUsed", 'Type': 'DDL' },                 
+                    { "ControlId": "txtEquipmentUsed3ControlId", "MessageKey": "EquipmentUsed", 'Type': 'DDL' },
                     //{ "ControlId": "txtColonyCountDilutionFirst3ControlId", "MessageKey": "ColonyCountDilution1", 'Type': 'TEXTBOX' },
                     //{ "ControlId": "txtColonyCountDilutionSecond3ControlId", "MessageKey": "ColonyCountDilution2", 'Type': 'TEXTBOX' },
                     //{ "ControlId": "txtConfirmationTest3ControlId", "MessageKey": "ConfirmationTest", 'Type': 'TEXTBOX' },
@@ -23211,13 +23213,13 @@ function DataCaptureBO(InputParm) {
 
     this.GetFoodAnalysisControlInfo = function (Type) {
 
-        try {                    
+        try {
             return GetFoodAnalysisControlInfo(Type);
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "FoodAnalysysValidationComponent.GetFoodAnalysisControlInfo", Excep);
         }
-        finally {        
+        finally {
         }
     }
 
@@ -23230,7 +23232,7 @@ function DataCaptureBO(InputParm) {
                 ControlInfo = [
                     { "ControlId": "txtColonyCountControlId", "MessageKey": "ColonyCount", 'Type': 'TEXTBOX' },
                     { "ControlId": "AddlEvaluationControlId", "MessageKey": "Evaluation", 'Type': 'DDL' },
-                    { "ControlId": "txtResultControlId", "MessageKey": "Result", 'Type': 'TEXTBOX' }                    
+                    { "ControlId": "txtResultControlId", "MessageKey": "Result", 'Type': 'TEXTBOX' }
                 ];
             }
             else if (Type == "Ymc") {
@@ -23516,7 +23518,7 @@ function DataCaptureBO(InputParm) {
             }
 
             //alert("DTDateofReceiptControlId : " + scope.NewDCModel.DTDateofReceiptControlId + " ATReceivingTemperatureControlId : " + scope.NewDCModel.ATReceivingTemperatureControlId + " txtTransportOfSample : " + scope.NewDCModel.txtTransportOfSample + " DTTimeofReceiptControlId : " + document.getElementById('DTTimeofReceiptControlId').value)
-            //if (scope['chkFoodReceivedType'].GetSelectedValue() == 139 || scope['chkFoodReceivedType'].GetSelectedValue() == 141) {                   
+            //if (scope['chkFoodReceivedType'].GetSelectedValue() == 139 || scope['chkFoodReceivedType'].GetSelectedValue() == 141) {
             //    if (scope.NewDCModel.txtSampleLocationControlId == "") {
             //        if (ErrorMessage != "") {
             //            ErrorMessage = ErrorMessage + ",";
@@ -23525,7 +23527,7 @@ function DataCaptureBO(InputParm) {
             //        IsSuccess = false;
             //    }
             //}
-            //else if (scope['chkFoodReceivedType'].GetSelectedValue() == 140) {                    
+            //else if (scope['chkFoodReceivedType'].GetSelectedValue() == 140) {
             //    if (scope.NewDCModel.txtCustomerNameControlId == "") {
             //        if (ErrorMessage != "") {
             //            ErrorMessage = ErrorMessage + ",";
@@ -23595,7 +23597,7 @@ function DataCaptureBO(InputParm) {
 
             OneViewConsole.Debug("IsAllCompletedForParameterTested End", "DataCaptureBO.IsAllCompletedForParameterTested");
 
-            return IsCompleted;            
+            return IsCompleted;
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.IsAllCompletedForParameterTested", Excep);
@@ -24109,7 +24111,7 @@ function DataCaptureBO(InputParm) {
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.ClearAutoTempAndTime", Excep);
         }
-        finally {           
+        finally {
         }
     }
 
@@ -25011,7 +25013,7 @@ function DataCaptureBO(InputParm) {
                 //}
                 //else if (AnswerToBind.Answer == "Cartridge Re-Cycling Box") {
                 //    EditShowHidePreAcceptanceCompositionAnalysis('CartridgeReCyclingBoxShow');
-                //}    
+                //}
 
                 if (AnswerToBind.Answer == 1414) {
                     EditShowHidePreAcceptanceCompositionAnalysis('SharpsBinShow');
@@ -25038,7 +25040,7 @@ function DataCaptureBO(InputParm) {
 
             else if (AnswerModeObject.ControlId == "AddlSharpsBinColourCodeControlId") {
                 if (AnswerToBind.Answer == "Other (please specify)") {
-                    scope.SharpsBinOthersShow = true;                    
+                    scope.SharpsBinOthersShow = true;
                 }
             }
 
@@ -25159,7 +25161,7 @@ function DataCaptureBO(InputParm) {
     }
 
     var SetEditValuesForPreAcceptanceLocalWasteStorage_OLD = function (AnswerModeObject, AnswerToBind) {
-        try {          
+        try {
             //if (AnswerModeObject.ControlId == "chkWasteSegregationType_" + WasteType) {
             if (AnswerModeObject.ControlId.indexOf("chkWasteSegregationType_") != -1) {
 
@@ -25197,7 +25199,7 @@ function DataCaptureBO(InputParm) {
 
                 //if (AnswerToBind.AnswerValue == "E" || AnswerToBind.AnswerValue == "P") {
                 if (AnswerToBind.Answer == 580 || AnswerToBind.Answer == 578) {
-                    scope["Contaminants_" + WasteType] = false;                    
+                    scope["Contaminants_" + WasteType] = false;
                 }
                 //else if (AnswerToBind.AnswerValue == "F") {
                 else if (AnswerToBind.Answer == 579) {
@@ -25216,7 +25218,7 @@ function DataCaptureBO(InputParm) {
             }
 
         }
-        catch (Excep) {          
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.SetEditValuesForPreAcceptanceLocalWasteStorage", Excep);
         }
         finally {
@@ -25281,7 +25283,7 @@ function DataCaptureBO(InputParm) {
                 //}
                 //else if (AnswerToBind.Answer == "Cartridge Re-Cycling Box") {
                 //    EditShowHidePreAcceptanceCompositionAnalysis('CartridgeReCyclingBoxShow');
-                //}    
+                //}
 
                 if (AnswerToBind.Answer == 1414) {
                     EditShowHidePreAcceptanceCompositionAnalysis('SharpsBinShow');
@@ -26895,7 +26897,7 @@ function DataCaptureBO(InputParm) {
                         }
                         ErrorMessage = ErrorMessage + "Cardboard Box Cont. Info";
                         IsSuccess = false;
-                    }                    
+                    }
                     if (chkCardboardBoxScoreContainerControlId == "" || (chkCardboardBoxScoreContainerControlId == "Fail" && (chkCardboardBoxAmberFailContaminatesControlId == 0 && chkCardboardBoxRedFailContaminatesControlId == 0))) {
                         if (ErrorMessage != "") {
                             ErrorMessage = ErrorMessage + ",";
@@ -27008,7 +27010,7 @@ function DataCaptureBO(InputParm) {
                     
                     if (ErrorMessage == "") {
                         ErrorMessage = "Is there evidence of leakage from any waste streams, ";
-                    }                    
+                    }
                     else {
                         CommonMessage = "MN-RQ-SPA-003 :: Please enter ";
                         ErrorMessage = ErrorMessage + "Is there evidence of leakage from any waste streams, ";
@@ -28980,7 +28982,7 @@ function DataCaptureBO(InputParm) {
 
     var PreAcceptanceCompositionAnalysisValidationNew = function (AryDcResultDetails, IsAlertMessageEnabled) {
 
-        try {                       
+        try {
             var IsSuccess = true;
 
             var CommonMessage = "";
@@ -29135,7 +29137,7 @@ function DataCaptureBO(InputParm) {
             return IsSuccess;
         }
         catch (Excep) {
-            alert("Excep .." + Excep + "...." + JSON.stringify(Excep));
+            navigator.notification.alert(("Excep .." + Excep + "...." + JSON.stringify(Excep)), ['OK'], "");
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.BulkWasteElementValidation", Excep);
         }
     }
@@ -29162,7 +29164,7 @@ function DataCaptureBO(InputParm) {
             for (var i = 1; i <= 12; i++) {
                 if (scope["chkInductionCompletedStatus_" + i].GetSelectedValue() == "") {
                     IsSuccess = false;
-                    IsInductionSuccess = false;                  
+                    IsInductionSuccess = false;
                     break;
                 }
             }
@@ -29170,7 +29172,7 @@ function DataCaptureBO(InputParm) {
                 for (var i = 1; i <= 12; i++) {
                     if (scope["chkInductionCompletedStatus_" + i].GetSelectedValue() != 1 && (document.getElementById("DTInductionDATE_" + i).value == "" || document.getElementById("DTInductionDATE_" + i).value == null)) {
                         IsSuccess = false;
-                        IsInductionSuccess = false;                       
+                        IsInductionSuccess = false;
                         break;
                     }
                 }
@@ -29182,7 +29184,7 @@ function DataCaptureBO(InputParm) {
             for (var i = 1; i <= 15; i++) {
                 if (scope["chkTaskCompletedStatus_" + i].GetSelectedValue() == "") {
                     IsSuccess = false;
-                    IsTaskSuccess = false;                    
+                    IsTaskSuccess = false;
                     break;
                 }
             }
@@ -29190,7 +29192,7 @@ function DataCaptureBO(InputParm) {
                 for (var i = 1; i <= 15; i++) {
                     if (scope["chkTaskCompletedStatus_" + i].GetSelectedValue() != 1 && (document.getElementById("DTTaskDATE_" + i).value == "" || document.getElementById("DTTaskDATE_" + i).value == null)) {
                         IsSuccess = false;
-                        IsTaskSuccess = false;                       
+                        IsTaskSuccess = false;
                         break;
                     }
                 }
@@ -29202,7 +29204,7 @@ function DataCaptureBO(InputParm) {
             for (var i = 1; i <= 10; i++) {
                 if (scope["chkEquipmentCompletedStatus_" + i].GetSelectedValue() == "") {
                     IsSuccess = false;
-                    IsEquipmentSuccess = false;                    
+                    IsEquipmentSuccess = false;
                     break;
                 }
             }
@@ -29210,7 +29212,7 @@ function DataCaptureBO(InputParm) {
                 for (var i = 1; i <= 10; i++) {
                     if (scope["chkEquipmentCompletedStatus_" + i].GetSelectedValue() != 1 && ((document.getElementById("DTEquipmentDATE_" + i).value == "" || document.getElementById("DTEquipmentDATE_" + i).value == null) || (oScope.NewDCModel["txtEquipment_" + i] == "" || oScope.NewDCModel["txtEquipment_" + i] == undefined))) {
                         IsSuccess = false;
-                        IsEquipmentSuccess = false;                       
+                        IsEquipmentSuccess = false;
                         break;
                     }
                 }
@@ -29251,7 +29253,7 @@ function DataCaptureBO(InputParm) {
             }
 
             if (IsSuccess == false && IsAlertMessageEnabled == true) {
-                var FinalMessage = CommonMessage + " " + ErrorMessage;                
+                var FinalMessage = CommonMessage + " " + ErrorMessage;
                 alert(FinalMessage);
             }
            
@@ -29590,7 +29592,7 @@ function DataCaptureBO(InputParm) {
            // alert('_DcResultDetailsEntity : ' + JSON.stringify(_DcResultDetailsEntity));
             return _DcResultDetailsEntity;
         }
-        catch (Excep) {          
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.GetDcResultDetailEntityForCheckBoxList", Excep);
         }
         finally {
@@ -29676,7 +29678,7 @@ function DataCaptureBO(InputParm) {
             if (TemplateNodes != undefined) {
                 var TemplateNodeObject = TemplateNodes[AttributeNodeId];
                 if (TemplateNodeObject.AnswerMode[0].ControlId == ControlId) {
-                    if (TemplateNodeObject.AnswerMode[0].Type == "DCListViewControlConfig" 
+                    if (TemplateNodeObject.AnswerMode[0].Type == "DCListViewControlConfig"
                                            && ((TemplateNodeObject.AnswerMode[0].ListViewDisplay == 2 && TemplateNodeObject.AnswerMode[0].SelectionType == 1) || TemplateNodeObject.AnswerMode[0].ListViewDisplay == 1)) {
                         IsCheckBoxList = true;
                     }
@@ -29709,7 +29711,7 @@ function DataCaptureBO(InputParm) {
             if (TemplateNodes != undefined) {
                 for (var AttributeNodeId in TemplateNodes) {
                     var TemplateNodeObject = TemplateNodes[AttributeNodeId];
-                    if (TemplateNodeObject.AnswerMode[0].Type == "DCListViewControlConfig" 
+                    if (TemplateNodeObject.AnswerMode[0].Type == "DCListViewControlConfig"
                                            && ((TemplateNodeObject.AnswerMode[0].ListViewDisplay == 2 && TemplateNodeObject.AnswerMode[0].SelectionType == 1) || TemplateNodeObject.AnswerMode[0].ListViewDisplay == 1)) {
 
                         var ControlId = TemplateNodeObject.AnswerMode[0].ControlId;
@@ -29778,7 +29780,7 @@ function DataCaptureBO(InputParm) {
                                 var Data = SelectedNewAnswerList[i];
                                 var DcId = OneViewSessionStorage.Get("DcId");
                                 var _DcResultDetailsEntity = MyInstance.GetDcResultDetailEntityForCheckBoxList(AttributeNodeId, ControlId, Data.Answer, Data.AnswerValue, DATEntityType.BandDetailsMaster, false, TemplateNodeObject.AnswerMode[0].DataType, TemplateNodeObject.Name, NewIndex, DcId, DCResultId);
-                                if (_DcResultDetailsEntity != undefined) {                                   
+                                if (_DcResultDetailsEntity != undefined) {
                                     FinalList.push(_DcResultDetailsEntity);
                                     NewIndex++;
                                 }
@@ -29905,7 +29907,7 @@ function DataCaptureBO(InputParm) {
 
 
 
-           // alert('Html : ' + Html);       
+           // alert('Html : ' + Html);
 
 
             var _oOneViewCompiler = new OneViewCompiler();
@@ -29965,7 +29967,7 @@ function DataCaptureBO(InputParm) {
                                             '</div>' +
                                             '<div class="item item-input-inset">' +
                                               '<label class="item-input-wrapper"><textarea msd-elastic="/n/n" ng-model="CustomAction"></textarea></label>' +
-                                              '<a class="button button-calm" ng-click="AddCustomAction(CustomAction,' + AttributeActionNCConfig.RuleId + ',' + AttributeActionNCConfig.ActionNCConfigSetting.IsNC + ',' + AttributeActionNCConfig.ActionNCConfigSetting.IsObservation + ',' + AttributeActionNCConfig.ActionNCConfigSetting.IsManual + ',' + TemplateNodeIds + ')"><i class="icon icon-plus"></i> {{"Add" | xlat}}</a>' +                                             
+                                              '<a class="button button-calm" ng-click="AddCustomAction(CustomAction,' + AttributeActionNCConfig.RuleId + ',' + AttributeActionNCConfig.ActionNCConfigSetting.IsNC + ',' + AttributeActionNCConfig.ActionNCConfigSetting.IsObservation + ',' + AttributeActionNCConfig.ActionNCConfigSetting.IsManual + ',' + TemplateNodeIds + ')"><i class="icon icon-plus"></i> {{"Add" | xlat}}</a>' +
                                               // '<a class="button button-calm" ng-click="AddCustomAction(CustomAction)"><i class="icon icon-plus"></i> {{"Add" | xlat}}</a>' +
                                             '</div>' +
                                           '</div>' +
@@ -30103,7 +30105,7 @@ function DataCaptureBO(InputParm) {
                         IsValid = false;
                        
 
-                        alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"));
+                        navigator.notification.alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"), ['OK'], "");
                     }
                 }
 
@@ -30114,7 +30116,7 @@ function DataCaptureBO(InputParm) {
             }
             else {
                 
-                alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"));
+                navigator.notification.alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"), ['OK'], "");
             }
 
             //alert(JSON.stringify(CPActionResult[RuleId]));
@@ -30151,7 +30153,7 @@ function DataCaptureBO(InputParm) {
 
                     if (CPActionResult[CustomAction.RuleId].Actions[i].Name == CustomAction.label) {
 
-                        if (CPActionResult[CustomAction.RuleId].Actions[i].ActionDetailsClientId == "") { //if (LVIsEdit == false) {                              
+                        if (CPActionResult[CustomAction.RuleId].Actions[i].ActionDetailsClientId == "") { //if (LVIsEdit == false) {
                             CPActionResult[CustomAction.RuleId].Actions.splice(i, 1);
                         }
                         else {
@@ -30538,7 +30540,7 @@ function DataCaptureBO(InputParm) {
                      //   alert(oActionNCConfig.RuleId + " , " + ActionDCNCMappings[i].RuleId + ", CPActionResult[ActionDCNCMappings[i].RuleId] : " + CPActionResult[ActionDCNCMappings[i].RuleId]  + ", ActionDCNCMappings[i].DCNCMappingClientId : " + ActionDCNCMappings[i].DCNCMappingClientId);
                         if (oActionNCConfig.RuleId == ActionDCNCMappings[i].RuleId) {
                             if (CPActionResult[ActionDCNCMappings[i].RuleId] != undefined && ActionDCNCMappings[i].DCNCMappingClientId == "") {
-                                //  alert('delete');                            
+                                //  alert('delete');
                                 delete CPActionResult[ActionDCNCMappings[i].RuleId];
                             }
                             else if (CPActionResult[ActionDCNCMappings[i].RuleId] != undefined && ActionDCNCMappings[i].DCNCMappingClientId != "") {
@@ -30614,13 +30616,13 @@ function DataCaptureBO(InputParm) {
 
             //  alert('CPActionResult[oActionNCConfig.RuleId].Actions  : ' + JSON.stringify(CPActionResult[oActionNCConfig.RuleId].Actions));
             if (CPActionResult[oActionNCConfig.RuleId] != undefined && CPActionResult[oActionNCConfig.RuleId].IsDisable == false) {
-                for (var i = 0; i < CPActionResult[oActionNCConfig.RuleId].Actions.length; i++) {                   
+                for (var i = 0; i < CPActionResult[oActionNCConfig.RuleId].Actions.length; i++) {
                     if (CPActionResult[oActionNCConfig.RuleId].Actions[i].IsDisable == false && CPActionResult[oActionNCConfig.RuleId].Actions[i].ActionType == CPActionType.CustomAction) {
                         oScope.CustomActions.push({ "RuleId": oActionNCConfig.RuleId, "label": CPActionResult[oActionNCConfig.RuleId].Actions[i].Name });
                         //if(CPActionResult[oActionNCConfig.RuleId].MultimediaSubElements.length>0){
                         //    oScope.ActionMultiMediaSubElements.push(CPActionResult[oActionNCConfig.RuleId].MultimediaSubElements);
                         //}
-                    }                  
+                    }
                 }
             }
 
@@ -30690,7 +30692,7 @@ function DataCaptureBO(InputParm) {
                             DeletedActionIndexLst.push(i);
                         }
                         else if (CPActionResult[itrCPActionResult].Actions[i].ActionDetailsClientId == "") {
-                            //alert(JSON.stringify(CPActionResult[itrCPActionResult].Actions[i]));                                      
+                            //alert(JSON.stringify(CPActionResult[itrCPActionResult].Actions[i]));
                             var _oActionDetailsEntity = GetActionDetailsEntity(DataCaptureRequest, CPActionResult[itrCPActionResult].ActionClientGuid, "", CPActionResult[itrCPActionResult].Actions[i]);
                             //alert(JSON.stringify(_oActionDetailsEntity));
 
@@ -30908,7 +30910,7 @@ function DataCaptureBO(InputParm) {
                         delete CPTemplateResult[DcResultDetailsList[i].AttributeNodeId];
                     }
 
-                    if (CPTemplateResult == undefined || Object.keys(CPTemplateResult).length < 1) {                       
+                    if (CPTemplateResult == undefined || Object.keys(CPTemplateResult).length < 1) {
                         break;
                     }
 
@@ -31168,9 +31170,9 @@ function DataCaptureBO(InputParm) {
     /// <summary>
     /// LoadActionMultimediaSubElements
     /// </summary>
-    /// <param name="oActionNCConfig">oActionNCConfig</param>  
-    /// <param name="TemplateNodeId">TemplateNodeId</param> 
-    /// <param name="ControlId">ControlId</param> 
+    /// <param name="oActionNCConfig">oActionNCConfig</param>
+    /// <param name="TemplateNodeId">TemplateNodeId</param>
+    /// <param name="ControlId">ControlId</param>
     var LoadActionMultimediaSubElements = function (oActionNCConfig) {
 
         try {
@@ -31226,6 +31228,7 @@ function DataCaptureBO(InputParm) {
 
 
    
+
 
 
 

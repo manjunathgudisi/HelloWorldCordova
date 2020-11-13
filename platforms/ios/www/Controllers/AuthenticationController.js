@@ -74,7 +74,8 @@ function AuthenticationFacade() {
 
                 if (NetworkStatus.IsNetworkAvailable == true) {
 
-                    oSetDefaultSpinner.Start(xlatService.xlat('Registering the Device'));
+                    //oSetDefaultSpinner.Start(xlatService.xlat('Registering the Device'));
+					oOneViewProgressbar.Start(xlatService.xlat('Registering the Device'));
 
                     var Req = { "userId": 1, "organizationId": 2 };
 
@@ -86,14 +87,14 @@ function AuthenticationFacade() {
                         MyInstance.Authenticate($scope, $location, xlatService, '', '');
                     }
                     else {
-                        alert(xlatService.xlat('DeviceRegistrationError'));
+                        navigator.notification.alert(xlatService.xlat('DeviceRegistrationError'), ['OK'], "");
                         OneViewConsole.Info("Error while registering the device", "AuthenticationFacade.Authenticate");
                     }
 
-                    oSetDefaultSpinner.Stop();
+                    oOneViewProgressbar.Stop();
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnectionToRegisterDevice'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnectionToRegisterDevice'), ['OK'], "");
                     OneViewConsole.Info("No Internet Connection", "AuthenticationFacade.Authenticate");
                 }
 
@@ -170,10 +171,7 @@ function AuthenticationFacade() {
                 var _oRegistryUrl = $scope.User.RegistryURL ;
             
                 OneViewLocalStorage.Save("OneViewGlobalRegistryURL", _oRegistryUrl);
-                oneViewGlobalVariables.RegistryURl = _oRegistryUrl;  
-
-
-                //oSetDefaultSpinner.Start();
+                oneViewGlobalVariables.RegistryURl = _oRegistryUrl;
               
                 var oDefaultValidationResponse = DefaultValidation($scope, MyInstance.Authentication_ClientValidatorConfigList, xlatService);
 
@@ -206,13 +204,13 @@ function AuthenticationFacade() {
                                
                                 if (_oUserDTO.Status == "0") {
                                     // toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('TokenInvalid'));
-                                    alert(xlatService.xlat('TokenInvalid'));
+                                    navigator.notification.alert(xlatService.xlat('TokenInvalid'), ['OK'], "");
                                     OneViewConsole.Info("Token Status : Invalid", "AuthenticationFacade.Authenticate");
                                 }
 
                                 else if(_oUserDTO.Status == "-1"){
                                     //  toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('TokenExpired'));
-                                    alert(xlatService.xlat('TokenExpired'));
+                                    navigator.notification.alert(xlatService.xlat('TokenExpired'), ['OK'], "");
                                     OneViewConsole.Info("Token Status : Expired", "AuthenticationFacade.Authenticate");
                                 }
                                 //FocusControl($scope, "txtToken");
@@ -232,28 +230,27 @@ function AuthenticationFacade() {
                         }
                         else if (_oUserDTO != null && _oUserDTO.IsAnyException == true) {
                             //toaster.pop('error', xlatService.xlat('Title_Error'), xlatService.xlat('ServerError'));
-                            alert(xlatService.xlat('ServerError'));
+                            navigator.notification.alert(xlatService.xlat('ServerError'), ['OK'], "");
                             OneViewConsole.Info("Token Status : Server Error", "AuthenticationFacade.Authenticate");
                         }
                     }
                     else {
                         //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                         OneViewConsole.Info("No Internet Connection", "AuthenticationFacade.Authenticate");
                     }
                 }
                 else {                  
                     // toaster.pop('error', xlatService.xlat('Title_Error'), oDefaultValidationResponse.MessageKey);
-                    alert(oDefaultValidationResponse.MessageKey);
+                    navigator.notification.alert(xlatService.xlat(oDefaultValidationResponse.MessageKey), ['OK'], "");
                     OneViewConsole.Info(oDefaultValidationResponse.MessageKey, "AuthenticationFacade.Authenticate");
                     //FocusControl($scope, "txtToken");
                 }
 
-                //oSetDefaultSpinner.Stop();
                 }
                 }
                 else {
-                    alert(xlatService.xlat('MN-RQ-AUT-001 :: Please enter all fileds'));
+                    navigator.notification.alert(xlatService.xlat('MN-RQ-AUT-001 :: Please enter all fileds'), ['OK'], "");
                 }
                 OneViewConsole.Debug("Authenticate End", "AuthenticationFacade.Authenticate");
             }
@@ -293,7 +290,7 @@ function AuthenticationFacade() {
                     }
                 }
                 else {
-                    alert(xlatService.xlat('MN-RQ-AUT-001 :: Please enter URL'));
+                    navigator.notification.alert(xlatService.xlat('MN-RQ-AUT-001 :: Please enter URL'), ['OK'], "");
                 }
 
                 OneViewConsole.Debug("ClickSaveURL End", "LoginFacade.ClickSaveURL");
@@ -312,7 +309,7 @@ function AuthenticationFacade() {
             var ISSuccess = true;
 
             if (!regexp.test(URL)) {
-                alert(xlatService.xlat('MN-RQ-AUT-002 :: Please enter valid URL'));
+                navigator.notification.alert(xlatService.xlat('MN-RQ-AUT-002 :: Please enter valid URL'), ['OK'], "");
                 ISSuccess = false;
             }
             return ISSuccess;

@@ -3889,7 +3889,7 @@ function DataCaptureBO(InputParm) {
                             //Todo :: (Sangeeta Bhatt : 06-10-2017) : Need to remove , temporarily kept for hiding two saved messages
                             if (OneViewSessionStorage.Get("ServiceId") == 23) {
                                 if (OneViewSessionStorage.Get("TemplateId") != 3) {
-                                    alert(xlatService.xlat('SavedSuccessfully'));
+                                    navigator.notification.alert(xlatService.xlat('SavedSuccessfully'), ['OK'], "");
                                 }
                             }
                             else {
@@ -3897,7 +3897,7 @@ function DataCaptureBO(InputParm) {
                                     //No alert
                                 }
                                 else {
-                                    alert(xlatService.xlat('SavedSuccessfully'));
+                                    navigator.notification.alert(xlatService.xlat('SavedSuccessfully'), ['OK'], "");
                                 }
                             }
                             // oToaster.pop('success', xlatService.xlat('Title_Success'), xlatService.xlat('SavedSuccessfully'));
@@ -4414,23 +4414,23 @@ function DataCaptureBO(InputParm) {
             //    IsSuccess = false;
             //}
             if (CookingTemp != "" && PreTempIn != "" && CookingTemp < PreTempIn) {
-                alert(xlatService.xlat('CookingTempPreTempInMsg'));
+                navigator.notification.alert(xlatService.xlat('CookingTempPreTempInMsg'), ['OK'], "");
                 IsSuccess = false;
             }
             else if (CookingTemp != "" && BcTempIn != "" && CookingTemp < BcTempIn) {
-                alert(xlatService.xlat('CookingTempBTempInMsg'));
+                navigator.notification.alert(xlatService.xlat('CookingTempBTempInMsg'), ['OK'], "");
                 IsSuccess = false;
             }
             else if (BcTempOut != "" && PreTempIn != "" && BcTempOut > PreTempIn) {
-                alert(xlatService.xlat('PreTempInBTempOutMsg'));
+                navigator.notification.alert(xlatService.xlat('PreTempInBTempOutMsg'), ['OK'], "");
                 IsSuccess = false;
             }
             else if (PreTempIn != "" && PreTempOut != "" && PreTempOut > PreTempIn) {
-                alert(xlatService.xlat('PreTempInPreTempOutMsg'));
+                navigator.notification.alert(xlatService.xlat('PreTempInPreTempOutMsg'), ['OK'], "");
                 IsSuccess = false;
             }
             else if (BcTempIn != "" && BcTempOut != "" && BcTempOut > BcTempIn) {
-                alert(xlatService.xlat('BTempInBTempOutMsg'));
+                navigator.notification.alert(xlatService.xlat('BTempInBTempOutMsg'), ['OK'], "");
                 IsSuccess = false;
             }           
             
@@ -4457,91 +4457,92 @@ function DataCaptureBO(InputParm) {
 
             if (GoodsType == 4 && DMVechicleTag == 1 && ProductStatus == 22) {
                 if (FrozenState == '' && ApprovalTag == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-004 :: Please select Frozen State, Approval Tag No and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-004 :: Please select Frozen State, Approval Tag No and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '' && ApprovalTag == '') {
-                    alert("MN-RQ-GRV-005 :: Please select Frozen State and Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-005 :: Please select Frozen State and Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-006 :: Please select Frozen State and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-006 :: Please select Frozen State and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (ApprovalTag == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-007 :: Please select Approval Tag No and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-007 :: Please select Approval Tag No and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '') {
-                    alert("MN-RQ-GRV-008 :: Please select Frozen State");
+                    navigator.notification.alert("MN-RQ-GRV-008 :: Please select Frozen State", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (ApprovalTag == '') {
-                    alert("MN-RQ-GRV-009 :: Please select Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-009 :: Please select Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (SNCNo == '') {
-                    alert("MN-RQ-GRV-010 :: Please select SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-010 :: Please select SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (GoodsType == 4 && DMVechicleTag == 1) {
                 if (FrozenState == '' && ApprovalTag == '') {
-                    alert("MN-RQ-GRV-005 :: Please select Frozen State and Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-005 :: Please select Frozen State and Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '') {
-                    alert("MN-RQ-GRV-008 :: Please select Frozen State");
+                    navigator.notification.alert("MN-RQ-GRV-008 :: Please select Frozen State", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (ApprovalTag == '') {
-                    alert("MN-RQ-GRV-009 :: Please select Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-009 :: Please select Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (GoodsType == 4 && ProductStatus == 22) {
                 if (FrozenState == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-006 :: Please select Frozen State and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-006 :: Please select Frozen State and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (FrozenState == '') {
-                    alert("MN-RQ-GRV-008 :: Please select Frozen State");
+                    navigator.notification.alert("MN-RQ-GRV-008 :: Please select Frozen State", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (SNCNo == '') {
-                    alert("MN-RQ-GRV-010 :: Please select SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-010 :: Please select SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (DMVechicleTag == 1 && ProductStatus == 22) {
                 if (ApprovalTag == '' && SNCNo == '') {
-                    alert("MN-RQ-GRV-007 :: Please select Approval Tag No and SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-007 :: Please select Approval Tag No and SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (ApprovalTag == '') {
-                    alert("MN-RQ-GRV-009 :: Please select Approval Tag No");
+                    navigator.notification.alert("MN-RQ-GRV-009 :: Please select Approval Tag No", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (SNCNo == '') {
-                    alert("MN-RQ-GRV-010 :: Please select SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-010 :: Please select SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (GoodsType == 4) {
                 if (FrozenState == '') {
-                    alert("MN-RQ-GRV-008 :: Please select Frozen State");
+                    navigator.notification.alert("MN-RQ-GRV-008 :: Please select Frozen State", ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (DMVechicleTag == 1) {
                 if (ApprovalTag == '') {
-                    alert("MN-RQ-GRV-009 :: Please select Approval Tag");
+                    navigator.notification.alert("MN-RQ-GRV-009 :: Please select Approval Tag", ['OK'], "");
+					
                     IsSuccess = false;
                 }
             }
             else if (ProductStatus == 22) {
                 if (SNCNo == '') {
-                    alert("MN-RQ-GRV-010 :: Please select SNC No");
+                    navigator.notification.alert("MN-RQ-GRV-010 :: Please select SNC No", ['OK'], "");
                     IsSuccess = false;
                 }
             }
@@ -4577,7 +4578,8 @@ function DataCaptureBO(InputParm) {
 
             //alert(' ProductionDateMode : ' + ProductionDateMode + " , PDDate : " + PDDate + " , PDMonthYear :" + PDMonthYear + " , ExpiryDateMode :" + ExpiryDateMode + " , ExDate :" + ExDate + " , ExUseBy :" + ExUseBy + " , ExUseBefore :" + ExUseBefore);
 
-            alert(' ProductionDateMode : ' + ProductionDateMode +  " , ExpiryDateMode :" + ExpiryDateMode  );
+			navigator.notification.alert((' ProductionDateMode : ' + ProductionDateMode +  " , ExpiryDateMode :" + ExpiryDateMode  ), ['OK'], "");
+			
             var msg = "MN-RQ-GRV-001 :: Please select";
             if (GoodsType == 4 && FrozenState == '') {
                 if (msg != "MN-RQ-GRV-001 :: Please select") {
@@ -4668,7 +4670,7 @@ function DataCaptureBO(InputParm) {
             }
 
             if (IsSuccess == false) {
-                alert(msg);
+                navigator.notification.alert(msg, ['OK'], "");
             }
 
             return IsSuccess;
@@ -4690,37 +4692,37 @@ function DataCaptureBO(InputParm) {
             
             if (oStocktype == 72) {//GlassWare                  
                 if (scope.NewDCModel.AddlGlasswareControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Glassware");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Glassware", ['OK'], "");
                     IsSuccess = false;
                   }
              }
             else if (oStocktype == 73) {//Media                  
                 if (scope.NewDCModel.AddlParameterControlId == "" && scope.NewDCModel.AddlMediaorReagentsControlId == "" && scope.NewDCModel.AddlBrandNameControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Parameter,Media or Reagents and Brand Name");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Parameter,Media or Reagents and Brand Name", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlParameterControlId == "" && scope.NewDCModel.AddlMediaorReagentsControlId == "" && scope.NewDCModel.AddlBrandNameControlId != "") {
-                    alert("MN-RQ-CST-008 :: Please select Parameter and Media or Reagents");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Parameter and Media or Reagents", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlParameterControlId == "" && scope.NewDCModel.AddlMediaorReagentsControlId != "" && scope.NewDCModel.AddlBrandNameControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Parameter and Brand Name");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Parameter and Brand Name", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlParameterControlId != "" && scope.NewDCModel.AddlMediaorReagentsControlId == "" && scope.NewDCModel.AddlBrandNameControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Media or Reagents and Brand Name");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Media or Reagents and Brand Name", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlParameterControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Parameter");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Parameter", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlMediaorReagentsControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Media or Reagents");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Media or Reagents", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.AddlBrandNameControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please select Brand Name");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please select Brand Name", ['OK'], "");
                     IsSuccess = false;
                 }
              }            
@@ -4744,27 +4746,27 @@ function DataCaptureBO(InputParm) {
 
             if (oExternalCaliberation == 78 && oPreventionMaintanence == 78) {
                 if (scope.NewDCModel.txtECServiceProviderControlId == "" && scope.NewDCModel.txtPMServiceProviderControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider and Preventive Maintanance Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider and Preventive Maintanance Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.txtECServiceProviderControlId == "" && scope.NewDCModel.txtPMServiceProviderControlId != "") {
-                    alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
                 else if (scope.NewDCModel.txtECServiceProviderControlId != "" && scope.NewDCModel.txtPMServiceProviderControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please enter Preventive Maintanance Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter Preventive Maintanance Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
             }
            else if (oExternalCaliberation == 78) {                  
                 if (scope.NewDCModel.txtECServiceProviderControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter External Caliberation Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
             }
            else if (oPreventionMaintanence == 78) {
                 if (scope.NewDCModel.txtPMServiceProviderControlId == "") {
-                    alert("MN-RQ-CST-008 :: Please enter Preventive Maintanance Service Provider");
+                    navigator.notification.alert("MN-RQ-CST-008 :: Please enter Preventive Maintanance Service Provider", ['OK'], "");
                     IsSuccess = false;
                 }
             }
@@ -7130,12 +7132,12 @@ function DataCaptureBO(InputParm) {
             if (TestType == 63) {
                 if (ThermoLabel == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-002 :: Please select ThermoLabel");
+                    navigator.notification.alert("MN-RQ-DPT-002 :: Please select ThermoLabel", ['OK'], "");
                 }
 
                 else if (DcPlaceId !=3 && ThermoLabel == 67 && (WashType == 60 || (WashType == 61 && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (1)" && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (2)") || (WashType == 62 && DishwashMachine != "HOBART   CR 1" && DishwashMachine != "HOBART   TC 1" && DishwashMachine != "HOBART   C 10")) && QuadTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-003 :: Please select QuadTest");
+                    navigator.notification.alert("MN-RQ-DPT-003 :: Please select QuadTest", ['OK'], "");
                 }
                 //else if (ThermoLabel == 67 && QuadTest == '') {
                 //    IsSuccess = false;
@@ -7147,7 +7149,7 @@ function DataCaptureBO(InputParm) {
             else if (TestType == 64) {
                 if (QuadTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-003 :: Please select QuadTest");
+                    navigator.notification.alert("MN-RQ-DPT-003 :: Please select QuadTest", ['OK'], "");
                 }
             }
 
@@ -7155,23 +7157,23 @@ function DataCaptureBO(InputParm) {
             else if (TestType == 64) {
                 if (ChlorineTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-004 :: Please select ChlorineTest");
+                    navigator.notification.alert("MN-RQ-DPT-004 :: Please select ChlorineTest", ['OK'], "");
                 }
             }
 
 
             if (WashType == 60 && PotMachineNo == '' ){
                 IsSuccess = false;
-                alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
             }
 
             else if (WashType == 61 && TrolleyMachineNo == '') {
                 IsSuccess = false;
-                alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
             }
             else if (WashType == 62 && DishwashMachineNo == '') {
                 IsSuccess = false;
-                alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
             }
 
 
@@ -7210,13 +7212,13 @@ function DataCaptureBO(InputParm) {
             if (TestType == 63) {
                 if (ThermoLabel == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-002 :: Please select ThermoLabel");
+                    navigator.notification.alert("MN-RQ-DPT-002 :: Please select ThermoLabel", ['OK'], "");
                 }
 
                 //else if (DcPlaceId != 3 && ThermoLabel == 67 && (WashType == 60 || (WashType == 61 && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (1)" && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (2)") || (WashType == 62 && DishwashMachine != "HOBART   CR 1" && DishwashMachine != "HOBART   TC 1" && DishwashMachine != "HOBART   C 10")) && QuadTest == '') {
                 else if (DcPlaceId != 3 && ThermoLabel == 67 && ((WashType == 61 && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (1)" && TrolleyMachine != "COLD KITCHEN TROLLEY WASH (2)") || (WashType == 62 && DishwashMachine != "HOBART   CR 1" && DishwashMachine != "HOBART   TC 1" && DishwashMachine != "HOBART   C 10")) && QuadTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-003 :: Please select QuadTest");
+                    navigator.notification.alert("MN-RQ-DPT-003 :: Please select QuadTest", ['OK'], "");
                 }
                 //else if (ThermoLabel == 67 && QuadTest == '') {
                 //    IsSuccess = false;
@@ -7228,7 +7230,7 @@ function DataCaptureBO(InputParm) {
             else if (TestType == 64) {
                 if (QuadTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-003 :: Please select QuadTest");
+                    navigator.notification.alert("MN-RQ-DPT-003 :: Please select QuadTest", ['OK'], "");
                 }
             }
 
@@ -7236,7 +7238,7 @@ function DataCaptureBO(InputParm) {
             else if (TestType == 65) {
                 if (ChlorineTest == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-004 :: Please select ChlorineTest");
+                    navigator.notification.alert("MN-RQ-DPT-004 :: Please select ChlorineTest", ['OK'], "");
                 }
             }
 
@@ -7244,36 +7246,36 @@ function DataCaptureBO(InputParm) {
             if (WashType == 60){
                 if (TestType == '' && PotMachineNo == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Test Type and Machine No.");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Test Type and Machine No.", ['OK'], "");
                 }
 
                 else if (PotMachineNo == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
                 }
 
                 else if (TestType == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Test Type");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Test Type", ['OK'], "");
                 }
             }
 
             else if (WashType == 61 && TrolleyMachineNo == '') {
                 IsSuccess = false;
-                alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
             }
             else if (WashType == 62){
                 if (TestType == '' && DishwashMachineNo == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Test Type and Machine No.");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Test Type and Machine No.", ['OK'], "");
                 }
                 else if (TestType == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Test Type");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Test Type", ['OK'], "");
                 }
                 else if (DishwashMachineNo == '') {
                     IsSuccess = false;
-                    alert("MN-RQ-DPT-005 :: Please select Machine No.");
+                    navigator.notification.alert("MN-RQ-DPT-005 :: Please select Machine No.", ['OK'], "");
                 }
             }
 
@@ -9272,7 +9274,7 @@ function DataCaptureBO(InputParm) {
                             //Todo :: (Sangeeta Bhatt : 06-10-2017) : Need to remove , temporarily kept for hiding two saved messages
                             if (OneViewSessionStorage.Get("ServiceId") == 23) {
                                 if (OneViewSessionStorage.Get("TemplateId") != 3) {
-                                    alert(xlatService.xlat('UpdatedSuccessfully'));
+                                    navigator.notification.alert(xlatService.xlat('UpdatedSuccessfully'), ['OK'], "");
                                 }
                             }
                             else {
@@ -9280,7 +9282,7 @@ function DataCaptureBO(InputParm) {
                                     //No alert
                                 }
                                 else {
-                                    alert(xlatService.xlat('UpdatedSuccessfully'));
+                                    navigator.notification.alert(xlatService.xlat('UpdatedSuccessfully'), ['OK'], "");
                                 }
                             }
                         }
@@ -29135,7 +29137,7 @@ function DataCaptureBO(InputParm) {
             return IsSuccess;
         }
         catch (Excep) {
-            alert("Excep .." + Excep + "...." + JSON.stringify(Excep));
+            navigator.notification.alert(("Excep .." + Excep + "...." + JSON.stringify(Excep)), ['OK'], "");
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.BulkWasteElementValidation", Excep);
         }
     }
@@ -30103,7 +30105,7 @@ function DataCaptureBO(InputParm) {
                         IsValid = false;
                        
 
-                        alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"));
+                        navigator.notification.alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"), ['OK'], "");
                     }
                 }
 
@@ -30114,7 +30116,7 @@ function DataCaptureBO(InputParm) {
             }
             else {
                 
-                alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"));
+                navigator.notification.alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"), ['OK'], "");
             }
 
             //alert(JSON.stringify(CPActionResult[RuleId]));

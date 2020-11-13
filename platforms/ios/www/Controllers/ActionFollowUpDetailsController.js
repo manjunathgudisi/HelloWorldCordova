@@ -128,11 +128,17 @@ function ActionFollowUpDetailsFacade(parm) {
             $scope.MultiMediaSubElements = [];
 
             var ServiceId = OneViewSessionStorage.Get("ServiceId");
-            if (ServiceId == 36 || ServiceId == 5 || ServiceId == 40 || ServiceId == 6 || ServiceId == 7 || ServiceId == 12 || ServiceId == 14 || ServiceId == 26 || ServiceId == 29 || ServiceId == 37 || ServiceId == 38 || ServiceId == 43 || ServiceId == 45 || ServiceId == 46) {
+            if (ServiceId == 36 || ServiceId == 5 || ServiceId == 40 || ServiceId == 6 || ServiceId == 7 || ServiceId == 12 || ServiceId == 14 || ServiceId == 26 || ServiceId == 29 || ServiceId == 37 || ServiceId == 38 || ServiceId == 43 || ServiceId == 45 || ServiceId == 46 || ServiceId == 52) {
                 $scope.HidePreviewButton = true;
             }
             else {
                 $scope.HidePreviewButton = false;
+            }
+
+
+            var IsHidePreviewButton = _ActionFollowUpDetailsBO.IsNeedtoHidePreviewButton();
+            if (IsHidePreviewButton == true) {
+                $scope.HidePreviewButton = true;
             }
             OneViewConsole.Debug("Init end", "ActionFollowUpDetailsFacade.Init");
         }
@@ -1070,6 +1076,40 @@ function ActionFollowUpDetailsBO(InputParm) {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "DataCaptureBO.CreateMultiMediaSubElements", Excep);
+        }
+    }
+
+
+    this.IsNeedtoHidePreviewButton = function (Req) {
+        try {
+            OneViewConsole.Debug("ViewButtonHandler start", "LandingPageFacade.ViewButtonHandler");
+            var IsSuccess = false;
+
+            var BusinessEventHandlerObjectKeys = "IsNeedtoHidePreviewButton";
+            //var TemplateId = Req.TemplateId;
+
+            var _BusinessEventEntityBO = new BusinessEventEntityBO();
+            //   var ViewRecordHandlerObj = { RequiredBusinessEventHandlerObjectKeys: "ValidateImageExistForAction", TemplateId: "" };
+            var ReqParameter = { ClassName: "HidePreviewButtonComponent", MethodName: "IsNeedtoHidePreviewButton", RequiredBusinessEventHandlerObjectKeys: {}, IsTemplateValidationRequired: false, TemplateIdLst: "", };
+            ReqParameter.RequiredBusinessEventHandlerObjectKeys[BusinessEventHandlerObjectKeys] = "";
+
+            var _BusinessEventEntityBO = new BusinessEventEntityBO();
+            var _IsBussinessEventExist = _BusinessEventEntityBO.IsBussinessEventExist(ReqParameter);
+
+            if (_IsBussinessEventExist.BusinessEventHandlersObjectKeysDetails[BusinessEventHandlerObjectKeys] != undefined) {
+                if (_IsBussinessEventExist.BusinessEventHandlersObjectKeysDetails[BusinessEventHandlerObjectKeys].IsSuccess == true) {
+                    IsSuccess = true;
+                }
+
+            }
+
+            OneViewConsole.Debug("ViewButtonHandler end", "LandingPageFacade.ViewButtonHandler");
+            //alert("IsSuccess : " + IsSuccess);
+            // alert(IsSuccess);
+            return IsSuccess;
+        }
+        catch (Excep) {
+            oOneViewExceptionHandler.Catch(Excep, "LandingPageFacade.ViewButtonHandler", xlatService);
         }
     }
 }

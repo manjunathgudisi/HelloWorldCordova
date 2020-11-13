@@ -77,10 +77,10 @@ function DcApprovalDAO() {
 
     this.GetUserIdAndPassword = function (ApproverUserIds, UserId, Password) {
 
-        try {         
+        try {
            OneViewConsole.Debug("GetUserIdAndPassword start", "DcApprovalDAO.GetUserIdAndPassword");
 
-           var Query = "SELECT * FROM UserMasterEntity WHERE  ServerId='" + ApproverUserIds + "' and UserName='" + UserId + "'and Password='" + Password + "'";          
+           var Query = "SELECT * FROM UserMasterEntity WHERE  ServerId='" + ApproverUserIds + "' and UserName='" + UserId + "'and Password='" + Password + "'";
             OneViewConsole.Debug("Requested Query : " + Query, "DcApprovalDAO.GetUserIdAndPassword");
             var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
 
@@ -164,12 +164,22 @@ function DcApprovalDAO() {
 
                     var DCApprovalOtherInfoMultimediaQuery = "Select ClientGuid FROM DCApprovalOtherInfoEntity Where Id IN " + DCApprovalOtherInfoExp;
                     
-                    var DCApprovalOtherInfoMultimediaResult = _OneViewSqlitePlugin.ExcecuteSqlReader(DCApprovalOtherInfoMultimediaQuery);                    
+                    var DCApprovalOtherInfoMultimediaResult = _OneViewSqlitePlugin.ExcecuteSqlReader(DCApprovalOtherInfoMultimediaQuery);
                     var DCApprovalOtherInfoMultimediaExp = FomatForInConditionByClientGuid(DCApprovalOtherInfoMultimediaResult);
 
                     _OneViewSqlitePlugin.ExcecuteSql("Update MultiMediaBlobSubElements Set ProcessCount = ProcessCount+1 Where IsSynchronized = 'false' And MappedEntityClientGuid IN " + DCApprovalOtherInfoMultimediaExp);
                     var MultiMediaBlobSubElementsDeleteQuery = "SELECT * FROM MultiMediaBlobSubElements WHERE MappedEntityClientGuid IN " + DCApprovalOtherInfoMultimediaExp;
-                    MultiMediaBlobSubElementsLst = _OneViewSqlitePlugin.ExcecuteSqlReader(MultiMediaBlobSubElementsDeleteQuery);                    
+                    MultiMediaBlobSubElementsLst = _OneViewSqlitePlugin.ExcecuteSqlReader(MultiMediaBlobSubElementsDeleteQuery);
+                  
+                    if (MultiMediaBlobSubElementsLst.length > 0) {
+                        for (var i = 0; i < MultiMediaBlobSubElementsLst.length; i++) {
+                            if (MultiMediaBlobSubElementsLst[i].BlobFile != undefined) {
+                                if (MultiMediaBlobSubElementsLst[i].BlobFile == 0 || MultiMediaBlobSubElementsLst[i].BlobFile == "" || MultiMediaBlobSubElementsLst[i].BlobFile == undefined) {
+                                    MultiMediaBlobSubElementsLst[i].BlobFile = null;
+                                }
+                            }
+                        }
+                    }
                 }
                 
                 DcApprovalDTOLst = NormalizeDcApprovalList(DcApprovalEntityLst, DcApprovalDetailsEntityLst, DcApprovalHistoryEntityLst, DCApprovalOtherInfoEntityLst, MultiMediaBlobSubElementsLst);
@@ -182,7 +192,7 @@ function DcApprovalDAO() {
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DcApprovalDAO.GetAllDcApprovalInfoForUpload", Excep);
         }
-        finally {           
+        finally {
         }
     }
 
@@ -225,7 +235,7 @@ function DcApprovalDAO() {
 
             OneViewConsole.Debug("UpdateDcApprovalInfo end", "DcApprovalDAO.UpdateDcApprovalInfo");
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DcApprovalDAO.UpdateDcApprovalInfo", Excep);
         }
         finally {
@@ -402,10 +412,10 @@ function DcApprovalDAO() {
             
             return DcApprovalList;
         }
-        catch (Excep) {            
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DcDAO.NormalizeDcApprovalList", Excep);
         }
-        finally {           
+        finally {
         }
     }
 
@@ -455,7 +465,7 @@ function DcApprovalDAO() {
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("Framework", "DcApprovalDAO.DeleteByDcInfo", Excep);
         }
-        finally {           
+        finally {
         }
     }
 
@@ -646,3 +656,4 @@ function DcApprovalHistoryDAO() {
         }
     }
 }
+

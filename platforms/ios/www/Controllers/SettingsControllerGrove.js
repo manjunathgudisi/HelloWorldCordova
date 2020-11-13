@@ -9,7 +9,7 @@ var ConnectedProbe = {};
 MyApp.controller('SettingsCtrl', function ($scope, $location, xlatService, $timeout) {
     var _oSettingsFacade = new SettingsFacade();
 
-    // Initialize page   
+    // Initialize page
     _oSettingsFacade.Init($scope, xlatService);
 
     // Page load
@@ -18,7 +18,7 @@ MyApp.controller('SettingsCtrl', function ($scope, $location, xlatService, $time
     /// <summary>
     /// Load all settings event registration
     /// while end user press the settings menu, this event will invoke
-    /// </summary>  
+    /// </summary>
     $scope.ShowSettings = function () {
         var _oSettingsFacade = new SettingsFacade();
         _oSettingsFacade.ShowSettings($scope, '', xlatService);
@@ -82,16 +82,16 @@ function SettingsFacade() {
         this.LoadAllPairedDevices_ClientValidatorConfigList = [{ 'IsDefaultClientValidator': true, 'IsCustomClientValidator': false, 'ClassName': 'BluetoothOnValidation' }];
 
 
-        // Vallidation list for ChangeProbe 
+        // Vallidation list for ChangeProbe
         this.ChangeProbe_ClientValidatorConfigList = [];
 
         
 
         /// <summary>
-        /// Initialize page   
+        /// Initialize page
         /// </summary>
-        /// <param name="$scope">Current scope</param>  
-        /// <param name="xlatService">xlatService for globalization</param>   
+        /// <param name="$scope">Current scope</param>
+        /// <param name="xlatService">xlatService for globalization</param>
         this.Init = function ($scope, xlatService) {
             try {
                 OneViewConsole.Debug("Init Start", "SettingsFacade.Init");
@@ -109,9 +109,9 @@ function SettingsFacade() {
         }
 
         /// <summary>
-        /// PageLoad 
+        /// PageLoad
         /// </summary>
-        /// <param name="$scope">Current scope</param>   
+        /// <param name="$scope">Current scope</param>
         /// <param name="xlatService">xlatService for globalization</param>
         /// <param name="SpinService">SpinService for loader</param>
         this.PageLoad = function ($scope, xlatService, SpinService) {
@@ -124,7 +124,7 @@ function SettingsFacade() {
                 OneViewConsole.Debug("PageLoad End", "SettingsFacade.PageLoad");
 
             }
-            catch (Excep) {           
+            catch (Excep) {
                 oOneViewExceptionHandler.Catch(Excep, "SettingsFacade.PageLoad", xlatService);
             }
             finally {
@@ -135,7 +135,7 @@ function SettingsFacade() {
         /// <summary>
         /// Show all settings
         /// </summary>
-        /// <param name="$scope">Current scope</param>   
+        /// <param name="$scope">Current scope</param>
         /// <param name="SpinService">SpinService for loader</param>
         this.ShowSettings = function ($scope, SpinService, xlatService) {
             try {
@@ -195,8 +195,8 @@ function SettingsFacade() {
                                 SettingsObj.badgetxt = "Manual";
                                 $scope.$apply();
                             }
-                        });                      
-                    } 
+                        });
+                    }
                 }
                 else if (SettingsObj.title == "Restore DB") {
 
@@ -330,9 +330,9 @@ function SettingsFacade() {
                             oOneViewProgressbar.SetProgressValue(100);
 
                             alert('IN-SU-MSE-011 :: Refreshed successfully');
-                        }                      
+                        }
 
-                        oOneViewProgressbar.Stop();                      
+                        oOneViewProgressbar.Stop();
                     }
                 }
 
@@ -384,7 +384,7 @@ function SettingsFacade() {
                         _oOneViewAppConfig.CheckForNewUpdates(toaster, true);
                     }
                     else {
-                        alert(xlatService.xlat('NoInternetConnection'));
+                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                        // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
@@ -412,7 +412,7 @@ function SettingsFacade() {
                             $scope.PasswordUpdateButton = true;
                         }
                         else {
-                            alert(xlatService.xlat('NoInternetConnection'));
+                            navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                             OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                         }
@@ -476,7 +476,8 @@ function SettingsFacade() {
                         $scope.NewPassword = "";
                         $scope.ConfirmPassword = "";
 
-                        alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'));
+                        //alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'));
+						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'), ['OK'], "");
 
                         $location.url('/login');
 
@@ -484,14 +485,17 @@ function SettingsFacade() {
                         ClearGlobalVariable();
                     }
                 }
-                else if ($scope.OldPassword == undefined || $scope.OldPassword == "") {
-                    alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'));
+				else if ($scope.OldPassword == undefined || $scope.OldPassword == "") {
+                    //alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'), ['OK'], "");
                 }
                 else if ($scope.NewPassword == undefined || $scope.NewPassword == "") {
-                    alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'));
+                    //alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'), ['OK'], "");
                 }
                 else if ($scope.ConfirmPassword == undefined || $scope.ConfirmPassword == "") {
-                    alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'));
+                    //alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'));
+					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'), ['OK'], "");
                 }
                
                 OneViewConsole.Debug("ResetPassword End", "SettingsFacade.ResetPassword");
@@ -502,7 +506,7 @@ function SettingsFacade() {
         }
 
         /// <summary>
-        /// Change one probe to another probe 
+        /// Change one probe to another probe
         /// </summary>
         /// <param name="$scope">Current scope</param>
         /// <param name="probeObj">Selected probe info</param>
@@ -521,7 +525,7 @@ function SettingsFacade() {
                 // If vallidation success
                 if (oDefaultValidationResponse.IsSuccess == true) {
 
-                    // if no probe is connected 
+                    // if no probe is connected
                     if (ConnectedProbe[0] == undefined) {
 
                         ConnectProbe($scope, probeObj, xlatService, toaster, $timeout);
@@ -533,7 +537,7 @@ function SettingsFacade() {
                         _oSettingsPresenter.UpdateProbeDisconnectStatus($scope, probeObj);
                     
                         //  toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('DisconnectExistingProbe'));
-                        alert(xlatService.xlat('DisconnectExistingProbe'));
+                        navigator.notification.alert(xlatService.xlat('DisconnectExistingProbe'), ['OK'], "");
                     }
                         //Disconnect the connected probe
                     else if (ConnectedProbe[0] != undefined && ConnectedProbe[0].Name == probeObj.Name) {
@@ -580,7 +584,7 @@ function SettingsFacade() {
                 var _oVallidationHandler = new VallidationHandler();
 
                 var parm = { scope: $scope, toaster: toaster, xlatService: xlatService, ClientValidatorConfigList: MyInstance.LoadAllPairedDevices_ClientValidatorConfigList }
-                //1. BluetoothOnValidation(DefaultClientValidator)//if bluetoooth is on vallidaion success     
+                //1. BluetoothOnValidation(DefaultClientValidator)//if bluetoooth is on vallidaion success
                 //  var oDefaultValidationResponse = _oVallidationHandler.Validate($scope, toaster, xlatService, MyInstance.LoadAllPairedDevices_ClientValidatorConfigList);
                 var oDefaultValidationResponse = _oVallidationHandler.Validate(parm);
                
@@ -600,7 +604,7 @@ function SettingsFacade() {
                     }
                         // If no devices available
                     else {
-                        alert(xlatService.xlat('Nodevicesfound'));
+                        navigator.notification.alert(xlatService.xlat('Nodevicesfound'), ['OK'], "");
                        // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('Nodevicesfound'));
                     }
                 }
@@ -622,7 +626,7 @@ function SettingsFacade() {
 
 
         /// <summary>
-        /// Change one probe to another probe 
+        /// Change one probe to another probe
         /// </summary>
         /// <param name="$scope">Current scope</param>
         /// <param name="probeObj">Selected probe info</param>
@@ -648,16 +652,16 @@ function SettingsFacade() {
                         var IsConnectionAlive = oBluetoothTemperatureLoggerBO.IsConnectionAlive(probeObj.Name);
                         
                         if (IsConnectionAlive) {
-                            alert(xlatService.xlat('ProbeConnectedSuccesfully'));
+                            navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
                           //  toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectedSuccesfully'));
-                            $scope.probes[probeObj.Index].selected = true;                            
+                            $scope.probes[probeObj.Index].selected = true;
                             //Save selected probe information
                             ////alert('Connected successfully');
                             _oSettingsPresenter.SaveSelectedDevice(probeObj);
                         }
-                        else {                        
+                        else {
                             // toaster.pop('error', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectionFailed'));
-                            alert(xlatService.xlat('ProbeConnectionFailed'));
+                            navigator.notification.alert(xlatService.xlat('ProbeConnectionFailed'), ['OK'], "");
                             $scope.probes[probeObj.Index].selected = '';
                            //// alert('Connection failed try again');
                             oOneViewBluetoothTemperatureLoggerPlugin.DisConnect("BlueThermProbe");
@@ -699,11 +703,11 @@ function SettingsFacade() {
                 OneViewConsole.Debug("ConnectProbe End", "SettingsFacade.ConnectProbe");
             
             }
-            catch (Excep) {              
+            catch (Excep) {
                 oOneViewExceptionHandler.Catch(Excep, "SettingsFacade.OnProbeChange", xlatService);
             }
             //finally {
-            //    //////////oOneViewBluetoothTemperatureLoggerPlugin = null; ////Dont un-comment 
+            //    //////////oOneViewBluetoothTemperatureLoggerPlugin = null; ////Dont un-comment
             //    _oSettingsPresenter = null;
             //    result = null;
             //}
@@ -723,7 +727,7 @@ function SettingsFacade() {
 
 
         /// <summary>
-        /// Change one probe to another probe 
+        /// Change one probe to another probe
         /// </summary>
         /// <param name="$scope">Current scope</param>
         /// <param name="probeObj">Selected probe info</param>
@@ -749,7 +753,7 @@ function SettingsFacade() {
                     $scope.probes[probeObj.Index].selected = '';
 
                     // toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " disconnected successfully");
-                    alert(probeObj.Name + " disconnected successfully");
+                    navigator.notification.alert((probeObj.Name + " disconnected successfully"), ['OK'], "");
                 }
                 else {
                     // Update model with connection status
@@ -878,7 +882,7 @@ function SettingsPresenter() {
             OneViewConsole.Debug("PageLoad End", "SettingsPresenter.PageLoad");
         }
 
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("Presenter", "SettingsPresenter.PageLoad", Excep);
         }
         finally {
@@ -894,7 +898,7 @@ function SettingsPresenter() {
     /// </summary>
     /// <param name="$scope">Current scope</param>
     /// <param name="DeviceLst">List of paired devices</param>
-    /// <param name=SettingsObj>selected settings object</param>   
+    /// <param name=SettingsObj>selected settings object</param>
     this.ShowPairedDevices = function ($scope, DeviceLst, SettingsObj) {
         try {
             OneViewConsole.Debug("ShowPairedDevices Start", "SettingsPresenter.ShowPairedDevices");
@@ -916,10 +920,10 @@ function SettingsPresenter() {
                     }
                     else {
                         $scope.probes[i + 1] = { "Index": i + 1, "Id": DeviceLst[i].DeviceName, "Name": DeviceLst[i].DeviceName };
-                    }               
+                    }
                 }
                 else {
-                    $scope.probes[i + 1] = { "Index": i + 1, "Id": DeviceLst[i].DeviceName, "Name": DeviceLst[i].DeviceName };              
+                    $scope.probes[i + 1] = { "Index": i + 1, "Id": DeviceLst[i].DeviceName, "Name": DeviceLst[i].DeviceName };
                 }
             }
 
@@ -941,7 +945,7 @@ function SettingsPresenter() {
     /// <summary>
     /// SaveSelectedDevice
     /// </summary>
-    /// <param name="probeObj">Probe info</param>   
+    /// <param name="probeObj">Probe info</param>
     this.SaveSelectedDevice = function (probeObj) {
         try {
             OneViewConsole.Debug("SaveSelectedDevice Start", "SettingsPresenter.SaveSelectedDevice");
@@ -958,8 +962,8 @@ function SettingsPresenter() {
     /// <summary>
     /// UpdateProbeDisconnectStatus
     /// </summary>
-    /// <param name="$scope">Current scope</param>   
-    /// <param name="probeObj">Probe info</param>   
+    /// <param name="$scope">Current scope</param>
+    /// <param name="probeObj">Probe info</param>
     this.UpdateProbeDisconnectStatus = function ($scope, probeObj) {
         try {
             OneViewConsole.Debug("UpdateProbeDisconnectStatus Start", "SettingsPresenter.UpdateProbeDisconnectStatus");
@@ -976,8 +980,8 @@ function SettingsPresenter() {
     /// <summary>
     /// UpdateProbeSelectedStatus
     /// </summary>
-    /// <param name="$scope">Current scope</param>   
-    /// <param name="probeObj">Probe info</param>   
+    /// <param name="$scope">Current scope</param>
+    /// <param name="probeObj">Probe info</param>
     this.UpdateProbeSelectedStatus = function ($scope, probeObj) {
         try {
             OneViewConsole.Debug("UpdateProbeSelectedStatus Start", "SettingsPresenter.UpdateProbeSelectedStatus");
@@ -990,7 +994,7 @@ function SettingsPresenter() {
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("Presenter", "SettingsPresenter.UpdateProbeSelectedStatus", Excep);
         }
-    }  
+    }
 }
 
 function SettingsBO() {
@@ -1031,20 +1035,20 @@ function SettingsBO() {
                     //// alert("Probe" + ConnectedProbe[0].Name + " is disconnected ,please go to  settings page and reconnect the probe");
                     var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnectionLost');
                     // toaster.pop('info', xlatService.xlat('Title_Notification'), msg);
-                    alert(msg);
+                    navigator.notification.alert(msg, ['OK'], "");
                 }
                 else {
                     //// alert("Probe" + ConnectedProbe[0].Name + " is connected , go ahead");
                     var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnected');
                    // toaster.pop('success', xlatService.xlat('Title_Success'), msg);
-                    alert(msg);
+                    navigator.notification.alert(msg, ['OK'], "");
                 }
             }
             else {
                 ////alert("No Probe is connected ,please go to  settings page and connect the probe");
                 var msg = xlatService.xlat('ProbeConnectionLostOrNoProbe');
                 // toaster.pop('warning', xlatService.xlat('Title_Notification'), msg);
-                alert(msg);
+                navigator.notification.alert(msg, ['OK'], "");
 
                 var obj = document.getElementById('txtTemperatureLoggerControlId');
                 if (obj != null) {
@@ -1065,5 +1069,6 @@ function SettingsBO() {
     }
 
 }
+
 
 

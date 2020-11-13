@@ -283,10 +283,10 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
                 $location.url(oChild.DCStartRouteKey);               
             }
             else if (ProfileDetails != null && ProfileDetails.IsProfileValid == true && ProfileDetails.Occurence == oChild.DCStatusInfo.OverallCount) {
-                alert("IN-NF-LDP-010 :: Task already completed");
+                navigator.notification.alert("IN-NF-LDP-010 :: Task already completed", ['OK'], "");
             }
             else {
-                alert("IN-NF-LDP-001 :: No Profile(s) are available. Please download the profile(s) and continue");
+                navigator.notification.alert("IN-NF-LDP-001 :: No Profile(s) are available. Please download the profile(s) and continue", ['OK'], "");
             }
 
             OneViewConsole.Debug("LoadNewDC end", "LandingPageFacade.LoadNewDC");
@@ -332,7 +332,7 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
                 }
             }
             else {
-                alert("IN-NF-LDP-001 :: No data available for View or Edit");
+                navigator.notification.alert("IN-NF-LDP-001 :: No data available for View or Edit", ['OK'], "");
             }
 
             OneViewConsole.Debug("LoadViewDC end", "LandingPageFacade.LoadViewDC");
@@ -458,10 +458,10 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
                             MyInstance.Init();
                             MyInstance.PageLoad();
 
-                            alert("IN-NF-LDP-002 :: Task synchronized succsessfully");
+                            navigator.notification.alert("IN-NF-LDP-002 :: Task synchronized succsessfully", ['OK'], "");
                         }
                         else if (IsSuccess != null && IsSuccess == false) {
-                            alert("IN-NF-LDP-003 :: Task synchronization failed");
+                            navigator.notification.alert("IN-NF-LDP-003 :: Task synchronization failed", ['OK'], "");
                         }
 
                         oSetDefaultSpinner.Stop();
@@ -469,7 +469,7 @@ function LandingPageFacade($scope, $document, xlatService, $timeout, $location, 
                 });
             }
             else {
-                alert("IN-NF-LDP-004 :: Please upload the all data captures and try again");
+                navigator.notification.alert("IN-NF-LDP-004 :: Please upload the all data captures and try again", ['OK'], "");
             }
 
             OneViewConsole.Debug("SyncTask end", "LandingPageFacade.SyncTask");
@@ -747,7 +747,8 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
 
                         if (IsDefaultProfiledownloadSuccess == true) {
 
-                            alert("IN-SU-LNP-001 :: Profile(s) downloaded successfully");
+                            //alert("IN-SU-LNP-001 :: Profile(s) downloaded successfully");
+							navigator.notification.alert(xlatService.xlat("IN-SU-LNP-001 :: Profile(s) downloaded successfully"), ['Ok'], "");
 
                             MyInstance.SetByView(LandingPageViewInfo.LandingPageViewName);
                             MyInstance.UpdateTaskStatus(DCTaskViewInfoDTO);
@@ -827,7 +828,7 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
                 }
                 else {
                     //toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoDataForUpload'));
-                    alert(xlatService.xlat('NoDataForUpload'));
+                    navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                     OneViewConsole.Info("No dc available", "LandingPageBO.UploadDcAndAction");
                 }
             }
@@ -921,12 +922,12 @@ function LandingPageBO($scope, $document, xlatService, $timeout, $location, $tem
                         IsSuccess = true;
                     }
                     else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
-                        alert(xlatService.xlat('UploadFailed'));
+                        navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                         IsSuccess = false;
                     }
                 }
                 else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {
-                    alert(xlatService.xlat('UploadFailed'));
+                    navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     IsSuccess = false;
                 }
 

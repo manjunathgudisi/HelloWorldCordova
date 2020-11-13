@@ -497,9 +497,10 @@ function DcPreviewUIComponent(param) {
                         Html += '   <div class="margin-left">';
                     }
                     //Html += '<div class="list no-margin margin-bottom">';
+                    var IsNeedToHideUnansweredattribute = MyInstance.IsRequiredToHideUnansweredattribute();
                     for (var i = 0; i < ChildList.length ; i++) {
                         var Child = ChildList[i];
-                        Html += ReadChilds(Child, AttributeGroupHeader, DcResultDetailsDict);
+                        Html += ReadChilds(Child, AttributeGroupHeader, DcResultDetailsDict, IsNeedToHideUnansweredattribute);
                     }
                     // Html += '</div></div>';
                 }
@@ -516,10 +517,13 @@ function DcPreviewUIComponent(param) {
         }
     }
 
-    var ReadChilds = function (Child, AttributeGroupHeader, DcResultDetailsDict) {
+    var ReadChilds = function (Child, AttributeGroupHeader, DcResultDetailsDict, IsNeedToHideUnansweredattribute) {
         try {
+           
             var SubChildList = Child.Childs;
             var Html = "";
+          
+
             var _oDcHeaderFooterPreviewUIComponent = new DcHeaderFooterPreviewUIComponent();
             if (Child.IsAttributeGroup == true) {
                 if (Child.Name != "") {
@@ -535,7 +539,7 @@ function DcPreviewUIComponent(param) {
                             Html += ReadChilds(SubChild, AttributeGroupHeader, DcResultDetailsDict);
                         }
                         else {
-                            Html += MyInstance.FormAnswermodeHtml(SubChild, DcResultDetailsDict);
+                            Html += MyInstance.FormAnswermodeHtml(SubChild, DcResultDetailsDict, IsNeedToHideUnansweredattribute);
 
                         }
                     }
@@ -544,7 +548,7 @@ function DcPreviewUIComponent(param) {
 
             }
             else {
-                Html += MyInstance.FormAnswermodeHtml(Child, DcResultDetailsDict);
+                Html += MyInstance.FormAnswermodeHtml(Child, DcResultDetailsDict, IsNeedToHideUnansweredattribute);
 
             }
 
@@ -557,7 +561,7 @@ function DcPreviewUIComponent(param) {
         }
     }
 
-    this.FormAnswermodeHtml = function (TemplateData, DcResultDetailsDict) {
+    this.FormAnswermodeHtml = function (TemplateData, DcResultDetailsDict, IsNeedToHideUnansweredattribute) {
         try {
 
             OneViewConsole.Debug("FormAnswermodeHtml Start", "DcPreviewUIComponent.FormAnswermodeHtml");
@@ -613,6 +617,11 @@ function DcPreviewUIComponent(param) {
                                     if (AnswerList[m].Answer != "") {
                                         var Color = _oBandDetailsMasterDAO.GetBandDetailsColourCodeById(AnswerList[m].Answer);
                                         // Html += _oDcBandAnswermodePreviewUIComponent.GetAnswerHtml(AnswerList[m].AnswerValue, Color);
+                                        if (Color != null && Color != "null" && Color != "" && Color != undefined) {
+                                            if (Color.toUpperCase() == "AMBER") {                                               
+                                                Color = "#FFBF00";
+                                            }
+                                        }
                                         Html += _oDcOtherAnswermodePreviewUIComponent.GetMultiSelectAnswerHtml(AnswerList[m].AnswerValue, Color);
 
                                     }
@@ -788,6 +797,35 @@ function DcPreviewUIComponent(param) {
                 }
             }
             Html += '</div>';
+
+            //if (OneViewSessionStorage.Get("ServiceId") == 55) {
+            //    if (AnswerList.length > 0) {
+            //        if (AnswerList[0].IsNA != 'true' && AnswerList[0].Answer != "") {
+            //        }
+            //        else {
+            //            Html = "";
+            //        }
+            //    }
+            //    else {
+            //        Html = "";
+            //    }
+            //}
+
+            if (IsNeedToHideUnansweredattribute != undefined) {
+                if (IsNeedToHideUnansweredattribute == true) {
+                    if (AnswerList.length > 0) {
+                        if (AnswerList[0].IsNA != 'true' && AnswerList[0].Answer != "") {
+                        }
+                        else {
+                            Html = "";
+                        }
+                    }
+                    else {
+                        Html = "";
+                    }
+                }
+            }
+
             OneViewConsole.Debug("FormAnswermodeHtml End", "DcPreviewUIComponent.FormAnswermodeHtml");
             return Html;
         }
@@ -1873,7 +1911,37 @@ function DcPreviewUIComponent(param) {
         }
     }
 
-   
+    this.IsRequiredToHideUnansweredattribute = function (Req) {
+        try {
+            OneViewConsole.Debug("ViewButtonHandler start", "LandingPageFacade.ViewButtonHandler");
+            var IsSuccess = false;
+
+            var BusinessEventHandlerObjectKeys = "IsRequiredToHideUnansweredattributeForPreview";
+            //var TemplateId = Req.TemplateId;
+
+            var _BusinessEventEntityBO = new BusinessEventEntityBO();
+            //   var ViewRecordHandlerObj = { RequiredBusinessEventHandlerObjectKeys: "ValidateImageExistForAction", TemplateId: "" };
+            var ReqParameter = { ClassName: "HideUnansweredattributeFromPreviewComponent", MethodName: "IsRequiredToHideUnansweredattribute", RequiredBusinessEventHandlerObjectKeys: {}, IsTemplateValidationRequired: false, TemplateIdLst: "", };
+            ReqParameter.RequiredBusinessEventHandlerObjectKeys[BusinessEventHandlerObjectKeys] = "";
+
+            var _BusinessEventEntityBO = new BusinessEventEntityBO();
+            var _IsBussinessEventExist = _BusinessEventEntityBO.IsBussinessEventExist(ReqParameter);
+
+            if (_IsBussinessEventExist.BusinessEventHandlersObjectKeysDetails[BusinessEventHandlerObjectKeys] != undefined) {
+                if (_IsBussinessEventExist.BusinessEventHandlersObjectKeysDetails[BusinessEventHandlerObjectKeys].IsSuccess == true) {
+                    IsSuccess = true;
+                }
+
+            }
+
+            OneViewConsole.Debug("ViewButtonHandler end", "LandingPageFacade.ViewButtonHandler");
+            //alert("IsSuccess : " + IsSuccess);
+            return IsSuccess;
+        }
+        catch (Excep) {
+            oOneViewExceptionHandler.Catch(Excep, "LandingPageFacade.ViewButtonHandler", xlatService);
+        }
+    }
 }
 
 

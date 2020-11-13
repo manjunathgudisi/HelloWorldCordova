@@ -612,7 +612,9 @@
                     if (IsPreEventSuccess == true) {
                         IsSaveSuccess = Save();
                         if (IsSaveSuccess == true && EnableAutoUpload == true) {                          
-                            window.OneViewAutoUpload.Start();
+                            if (window.OneViewAutoUpload) {
+								window.OneViewAutoUpload.Start();
+							}
                         }
                     }
 
@@ -6525,7 +6527,7 @@
                 try {
                     OneViewConsole.Debug("Notify Start", "LVDefaultNotificationComponent.ShowDefaultJavaScriptAlert");
 
-                    alert(Msg);
+                    navigator.notification.alert(Msg, ['OK'], "");
 
                     OneViewConsole.Debug("Notify End", "LVDefaultNotificationComponent.ShowDefaultJavaScriptAlert");
                 }

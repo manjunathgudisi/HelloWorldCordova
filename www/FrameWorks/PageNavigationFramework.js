@@ -316,7 +316,7 @@
                           alert(xlatService.xlat("IN-SU-LVI-001 :: Record approved successfully"));
                       }
                       else {
-                          alert(xlatService.xlat(MsgKey));
+                          navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
                       }
                   }
               }
@@ -325,7 +325,7 @@
                       alert(xlatService.xlat("IN-SU-LVI-004 :: Record updated successfully"));
                   }
                   else {
-                      alert(xlatService.xlat(MsgKey));
+                      navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
                   }
               }
               else if (MessageKey.indexOf('Save') != -1) {
@@ -333,7 +333,7 @@
                       alert(xlatService.xlat("IN-SU-LVI-002 :: Record saved successfully"));
                   }
                   else {
-                      alert(xlatService.xlat(MsgKey));
+                      navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
                   }
               }
               else if (MessageKey.indexOf('Submit') != -1) {
@@ -341,7 +341,7 @@
                       alert(xlatService.xlat("IN-SU-LVI-003 :: Record saved successfully"));
                   }
                   else {
-                      alert(xlatService.xlat(MsgKey));
+                      navigator.notification.alert(xlatService.xlat(Msgkey), ['OK'], "");
                   }
               }              
               else {

@@ -36,4 +36,16 @@
     return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
+/*
+ 
+ UserDetails
+
+ UserName => mgrant, cjackson
+
+ Password => mgrant, cjackson
+
+ OrganizationName => CMFT, WHHT
+ 
+ */
+
 @end

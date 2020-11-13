@@ -9,7 +9,7 @@ function UploadBO(xlatService, toaster) {
     /// BatchUpload
     /// For particulat user (Login user)
     /// </summary>
-    /// <param name="_oDcFilterParamRequest">_oDcFilterParamRequest</param>   
+    /// <param name="_oDcFilterParamRequest">_oDcFilterParamRequest</param>
     this.BatchUploadAdv = function (_oDcFilterParamRequest) {
 
         var _oOneViewSqlitePlugin = new OneViewSqlitePlugin();
@@ -105,7 +105,8 @@ function UploadBO(xlatService, toaster) {
                         IsSuccess = false;
 
                         //toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailedLocal'));
-                        alert(xlatService.xlat('UploadFailedLocal'));
+                        //navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
+						navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
                         UploadedDcResponseLst = [];
                         OneViewConsole.Error("Upload failed local", "UploadBO.BatchUploadAdv");
 
@@ -127,7 +128,8 @@ function UploadBO(xlatService, toaster) {
                     IsSuccess = false;
 
                     // toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailed'));
-                    alert(xlatService.xlat('UploadFailed'));
+                    //navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
+					navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     UploadedDcResponseLst = [];
                     OneViewConsole.Info("Upload failed", "UploadBO.BatchUploadAdv");
                 }
@@ -151,7 +153,8 @@ function UploadBO(xlatService, toaster) {
                 IsSuccess = false;
 
                 // toaster.pop('success', xlatService.xlat('Success'), xlatService.xlat('UploadSuccess'));
-                alert(xlatService.xlat('UploadSuccess'));
+                //navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
+				navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
                 UploadedDcResponseLst = [];
                 OneViewConsole.Info("Upload success", "UploadBO.Upload");
             }
@@ -185,7 +188,7 @@ function UploadBO(xlatService, toaster) {
     /// BatchUpload
     /// For particulat user (Login user)
     /// </summary>
-    /// <param name="_oDcFilterParamRequest">_oDcFilterParamRequest</param>   
+    /// <param name="_oDcFilterParamRequest">_oDcFilterParamRequest</param>
     this.BatchUpload = function (_oDcFilterParamRequest) {
 
         var _oOneViewSqlitePlugin = new OneViewSqlitePlugin();
@@ -229,7 +232,7 @@ function UploadBO(xlatService, toaster) {
                     //alert(JSON.stringify(DCBlockerInfoRequest));
 
                     var _oDcApprovalDAO = new DcApprovalDAO();
-                    var DcApprovalDTOLst = _oDcApprovalDAO.GetAllDcApprovalInfoForUpload(DcInfo);                    
+                    var DcApprovalDTOLst = _oDcApprovalDAO.GetAllDcApprovalInfoForUpload(DcInfo);
 
                     var oUploadrequest = MakeUploadRequest(DataCaptureDTOLst, DynamicRCOData, DynamicOrgAssetNodeData, ActionResponse, MultiMediaBlobSubElementLst, AuditTrailDCLst, MultiMediaSubElementLst, DCBlockerInfoRequest, DcApprovalDTOLst);
 
@@ -275,7 +278,8 @@ function UploadBO(xlatService, toaster) {
                             oOneViewCordovaDialogs.alert(Msg, Title);
 
                             //toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailedLocal'));
-                            alert(xlatService.xlat('UploadFailedLocal'));
+                            //navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
+							navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
                             UploadedDcResponseLst = [];
                             OneViewConsole.Error("Upload failed local", "UploadBO.BatchUpload");
 
@@ -296,7 +300,8 @@ function UploadBO(xlatService, toaster) {
                         oOneViewCordovaDialogs.alert(Msg, Title);
 
                         // toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailed'));
-                        alert(xlatService.xlat('UploadFailed'));
+                        //navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
+						navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                         UploadedDcResponseLst = [];
                         OneViewConsole.Info("Upload failed", "UploadBO.BatchUpload");
                     }
@@ -319,10 +324,11 @@ function UploadBO(xlatService, toaster) {
                     oOneViewCordovaDialogs.alert(Msg, Title);
 
                     // toaster.pop('success', xlatService.xlat('Success'), xlatService.xlat('UploadSuccess'));
-                    alert(xlatService.xlat('UploadSuccess'));
+                    //navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
+					navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
                     UploadedDcResponseLst = [];
                     OneViewConsole.Info("Upload success", "UploadBO.Upload");
-                }          
+                }
 
             OneViewConsole.Debug("BatchUpload end", "UploadBO.BatchUpload");
         }
@@ -350,7 +356,7 @@ function UploadBO(xlatService, toaster) {
     /// <summary>
     /// BatchUpload
     /// For all users
-    /// </summary>  
+    /// </summary>
     this.BulkUpload = function (IsHideSuccessMsg) {
 
         var _oOneViewSqlitePlugin = new OneViewSqlitePlugin();
@@ -411,7 +417,7 @@ function UploadBO(xlatService, toaster) {
 
                         var oUploadrequest = MakeUploadRequest(DataCaptureDTOLst, DynamicRCOData, DynamicOrgAssetNodeData, ActionResponse, MultiMediaBlobSubElementLst, AuditTrailDCLst, MultiMediaSubElementLst, DCBlockerInfoRequest, DcApprovalDTOLst);
 
-                        //alert(JSON.stringify(oUploadrequest));  
+                        //alert(JSON.stringify(oUploadrequest));
 
                         var _UploadDcIL = new UploadDcIL(toaster);
                         var oUploadResponse = _UploadDcIL.Upload(oUploadrequest);
@@ -437,14 +443,16 @@ function UploadBO(xlatService, toaster) {
 
                                 // toaster.pop('success', xlatService.xlat('Success'), xlatService.xlat('UploadSuccess'));
                                 if (IsHideSuccessMsg != true) {
-                                    alert(xlatService.xlat('UploadSuccess'));
+                                    //navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
+									navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
                                 }
                                 OneViewConsole.Info("Upload success", "UploadBO.Upload");
                             }
                             catch (Excep) {
                                 // toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailedLocal'));
                                 if (IsHideSuccessMsg != true) {
-                                    alert(xlatService.xlat('UploadFailedLocal'));
+                                    //navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
+									navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
                                 }
                                 OneViewConsole.Info("Upload failed local", "UploadBO.BulkUpload");
                                 _oOneViewSqlitePlugin.Rollback();
@@ -454,7 +462,8 @@ function UploadBO(xlatService, toaster) {
                         else {
                             //toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailed'));
                             if (IsHideSuccessMsg != true) {
-                                alert(xlatService.xlat('UploadFailed'));
+                                //navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
+								navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                             }
                             OneViewConsole.Info("Upload failed", "UploadBO.BulkUpload");
                             IsSuccess = false;
@@ -463,7 +472,8 @@ function UploadBO(xlatService, toaster) {
                     else {
                         // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoDataForUpload'));
                         if (IsHideSuccessMsg != true) {
-                            alert(xlatService.xlat('NoDataForUpload'));
+                            //navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
+							navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                         }
                         OneViewConsole.Info("No dc available", "UploadBO.Upload");
                     }
@@ -471,7 +481,8 @@ function UploadBO(xlatService, toaster) {
                 else {
                     //toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailed'));
                     if (IsHideSuccessMsg != true) {
-                        alert(xlatService.xlat('UploadFailed'));
+                        //navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
+						navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     }
                     OneViewConsole.Info("Upload failed", "UploadBO.BulkUpload");
                     IsSuccess = false;
@@ -481,7 +492,7 @@ function UploadBO(xlatService, toaster) {
                 IsSuccess = false;
             }
 
-            OneViewConsole.Debug("Upload end", "UploadBO.BulkUpload");          
+            OneViewConsole.Debug("Upload end", "UploadBO.BulkUpload");
             //oOneViewProgressbar.Stop();
             if (IsHideSuccessMsg != true) {
                 oSetDefaultSpinner.Stop();
@@ -514,14 +525,12 @@ function UploadBO(xlatService, toaster) {
     /// <summary>
     /// AutoUpload
     /// For all users
-    /// </summary>  
+    /// </summary>
     this.AutoUpload = function (IsBulkUploadEnabled) {
 
         //alert("Auto Upload Started ...");
       
         var _oOneViewSqlitePlugin = new OneViewSqlitePlugin();
-        var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
-       
 
         try {
             OneViewConsole.Debug("AutoUpload start", "UploadBO.AutoUpload");
@@ -532,8 +541,8 @@ function UploadBO(xlatService, toaster) {
             //var _oDcDAO = new DcDAO();
             //var DcCount = _oDcDAO.GetAllUnSyncDcCount();
 
-            var _oDcFilterParamRequest = new DcFilterParamRequest();           
-            _oDcFilterParamRequest.SystemUserId = OneViewSessionStorage.Get("LoginUserId");;           
+            var _oDcFilterParamRequest = new DcFilterParamRequest();
+            _oDcFilterParamRequest.SystemUserId = OneViewSessionStorage.Get("LoginUserId");;
             _oDcFilterParamRequest.IsSynchronized = false;
 
             var _oDcDAO = new DcDAO();
@@ -542,174 +551,182 @@ function UploadBO(xlatService, toaster) {
             if (DcCount > 0) {
 
                 var ConfirmationSuccess = true;
-                if (IsBulkUploadEnabled!=undefined && IsBulkUploadEnabled == true) {
-                    var Message = 'IN-MG-LDP-001 :: Are you sure you want to Upload?';
-                    ConfirmationSuccess = oOneViewDefaultConfirmBox.Show(Message);
-                }
-                if (ConfirmationSuccess == true) {
-                    if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
-                        oOneViewProgressbar.Start("Uploading");
-                    }
-                var IsMultiMediaSubElementsSuccess = MyInstance.UploadMultiMediaSubElements(false);
-                ProgressBarStatus(IsBulkUploadEnabled, 10);
-                //alert("IsMultiMediaSubElementsSuccess : " + IsMultiMediaSubElementsSuccess);
+//                if (IsBulkUploadEnabled!=undefined && IsBulkUploadEnabled == true) {
+//                    var Message = 'IN-MG-LDP-001 :: Are you sure you want to Upload?';
+//                    ConfirmationSuccess = oOneViewDefaultConfirmBox.Show(Message);
+//                }
+//
+				oOneViewProgressbar.Start("Uploading");
+				var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+				oOneViewCordovaPlugin.DefaultConfirmBox("Confirm", 'IN-MG-LDP-001 :: Are you sure you want to Upload?', function (ConfirmationId) {
+					if (ConfirmationId == "2") {
+						
+						var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
+														
+						var IsMultiMediaSubElementsSuccess = MyInstance.UploadMultiMediaSubElements(false);
+						ProgressBarStatus(IsBulkUploadEnabled, 10);
+						//alert("IsMultiMediaSubElementsSuccess : " + IsMultiMediaSubElementsSuccess);
 
-                if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == true) {
+						if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == true) {
 
-                    var IsSyncDynamicRcoAndAssetNodesSuccess = MyInstance.SyncDynamicRcoAndAssetNodes(true, false);
+							var IsSyncDynamicRcoAndAssetNodesSuccess = MyInstance.SyncDynamicRcoAndAssetNodes(true, false);
 
-                    //alert("IsSyncDynamicRcoAndAssetNodesSuccess : " + IsSyncDynamicRcoAndAssetNodesSuccess);
-                    ProgressBarStatus(IsBulkUploadEnabled,20);
-                    if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == true) {
+							//alert("IsSyncDynamicRcoAndAssetNodesSuccess : " + IsSyncDynamicRcoAndAssetNodesSuccess);
+							ProgressBarStatus(IsBulkUploadEnabled,20);
+							if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == true) {
 
-                        //var _oDcDAO = new DcDAO();
+								var _oDcDAO = new DcDAO();
 
-                        //Update_UnSync_DC_ProcessCount();
-                        //var DataCaptureDTOLst = _oDcDAO.GetAllUnSyncDc();
-                        var _oMyAuditDAO = new MyAuditDAO();
-                        var DcInfo = _oMyAuditDAO.GetAllDCAdv(_oDcFilterParamRequest);
+								//Update_UnSync_DC_ProcessCount();
+								//var DataCaptureDTOLst = _oDcDAO.GetAllUnSyncDc();
+								var _oMyAuditDAO = new MyAuditDAO();
+								var DcInfo = _oMyAuditDAO.GetAllDCAdv(_oDcFilterParamRequest);
 
-                        if (DcInfo.length > 0) {
+								if (DcInfo.length > 0) {
 
-                            _oDcDAO.UpdateDcProcessCountByDcInfo(DcInfo);
-                            var DataCaptureDTOLst = _oDcDAO.GetDcList(DcInfo);
+									_oDcDAO.UpdateDcProcessCountByDcInfo(DcInfo);
+									var DataCaptureDTOLst = _oDcDAO.GetDcList(DcInfo);
 
-                            Update_UnSync_RcoProcessCount();
-                            var DynamicRCOData = GetAll_UnSync_DynamicRco();
+									Update_UnSync_RcoProcessCount();
+									var DynamicRCOData = GetAll_UnSync_DynamicRco();
 
-                            Update_UnSync_AssetNodeProcessCount();
-                            var DynamicOrgAssetNodeData = GetAll_UnSync_DynamicAssetNode();
+									Update_UnSync_AssetNodeProcessCount();
+									var DynamicOrgAssetNodeData = GetAll_UnSync_DynamicAssetNode();
 
-                            Update_UnSync_MultiMediaBlobSubElementsProcessCount();
-                            var MultiMediaBlobSubElementLst = GetAll_UnSync_MultiMediaBlobSubElements();
+									Update_UnSync_MultiMediaBlobSubElementsProcessCount();
+									var MultiMediaBlobSubElementLst = GetAll_UnSync_MultiMediaBlobSubElements();
 
-                            Update_UnSync_MultiMediaSubElementsProcessCount();
-                            var MultiMediaSubElementLst = GetAll_UnSync_MultiMediaSubElements();
+									Update_UnSync_MultiMediaSubElementsProcessCount();
+									var MultiMediaSubElementLst = GetAll_UnSync_MultiMediaSubElements();
 
-                            Update_UnSync_AuditTrailDC();
-                            var AuditTrailDCLst = GetAll_UnSync_AuditTrailDC();
+									Update_UnSync_AuditTrailDC();
+									var AuditTrailDCLst = GetAll_UnSync_AuditTrailDC();
 
-                            var _oActionDAO = new ActionDAO();
-                            var ActionResponse = _oActionDAO.GetAllUnSyncActionsForUpload(DataCaptureDTOLst);
+									var _oActionDAO = new ActionDAO();
+									var ActionResponse = _oActionDAO.GetAllUnSyncActionsForUpload(DataCaptureDTOLst);
 
-                            var _oDCBlockerInfoDAO = new DCBlockerInfoDAO();
-                            var DCBlockerInfoRequest = _oDCBlockerInfoDAO.GetAllDCBlockerInfoForUpload(DataCaptureDTOLst);
+									var _oDCBlockerInfoDAO = new DCBlockerInfoDAO();
+									var DCBlockerInfoRequest = _oDCBlockerInfoDAO.GetAllDCBlockerInfoForUpload(DataCaptureDTOLst);
 
-                            var _oDcApprovalDAO = new DcApprovalDAO();
-                            var DcApprovalDTOLst = _oDcApprovalDAO.GetAllDcApprovalInfoForUpload(DcInfo);
+									var _oDcApprovalDAO = new DcApprovalDAO();
+									var DcApprovalDTOLst = _oDcApprovalDAO.GetAllDcApprovalInfoForUpload(DcInfo);
 
-                            var oUploadrequest = MakeUploadRequest(DataCaptureDTOLst, DynamicRCOData, DynamicOrgAssetNodeData, ActionResponse, MultiMediaBlobSubElementLst, AuditTrailDCLst, MultiMediaSubElementLst, DCBlockerInfoRequest, DcApprovalDTOLst);
-                            ProgressBarStatus(IsBulkUploadEnabled,25);
-                      
-                           
+									var oUploadrequest = MakeUploadRequest(DataCaptureDTOLst, DynamicRCOData, DynamicOrgAssetNodeData, ActionResponse, MultiMediaBlobSubElementLst, AuditTrailDCLst, MultiMediaSubElementLst, DCBlockerInfoRequest, DcApprovalDTOLst);
+									ProgressBarStatus(IsBulkUploadEnabled,25);
+							  
+								   
+								 
+									var _UploadDcIL = new UploadDcIL(toaster);
+									var oUploadResponse = _UploadDcIL.Upload(oUploadrequest, false);
+									ProgressBarStatus(IsBulkUploadEnabled,50);
+									//alert(JSON.stringify(oUploadResponse));
+									//if (oUploadResponse != null) {
+									//    alert(oUploadResponse.IsAnyException);
+									//}
+
+									if (oUploadResponse != null && oUploadResponse.IsAnyException == false) {
+
+										try {
+											_oOneViewSqlitePlugin.StartTransaction();
+
+											Update_Upload_Response(oUploadResponse);
+											ProgressBarStatus(IsBulkUploadEnabled, 60);
+
+											ExecuteGarbageCollector();
+											ProgressBarStatus(IsBulkUploadEnabled, 70);
+
+											var _oLandingPageViewReponseBO = new LandingPageViewReponseBO(xlatService);
+											var LandingPageViewReponseBOIsSuccess = _oLandingPageViewReponseBO.Download();
+											ProgressBarStatus(IsBulkUploadEnabled, 80);
+
+											var _oDcProfileSyncStatusBO = new DcProfileSyncStatusBO();
+											var IsDcProfileSyncStatus = _oDcProfileSyncStatusBO.Download(xlatService);
+											ProgressBarStatus(IsBulkUploadEnabled, 90);
+
+											_oOneViewSqlitePlugin.EndTransaction();
+											DownloadActionFollowUp(xlatService);
+
+											MyInstance.DownlaodActionFollowUpDetails();
+
+											if (OneViewSessionStorage.Get("ServiceId") == 32) {
+												ProgressBarStatus(IsBulkUploadEnabled, 95);
+												var DownloadedTGIdList = MyInstance.GetTemplateGroupIds();
+												if (DownloadedTGIdList != null && DownloadedTGIdList.length > 0) {
+													var IsMitmarkLandingPageViewReponseSuccess = new MitmarkLandingPageViewReponseBO(xlatService).Download(DownloadedTGIdList);
+												}
+											}
+
+											ProgressBarStatus(IsBulkUploadEnabled, 100);
+
+											if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+												//alert(xlatService.xlat('IN-SU-LDP-001 :: Data uploaded successfully'));
+												navigator.notification.alert(xlatService.xlat('IN-SU-LDP-001 :: Data uploaded successfully'), ['OK'], "");
+											}
+											_oOneViewAutoUploadPlugin.Stop();
+										  
+											OneViewConsole.Info("Upload success", "UploadBO.AutoUpload");
+										}
+										catch (Excep) {
+											_oOneViewAutoUploadPlugin.Stop();
+											if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+										
+												//alert(xlatService.xlat("IN-ER-LDP-003 :: Upload failed. Please try again"));
+												navigator.notification.alert(xlatService.xlat("IN-ER-LDP-003 :: Upload failed. Please try again"), ['OK'], "");
+											}
+											OneViewConsole.Info("Upload failed local", "UploadBO.AutoUpload");
+											_oOneViewSqlitePlugin.Rollback();
+											IsSuccess = false;
+										   
+										}
+									}
+									else {
+										_oOneViewAutoUploadPlugin.Stop();
+										if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+											
+											//alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"));
+											navigator.notification.alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"), ['OK'], "");
+										}
+										OneViewConsole.Info("Upload failed", "UploadBO.AutoUpload");
+										IsSuccess = false;
+										
+									}
+								}
+								else {
+									_oOneViewAutoUploadPlugin.Stop();
+									if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+									   
+										//navigator.notification.alert(xlatService.xlat("IN-IN-LDP-001 :: No data available for Upload"), ['OK'], "");
+										navigator.notification.alert(xlatService.xlat("IN-IN-LDP-001 :: No data available for Upload"), ['OK'], "");
+									}
+									OneViewConsole.Info("No dc available", "UploadBO.AutoUpload");
+								}
+							}
+							else {
+								_oOneViewAutoUploadPlugin.Stop();
+								if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+									
+									//alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"));
+									navigator.notification.alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"), ['OK'], "");
+								}
+								OneViewConsole.Info("Upload failed", "UploadBO.AutoUpload");
+								IsSuccess = false;
+							}
+						}
+						
+						OneViewConsole.Debug("AutoUpload end", "UploadBO.AutoUpload");
+					}
+					oOneViewProgressbar.Stop();
+				});
+			}
+			else {
+				if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+					navigator.notification.alert(xlatService.xlat("IN-IN-LDP-001 :: No data available for Upload"), ['OK'], "");
+				}
+				var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
+				_oOneViewAutoUploadPlugin.Stop();
+				OneViewConsole.Info("No dc available", "UploadBO.AutoUpload");
+			}
                          
-                            var _UploadDcIL = new UploadDcIL(toaster);
-                            var oUploadResponse = _UploadDcIL.Upload(oUploadrequest, false);
-                            ProgressBarStatus(IsBulkUploadEnabled,50);
-                            //alert(JSON.stringify(oUploadResponse));
-                            //if (oUploadResponse != null) {
-                            //    alert(oUploadResponse.IsAnyException);
-                            //}
-
-                            if (oUploadResponse != null && oUploadResponse.IsAnyException == false) {
-
-                                try {
-                                    _oOneViewSqlitePlugin.StartTransaction();
-
-                                    Update_Upload_Response(oUploadResponse);
-                                    ProgressBarStatus(IsBulkUploadEnabled, 60);
-
-                                    ExecuteGarbageCollector();
-                                    ProgressBarStatus(IsBulkUploadEnabled, 70);
-
-                                    var _oLandingPageViewReponseBO = new LandingPageViewReponseBO(xlatService);
-                                    var LandingPageViewReponseBOIsSuccess = _oLandingPageViewReponseBO.Download();
-                                    ProgressBarStatus(IsBulkUploadEnabled, 80);
-
-                                    var _oDcProfileSyncStatusBO = new DcProfileSyncStatusBO();
-                                    var IsDcProfileSyncStatus = _oDcProfileSyncStatusBO.Download(xlatService);
-                                    ProgressBarStatus(IsBulkUploadEnabled, 90);
-
-                                    _oOneViewSqlitePlugin.EndTransaction();
-                                    DownloadActionFollowUp(xlatService);
-
-                                    MyInstance.DownlaodActionFollowUpDetails();
-
-                                    if (OneViewSessionStorage.Get("ServiceId") == 32) {
-                                        ProgressBarStatus(IsBulkUploadEnabled, 95);
-                                        var DownloadedTGIdList = MyInstance.GetTemplateGroupIds();
-                                        if (DownloadedTGIdList != null && DownloadedTGIdList.length > 0) {
-                                            var IsMitmarkLandingPageViewReponseSuccess = new MitmarkLandingPageViewReponseBO(xlatService).Download(DownloadedTGIdList);
-                                        }
-                                    }
-
-                                    ProgressBarStatus(IsBulkUploadEnabled, 100);
-
-                                    if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {                                        
-                                        alert(xlatService.xlat('IN-SU-LDP-001 :: Data uploaded successfully'));
-                                    }
-                                    _oOneViewAutoUploadPlugin.Stop();
-                                  
-                                    OneViewConsole.Info("Upload success", "UploadBO.AutoUpload");
-                                }
-                                catch (Excep) {
-                                    _oOneViewAutoUploadPlugin.Stop();
-                                    if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
-                                
-                                        alert(xlatService.xlat("IN-ER-LDP-003 :: Upload failed. Please try again"));
-                                    }
-                                    OneViewConsole.Info("Upload failed local", "UploadBO.AutoUpload");
-                                    _oOneViewSqlitePlugin.Rollback();
-                                    IsSuccess = false;
-                                   
-                                }
-                            }
-                            else {
-                                _oOneViewAutoUploadPlugin.Stop();
-                                if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
-                                    
-                                    alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"));
-                                }
-                                OneViewConsole.Info("Upload failed", "UploadBO.AutoUpload");
-                                IsSuccess = false;
-                                
-                            }
-                        }
-                        else {
-                            _oOneViewAutoUploadPlugin.Stop();
-                            if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
-                               
-                                alert(xlatService.xlat("IN-IN-LDP-001 :: No data available for Upload"));
-                            }
-                            OneViewConsole.Info("No dc available", "UploadBO.AutoUpload");                            
-                        }
-                    }
-                    else {
-                        _oOneViewAutoUploadPlugin.Stop();
-                        if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
-                            
-                            alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"));
-                        }
-                        OneViewConsole.Info("Upload failed", "UploadBO.AutoUpload");
-                        IsSuccess = false;                        
-                    }
-                }
-                //if (IsBulkUploadEnabled == true) {
-                   oOneViewProgressbar.Stop();
-                //}
-                OneViewConsole.Debug("AutoUpload end", "UploadBO.AutoUpload");
-            }
-            }
-            else {
-                if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
-                    
-                    alert(xlatService.xlat("IN-IN-LDP-001 :: No data available for Upload"));
-                }
-                //alert("No dc available");
-                //var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
-                _oOneViewAutoUploadPlugin.Stop();
-                OneViewConsole.Info("No dc available", "UploadBO.AutoUpload");
-            }          
             Response.IsSuccess = IsSuccess;
             Response.DCCount = DcCount;
             return Response;
@@ -743,7 +760,7 @@ function UploadBO(xlatService, toaster) {
     /// <summary>
     /// Save_Uploaded_DcResponse
     /// </summary>
-    /// <param name="DCSyncStatusDTOlst">DCSyncStatusDTOlst</param>   
+    /// <param name="DCSyncStatusDTOlst">DCSyncStatusDTOlst</param>
     var Save_Uploaded_DcResponse = function (DCSyncStatusDTOlst) {
 
         try {
@@ -811,7 +828,7 @@ function UploadBO(xlatService, toaster) {
                     Response.ValidationFailedRecordsCount++;
 
                     Response.ValidationSummary += "\n\n" + UploadedDcResponseLst[i].ServerDCDocId + " : " + UploadedDcResponseLst[i].ValidationMessage;
-                }                    
+                }
             }
 
             OneViewConsole.Debug("Get_Uploaded_Dc_Validation_Summary end", "UploadBO.Get_Uploaded_Dc_Validation_Summary");
@@ -862,7 +879,7 @@ function UploadBO(xlatService, toaster) {
                 _oDcDeletion.DeleteInCompleteAndSyncedDataFromNow(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
                 _oDcDeletion.DeleteCompletedSyncAndApprovedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
                 _oDcDeletion.DeleteCompletedSyncAndOnDeviceApprovalFinishedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-                if (OneViewSessionStorage.Get("ServiceId") == 39) {                    
+                if (OneViewSessionStorage.Get("ServiceId") == 39) {
                     _oDcDeletion.DeleteInActivePurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
                     _oDcDeletion.DeleteItemCompletedorInActiveInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
                     _oDcDeletion.DeleteCompletedItemInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
@@ -901,7 +918,7 @@ function UploadBO(xlatService, toaster) {
 
             OneViewConsole.Debug("DownloadActionFollowUp end", "UploadBO.DownloadActionFollowUp");
         }
-        catch (Excep) {          
+        catch (Excep) {
         }
         finally {
         }
@@ -926,7 +943,7 @@ function UploadBO(xlatService, toaster) {
 
     this.DownlaodExcludedAttributeDetails = function (FilterParamUpload) {
         try {
-            OneViewConsole.Debug("DownlaodExcludedAttributeDetails start", "DasboardBO.DownlaodExcludedAttributeDetails");        
+            OneViewConsole.Debug("DownlaodExcludedAttributeDetails start", "DasboardBO.DownlaodExcludedAttributeDetails");
                  
             var FilterParams = {
                 OSGuid: FilterParamUpload.ServiceId,
@@ -943,7 +960,7 @@ function UploadBO(xlatService, toaster) {
             }
 
             FilterParams.TemplateId.push(FilterParamUpload.TemplateNodeId);
-            FilterParams.DcPlaceIds.push(FilterParamUpload.DcPlaceId);            
+            FilterParams.DcPlaceIds.push(FilterParamUpload.DcPlaceId);
             FilterParams.IsDCPlaceGroup = FilterParamUpload.IsDCPlaceGroup;
             FilterParams.IsTemplateGroup = FilterParamUpload.IsTemplateGroup;
              
@@ -963,7 +980,7 @@ function UploadBO(xlatService, toaster) {
     /// <summary>
     /// SyncDynamicRcoAndAssetNodes
     /// </summary>
-    /// <param name="IsUpload">true or false</param>  (true => for upload, false => for profile download) 
+    /// <param name="IsUpload">true or false</param>  (true => for upload, false => for profile download)
     this.SyncDynamicRcoAndAssetNodes = function (IsUpload, ShowExceptionMessage) {
 
         try {
@@ -1029,7 +1046,7 @@ function UploadBO(xlatService, toaster) {
 
             return IsSuccess;
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "UploadBO.SyncDynamicRcoAndAssetNodes", Excep);
             return false;
         }
@@ -1173,7 +1190,7 @@ function UploadBO(xlatService, toaster) {
         try {
             OneViewConsole.Debug("Update_UnSync_AuditTrailDC start", "UploadBO.Update_UnSync_AuditTrailDC");
 
-            // Update ProcessCount in DcResultDetailsHistory         
+            // Update ProcessCount in DcResultDetailsHistory
             new DefaultMasterDAO("DcResultDetailsHistory").UpdateProcessCountForUnsyncData();
 
             OneViewConsole.Debug("Update_UnSync_AuditTrailDC end", "UploadBO.Update_UnSync_AuditTrailDC");
@@ -1324,7 +1341,7 @@ function UploadBO(xlatService, toaster) {
         finally {
             MultiMediaSubElementsList = null;
         }
-    }    
+    }
 
     /// <summary>
     /// GetAll_UnSync_AuditTrailDC
@@ -1354,15 +1371,15 @@ function UploadBO(xlatService, toaster) {
     /// <summary>
     /// Update_Upload_Response
     /// </summary>
-    /// <param name="oUploadResponse">oUploadResponse</param> 
+    /// <param name="oUploadResponse">oUploadResponse</param>
     var Update_Upload_Response = function (oUploadResponse) {
 
-        try {           
-            OneViewConsole.Debug("Update_Upload_Response start", "UploadBO.Update_Upload_Response");          
-            Update_Uploaded_Rco_Response(oUploadResponse.DCResponseDTO.DynamicRCOData);          
-            Update_Uploaded_AssetNode_Response(oUploadResponse.DCResponseDTO.DynamicOrgAssetNodeLst);         
-            Update_Uploaded_Dc_Response(oUploadResponse.DCResponseDTO.DCSyncStatusDTOlst);          
-            Update_Dynamic_Answers(oUploadResponse.DCResponseDTO.DynamicOrgAssetNodeLst);         
+        try {
+            OneViewConsole.Debug("Update_Upload_Response start", "UploadBO.Update_Upload_Response");
+            Update_Uploaded_Rco_Response(oUploadResponse.DCResponseDTO.DynamicRCOData);
+            Update_Uploaded_AssetNode_Response(oUploadResponse.DCResponseDTO.DynamicOrgAssetNodeLst);
+            Update_Uploaded_Dc_Response(oUploadResponse.DCResponseDTO.DCSyncStatusDTOlst);
+            Update_Dynamic_Answers(oUploadResponse.DCResponseDTO.DynamicOrgAssetNodeLst);
             Update_MultiMediaBlobSubElements_Response(oUploadResponse.DCResponseDTO.MultiMediaBlobSubElementResponceLst);
             Update_MultiMediaSubElements_Response(oUploadResponse.DCResponseDTO.MultiMediaMappingResponceLst);
             if (oUploadResponse.ActionResponseDTO != null) {
@@ -1371,16 +1388,16 @@ function UploadBO(xlatService, toaster) {
             if (oUploadResponse.HistoryResponceDTO != null) {
                 Update_AuditTrail_Response(oUploadResponse.HistoryResponceDTO.DCHistoryResponceLst);
             }
-            if (oUploadResponse.DCBlockerInfoResponceDTO != null) {                
+            if (oUploadResponse.DCBlockerInfoResponceDTO != null) {
                 Update_DCBlockerInfo_Response(oUploadResponse.DCBlockerInfoResponceDTO.DCBlockerInfoResponceLst)
             }
-            if (oUploadResponse.DCApprovalInfoResponceDTO != null) {                
+            if (oUploadResponse.DCApprovalInfoResponceDTO != null) {
                 Update_DcApprovalInfo_Response(oUploadResponse.DCApprovalInfoResponceDTO.DcApprovalInfoResponceLst)
             }
         
             OneViewConsole.Debug("Update_Upload_Response end", "UploadBO.Update_Upload_Response");
         }
-        catch (Excep) {       
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "UploadBO.Update_Upload_Response", Excep);
         }
     }
@@ -1395,7 +1412,7 @@ function UploadBO(xlatService, toaster) {
         try {
             OneViewConsole.Debug("Update_Uploaded_Rco_Response start", "UploadBO.Update_Uploaded_Rco_Response");
 
-            // Update server id's in RcoMasterEntity (For dynamic rco's)                       
+            // Update server id's in RcoMasterEntity (For dynamic rco's)
             if (DynamicRCOResponse.length != 0) {
                 var oDefaultRcoMasterDAO = new DefaultMasterDAO("RcoMasterEntity");
                 oDefaultRcoMasterDAO.UpdateMasterServerIds(DynamicRCOResponse);
@@ -1421,7 +1438,7 @@ function UploadBO(xlatService, toaster) {
         try {
             OneViewConsole.Debug("Update_Uploaded_AssetNode_Response start", "UploadBO.Update_Uploaded_AssetNode_Response");
 
-            // Update server id's in OrganizationAssetsNode (For dynamic OrganizationAssetsNode's)                        
+            // Update server id's in OrganizationAssetsNode (For dynamic OrganizationAssetsNode's)
             if (DynamicAssetNodeResponse.length != 0) {
                 var oDefaultOrgAssetNodeDAO = new DefaultMasterDAO("OrganizationAssetsNode");
                 oDefaultOrgAssetNodeDAO.UpdateNodeServerIds(DynamicAssetNodeResponse);
@@ -1535,7 +1552,7 @@ function UploadBO(xlatService, toaster) {
         try {
             OneViewConsole.Debug("Update_Uploaded_Dc_Response start", "UploadBO.Update_Uploaded_Dc_Response");
 
-            // Update server id's in DataCaptureEntity                        
+            // Update server id's in DataCaptureEntity
             if (DcResponse.length != 0) {
                 var _oDcDAO = new DcDAO();
                 _oDcDAO.UpdateDc(DcResponse);
@@ -1561,7 +1578,7 @@ function UploadBO(xlatService, toaster) {
         try {
             OneViewConsole.Debug("Update_DcApprovalInfo_Response start", "UploadBO.Update_DcApprovalInfo_Response");
 
-            // Update server id's in DataCaptureEntity                        
+            // Update server id's in DataCaptureEntity
             if (DcApprovalInfoResponse.length != 0) {
                 var _oDcApprovalDAO = new DcApprovalDAO();
                 _oDcApprovalDAO.UpdateDcApprovalInfo(DcApprovalInfoResponse);
@@ -1593,7 +1610,7 @@ function UploadBO(xlatService, toaster) {
             //alert("Update_Dynamic_Answers : " + JSON.stringify(DynamicAnswers));
             var _oDcDAO = new DcDAO();
 
-            if (DynamicAnswers.length != 0) {                
+            if (DynamicAnswers.length != 0) {
                 _oDcDAO.UpdateDynamicAnswers(DynamicAnswers);
             }
            
@@ -1644,13 +1661,13 @@ function UploadBO(xlatService, toaster) {
         try {
             OneViewConsole.Debug("Update_AuditTrail_Response start", "UploadBO.Update_AuditTrail_Response");
 
-            // Date : 19-02-2015 
+            // Date : 19-02-2015
             // Name : Siva
             // Once history uploaded it will delete from mobile (As per discussion with harshil)
-            // Note : any requirement comming we have to change deletion to updation           
+            // Note : any requirement comming we have to change deletion to updation
             var oDefaultRcoMasterDAO = new DefaultMasterDAO("DcResultDetailsHistory");
 
-            // Delete DcResultDetailsHistory by server id                              
+            // Delete DcResultDetailsHistory by server id
             for (var i = 0; i < DCHistoryResponceLst.length; i++) {
                 oDefaultRcoMasterDAO.DeleteById(DCHistoryResponceLst[i].Id);
             }
@@ -1675,7 +1692,7 @@ function UploadBO(xlatService, toaster) {
         try {
             OneViewConsole.Debug("Update_Uploaded_Rco_Response start", "UploadBO.Update_Uploaded_Rco_Response");
 
-            // Update server id's in DCBlockerInfoResponse                
+            // Update server id's in DCBlockerInfoResponse
             if (DCBlockerInfoResponse.length != 0) {
                 var oDefaultRcoMasterDAO = new DefaultMasterDAO("DCBlockerInfoEntity");
                 oDefaultRcoMasterDAO.UpdateMasterServerIds(DCBlockerInfoResponse);
@@ -1701,7 +1718,7 @@ function UploadBO(xlatService, toaster) {
         try {
             OneViewConsole.Debug("Update_MultiMediaBlobSubElements_Response start", "UploadBO.Update_MultiMediaBlobSubElements_Response");
 
-            // Update server id's in MultiMediaBlobSubElements                      
+            // Update server id's in MultiMediaBlobSubElements
             if (MultiMediaBlobSubElementsResponseDTO.length != 0) {
                 var oDefaultRcoMasterDAO = new DefaultMasterDAO("MultiMediaBlobSubElements");
                 oDefaultRcoMasterDAO.UpdateMasterServerIds(MultiMediaBlobSubElementsResponseDTO);
@@ -1727,7 +1744,7 @@ function UploadBO(xlatService, toaster) {
         try {
             OneViewConsole.Debug("Update_MultiMediaSubElements_Response start", "UploadBO.Update_MultiMediaSubElements_Response");
             // alert(MultiMediaSubElementsResponseDTO.length);
-            // Update server id's in MultiMediaBlobSubElements                      
+            // Update server id's in MultiMediaBlobSubElements
             if (MultiMediaSubElementsResponseDTO.length != 0) {
                 var oDefaultRcoMasterDAO = new DefaultMasterDAO("MultiMediaSubElements");
                 oDefaultRcoMasterDAO.UpdateMasterServerIds(MultiMediaSubElementsResponseDTO);
@@ -1768,7 +1785,7 @@ function UploadBO(xlatService, toaster) {
                 "DynamicAttributeData": new Array(),
                 "DynamicUserData": new Array(),
                 "MultiMediaBlobSubElementLst": MultiMediaBlobSubElementLst,
-                "MultiMediaMappingLst": MultiMediaSubElementLst,               
+                "MultiMediaMappingLst": MultiMediaSubElementLst,
             };
            
             var oUploadrequest = {
@@ -1787,7 +1804,7 @@ function UploadBO(xlatService, toaster) {
                       
             return oUploadrequest;
         }
-        catch (Excep) {           
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "UploadBO.MakeUploadRequest", Excep);
         }
         finally {
@@ -1831,7 +1848,7 @@ function UploadBO(xlatService, toaster) {
 
     /// <summary>
     /// UploadMultiMediaSubElements
-    /// </summary>   
+    /// </summary>
     this.UploadMultiMediaSubElements = function (ShowExceptionMessage) {
 
         try{
@@ -1869,12 +1886,12 @@ function UploadBO(xlatService, toaster) {
 
             var options = { 'httpMethod': 'POST' };
             //var DestinationPath = "http://10.20.25.6:8090/EKFCLive/SimpleStorageService.svc/SimpleStorageService/" + ServiceName + "/" + OrganizationName + "/" + LoginUserName + "/";
-            var DestinationPath = oneViewGlobalVariables.SimpleStorageURL+"/SimpleStorageService.svc/SimpleStorageService/" + ServiceName + "/" + OrganizationName + "/" + LoginUserName + "/";          
+            var DestinationPath = oneViewGlobalVariables.SimpleStorageURL+"/SimpleStorageService.svc/SimpleStorageService/" + ServiceName + "/" + OrganizationName + "/" + LoginUserName + "/";
         
             var oOneViewCordovaFileTransferPlugin = new OneViewCordovaFileTransferPlugin();
             //alert(MultiMediaSubElementsList.length);
-            for (var i = 0; i < MultiMediaSubElementsList.length; i++) {                
-                if (MultiMediaSubElementsList[i].IsDisabled == 'true' || MultiMediaSubElementsList[i].IsDisabled == true) {                  
+            for (var i = 0; i < MultiMediaSubElementsList.length; i++) {
+                if (MultiMediaSubElementsList[i].IsDisabled == 'true' || MultiMediaSubElementsList[i].IsDisabled == true) {
                     var oHttpClientResponseDTO = window.HttpClinetPlugin.DeleteFile(oneViewGlobalVariables.SimpleStorageURL + "/SimpleStorageService.svc/SimpleStorageService" + MultiMediaSubElementsList[i].RemoteURL);
                     //alert(oHttpClientResponseDTO);
                 }
@@ -1897,7 +1914,7 @@ function UploadBO(xlatService, toaster) {
                         {
                             CloseProgressbarAndLoader();
                             //alert("IN-ER-ALP-001 :: Service Unavailable");
-                            alert(OneViewGlobalization[CurrentLanguage].ServiceUnavailable_Message);
+                            navigator.notification.alert((OneViewGlobalization[CurrentLanguage].ServiceUnavailable_Message), ['OK'], "");
                             return null;
 
                         }
@@ -1946,11 +1963,11 @@ function UploadBO(xlatService, toaster) {
                 }
             }
 
-            return IsSuccess;            
+            return IsSuccess;
            
             OneViewConsole.Debug("UploadMultiMediaSubElements end", "UploadBO.UploadMultiMediaSubElements");
         }
-        catch (Excep) {       
+        catch (Excep) {
             throw oOneViewExceptionHandler.Create("BO", "UploadBO.UploadMultiMediaSubElements", Excep);
             return false;
         }
@@ -1962,7 +1979,7 @@ function UploadBO(xlatService, toaster) {
 
     /// <summary>
     /// CloseProgressbarAndLoader
-    /// </summary>   
+    /// </summary>
     var CloseProgressbarAndLoader = function () {
         oSetDefaultSpinner.Stop();
         oOneViewProgressbar.Stop();
@@ -1971,7 +1988,7 @@ function UploadBO(xlatService, toaster) {
 
     /// <summary>
     /// DownloadMultiMediaSubElements
-    /// </summary>   
+    /// </summary>
     this.DownloadMultiMediaSubElements = function (MultiMediaSubElementsList) {
 
         try {
@@ -1984,22 +2001,22 @@ function UploadBO(xlatService, toaster) {
 
             var _OneViewSqlitePlugin = new OneViewSqlitePlugin();
 
-            var options = { 'httpMethod': 'GET' };           
+            var options = { 'httpMethod': 'GET' };
             
             for (var i = 0; i < MultiMediaSubElementsList.length; i++) {
                 var _oRegExp = new RegExp(' ', 'g');
                 var RemoteURL = MultiMediaSubElementsList[i].RemoteURL.replace(_oRegExp, '%20');
-                var ServiceURL = oneViewGlobalVariables.SimpleStorageURL + "/SimpleStorageService.svc/SimpleStorageService" + RemoteURL;                           
+                var ServiceURL = oneViewGlobalVariables.SimpleStorageURL + "/SimpleStorageService.svc/SimpleStorageService" + RemoteURL;
                 var oHttpClientResponseDTO = window.HttpClinetPlugin.DownloadFile(ServiceURL);
-                oHttpClientResponseDTO = JSON.parse(oHttpClientResponseDTO);                
+                oHttpClientResponseDTO = JSON.parse(oHttpClientResponseDTO);
                 if (oHttpClientResponseDTO.IsAnyException == true || oHttpClientResponseDTO.IsAnyException == "true") {
                     IsSuccess = false;
                     break;
                 }
                 else if (oHttpClientResponseDTO.Response != "") {
-                    var Query = "Update MultiMediaSubElements SET IsMultiMediaSynchronized = 'true', LocalURL = '" + oHttpClientResponseDTO.Response + "', MultiMediaSyncDate = '" + CurrenntDateAndTime + "', TimeStamp = '" + CurrenntDateAndTime + "' WHERE Id = " + MultiMediaSubElementsList[i].Id;                 
+                    var Query = "Update MultiMediaSubElements SET IsMultiMediaSynchronized = 'true', LocalURL = '" + oHttpClientResponseDTO.Response + "', MultiMediaSyncDate = '" + CurrenntDateAndTime + "', TimeStamp = '" + CurrenntDateAndTime + "' WHERE Id = " + MultiMediaSubElementsList[i].Id;
                     _OneViewSqlitePlugin.ExcecuteSql(Query);
-                }               
+                }
             }
 
             return IsSuccess;
@@ -2026,11 +2043,11 @@ function UploadBO(xlatService, toaster) {
             MyAuditUploadProgressValue = 0;
             MyAuditUploadBatchNumber = 1;
 
-            var _oDcDAO = new DcDAO();           
-            MyAuditTotalDCCountForUpload = _oDcDAO.GetServiceWiseUnSyncDcCount(OneViewSessionStorage.Get("ServiceId"));            
+            var _oDcDAO = new DcDAO();
+            MyAuditTotalDCCountForUpload = _oDcDAO.GetServiceWiseUnSyncDcCount(OneViewSessionStorage.Get("ServiceId"));
             var TotalBatches = MyAuditTotalDCCountForUpload / MyAuditUploadLimit;
             TotalBatches = Math.ceil(TotalBatches);
-            MyAuditUploadProgressValue = 100 / TotalBatches;            
+            MyAuditUploadProgressValue = 100 / TotalBatches;
             //alert('MyAuditTotalDCCountForUpload : ' + MyAuditTotalDCCountForUpload);
             //alert('TotalBatches : ' + TotalBatches);
             //alert('MyAuditUploadProgressValue : ' + MyAuditUploadProgressValue);
@@ -2085,12 +2102,12 @@ function UploadBO(xlatService, toaster) {
                     IsSuccess = MyInstance.APKUpgradeBatchUpload();
                 }
                 else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
-                    //alert(xlatService.xlat('UploadFailed'));
+                    //navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     IsSuccess = false;
                 }
             }
             else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {
-                //alert(xlatService.xlat('UploadFailed'));
+                //navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                 IsSuccess = false;
             }
             oOneViewProgressbar.Stop();
@@ -2119,7 +2136,7 @@ function UploadBO(xlatService, toaster) {
 
             var IsSuccess = true;
 
-            var _oDcDAO = new DcDAO();          
+            var _oDcDAO = new DcDAO();
             var DcInfo = _oDcDAO.GetServiceWiseUnSyncDc(MyAuditUploadLimit);
             //alert('DcInfo.length : ' + DcInfo.length);
             if (DcInfo.length > 0) {
@@ -2204,7 +2221,7 @@ function UploadBO(xlatService, toaster) {
                         IsSuccess = false;
 
                         //toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailedLocal'));
-                        // alert(xlatService.xlat('UploadFailedLocal'));
+                        // navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
                         UploadedDcResponseLst = [];
                         OneViewConsole.Error("APKUpgradeBatchUpload failed local", "UploadBO.APKUpgradeBatchUpload");
 
@@ -2228,7 +2245,7 @@ function UploadBO(xlatService, toaster) {
                     IsSuccess = false;
 
                     // toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailed'));
-                    // alert(xlatService.xlat('UploadFailed'));
+                    // navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     UploadedDcResponseLst = [];
                     OneViewConsole.Info("APKUpgradeBatchUpload failed", "UploadBO.APKUpgradeBatchUpload");
                 }
@@ -2249,7 +2266,7 @@ function UploadBO(xlatService, toaster) {
                 IsSuccess = true;
 
                 // toaster.pop('success', xlatService.xlat('Success'), xlatService.xlat('UploadSuccess'));
-                // alert(xlatService.xlat('UploadSuccess'));
+                // navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
                 UploadedDcResponseLst = [];
 
                 OneViewConsole.Info("APKUpgradeBatchUpload success", "UploadBO.APKUpgradeBatchUpload");
@@ -2289,7 +2306,7 @@ function UploadBO(xlatService, toaster) {
     /// BatchAutoUpload
     /// For particulat user (Login user)
     /// </summary>
-    /// <param name="_oDcFilterParamRequest">_oDcFilterParamRequest</param>   
+    /// <param name="_oDcFilterParamRequest">_oDcFilterParamRequest</param>
     this.BatchAutoUpload = function (_oDcFilterParamRequest, PlaceFilterParam, TemplateFilterParam) {
 
         var _oOneViewSqlitePlugin = new OneViewSqlitePlugin();
@@ -2395,7 +2412,7 @@ function UploadBO(xlatService, toaster) {
                         IsSuccess = false;
 
                         //toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailedLocal'));
-                        //alert(xlatService.xlat('UploadFailedLocal'));
+                        //navigator.notification.alert(xlatService.xlat('UploadFailedLocal'), ['OK'], "");
                         UploadedDcResponseLst = [];
                         OneViewConsole.Error("BatchAutoUpload failed local", "UploadBO.BatchAutoUpload");
 
@@ -2417,7 +2434,7 @@ function UploadBO(xlatService, toaster) {
                     IsSuccess = false;
 
                     // toaster.pop('error', xlatService.xlat('Error'), xlatService.xlat('UploadFailed'));
-                   // alert(xlatService.xlat('UploadFailed'));
+                   // navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     UploadedDcResponseLst = [];
                     OneViewConsole.Info("BatchAutoUpload failed", "UploadBO.BatchAutoUpload");
                 }
@@ -2439,7 +2456,7 @@ function UploadBO(xlatService, toaster) {
                 IsSuccess = false;
 
                 // toaster.pop('success', xlatService.xlat('Success'), xlatService.xlat('UploadSuccess'));
-               // alert(xlatService.xlat('UploadSuccess'));
+               // navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
                 UploadedDcResponseLst = [];
                 OneViewConsole.Info("BatchAutoUpload success", "UploadBO.BatchAutoUpload");
             }
@@ -2622,16 +2639,16 @@ function UploadDcIL(toaster) {
             _oOneViewChannel.parameter = JSON.stringify({ "req": RequestParam });
             var oUploadResponse = _oOneViewChannel.Send({ "ShowExceptionMessage": (ShowExceptionMessage != undefined) ? ShowExceptionMessage : true });
                       
-            OneViewConsole.Debug("Upload end", "UploadDcIL.Upload");          
+            OneViewConsole.Debug("Upload end", "UploadDcIL.Upload");
 
             if (oUploadResponse != null) {
 
                 oUploadResponse = JSON.parse(oUploadResponse.AdvActionDCUploadResult);
 
-                OneViewConsole.DataLog("Response from server : " + JSON.stringify(oUploadResponse), "UploadDcIL.Upload");               
+                OneViewConsole.DataLog("Response from server : " + JSON.stringify(oUploadResponse), "UploadDcIL.Upload");
             }
            
-            return oUploadResponse;            
+            return oUploadResponse;
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("IL", "UploadDcIL.Upload", Excep);
@@ -2669,7 +2686,7 @@ function UploadDcIL(toaster) {
 
                 oUploadResponse = JSON.parse(oUploadResponse.AdvCreateAndSyncNodeResult);
 
-                OneViewConsole.DataLog("Response from server : " + JSON.stringify(oUploadResponse), "UploadDcIL.SyncDynamicRcoAndAssetNodes");               
+                OneViewConsole.DataLog("Response from server : " + JSON.stringify(oUploadResponse), "UploadDcIL.SyncDynamicRcoAndAssetNodes");
             }
 
             return oUploadResponse;
@@ -2684,4 +2701,5 @@ function UploadDcIL(toaster) {
         }
     }
 }
+
 

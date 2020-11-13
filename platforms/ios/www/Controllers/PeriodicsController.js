@@ -81,7 +81,7 @@ MyApp.controller("PlatformPeriodicsController", function ($scope, $location, xla
     });
 
     var lastTimeOutId = null;
-    $scope.GraphSearch = function () {        
+    $scope.GraphSearch = function () {
         if (lastTimeOutId != null)
             window.clearTimeout(lastTimeOutId);
         lastTimeOutId = window.setTimeout(oPlatformPeriodicsFacade.GraphSearch, PlatformPeriodicsGraphSearchTime);
@@ -170,7 +170,7 @@ function PlatformPeriodicsFacade(param) {
 
             PlatformPeriodicHierarchyBreadCrumbs.push(TemplateNodeId);
             oPeriodicalWorkComponent.UpdateIndex(Index);
-            var IsShowBackButton = oPeriodicalWorkComponent.ShowBackButton();            
+            var IsShowBackButton = oPeriodicalWorkComponent.ShowBackButton();
             oPeriodicalWorkComponent.LoadSubGroup(TemplateNodeId, IsShowBackButton, Index);
             
             OneViewConsole.Debug("LoadSubGroup End", "PlatformPeriodicsFacade.LoadSubGroup");
@@ -235,15 +235,15 @@ function PlatformPeriodicsFacade(param) {
             var Response = oPeriodicalWorkComponent.SaveTemplateWise('SaveValidationMetaData', IsSaveDraft);
             if (Response.IsSuccess == true) {
                 if (Response.NumOfRecordsSaved == 0) {
-                    alert(xlatService.xlat('No records to save'));
+                    navigator.notification.alert(xlatService.xlat('No records to save'), ['OK'], "");
                 }
                 else {
-                    alert(xlatService.xlat(Response.NumOfRecordsSaved) + " " + xlatService.xlat('Records Saved Successfully'));
+					navigator.notification.alert(xlatService.xlat(Response.NumOfRecordsSaved) + " " + xlatService.xlat('Records Saved Successfully'), ['OK'], "");
                 }
             }
             else {
                 if (Response.NumOfRecordsSaved == 0) {
-                    alert(xlatService.xlat('No records to save'));
+                    navigator.notification.alert(xlatService.xlat('No records to save'), ['OK'], "");
                 }
                 else {
                     alert(xlatService.xlat('Please enter ') + Response.Message);
@@ -297,20 +297,20 @@ function PlatformPeriodicsFacade(param) {
             oSetDefaultSpinner.Start();
             var Event = oPeriodicalWorkComponent.GetDcPeriodicDisplayEvent(Position);
             var Response;
-            if (Event == "") {            
+            if (Event == "") {
 
                 Response = oPeriodicalWorkComponent.SaveTemplateWise('SubmitValidationMetaData');
                 if (Response.IsSuccess == true) {
                     if (Response.NumOfRecordsSaved == 0) {
-                        alert(xlatService.xlat('No records to save'));
+                        navigator.notification.alert(xlatService.xlat('No records to save'), ['OK'], "");
                     }
                     else {
-                        alert(xlatService.xlat(Response.NumOfRecordsSaved) + " " + xlatService.xlat('Records Submit Successfully'));
+						navigator.notification.alert(xlatService.xlat(Response.NumOfRecordsSaved) + " " + xlatService.xlat('Records Submit Successfully'), ['OK'], "");
                     }
                 }
                 else {
                     //if (Response.NumOfRecordsSaved == 0) {
-                    //    alert(xlatService.xlat('No records to save'));
+                    //    navigator.notification.alert(xlatService.xlat('No records to save'), ['OK'], "");
                     //}
                     //else {
                         alert(xlatService.xlat('Please enter ') + Response.Message);
@@ -371,7 +371,7 @@ function PlatformPeriodicsFacade(param) {
                     PlatformPeriodicHierarchyBreadCrumbs.pop();
                     oPeriodicalWorkComponent.UpdateHierachy();
                    
-                    var IsShowBackButton = oPeriodicalWorkComponent.ShowBackButton();                
+                    var IsShowBackButton = oPeriodicalWorkComponent.ShowBackButton();
                     PlatformPeriodicCurrentSubGroupId = PlatformPeriodicHierarchyBreadCrumbs[PlatformPeriodicHierarchyBreadCrumbs.length - 1];
 
                     
@@ -458,7 +458,7 @@ function PlatformPeriodicsFacade(param) {
                     }
                     else {
                         IsValid = false;
-                        alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"));
+                        navigator.notification.alert(xlatService.xlat("IN-MG-LVI-001 :: The action already exists, Please enter new action"), ['OK'], "");
                     }
                 }
 
@@ -468,7 +468,7 @@ function PlatformPeriodicsFacade(param) {
                 }
             }
             else {
-                alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"));
+                navigator.notification.alert(xlatService.xlat("MN-RQ-LVI-002 :: Please enter valid action"), ['OK'], "");
             }
 
             //alert(JSON.stringify(LVActionResult[RuleId]));
@@ -503,7 +503,7 @@ function PlatformPeriodicsFacade(param) {
 
                 if (LVActionResult[CustomAction.RuleId].Actions[i].Name == CustomAction.label) {
 
-                    if (LVActionResult[CustomAction.RuleId].Actions[i].ActionDetailsClientId == "") { //if (LVIsEdit == false) {                              
+                    if (LVActionResult[CustomAction.RuleId].Actions[i].ActionDetailsClientId == "") { //if (LVIsEdit == false) {
                         LVActionResult[CustomAction.RuleId].Actions.splice(i, 1);
                     }
                     else {
@@ -675,7 +675,7 @@ function PlatformPeriodicsFacade(param) {
                 }
 
                 //alert('IsGoBack : ' + IsGoBack);
-                if (IsGoBack == true) { 
+                if (IsGoBack == true) {
                     var p;
                     if (DcPeriodicDisplayMetaData.ButtonBarConfig.Type == "DcPeriodicDefaultButtonBarConfig") {
                         var DcPeriodicOperationConfigDict = DcPeriodicDisplayMetaData.ButtonBarConfig.DcPeriodicOperationConfigDict;
@@ -724,7 +724,7 @@ function PlatformPeriodicsFacade(param) {
             CurrentControlId = "";
             DcPeriodicDisplayMetaData = {};
             CompleteMultiMediaSubElementsAnswerModeDict = {};
-            CompleteDcStatusCountDict = {};            
+            CompleteDcStatusCountDict = {};
             PeriodicPropertyToAccess = "";
             PTempMData = {};
             PlatformPeriodicCurrentSubGroupId = 0;
@@ -748,6 +748,7 @@ function PlatformPeriodicsFacade(param) {
 
 
 ////////////////**************** PlatformPeriodicsFacade END *******************//////////////////////////////
+
 
 
 

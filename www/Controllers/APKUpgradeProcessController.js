@@ -178,7 +178,7 @@ function APKUpgradeProcessFacade(parm) {
                             //document.getElementById("DivStepMessageId").innerHTML = "Auto upload on-progress.........";
                             //   oOneViewProgressbar.Start("IN-MG-AUP-016 :: We are going to upload all unsynched records. Please wait while the process completes.");
                             var msg = xlatService.xlat('Step') + "1" + xlatService.xlat('of') + WFLength + " : " + xlatService.xlat(UploadConfig.PreMessage);
-                            // alert(msg);                            
+                            // navigator.notification.alert(msg, ['OK'], "");                            
                             oOneViewProgressbar.Start(GlobalxlatService.xlat(msg));
                             IsSuccess = new window[UploadConfig.ClassName]().UploadHandler("1", IsHideSuccessMsg);
                            // IsSuccess = new APKUpgradeUploadStep().UploadHandler("1", IsHideSuccessMsg);
@@ -361,7 +361,7 @@ function APKUpgradeProcessFacade(parm) {
                 _oDbStructureController.UploadDbAcrossService(xlatService);
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "APKUpgradeProcessFacade.UploadDbSupportEvent");
             }
 
@@ -387,7 +387,7 @@ function APKUpgradeProcessFacade(parm) {
                 _oDbStructureController.UploadImagesAndDbAcrossService(xlatService);
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "APKUpgradeProcessFacade.UploadImagesAndDbAcrossServiceEvent");
             }
 
@@ -1930,7 +1930,7 @@ function APKUpgradeProcessBO() {
                var StepKey = APKUpgradeMetadataForCurrentVersion.Workflow[StepNo];
 
                var StepConfig = APKUpgradeMetadataForCurrentVersion.WorkflowConfig[StepKey];
-               alert('StepConfig : ' + JSON.stringify(StepConfig));
+               navigator.notification.alert(('StepConfig : ' + JSON.stringify(StepConfig)), ['OK'], "")
                IsSkipAllowed = StepConfig.IsSkipAllowed;
            }
 
@@ -2128,7 +2128,7 @@ function APKUpgradeUpgradeStep() {
                             var WFLength = Object.keys(GlobalAPKUpgradeMetadataForCurrentVersion.Workflow).length;
                             var WorkflowConfig = GlobalAPKUpgradeMetadataForCurrentVersion.WorkflowConfig[GlobalAPKUpgradeMetadataForCurrentVersion.Workflow[StepNo]];
                             var msg = GlobalxlatService.xlat('Step') + StepNo + GlobalxlatService.xlat('of') + WFLength + " : " + GlobalxlatService.xlat(WorkflowConfig.PreMessage);
-                            // alert(msg);
+                            // navigator.notification.alert(msg, ['OK'], "");
 
                             //  oSetDefaultSpinner.Start("Downloading new updates");
                             oSetDefaultSpinner.Start(GlobalxlatService.xlat(msg));
@@ -2300,7 +2300,7 @@ function APKAppStoreUpgradeUpgradeStep() {
                             var WFLength = Object.keys(GlobalAPKUpgradeMetadataForCurrentVersion.Workflow).length;
                             var WorkflowConfig = GlobalAPKUpgradeMetadataForCurrentVersion.WorkflowConfig[GlobalAPKUpgradeMetadataForCurrentVersion.Workflow[StepNo]];
                             var msg = GlobalxlatService.xlat('Step') + StepNo + GlobalxlatService.xlat('of') + WFLength + " : " + GlobalxlatService.xlat(WorkflowConfig.PreMessage);
-                            // alert(msg);
+                            // navigator.notification.alert(msg, ['OK'], "");
 
                             // If network is available
                             var NetworkDetails = oOneViewCordovaPlugin.CheckNetworkStatus();
@@ -2537,7 +2537,7 @@ function APKUpgradeRefreshStep() {
     this.RefreshHandler = function (StepNo) {
         try {
             OneViewConsole.Debug("RefreshHandler Start", "APKUpgradeRefreshStep.RefreshHandler");
-            //alert(msg);
+            //navigator.notification.alert(msg, ['OK'], "");
             var RetryRefreshLimit = 4;
             var RetryRefreshCount = 0;
             var IsRefreshCompleted = false;
@@ -2774,20 +2774,20 @@ function APKUpgradeSchemaModifyStep() {
                                 oOneViewProgressbar.SetProgressValue(ProgressBarCount);
                             }
                             else {
-                                alert('IN-ER-AUP-020 :: APKUpgradeSchemaModifyStep Type = ' + Details.Type + 'Not implemented ');
+                                navigator.notification.alert(('IN-ER-AUP-020 :: APKUpgradeSchemaModifyStep Type = ' + Details.Type + 'Not implemented '), ['OK'], "");
                             }
                         }
 
                         IsStepCompleted = true;
                     }
                     else {
-                        alert("IN-ER-AUP-021 :: APKUpgradeSchemaFile File Not Found.");
+                        navigator.notification.alert(("IN-ER-AUP-021 :: APKUpgradeSchemaFile File Not Found."), ['OK'], "");
                     }
                     //alert(ExecutedQueryCount + ",TotalQueryCount " + TotalQueryCount + " , IsStepCompleted : " + IsStepCompleted);
 
                 }
                 else {
-                    alert("IN-ER-AUP-022 :: APKUpgradeProcessStatus Not Found.");
+                    navigator.notification.alert(("IN-ER-AUP-022 :: APKUpgradeProcessStatus Not Found."), ['OK'], "");
                 }
 
                 //alert(' IsStepCompleted : ' + IsStepCompleted);

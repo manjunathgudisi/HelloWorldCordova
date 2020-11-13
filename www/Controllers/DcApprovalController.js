@@ -130,7 +130,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
                         _oDcApprovalDetailsUIComponent.LoadHtml(DcOnDeviceApprovalConfigControls);
                     }
                     else {
-                        alert("OnDevice approval configuration not found. Please contact administrator");
+                        navigator.notification.alert("OnDevice approval configuration not found. Please contact administrator", ['OK'], "");
                     }
                 }
                 else {
@@ -141,7 +141,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
                 
             }
             else {
-                alert("OnDevice approval configuration not found. Please contact administrator");
+                navigator.notification.alert("OnDevice approval configuration not found. Please contact administrator", ['OK'], "");
             }
             
             OneViewConsole.Debug("PageLoad End", "DcApprovalFacade.PageLoad");
@@ -230,7 +230,7 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
 
                         if (DcOnDeviceApprovalInfo.NextApprovalIndex <= DcOnDeviceApprovalInfo.DcApprovalProfileInfo.DcApprovalProfile.OnDeviceApprovalLevels) {
                             // alert("Level " + (DcOnDeviceApprovalInfo.NextApprovalIndex - 1) + " approved successfully. Click ok proceed the next level");                           
-                            alert(xlatService.xlat(ApprovalSuccessMessageKey));
+                            navigator.notification.alert(xlatService.xlat(ApprovalSuccessMessageKey), ['OK'], "");
                             this.PageLoad();
                         }
                         else {
@@ -238,22 +238,22 @@ function DcApprovalFacade($scope, xlatService, $location, snapRemote, $compile, 
                             _oDasboardBO.UpdateTaskStatus_ApproveDC(DcOnDeviceApprovalInfoLst.length);
 
                             //  alert("Approved successfully");
-                           //  alert(xlatService.xlat(ApprovalSuccessMessageKey));
+                           //  navigator.notification.alert(xlatService.xlat(ApprovalSuccessMessageKey), ['OK'], "");
                             // $location.url('/dashboard');
                             var OperationKey = oPageNavigationFramework.GetOperationKey("Approve", "C");
                             oPageNavigationFramework.RedirectByPreference(OperationKey, $location, xlatService, $scope);
                         }
                     }
                     else {
-                        alert("Error while approving");
+                        navigator.notification.alert("Error while approving", ['OK'], "");
                     }
                 }
                 else {
-                    alert(xlatService.xlat(BusinessValidationResponse.ErrorMessage));
+                    navigator.notification.alert(xlatService.xlat(BusinessValidationResponse.ErrorMessage), ['OK'], "");
                 }
             }
             else {
-                alert(xlatService.xlat(UIValidationResponse.ErrorMessage));
+                navigator.notification.alert(xlatService.xlat(UIValidationResponse.ErrorMessage), ['OK'], "");
             }
 
             OneViewConsole.Debug("Approve End", "DcApprovalFacade.Approve");
@@ -871,7 +871,7 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
 
             if (OnDeviceApprovalControlConfig.IsQRCodeReaderEnabled !=undefined &&OnDeviceApprovalControlConfig.IsQRCodeReaderEnabled == true) {
                 if (OnDeviceApprovalControlConfig.IsManualPINEnabled == true) {
-                    alert("Not Implemented");
+                    navigator.notification.alert(("Not implemented"), ['OK'], "");
                 }
                 else {
                     Html += '<input type="text" id="' + OnDeviceApprovalControlConfig.Type + 'ControlId" oninput="new DcApprovalDetailsPinApprovalTypeAnswerModeComponent().Set(this.value, ' + Type + ')" disabled>';
@@ -924,7 +924,7 @@ function DcApprovalDetailsPinApprovalTypeAnswerModeComponent() {
                  },
           function (error) {
               // ReturnMessage.Text = "Scanning failed: " + error;
-              alert("Scanning failed: " + error);
+              navigator.notification.alert(("Scanning failed: " + error), ['OK'], "");
           },
           {
               "resultDisplayDuration": 0
@@ -1353,7 +1353,7 @@ function AnonymousApproverSignatureApprovalTypeComponent() {
             saveButton.addEventListener("click", function (event) {
                 //alert(signaturePad.toDataURL().length);
                 if (signaturePad.isEmpty()) {
-                    alert("MN-RQ-NCF-001 :: Please provide signature first.");
+                    navigator.notification.alert("MN-RQ-NCF-001 :: Please provide signature first.", ['OK'], "");
                 } else {
                     SaveSignature(Type,SignatureNameControlId, signaturePad);
                 }

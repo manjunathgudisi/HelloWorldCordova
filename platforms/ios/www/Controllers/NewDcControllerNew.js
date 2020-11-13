@@ -155,11 +155,11 @@ function NewDcFacadeNew($scope, $location, xlatService, $compile) {
                     }
                 }
                 else {
-                    alert("IN-NF-NDC-010 :: Please select DC Start Date");
+                    navigator.notification.alert("IN-NF-NDC-010 :: Please select DC Start Date", ['OK'], "");
                 }
             }
             else {
-                alert(xlatService.xlat('Please select Aisle'));
+                navigator.notification.alert(xlatService.xlat('Please select Aisle'), ['OK'], "");
             }
 
             OneViewConsole.Debug("NewDc End", "NewDcFacadeNew.NewDc");
@@ -182,7 +182,7 @@ function NewDcFacadeNew($scope, $location, xlatService, $compile) {
             //    $location.url('/ViewRecords');
             //}
             //else {
-            //    alert(xlatService.xlat('No_Records_Available'));
+            //    navigator.notification.alert(xlatService.xlat('No_Records_Available'), ['OK'], "");
             //}
 
             var IsBarcodeSuccess = true;
@@ -205,7 +205,7 @@ function NewDcFacadeNew($scope, $location, xlatService, $compile) {
 
                 if (DcInfo.length == 0) {
 
-                    alert(xlatService.xlat('No_Records_Available'));
+                    navigator.notification.alert(xlatService.xlat('No_Records_Available'), ['OK'], "");
                 }
                 else if (DcInfo.length == 1) {
 
@@ -229,7 +229,7 @@ function NewDcFacadeNew($scope, $location, xlatService, $compile) {
                 }
             }
             else {
-                alert(xlatService.xlat('Please select Aisle'));
+                navigator.notification.alert(xlatService.xlat('Please select Aisle'), ['OK'], "");
             }
 
             OneViewConsole.Debug("LoadViewRecordsPage End", "NewDcFacadeNew.LoadViewRecordsPage");
@@ -254,7 +254,7 @@ function NewDcFacadeNew($scope, $location, xlatService, $compile) {
             }
 
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "NewDcFacadeNew.EditMaster");
             }
 
@@ -2302,7 +2302,7 @@ function NewDcHTMLDropdownControl() {
               
                 IsPlaceSelectedUsingBarcode = false;
                 document.getElementById("txtDcPlaceNme").value = "";
-                alert(oxlatService.xlat('User is not responsible to any of the Aisle in this DC'));
+                navigator.notification.alert(xlatService.xlat('User is not responsible to any of the Aisle in this DC'), ['OK'], "");
             }
 
             OneViewConsole.Debug("BarcodeReaderEventHandler End", "DcApprovalDetailsAnswerModeComponent.BarcodeReaderEventHandler");

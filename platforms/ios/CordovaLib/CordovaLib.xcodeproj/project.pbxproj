@@ -7,18 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		27CE7BF2238A8A11009EED2B /* OneViewGeolocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE7BE8238A8A10009EED2B /* OneViewGeolocation.m */; };
-		27CE7BF3238A8A11009EED2B /* OneViewDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE7BE9238A8A10009EED2B /* OneViewDeviceInfo.m */; };
-		27CE7BF4238A8A11009EED2B /* HttpClinetPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE7BEA238A8A10009EED2B /* HttpClinetPlugin.m */; };
-		27CE7BF5238A8A11009EED2B /* OneViewAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE7BEB238A8A10009EED2B /* OneViewAppInfo.m */; };
-		27CE7BF6238A8A11009EED2B /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE7BEC238A8A10009EED2B /* DBManager.m */; };
-		27CE7BF7238A8A11009EED2B /* OneViewGeolocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE7BED238A8A10009EED2B /* OneViewGeolocation.h */; };
-		27CE7BF8238A8A11009EED2B /* DBManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE7BEE238A8A10009EED2B /* DBManager.h */; };
-		27CE7BF9238A8A11009EED2B /* HttpClinetPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE7BEF238A8A11009EED2B /* HttpClinetPlugin.h */; };
-		27CE7BFA238A8A11009EED2B /* OneViewDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE7BF0238A8A11009EED2B /* OneViewDeviceInfo.h */; };
-		27CE7BFB238A8A11009EED2B /* OneViewAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE7BF1238A8A11009EED2B /* OneViewAppInfo.h */; };
-		27CE7BFE238A9100009EED2B /* UIWebView+TS_JavaScriptContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE7BFC238A9100009EED2B /* UIWebView+TS_JavaScriptContext.h */; };
-		27CE7BFF238A9100009EED2B /* UIWebView+TS_JavaScriptContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE7BFD238A9100009EED2B /* UIWebView+TS_JavaScriptContext.m */; };
+		27317ADF23B1DFEE003CA351 /* HttpClinetPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27317AD323B1DFED003CA351 /* HttpClinetPlugin.m */; };
+		27317AE023B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27317AD423B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.h */; };
+		27317AE123B1DFEE003CA351 /* OneViewGeolocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27317AD523B1DFEE003CA351 /* OneViewGeolocation.m */; };
+		27317AE223B1DFEE003CA351 /* OneViewAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 27317AD623B1DFEE003CA351 /* OneViewAppInfo.m */; };
+		27317AE323B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27317AD723B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.m */; };
+		27317AE423B1DFEE003CA351 /* OneViewAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 27317AD823B1DFEE003CA351 /* OneViewAppInfo.h */; };
+		27317AE523B1DFEE003CA351 /* OneViewDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 27317AD923B1DFEE003CA351 /* OneViewDeviceInfo.m */; };
+		27317AE623B1DFEE003CA351 /* OneViewGeolocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 27317ADA23B1DFEE003CA351 /* OneViewGeolocation.h */; };
+		27317AE723B1DFEE003CA351 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27317ADB23B1DFEE003CA351 /* DBManager.m */; };
+		27317AE823B1DFEE003CA351 /* HttpClinetPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27317ADC23B1DFEE003CA351 /* HttpClinetPlugin.h */; };
+		27317AE923B1DFEE003CA351 /* DBManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27317ADD23B1DFEE003CA351 /* DBManager.h */; };
+		27317AEA23B1DFEE003CA351 /* OneViewDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 27317ADE23B1DFEE003CA351 /* OneViewDeviceInfo.h */; };
+		27967D0623B9F7A500DECBB6 /* MyProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 27967D0423B9F7A500DECBB6 /* MyProgressHUD.h */; };
+		27967D0723B9F7A500DECBB6 /* MyProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 27967D0523B9F7A500DECBB6 /* MyProgressHUD.m */; };
 		28BFF9141F355A4E00DDF01A /* CDVLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 28BFF9121F355A4E00DDF01A /* CDVLogger.h */; };
 		28BFF9151F355A4E00DDF01A /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BFF9131F355A4E00DDF01A /* CDVLogger.m */; };
 		30193A501AE6350A0069A75F /* CDVUIWebViewNavigationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30193A4E1AE6350A0069A75F /* CDVUIWebViewNavigationDelegate.m */; };
@@ -135,18 +137,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		27CE7BE8238A8A10009EED2B /* OneViewGeolocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneViewGeolocation.m; sourceTree = "<group>"; };
-		27CE7BE9238A8A10009EED2B /* OneViewDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneViewDeviceInfo.m; sourceTree = "<group>"; };
-		27CE7BEA238A8A10009EED2B /* HttpClinetPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClinetPlugin.m; sourceTree = "<group>"; };
-		27CE7BEB238A8A10009EED2B /* OneViewAppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneViewAppInfo.m; sourceTree = "<group>"; };
-		27CE7BEC238A8A10009EED2B /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
-		27CE7BED238A8A10009EED2B /* OneViewGeolocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneViewGeolocation.h; sourceTree = "<group>"; };
-		27CE7BEE238A8A10009EED2B /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
-		27CE7BEF238A8A11009EED2B /* HttpClinetPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClinetPlugin.h; sourceTree = "<group>"; };
-		27CE7BF0238A8A11009EED2B /* OneViewDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneViewDeviceInfo.h; sourceTree = "<group>"; };
-		27CE7BF1238A8A11009EED2B /* OneViewAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneViewAppInfo.h; sourceTree = "<group>"; };
-		27CE7BFC238A9100009EED2B /* UIWebView+TS_JavaScriptContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+TS_JavaScriptContext.h"; sourceTree = "<group>"; };
-		27CE7BFD238A9100009EED2B /* UIWebView+TS_JavaScriptContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+TS_JavaScriptContext.m"; sourceTree = "<group>"; };
+		27317AD323B1DFED003CA351 /* HttpClinetPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClinetPlugin.m; sourceTree = "<group>"; };
+		27317AD423B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+TS_JavaScriptContext.h"; sourceTree = "<group>"; };
+		27317AD523B1DFEE003CA351 /* OneViewGeolocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneViewGeolocation.m; sourceTree = "<group>"; };
+		27317AD623B1DFEE003CA351 /* OneViewAppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneViewAppInfo.m; sourceTree = "<group>"; };
+		27317AD723B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+TS_JavaScriptContext.m"; sourceTree = "<group>"; };
+		27317AD823B1DFEE003CA351 /* OneViewAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneViewAppInfo.h; sourceTree = "<group>"; };
+		27317AD923B1DFEE003CA351 /* OneViewDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneViewDeviceInfo.m; sourceTree = "<group>"; };
+		27317ADA23B1DFEE003CA351 /* OneViewGeolocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneViewGeolocation.h; sourceTree = "<group>"; };
+		27317ADB23B1DFEE003CA351 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		27317ADC23B1DFEE003CA351 /* HttpClinetPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClinetPlugin.h; sourceTree = "<group>"; };
+		27317ADD23B1DFEE003CA351 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		27317ADE23B1DFEE003CA351 /* OneViewDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneViewDeviceInfo.h; sourceTree = "<group>"; };
+		27967D0423B9F7A500DECBB6 /* MyProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProgressHUD.h; sourceTree = "<group>"; };
+		27967D0523B9F7A500DECBB6 /* MyProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProgressHUD.m; sourceTree = "<group>"; };
 		28BFF9121F355A4E00DDF01A /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVLogger.h; sourceTree = "<group>"; };
 		28BFF9131F355A4E00DDF01A /* CDVLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVLogger.m; sourceTree = "<group>"; };
 		30193A4E1AE6350A0069A75F /* CDVUIWebViewNavigationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVUIWebViewNavigationDelegate.m; sourceTree = "<group>"; };
@@ -326,6 +330,20 @@
 		7ED95D0E1AB9029B008C4574 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				27967D0423B9F7A500DECBB6 /* MyProgressHUD.h */,
+				27967D0523B9F7A500DECBB6 /* MyProgressHUD.m */,
+				27317ADD23B1DFEE003CA351 /* DBManager.h */,
+				27317ADB23B1DFEE003CA351 /* DBManager.m */,
+				27317ADC23B1DFEE003CA351 /* HttpClinetPlugin.h */,
+				27317AD323B1DFED003CA351 /* HttpClinetPlugin.m */,
+				27317AD823B1DFEE003CA351 /* OneViewAppInfo.h */,
+				27317AD623B1DFEE003CA351 /* OneViewAppInfo.m */,
+				27317ADE23B1DFEE003CA351 /* OneViewDeviceInfo.h */,
+				27317AD923B1DFEE003CA351 /* OneViewDeviceInfo.m */,
+				27317ADA23B1DFEE003CA351 /* OneViewGeolocation.h */,
+				27317AD523B1DFEE003CA351 /* OneViewGeolocation.m */,
+				27317AD423B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.h */,
+				27317AD723B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.m */,
 				7ED95D0F1AB9029B008C4574 /* CDV.h */,
 				7ED95D101AB9029B008C4574 /* CDVAppDelegate.h */,
 				7ED95D111AB9029B008C4574 /* CDVAppDelegate.m */,
@@ -362,18 +380,6 @@
 				7ED95D321AB9029B008C4574 /* NSDictionary+CordovaPreferences.m */,
 				7ED95D331AB9029B008C4574 /* NSMutableArray+QueueAdditions.h */,
 				7ED95D341AB9029B008C4574 /* NSMutableArray+QueueAdditions.m */,
-				27CE7BEE238A8A10009EED2B /* DBManager.h */,
-				27CE7BEC238A8A10009EED2B /* DBManager.m */,
-				27CE7BEF238A8A11009EED2B /* HttpClinetPlugin.h */,
-				27CE7BEA238A8A10009EED2B /* HttpClinetPlugin.m */,
-				27CE7BF1238A8A11009EED2B /* OneViewAppInfo.h */,
-				27CE7BEB238A8A10009EED2B /* OneViewAppInfo.m */,
-				27CE7BF0238A8A11009EED2B /* OneViewDeviceInfo.h */,
-				27CE7BE9238A8A10009EED2B /* OneViewDeviceInfo.m */,
-				27CE7BED238A8A10009EED2B /* OneViewGeolocation.h */,
-				27CE7BE8238A8A10009EED2B /* OneViewGeolocation.m */,
-				27CE7BFC238A9100009EED2B /* UIWebView+TS_JavaScriptContext.h */,
-				27CE7BFD238A9100009EED2B /* UIWebView+TS_JavaScriptContext.m */,
 			);
 			name = Public;
 			path = Classes/Public;
@@ -444,27 +450,25 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27317AE423B1DFEE003CA351 /* OneViewAppInfo.h in Headers */,
 				7ED95D351AB9029B008C4574 /* CDV.h in Headers */,
-				27CE7BF7238A8A11009EED2B /* OneViewGeolocation.h in Headers */,
-				27CE7BFE238A9100009EED2B /* UIWebView+TS_JavaScriptContext.h in Headers */,
 				7ED95D361AB9029B008C4574 /* CDVAppDelegate.h in Headers */,
 				7ED95D381AB9029B008C4574 /* CDVAvailability.h in Headers */,
 				7ED95D391AB9029B008C4574 /* CDVAvailabilityDeprecated.h in Headers */,
 				7ED95D3A1AB9029B008C4574 /* CDVCommandDelegate.h in Headers */,
+				27317AE623B1DFEE003CA351 /* OneViewGeolocation.h in Headers */,
+				27317AE023B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.h in Headers */,
 				7ED95D3B1AB9029B008C4574 /* CDVCommandDelegateImpl.h in Headers */,
 				7ED95D3D1AB9029B008C4574 /* CDVCommandQueue.h in Headers */,
-				27CE7BFB238A8A11009EED2B /* OneViewAppInfo.h in Headers */,
 				7ED95D3F1AB9029B008C4574 /* CDVConfigParser.h in Headers */,
 				7ED95D411AB9029B008C4574 /* CDVInvokedUrlCommand.h in Headers */,
-				27CE7BF8238A8A11009EED2B /* DBManager.h in Headers */,
 				7ED95D431AB9029B008C4574 /* CDVPlugin+Resources.h in Headers */,
 				7ED95D451AB9029B008C4574 /* CDVPlugin.h in Headers */,
 				7ED95D471AB9029B008C4574 /* CDVPluginResult.h in Headers */,
 				7ED95D491AB9029B008C4574 /* CDVScreenOrientationDelegate.h in Headers */,
-				27CE7BF9238A8A11009EED2B /* HttpClinetPlugin.h in Headers */,
+				27967D0623B9F7A500DECBB6 /* MyProgressHUD.h in Headers */,
 				7ED95D4A1AB9029B008C4574 /* CDVTimer.h in Headers */,
 				7ED95D4C1AB9029B008C4574 /* CDVURLProtocol.h in Headers */,
-				27CE7BFA238A8A11009EED2B /* OneViewDeviceInfo.h in Headers */,
 				7ED95D4E1AB9029B008C4574 /* CDVUserAgentUtil.h in Headers */,
 				7ED95D501AB9029B008C4574 /* CDVViewController.h in Headers */,
 				7ED95D521AB9029B008C4574 /* CDVWebViewEngineProtocol.h in Headers */,
@@ -481,6 +485,9 @@
 				7E7F69B61ABA35D8007546F4 /* CDVLocalStorage.h in Headers */,
 				30193A511AE6350A0069A75F /* CDVUIWebViewNavigationDelegate.h in Headers */,
 				7ED95D0A1AB9028C008C4574 /* CDVUIWebViewDelegate.h in Headers */,
+				27317AE823B1DFEE003CA351 /* HttpClinetPlugin.h in Headers */,
+				27317AE923B1DFEE003CA351 /* DBManager.h in Headers */,
+				27317AEA23B1DFEE003CA351 /* OneViewDeviceInfo.h in Headers */,
 				7E7F69B81ABA368F007546F4 /* CDVUIWebViewEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,25 +603,27 @@
 			files = (
 				7ED95D371AB9029B008C4574 /* CDVAppDelegate.m in Sources */,
 				7ED95D3C1AB9029B008C4574 /* CDVCommandDelegateImpl.m in Sources */,
+				27317AE123B1DFEE003CA351 /* OneViewGeolocation.m in Sources */,
 				7ED95D3E1AB9029B008C4574 /* CDVCommandQueue.m in Sources */,
 				7ED95D401AB9029B008C4574 /* CDVConfigParser.m in Sources */,
 				7ED95D421AB9029B008C4574 /* CDVInvokedUrlCommand.m in Sources */,
-				27CE7BF3238A8A11009EED2B /* OneViewDeviceInfo.m in Sources */,
-				27CE7BFF238A9100009EED2B /* UIWebView+TS_JavaScriptContext.m in Sources */,
 				7ED95D441AB9029B008C4574 /* CDVPlugin+Resources.m in Sources */,
-				27CE7BF2238A8A11009EED2B /* OneViewGeolocation.m in Sources */,
 				7ED95D461AB9029B008C4574 /* CDVPlugin.m in Sources */,
-				27CE7BF5238A8A11009EED2B /* OneViewAppInfo.m in Sources */,
 				7ED95D481AB9029B008C4574 /* CDVPluginResult.m in Sources */,
+				27317AE723B1DFEE003CA351 /* DBManager.m in Sources */,
 				7ED95D4B1AB9029B008C4574 /* CDVTimer.m in Sources */,
 				7ED95D4D1AB9029B008C4574 /* CDVURLProtocol.m in Sources */,
+				27317ADF23B1DFEE003CA351 /* HttpClinetPlugin.m in Sources */,
 				7ED95D4F1AB9029B008C4574 /* CDVUserAgentUtil.m in Sources */,
 				7ED95D511AB9029B008C4574 /* CDVViewController.m in Sources */,
+				27317AE323B1DFEE003CA351 /* UIWebView+TS_JavaScriptContext.m in Sources */,
 				7ED95D541AB9029B008C4574 /* CDVWhitelist.m in Sources */,
-				27CE7BF6238A8A11009EED2B /* DBManager.m in Sources */,
+				27317AE223B1DFEE003CA351 /* OneViewAppInfo.m in Sources */,
 				7ED95D581AB9029B008C4574 /* NSDictionary+CordovaPreferences.m in Sources */,
+				27317AE523B1DFEE003CA351 /* OneViewDeviceInfo.m in Sources */,
 				7ED95D5A1AB9029B008C4574 /* NSMutableArray+QueueAdditions.m in Sources */,
 				7ED95D041AB9028C008C4574 /* CDVJSON_private.m in Sources */,
+				27967D0723B9F7A500DECBB6 /* MyProgressHUD.m in Sources */,
 				28BFF9151F355A4E00DDF01A /* CDVLogger.m in Sources */,
 				A3B082D51BB15CEA00D8DC35 /* CDVGestureHandler.m in Sources */,
 				3093E2241B16D6A3003F381A /* CDVIntentAndNavigationFilter.m in Sources */,
@@ -623,7 +632,6 @@
 				30193A501AE6350A0069A75F /* CDVUIWebViewNavigationDelegate.m in Sources */,
 				7ED95D0B1AB9028C008C4574 /* CDVUIWebViewDelegate.m in Sources */,
 				7ED95D0D1AB9028C008C4574 /* CDVUIWebViewEngine.m in Sources */,
-				27CE7BF4238A8A11009EED2B /* HttpClinetPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,6 +699,7 @@
 				GCC_PREFIX_HEADER = CordovaLib_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					"WK_WEB_VIEW_ONLY=$(WK_WEB_VIEW_ONLY)",
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -707,6 +716,7 @@
 				PRODUCT_NAME = Cordova;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				WK_WEB_VIEW_ONLY = 0;
 			};
 			name = Debug;
 		};
@@ -751,6 +761,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CordovaLib_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"WK_WEB_VIEW_ONLY=$(WK_WEB_VIEW_ONLY)",
+					"$(inherited)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -765,6 +779,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
+				WK_WEB_VIEW_ONLY = 0;
 			};
 			name = Release;
 		};

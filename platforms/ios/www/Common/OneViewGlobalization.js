@@ -1,4 +1,4 @@
-﻿ var res = {
+ var res = {
  			
  			'Authentication_Page':{
  				'SignIn': { 'en-us': 'Sign In', 'es-mx': 'aaayudame' },
@@ -4219,7 +4219,7 @@
 
             xlatService.setCurrentPage('Authentication');
                 $scope.Authentication = function () {
-                    alert(xlatService.xlat('SavedSuccessfully'));
+                    navigator.notification.alert(xlatService.xlat('SavedSuccessfully'), ['OK'], "");
                 }
             }
         )*/
@@ -4311,7 +4311,7 @@
                         //alert("thjhdd");
                         return MessageKey;
                         if(IsDevelopementMode==true)
-                            alert('xlat exception : ' + Exep);
+                            navigator.notification.alert(('xlat exception : ' + Exep), ['OK'], "");
                         return MessageKey;
                     }
                 }

@@ -144,7 +144,7 @@ function DbStructureController() {
     
     this.ClearAllDCAndActions = function () {
 
-        try {          
+        try {
             OneViewConsole.Debug("ClearAllDc start", "DbStructureController.ClearAllDc");
 
             var _DbStructureDAO = new DbStructureDAO();
@@ -207,7 +207,7 @@ function DbStructureController() {
                     ErrorMessage += " .Please Contact Administrator.";
                 }
                 else {
-                    alert("Databases Copied Successfully");
+                    navigator.notification.alert("Databases Copied Successfully", ['OK'], "");
                 }
             }
             oSetDefaultSpinner.Stop();
@@ -286,9 +286,9 @@ function DbStructureController() {
             
             //Get all services in the device
             var _oCloudManagerBO = new CloudManagerBO(xlatService);
-            var CloudManagerServiceInfo = OneViewLocalStorage.Get("CloudManagerServiceInfo");            
+            var CloudManagerServiceInfo = OneViewLocalStorage.Get("CloudManagerServiceInfo");
             if (CloudManagerServiceInfo != null) {
-                CloudManagerServiceInfo = JSON.parse(CloudManagerServiceInfo);                
+                CloudManagerServiceInfo = JSON.parse(CloudManagerServiceInfo);
                 var _oOneViewDeviceInfoPlugin = new OneViewDeviceInfoPlugin();
                 var IMEI = _oOneViewDeviceInfoPlugin.GetIMEINumber();
 
@@ -313,7 +313,7 @@ function DbStructureController() {
                 var LocalDBFolderPath = "/mnt/sdcard/OneView/DB Backup/" + DBName;
 
                 _DbStructureDAO.UploadDbAcrossService(LocalDBFolderPath, RemoteDBUploadFolderPath, FirstServiceDetails);
-            }           
+            }
 
             OneViewConsole.Debug("UploadDbAcrossService end", "DbStructureController.UploadDbAcrossService");
         }
@@ -585,7 +585,7 @@ function DbStructureDAO() {
             // params.UserName = userName;
            // params.OrgName = ServiceName;
 
-           // options.params = params; 
+           // options.params = params;
             var ft = new FileTransfer();
             //http://winaim.biz/SimpleStorageService/SimpleStorageService.svc/SimpleStorageService
             ////http://10.20.25.6:8090/UploadNew/Operations/UploadDatabase
@@ -734,7 +734,7 @@ function DbStructureDAO() {
     this.DownloadLogs = function (Source, Destination)
     {
         alert("DownloadLogs");
-        var oDateTime = new DateTime();    
+        var oDateTime = new DateTime();
         var FileName = "Log_" + oDateTime.GetDateByCustomSeparator("-") + "_" + oDateTime.GetTimeCustomSeparator("-") + ".txt";
 
         var ServiceName = OneViewSessionStorage.Get("ServiceName");
@@ -742,7 +742,7 @@ function DbStructureDAO() {
         var userName = OneViewSessionStorage.Get("LoginUserName");
 
         SaveToLocalStorage();
-       //// Source = "http://winaim.biz/SimpleStorageService/SimpleStorageService.svc/SimpleStorageService/" + ServiceName + "/" + OrganizationName + "/" + userName + "/LogFiles/Log.txt"; 
+       //// Source = "http://winaim.biz/SimpleStorageService/SimpleStorageService.svc/SimpleStorageService/" + ServiceName + "/" + OrganizationName + "/" + userName + "/LogFiles/Log.txt";
         Source = "http://10.20.25.158/SimpleStorageService/SimpleStorageService.svc/SimpleStorageService/" + ServiceName + "/" + OrganizationName + "/" + userName + "/LogFiles/Log.txt";
 
         Destination = "file:///mnt/sdcard/OneView/downloads/" + ServiceName + "/" + OrganizationName + "/" + userName + "/LogFiles/" + FileName;
@@ -765,12 +765,12 @@ function DbStructureDAO() {
     }
 
     var DownloadSuccessCallback = function (url) {
-        alert("File downloaded successfully to location :" + JSON.stringify(url));
+        navigator.notification.alert(("File downloaded successfully to location :" + JSON.stringify(url)), ['OK'], "");
     }
 
    var DownloadErrorCallback = function (details) {
-        alert('Error downloading file');
-        alert(JSON.stringify(details));
+        //alert('Error downloading file');
+	   navigator.notification.alert(JSON.stringify(details), ['OK'], "");
    }
 
 
@@ -849,21 +849,21 @@ function DbStructureDAO() {
    }
 
    var fail = function (error) {
-       alert("Download Error Code: "+error.code);
+       navigator.notification.alert(("Download Error Code: "+error.code), ['OK'], "");
    }
     ///////////////Create Directory structure for DOWNLOADED Logs---- End ////////////
 
 
 
     var LocalLogDeleteWin = function (r) {
-        //alert('Local log deleted successfully');       
+        //alert('Local log deleted successfully');
     }
     var UploadDbSuccess = function (r) {
-        alert(OneViewGlobalization[CurrentLanguage].DB_uploaded_successfully);        
+        alert(OneViewGlobalization[CurrentLanguage].DB_uploaded_successfully);
     }
 
     var UploadLogsSuccess = function (r) {
-        alert('Log uploaded successfully');
+        navigator.notification.alert('Log uploaded successfully', ['OK'], "");
         GetFromLocalStorage();
     }
 
@@ -877,7 +877,7 @@ function DbStructureDAO() {
         //    alert("DB Upload failed");
         //}
        // alert("Please contact administrator, Error Code : " + error.http_status);
-        alert(OneViewGlobalization[CurrentLanguage].DB_Upload_Failed);
+        navigator.notification.alert((OneViewGlobalization[CurrentLanguage].DB_Upload_Failed), ['OK'], "");
     }
 
     var UploadLogfail = function (error) {
@@ -889,7 +889,7 @@ function DbStructureDAO() {
         //else {
         //    alert("Log Upload failed");
         //}
-        alert("Please contact administrator, Error Code : " + error.http_status);
+        navigator.notification.alert(("Please contact administrator, Error Code : " + error.http_status), ['OK'], "");
     }
 
     var Deletefail = function (error) {
@@ -923,7 +923,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.CreateTable", Excep);
-        }       
+        }
     }
 
     var DropTable = function (TableName) {
@@ -937,7 +937,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.DropTable", Excep);
-        }      
+        }
     }
  
     this.DeleteAllTableRows = function (TableNamelst) {
@@ -953,7 +953,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.DeleteAllTableRows", Excep);
-        }      
+        }
     }
 
     this.DeleteAllRows = function (TableName) {
@@ -967,7 +967,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.DeleteAllRows", Excep);
-        }      
+        }
     }
 
     this.DeleteAllMasterData = function () {
@@ -981,7 +981,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.DeleteAllMasterData", Excep);
-        }        
+        }
     }
 
     this.DeleteAllNodeData = function () {
@@ -995,7 +995,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.DeleteAllNodeData", Excep);
-        }       
+        }
     }
 
     this.DeleteAllProfileData = function () {
@@ -1009,7 +1009,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.DeleteAllProfileData", Excep);
-        }      
+        }
     }
 
     this.DeleteAllActionData = function () {
@@ -1023,7 +1023,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.DeleteAllActionData", Excep);
-        }      
+        }
     }
 
     this.DeleteAllDcData = function () {
@@ -1037,7 +1037,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.DeleteAllDcData", Excep);
-        }      
+        }
     }
 
     this.DeleteAuditTrialData = function () {
@@ -1079,7 +1079,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.DeleteMasterDataRegistry", Excep);
-        }     
+        }
     }
 
     this.CleanDb = function () {
@@ -1093,7 +1093,7 @@ function DbStructureDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "DbStructureDAO.CleanDb", Excep);
-        }      
+        }
     }
 
     var EnableIndexing = function() {
@@ -1278,7 +1278,7 @@ function DbStructureDAO() {
                 var DBName = "Service" + UploadServiceDetails.CloudManagerServiceInfo.Id + "DB";
                 var LocalDBFolderPath = "/mnt/sdcard/OneView/DB Backup/" + DBName;
 
-                MyInstance.UploadDbAcrossService(LocalDBFolderPath, RemoteDBUploadFolderPath, UploadServiceDetails);                
+                MyInstance.UploadDbAcrossService(LocalDBFolderPath, RemoteDBUploadFolderPath, UploadServiceDetails);
             }
             else {
                 var ErrorMessage = "Some error occurred while uploading database for ";
@@ -1305,7 +1305,7 @@ function DbStructureDAO() {
                     oSetDefaultSpinner.Stop();
                     GlobalUploadDbAcrossServiceDict = {};
                     GlobalUploadedDbCount = 0;
-                    alert("Databases Uploaded Successfully");
+                    navigator.notification.alert("Databases Uploaded Successfully", ['OK'], "");
                 }
 
             }
@@ -1332,7 +1332,7 @@ function DbStructureDAO() {
             GlobalUploadedDbCount = 0;
 
             if (error.http_status != null && error.http_status != undefined && error.http_status != "") {
-                alert("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator. Error details are : " + error.http_status);
+                navigator.notification.alert(("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator. Error details are : " + error.http_status), ['OK'], "");
             }
             else {
                 var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
@@ -1341,10 +1341,10 @@ function DbStructureDAO() {
 
                 // If network is available
                 if (NetworkDetails.IsNetworkAvailable == true) {
-                    alert("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator.");
+                    navigator.notification.alert(("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator."), ['OK'], "");
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 }
 
             }
@@ -1394,7 +1394,7 @@ function DbStructureDAO() {
             }
             else if (OSType == OSTypeEnum.IOS) //ios
             {
-                alert("Not Implemented For IOS");
+                navigator.notification.alert("Not Implemented For IOS", ['OK'], "");
             }
 
             OneViewConsole.Debug("UploadDbForParticularServiceForImages end", "DbStructureDAO.UploadDbForParticularServiceForImages");
@@ -1463,14 +1463,14 @@ function DbStructureDAO() {
                 else {
                     
                     GlobalUploadDbAcrossServiceDict = {};
-                    GlobalUploadedDbCount = 0;                    
+                    GlobalUploadedDbCount = 0;
                     
 
-                    //Upload Images (one time for all services which are available in cloud manager)                    
-                    MyInstance.UploadImagesAcrossService();                  
+                    //Upload Images (one time for all services which are available in cloud manager)
+                    MyInstance.UploadImagesAcrossService();
                     //alert('IsGlobalImageUploadSuccess : ' + IsGlobalImageUploadSuccess);
 
-                    if (IsGlobalImageUploadSuccess == true) {                      
+                    if (IsGlobalImageUploadSuccess == true) {
                         if (GlobalTotalUploadImageCount > 0) {
                             if (GlobalUploadedImageCount == GlobalTotalUploadImageCount) {
                                 alert(GlobalXlatService.xlat("IN-SU-DBS-001 :: Databases Uploaded Successfully.\n\n Total Images Uploaded : ") + GlobalUploadedImageCount);
@@ -1519,7 +1519,7 @@ function DbStructureDAO() {
             GlobalUploadedDbCount = 0;
 
             if (error.http_status != null && error.http_status != undefined && error.http_status != "") {
-                alert("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator. Error details are : " + error.http_status);
+                navigator.notification.alert(("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator. Error details are : " + error.http_status), ['OK'], "");
 
                 //Upload Log after db and images upload with a confirmation messsages
                 MyInstance.UploadLogsAfterDb(GlobalXlatService);
@@ -1531,13 +1531,13 @@ function DbStructureDAO() {
 
                 // If network is available
                 if (NetworkDetails.IsNetworkAvailable == true) {
-                    alert("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator.");
+                    navigator.notification.alert(("Some error occured while uploading database for " + ServiceName + ". Please Contact Administrator."), ['OK'], "");
 
                     //Upload Log after db and images upload with a confirmation messsages
                     MyInstance.UploadLogsAfterDb(GlobalXlatService);
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 }
 
             }
@@ -1623,9 +1623,9 @@ function DbStructureDAO() {
 
     /// <summary>
     /// Upload Images of particular folder
-    /// </summary>  
+    /// </summary>
     /// <param name="LocalFolderPath">Local Folder Path</param>
-    /// <param name="RemoteUploadFolderPath">RemoteUploadFolderPath where need to upload</param> 
+    /// <param name="RemoteUploadFolderPath">RemoteUploadFolderPath where need to upload</param>
     this.UploadFolderImages = function (RemoteUploadFolderPath) {
 
         try {
@@ -1672,7 +1672,7 @@ function DbStructureDAO() {
 
             if (oHttpClientResponseDTO == null || oHttpClientResponseDTO == "") {
                 IsSuccess = false;
-                // alert(OneViewGlobalization[CurrentLanguage].Connectionrefused_Message);  
+                // alert(OneViewGlobalization[CurrentLanguage].Connectionrefused_Message);
             }
             else if (oHttpClientResponseDTO.IsAnyException == true || oHttpClientResponseDTO.IsAnyException == "true") {
                 IsSuccess = false;
@@ -1683,7 +1683,7 @@ function DbStructureDAO() {
             else if (oHttpClientResponseDTO.IsAnyException == "false" && oHttpClientResponseDTO.ResponseCode == "503")//Service Unavailable
             {
                 IsSuccess = false;
-                // alert(OneViewGlobalization[CurrentLanguage].ServiceUnavailable_Message);             
+                // navigator.notification.alert((OneViewGlobalization[CurrentLanguage].ServiceUnavailable_Message), ['OK'], "");
 
             }
             else if (oHttpClientResponseDTO.IsAnyException == "false" && oHttpClientResponseDTO.ResponseCode == "504")//Gateway Timeout
@@ -1792,17 +1792,17 @@ function DbStructureDAO() {
           
             var ServicesDetails;
             var _oCloudManagerBO = new CloudManagerBO(xlatService);
-            var CloudManagerServiceInfo = OneViewLocalStorage.Get("CloudManagerServiceInfo");            
+            var CloudManagerServiceInfo = OneViewLocalStorage.Get("CloudManagerServiceInfo");
             if (CloudManagerServiceInfo != null) {
                 CloudManagerServiceInfo = JSON.parse(CloudManagerServiceInfo);
-                for (var ServiceId in CloudManagerServiceInfo) {                   
+                for (var ServiceId in CloudManagerServiceInfo) {
                     ServicesDetails = CloudManagerServiceInfo[ServiceId];
                     break;
-                }              
+                }
             }
 
             if (ServicesDetails != undefined && ServicesDetails != null) {
-                //var ft = new FileTransfer();                
+                //var ft = new FileTransfer();
                 //var LocalPath = "/mnt/sdcard/OneView/Log Files/Common/Log.txt";
                 //var RemotePath = ServicesDetails.SimpleStorageUrl + "SimpleStorageService.svc/SimpleStorageService/Common/" + IMEI + "/LogFiles/";
                 //alert('LocalPath : ' + LocalPath + ', RemotePath : ' + RemotePath);
@@ -1863,7 +1863,7 @@ function DbStructureDAO() {
         }
         else {
             //  alert("Log Upload failed");
-            alert("Please contact administrator, Error Code : " + error.http_status);
+            navigator.notification.alert(("Please contact administrator, Error Code : " + error.http_status), ['OK'], "");
         }
        
     }
@@ -1881,7 +1881,7 @@ function DbStructureDAO() {
     }
 
     var LocalCommonLogDeleteWin = function (r) {
-        //alert('Local log deleted successfully');  
+        //alert('Local log deleted successfully');
         //Upload ServiceWise Logs
 
         var userName = OneViewSessionStorage.Get("LoginUserName");
@@ -1994,7 +1994,7 @@ function DbStructureDAO() {
         }
     }
     var GotZippedLogsFSTodelete = function (fileSystem) {
-        try {          
+        try {
             fileSystem.root.getFile("OneView/ZippedLogs.zip", { create: true, exclusive: false }, GotFileEntryToDelete, Deletefail);
 
         }
@@ -2009,18 +2009,19 @@ function DbStructureDAO() {
     }
 
     var UploadZippedLogfail = function (error) {
-        alert("Error : " + JSON.stringify(error));
-        alert("Error Code: " + error.code);//FileTransferError.FILE_NOT_FOUND_ERR
+        //alert("Error : " + JSON.stringify(error));
+        //alert("Error Code: " + error.code);//FileTransferError.FILE_NOT_FOUND_ERR
         //if (error.code == 1) {
         //    alert("No logs available to upload");
         //}
         //else {
         //    alert("Log Upload failed");
         //}
-        alert("DBC-01 : Please contact administrator, Error Code : " + error.http_status);
+        navigator.notification.alert(("DBC-01 : Please contact administrator, Error Code : " + error.http_status), ['OK'], "");
     }
 
 }
+
 
 
 

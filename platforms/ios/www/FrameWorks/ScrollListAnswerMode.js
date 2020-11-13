@@ -458,6 +458,10 @@ function ScrollListAnswerMode($scope) {
             MyInstance.SelectedText = ItemData.Name;
             MyInstance.IsDynamicElement = ItemData.IsDynamicElement;
             MyInstance.DATEntityTypeId = ItemData.Type;
+            if (ItemData.Type == undefined) {
+                MyInstance.DATEntityTypeId = "";
+            }
+           
             
             $scope[ItemData.ControlId] = MyInstance;
 
@@ -814,6 +818,45 @@ function ScrollListAnswerMode($scope) {
                         _oDOM.SetStyle("DivItem_" + OrdrServerId, "overflow", "visible");
                         _oDOM.SetStyle("DivItem_" + OrdrServerId, "border-left", "7px solid red");
                     }
+
+
+                    if (OneViewSessionStorage.Get("ServiceId") == 52) {
+                        if (OneViewSessionStorage.Get("TemplateId") == 3) {
+                          //  alert("IsChecked => " + ItemList[i].IsChecked)
+                            if (ItemList[i].IsChecked != undefined) {
+                                if ((ItemList[i].IsChecked == "true" || ItemList[i].IsChecked == true) && (ItemList[i].IsNC == "true" || ItemList[i].IsNC == true)) {
+                                    _oDOM.SetStyle("DivItem_" + OrdrServerId, "overflow", "visible");
+                                    _oDOM.SetStyle("DivItem_" + OrdrServerId, "border-left", "7px solid red");                                  
+                                }
+                                else if ((ItemList[i].IsChecked == "true" || ItemList[i].IsChecked == true) && (ItemList[i].IsNC == "false" || ItemList[i].IsNC == false || ItemList[i].IsNC == "" || ItemList[i].IsNC == undefined || ItemList[i].IsNC == "null" || ItemList[i].IsNC == null)) {
+                                    _oDOM.SetStyle("DivItem_" + OrdrServerId, "overflow", "visible");
+                                    _oDOM.SetStyle("DivItem_" + OrdrServerId, "border-left", "7px solid green");
+                                }
+                            }
+                        }
+                    }
+
+                    if (OneViewSessionStorage.Get("ServiceId") == 50) {
+                        if (ItemList[i].DataCaptureId != undefined) {
+
+                            if (ItemList[i].IsDcCompleted != undefined) {
+                                var IsDcCompleted = ItemList[i].IsDcCompleted;
+
+                                if (DataCaptureId != 0) {
+                                    if (IsDcCompleted == true || IsDcCompleted == 'true') {
+                                        _oDOM.SetStyle("DivItem_" + OrdrServerId, "overflow", "visible");
+                                        _oDOM.SetStyle("DivItem_" + OrdrServerId, "border-left", "7px solid green");
+                                    }
+                                    else {
+                                        _oDOM.SetStyle("DivItem_" + OrdrServerId, "overflow", "visible");
+                                        _oDOM.SetStyle("DivItem_" + OrdrServerId, "border-left", "7px solid #ffbf00");
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
                 }
 
                 _oDOM.SetStyle("DivItem_" + MenuItemServerId, "background-color", "grey");
@@ -1171,6 +1214,326 @@ function ScrollListAnswerMode($scope) {
             throw oOneViewExceptionHandler.Create("Framework", "ScrollListAnswerMode.UpdatePOActiveStatus", Excep);
         }
     }
+
+    /*WorkOrderNo ScrollList Code Start*/
+
+    this.LoadProductsForWorkOrder = function (Req) {
+        try {
+            OneViewConsole.Debug("LoadProductsForWorkOrder Start", "ScrollListAnswerMode.LoadProductsForWorkOrder");
+
+            var LabelId = Req.LabelId;
+            var OrderById = Req.OrderById;
+
+            var DataSourceModelName = Req.DataSourceModelName;
+            var DcPlaceId = Req.DcPlaceId;
+            var AttributeNodeId = Req.AttributeNodeId;
+            var ControlId = Req.ControlId;
+            var DATId = Req.DATId;
+            var DivId = Req.DivId;
+            var $compile = Req.$compile;
+            var WorkOrderNum = Req.WorkOrderNum;
+
+            var oDateTime = new DateTime();
+
+
+            var CurrentDate = oDateTime.GetDate();//CurrentDate
+
+            var ReqObj = {
+                'DcPlaceId': DcPlaceId, 'Type': DATId, 'LabelId': LabelId, 'OrderById': OrderById,
+                'AttributeNodeId': AttributeNodeId, 'ControlId': ControlId, 'Date': CurrentDate, 'OrderByName': Req.OrderByName, WorkOrderNum: Req.WorkOrderNum
+            };
+
+            MyInstance.Init(DataSourceModelName, ControlId, DATId);
+            var DataList = MyInstance.GetDataForWorkOrder(ReqObj);
+            DataList = MyInstance.GetDcDataByItemsForWorkOrder(DataList, AttributeNodeId, ControlId, Req);
+
+            AllDataListItems = clone(DataList);
+            MyInstance.LoadItem({ DataSourceModelName: DataSourceModelName, AttributeNodeId: AttributeNodeId, ControlId: ControlId, DivId: DivId, DataList: DataList, $compile: $compile });
+
+            OneViewConsole.Debug("LoadProductsForWorkOrder End", "ScrollListAnswerMode.LoadProductsForWorkOrder");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "ScrollListAnswerMode.LoadProductsForWorkOrder", Excep);
+        }
+        finally {
+        }
+    }
+
+
+    this.GetDataForWorkOrder = function (Req) {
+        try {
+            OneViewConsole.Debug("GetDataForPO Start", "ScrollListAnswerMode.GetDataForPO");
+
+            //DataList************************************************
+
+            var DataList = [];
+
+            /*
+            DataList.push({
+                SrNo: 5, Id: 5, ServerId: 14, Name: 'Fish Curry', IsDynamicElement: false, Type: 290, AttributeNodeId: 14027, ControlId: 'ControlId_14027', DataCaptureId: null, DcClientGuid: null,
+                LabelDetails: [{ LabelTypeId: 1, LabelTypeName: 'Risk', LabelId: 3, LabelName: 'Low Risk' }, { LabelTypeId: 2, LabelTypeName: 'Meal Type', LabelId: 5, LabelName: 'Lunch' }, { LabelTypeId: 3, LabelTypeName: 'Item Type', LabelId: 11, LabelName: 'Seared Foods' }
+                 , { LabelTypeId: 4, LabelTypeName: 'Item Category', LabelId: 16, LabelName: 'Beverage' }]
+            });
+
+              */
+
+            //DataList************************************************
+
+            var _oItemDAO = new ItemDAO();
+            var Response = _oItemDAO.GetProductsForWorkOrderNo(Req);
+
+            //If any processing
+            var DataList = Response;
+
+            OneViewConsole.Debug("GetDataForPO End", "ScrollListAnswerMode.GetDataForPO");
+
+            return DataList;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "ScrollListAnswerMode.GetDataForPO", Excep);
+        }
+    }
+
+    this.GetDcDataByItemsForWorkOrder = function (ItemList, AttributeNodeId, ControlId, Req) {
+        try {
+            OneViewConsole.Debug("GetDcDataByItemsForWorkOrder Start", "ScrollListAnswerMode.GetDcDataByItemsForWorkOrder");
+
+
+            if (ItemList != null && ItemList.length > 0) {
+                var _oItemDAO = new ItemDAO();
+
+                // var DcAndItemIdList = _oItemDAO.GetDcDataByItemsForSingleAttribute(ItemList, AttributeNodeId);
+                var AttributeLst = [];
+                if (Req.WorkOrderNoAttributeNodeId != undefined) {
+                    AttributeLst.push(Req.WorkOrderNoAttributeNodeId);
+                }
+                AttributeLst.push(AttributeNodeId);
+
+
+                var DcAndItemIdList = _oItemDAO.GetDcDataByItemsForMultipleAttribute(ItemList, AttributeLst);
+
+                if (DcAndItemIdList != null && DcAndItemIdList.length > 0) {
+
+                    var DcDataDict = {};
+                    DcDataDict = MyInstance.GetDcDataDictList({ DcResultDetailsLst: DcAndItemIdList, AttributeListDetails: Req.AttributeListDetails });
+
+                    for (var DcId in DcDataDict) {
+
+                        for (var j = 0; j < ItemList.length ; j++) {
+                            ItemList[j].SrNo = j + 1;
+                            //if (DcDataDict[DcId].WorkOrderNo == ItemList[j].WorkOrderNo && DcDataDict[DcId].ItemName == ItemList[j].ServerId) { //This will work if work order filteration is there
+                            if ( DcDataDict[DcId].ItemName == ItemList[j].ServerId) {
+                                ItemList[j].DataCaptureId = DcDataDict[DcId].DataCaptureId;
+                                ItemList[j].DcClientGuid = DcDataDict[DcId].ClientGuid;
+                                ItemList[j].IsDcCompleted = DcDataDict[DcId].IsDcCompleted;
+                                break;
+                            }
+                        }
+                    }                   
+
+                }
+
+                for (var j = 0; j < ItemList.length ; j++) {
+                    ItemList[j].SrNo = j + 1;
+                    ItemList[j].ControlId = ControlId;
+                    if (ItemList[j].DataCaptureId == undefined) {
+                        ItemList[j].DataCaptureId = null;
+                    }
+                    if (ItemList[j].DcClientGuid == undefined) {
+                        ItemList[j].DcClientGuid = null;
+                    }
+                    if (ItemList[j].IsDcCompleted == undefined) {
+                        ItemList[j].IsDcCompleted = false;
+                    }
+                   
+                }
+
+            }
+            OneViewConsole.Debug("GetDcDataByItemsForWorkOrder End", "ScrollListAnswerMode.GetDcDataByItemsForWorkOrder");
+
+            return ItemList;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "ScrollListAnswerMode.GetDcDataByItemsForWorkOrder", Excep);
+        }
+    }
+
+    this.UpdateStatusInWorkOrder = function (Req) {
+        try {
+            OneViewConsole.Debug("UpdateStatusInWorkOrder Start", "ScrollListAnswerMode.UpdateStatusInWorkOrder");
+
+            var _oItemDAO = new ItemDAO();
+            _oItemDAO.UpdateItemStatusForWorkOrderNo(Req);
+
+            OneViewConsole.Debug("UpdateStatusInWorkOrder End", "ScrollListAnswerMode.UpdateStatusInWorkOrder");
+
+            // return ItemList;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "ScrollListAnswerMode.UpdateStatusInWorkOrder", Excep);
+        }
+    }
+    /*WorkOrderNo ScrollList Code End*/
+
+    /*FlightBeltPlanDetails Code Start*/
+
+    this.LoadScrollListItem = function (Req) {
+        try {
+            OneViewConsole.Debug("LoadProductsForWorkOrder Start", "ScrollListAnswerMode.LoadProductsForWorkOrder");
+
+            var LabelId = Req.LabelId;
+            var OrderById = Req.OrderById;
+
+            var DataSourceModelName = Req.DataSourceModelName;
+            var DcPlaceId = Req.DcPlaceId;
+            var AttributeNodeId = Req.AttributeNodeId;
+            var ControlId = Req.ControlId;
+            var DATId = Req.DATId;
+            var DivId = Req.DivId;
+            var $compile = Req.$compile;
+            var WorkOrderNum = Req.WorkOrderNum;
+
+            var oDateTime = new DateTime();
+
+
+            var CurrentDate = oDateTime.GetDate();//CurrentDate
+            var ServiceDate=CurrentDate;
+            if (Req.ServiceDate != undefined) {
+                ServiceDate = Req.ServiceDate;
+            }
+            var CurrentStatus = '';
+            if (Req.CurrentStatus != undefined) {
+                CurrentStatus = Req.CurrentStatus;
+            }
+
+            var ReqObj = {
+                'DcPlaceId': DcPlaceId, 'Type': DATId, 'LabelId': LabelId, 'OrderById': OrderById,
+                'AttributeNodeId': AttributeNodeId, 'ControlId': ControlId, 'Date': CurrentDate, 'OrderByName': Req.OrderByName, WorkOrderNum: Req.WorkOrderNum,
+                'ServiceDate': ServiceDate, 'CurrentStatus': CurrentStatus
+            };
+
+            MyInstance.Init(DataSourceModelName, ControlId, DATId);
+            var DataList = MyInstance.GetDataForScrollListItem(ReqObj);
+            DataList = MyInstance.GetDcDataByItemsForWorkOrder(DataList, AttributeNodeId, ControlId, Req);
+
+            AllDataListItems = clone(DataList);
+            MyInstance.LoadItem({ DataSourceModelName: DataSourceModelName, AttributeNodeId: AttributeNodeId, ControlId: ControlId, DivId: DivId, DataList: DataList, $compile: $compile });
+
+            OneViewConsole.Debug("LoadProductsForWorkOrder End", "ScrollListAnswerMode.LoadProductsForWorkOrder");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "ScrollListAnswerMode.LoadProductsForWorkOrder", Excep);
+        }
+        finally {
+        }
+    }
+
+
+    this.GetDataForScrollListItem = function (Req) {
+        try {
+            OneViewConsole.Debug("GetDataForPO Start", "ScrollListAnswerMode.GetDataForPO");
+
+            //DataList************************************************
+
+            var DataList = [];
+
+            /*
+            DataList.push({
+                SrNo: 5, Id: 5, ServerId: 14, Name: 'Fish Curry', IsDynamicElement: false, Type: 290, AttributeNodeId: 14027, ControlId: 'ControlId_14027', DataCaptureId: null, DcClientGuid: null,
+                LabelDetails: [{ LabelTypeId: 1, LabelTypeName: 'Risk', LabelId: 3, LabelName: 'Low Risk' }, { LabelTypeId: 2, LabelTypeName: 'Meal Type', LabelId: 5, LabelName: 'Lunch' }, { LabelTypeId: 3, LabelTypeName: 'Item Type', LabelId: 11, LabelName: 'Seared Foods' }
+                 , { LabelTypeId: 4, LabelTypeName: 'Item Category', LabelId: 16, LabelName: 'Beverage' }]
+            });
+
+              */
+
+            //DataList************************************************
+
+            var _oItemDAO = new ItemDAO();
+            var Response =[];
+
+            //if (OneViewSessionStorage.Get("TemplateId") != null && OneViewSessionStorage.Get("TemplateId") != undefined && OneViewSessionStorage.Get("TemplateId") != "") {
+            //    if (OneViewSessionStorage.Get("TemplateId") == 3) {// BeltPlan Template
+            //        Response = _oItemDAO.GetFlightBeltPlanDetails(Req);
+            //    }
+            //}
+
+
+            if (OneViewSessionStorage.Get("ServiceId") == 51) {
+
+                if (OneViewSessionStorage.Get("TemplateId") != null && OneViewSessionStorage.Get("TemplateId") != undefined && OneViewSessionStorage.Get("TemplateId") != "") {
+                    if (OneViewSessionStorage.Get("TemplateId") == 3) {// BeltPlan Template
+                        Response = _oItemDAO.GetFlightBeltPlanDetails(Req);
+                    }
+                    else if (OneViewSessionStorage.Get("TemplateId") == 26) {
+                        Response = _oItemDAO.GetFlightCellPlanDetails(Req);
+                    }
+                    else if (OneViewSessionStorage.Get("TemplateId") == 47) {
+                        Response = _oItemDAO.GetFlightOLAPlanDetails(Req);
+                    }
+                }
+                
+               
+            }
+            else if (OneViewSessionStorage.Get("ServiceId") == 52) { 
+                Response = _oItemDAO.GetASOWorkOrderDetails(Req);
+            }
+            else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+                Response = _oItemDAO.GetRFLWorkOrderDetails(Req);
+            }
+
+            //If any processing
+            var DataList = Response;
+
+            OneViewConsole.Debug("GetDataForPO End", "ScrollListAnswerMode.GetDataForPO");
+
+            return DataList;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "ScrollListAnswerMode.GetDataForPO", Excep);
+        }
+    }
+
+    this.UpdateStatusInScrollListItemTable = function (Req) {
+        try {
+            OneViewConsole.Debug("UpdateStatusInScrollListItemTable Start", "ScrollListAnswerMode.UpdateStatusInScrollListItemTable");
+
+            var _oItemDAO = new ItemDAO();
+
+
+            if (OneViewSessionStorage.Get("ServiceId") == 51) {
+
+                if (OneViewSessionStorage.Get("TemplateId") == 3) {
+                    _oItemDAO.UpdateItemStatusForFlightBeltPlanDetails(Req);
+                }
+                else if (OneViewSessionStorage.Get("TemplateId") == 26) {
+                    _oItemDAO.UpdateItemStatusForFlightCellPlanDetails(Req);
+                }
+                else if (OneViewSessionStorage.Get("TemplateId") == 47) {
+                    _oItemDAO.UpdateItemStatusForFlightOLAPlanDetails(Req);
+                }
+            }
+            else if (OneViewSessionStorage.Get("ServiceId") == 52) {
+                if (OneViewSessionStorage.Get("TemplateId") == 3) {
+                    _oItemDAO.UpdateItemStatusForASOWorkOrderDetails(Req);
+                }
+            }
+            else if (OneViewSessionStorage.Get("ServiceId") == 61) {           
+               _oItemDAO.UpdateItemStatusForRFLWorkOrderDetails(Req);            
+            }
+           
+
+            OneViewConsole.Debug("UpdateStatusInScrollListItemTable End", "ScrollListAnswerMode.UpdateStatusInScrollListItemTable");
+
+            // return ItemList;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("Framework", "ScrollListAnswerMode.UpdateStatusInScrollListItemTable", Excep);
+        }
+    }
+
+    /*FlightBeltPlanDetails Code End*/
 }
 
 
@@ -1981,8 +2344,12 @@ function ItemDAO() {
         
             var Incondition = "(";
             for (var i = 0; i < ItemList.length; i++) {
-
-                Incondition += "'"+ItemList[i].PurchaseOrderNo + "',";
+                if (ItemList[i].PurchaseOrderNo === undefined) {
+                    Incondition += "'" + ItemList[i].WorkOrderNo + "',";
+                }
+                else {
+                    Incondition += "'" + ItemList[i].PurchaseOrderNo + "',";
+                }
                 Incondition += ItemList[i].ServerId;
                 Incondition += (i <= ItemList.length - 2) ? "," : ")";
             }
@@ -2022,4 +2389,621 @@ function ItemDAO() {
             Nodes = null;
         }
     }
+
+
+    /*WorkOrderNo Data Code Start*/
+
+    this.GetProductsForWorkOrderNo = function (Req) {
+        try {
+            OneViewConsole.Debug("GetProducts start", "ItemDAO.GetProducts");
+
+            var DcPlaceId = Req.DcPlaceId;
+            var Type = Req.Type;
+            var LabelId = Req.LabelId;
+            var Date = Req.Date;
+            var StartDateTime = Date + " 00:00:00";
+            var EndDateTime = Date + " 23:59:59";
+            var TemplateId = Req.TemplateId;
+            var WorkOrderNum = Req.WorkOrderNum;
+
+            var oDateTime = new DateTime();
+            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+            var StartDateValidity = '-24 Hours';
+            var EndDateValidity = '4 Hours';
+            var ReqObj = { "TemplateId": OneViewSessionStorage.Get("TemplateId") };
+           // var StartDateEndDateConfiguration = MyInstance.GetStartDateAnEndDateConfiguration(ReqObj);
+            // var StartDateEndDateConfiguration = {StartDate:'-24',EndDate:'+4'};
+           // StartDateValidity = StartDateEndDateConfiguration.StartDate + ' Hours';
+           // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
+
+
+            var Query = "SELECT DISTINCT WrkOrdrD.Id AS Id,WrkOrdrD.ServerId AS ServerId," +
+                        "WrkOrdrD.OSGuid,WrkOrdrD.OVGuid,WrkOrdrD.BusinessUnitId,WrkOrdrD.BusinessUnitName,WrkOrdrD.BusinessUnitCode," +
+                        "WrkOrdrD.SectionId,WrkOrdrD.SectionName,WrkOrdrD.SectionCode,WrkOrdrD.WorkOrderNo," +
+                        "WrkOrdrD.ItemMasterId AS ItemMasterId,WrkOrdrD.ItemMasterName," +
+                        //"( WrkOrdrD.ItemMasterCode || ' - ' || WrkOrdrD.ItemMasterName) AS Name," +
+                        "CASE WHEN WrkOrdrD.RequiredQuantity=='' then ( WrkOrdrD.ItemMasterCode || ' - ' || WrkOrdrD.ItemMasterName ) " +
+                        "ELSE (WrkOrdrD.ItemMasterCode || ' - ' || WrkOrdrD.ItemMasterName ||' (' ||WrkOrdrD.RequiredQuantity || ')' ) " +
+                        "END AS Name, " +
+                        "WrkOrdrD.ItemMasterCode," +
+                        "WrkOrdrD.ParentItemMasterId,WrkOrdrD.ParentItemMasterName  ,WrkOrdrD.ParentItemMasterCode," +
+                        "WrkOrdrD.Sector,WrkOrdrD.AirlineId ,WrkOrdrD.AirlineName,WrkOrdrD.FlightId,WrkOrdrD.FlightName," +
+                        "WrkOrdrD.Class,WrkOrdrD.MealTypeName ,WrkOrdrD.RequiredQuantity,WrkOrdrD.UOM,WrkOrdrD.Status,WrkOrdrD.CompanyMasterId AS CompanyMasterId," +
+                        //StartDate StartDate(-24 hr)
+                        //"(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,1,4) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,6,2) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,9,2) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,12,2) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,15,2) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) ,  '" + StartDateValidity + "')) ,18,2) ) as DStartDate," +
+                        //StartDate EndDate(+4 hr)
+                        //"(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,1,4) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,6,2) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,9,2) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,12,2) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,15,2) ||" +
+                        //"SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,18,2) ) as DEndDate," +
+                        "WrkOrdrD.RequestDate AS RequestDate,WrkOrdrD.StartDate AS StartDate,WrkOrdrD.ParentInfo AS ParentInfo," +
+                        //"(SUBSTR('" + StartDateTime + "', 7, 4) || SUBSTR('" + StartDateTime + "', 4, 2) || SUBSTR('" + StartDateTime + "', 1, 2) || SUBSTR('" + StartDateTime + "', 12, 2) ||  SUBSTR('" + StartDateTime + "', 15, 2) || SUBSTR('" + StartDateTime + "', 18, 2) ) AS OrderStartDate ," +
+                        "(SUBSTR(WrkOrdrD.StartDate, 7, 4) || SUBSTR(WrkOrdrD.StartDate, 4, 2) || SUBSTR(WrkOrdrD.StartDate, 1, 2) || SUBSTR(WrkOrdrD.StartDate, 12, 2) ||  SUBSTR(WrkOrdrD.StartDate, 15, 2) || SUBSTR(WrkOrdrD.StartDate, 18, 2) ) AS StartDate1 " +
+                        " FROM  WorkOrderItemDetails WrkOrdrD " +
+                        " WHERE WrkOrdrD.SectionId = " + DcPlaceId + " AND ('-1' = '" + WorkOrderNum + "' OR WrkOrdrD.WorkOrderNo='" + WorkOrderNum + "')"+
+                        //" AND ( (   OrderStartDate <= StartDate1  AND    StartDate1 <=DEndDate ) or  '' = StartDate ) " +
+                        " ORDER By WrkOrdrD.ServerId";
+
+
+            //alert('ItemDAO.GetProducts Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            OneViewConsole.Debug("GetProducts end", "ItemDAO.GetProducts");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetProducts", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    this.UpdateItemStatusForWorkOrderNo = function (Req) {
+        try {
+            OneViewConsole.Debug("UpdateItemStatusForWorkOrderNo start", "ItemDAO.UpdateItemStatusForWorkOrderNo");
+
+            //var ServerIdCondition = "";
+
+            ////if ((Req.IsPOActive != 'false' && Req.IsPOActive != false)) {
+            //    ServerIdCondition = " AND ItemMasterId='" + Req.ServerId + "'";
+            ////}
+
+            var Query = "UPDATE WorkOrderItemDetails set Status='" + Req.ItemStatus + "' " +
+                        " WHERE ServerId='" + Req.ServerId + "'";
+
+            _OneViewSqlitePlugin.ExcecuteSql(Query);
+
+            OneViewConsole.Debug("UpdateItemStatusForWorkOrderNo end", "ItemDAO.UpdateItemStatusForWorkOrderNo");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.UpdateItemStatusForWorkOrderNo", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    this.DeleteWorkOrderItems = function (Req) {
+        try {
+            OneViewConsole.Debug("DeleteWorkOrderItems start", "ItemDAO.DeleteWorkOrderItems");
+
+            var Result = Req;
+            var Incondition = "(";
+            for (var i = 0; i < Result.length; i++) {
+                Incondition += Result[i].Id;
+
+                if ((Result.length - 1) !== i) {
+                    Incondition += ",";
+                }
+            }
+            Incondition += ")";    
+         
+
+            var Query = "DELETE  FROM  WorkOrderItemDetails WHERE Id IN" + Incondition;
+            _OneViewSqlitePlugin.ExcecuteSql(Query);
+
+            OneViewConsole.Debug("DeleteWorkOrderItems end", "ItemDAO.DeleteWorkOrderItems");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.DeleteWorkOrderItems", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    this.GetWorkOrderNo = function (Req) {
+        try {
+            OneViewConsole.Debug("GetProducts start", "ItemDAO.GetProducts");
+
+            var _OneViewSqlitePlugin = new OneViewSqlitePlugin();
+            var DcPlaceId = OneViewSessionStorage.Get("DcPlaceId");
+
+            var oDateTime = new DateTime();
+            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+            var StartDateValidity = '-24 Hours';
+            var EndDateValidity = '4 Hours';
+      
+            // debugger;
+            var Query = "SELECT Distinct WorkOrderNo as WorkOrderNo," +
+                       //StartDate StartDate(-24 hr)
+                       "(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,1,4) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,6,2) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,9,2) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,12,2) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + StartDateValidity + "')) ,15,2) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) ,  '" + StartDateValidity + "')) ,18,2) ) as DStartDate," +
+                       //StartDate EndDate(+4 hr)
+                       "(SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,1,4) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,6,2) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,9,2) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,12,2) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,15,2) ||" +
+                       "SUBSTR((datetime((SUBSTR('" + CurrentDateAndTime + "', 7, 4) || '-' || SUBSTR('" + CurrentDateAndTime + "', 4, 2) || '-' || SUBSTR('" + CurrentDateAndTime + "', 1, 2) || ' ' || SUBSTR('" + CurrentDateAndTime + "', 12, 2) ||  ':' ||  SUBSTR('" + CurrentDateAndTime + "', 15, 2) ||  ':' || SUBSTR('" + CurrentDateAndTime + "', 18, 2)) , '" + EndDateValidity + "')) ,18,2) ) as DEndDate," +
+                       "WrkOrdrD.RequestDate AS RequestDate,WrkOrdrD.StartDate AS StartDate,WrkOrdrD.ParentInfo AS ParentInfo," +
+                       "(SUBSTR(WrkOrdrD.StartDate, 7, 4) || SUBSTR(WrkOrdrD.StartDate, 4, 2) || SUBSTR(WrkOrdrD.StartDate, 1, 2) || SUBSTR(WrkOrdrD.StartDate, 12, 2) ||  SUBSTR(WrkOrdrD.StartDate, 15, 2) || SUBSTR(WrkOrdrD.StartDate, 18, 2) ) AS StartDate1 " +
+                       " FROM  WorkOrderItemDetails WrkOrdrD " +
+                       " WHERE WrkOrdrD.SectionId = " + DcPlaceId +
+                       " AND ( (   DStartDate <= StartDate1  AND    StartDate1 <=DEndDate ) or  '' = StartDate ) " +
+                       " ORDER By WrkOrdrD.ItemMasterId";
+
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            OneViewConsole.Debug("GetProducts end", "ItemDAO.GetProducts");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetProducts", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+
+    this.GetStartDateAnEndDateConfiguration = function (Req) {
+        var StartDateEndDateConfiguration = {StartDate:'-24',EndDate:'+4',GrabageCollectorDate:'-32'};
+        try {
+            OneViewConsole.Debug("GetStartDateConfiguration start", "LandingPageFacade.GetStartDateConfiguration");
+            var IsSuccess = false;
+       
+            var _MobileAutoSyncMetadataDAO = new MobileAutoSyncMetadataDAO();
+            var Result = _MobileAutoSyncMetadataDAO.GetByServiceAndUserIdAndEvent(OneViewSessionStorage.Get("ServiceId"), OneViewSessionStorage.Get("LoginUserId"), "ScrollListItemDAO", "GetWorkOrderItemDetailsTimeConfiguration");
+            //alert("Result : " + JSON.stringify(Result));
+
+            if (Result.length > 0) {
+
+                var BusinessEventHandlers = Result[0].BusinessEventHandlers[0];
+                var TimeConfiguration = JSON.parse(BusinessEventHandlers.BusinessEventEvaluatorObjectKey);
+                var TemplateId = Req.TemplateId;
+
+                for (var i = 0; i < TimeConfiguration.length; i++) {
+
+                    if (TimeConfiguration[i].TemplateId == TemplateId) {
+
+                        StartDateEndDateConfiguration.StartDate = TimeConfiguration[i].StartTime;
+                        StartDateEndDateConfiguration.EndDate = TimeConfiguration[i].EndTime;
+                        StartDateEndDateConfiguration.GrabageCollectorDate = TimeConfiguration[i].GrabageCollectorDate;
+
+                    }
+                }
+                
+            }
+            
+
+            OneViewConsole.Debug("GetStartDateConfiguration end", "LandingPageFacade.GetStartDateConfiguration");
+
+            return StartDateEndDateConfiguration;
+          //  return IsSuccess;
+        }
+        catch (Excep) {
+            return StartDateEndDateConfiguration;
+            oOneViewExceptionHandler.Catch(Excep, "LandingPageFacade.GetStartDateConfiguration", xlatService);
+        }
+        
+    }
+
+    /*WorkOrderNo Data Code End*/
+    /*FlightBeltPlanDetails Data Code Start*/
+
+    this.GetFlightBeltPlanDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("GetProducts start", "ItemDAO.GetProducts");
+
+            var DcPlaceId = Req.DcPlaceId;
+            var Type = Req.Type;
+            var LabelId = Req.LabelId;
+            var Date = Req.Date;
+            var StartDateTime = Date + " 00:00:00";
+            var EndDateTime = Date + " 23:59:59";
+            var TemplateId = Req.TemplateId;
+            var AirlineName = Req.AirlineName;
+
+            var oDateTime = new DateTime();
+            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+            var StartDateValidity = '-24 Hours';
+            var EndDateValidity = '4 Hours';
+            var ReqObj = { "TemplateId": OneViewSessionStorage.Get("TemplateId") };
+            // var StartDateEndDateConfiguration = MyInstance.GetStartDateAnEndDateConfiguration(ReqObj);
+            // var StartDateEndDateConfiguration = {StartDate:'-24',EndDate:'+4'};
+            // StartDateValidity = StartDateEndDateConfiguration.StartDate + ' Hours';
+            // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
+
+
+            var Query = "SELECT DISTINCT Id,ServerId," +
+                       "Airline,(FlightNo || ' - ' || UPLift|| ' - ' || Class)  As Name,FlightNo,AircraftType,Regn,SDD,ETD,FlightPlanFrom," +
+                       "FlightPlanTo,FCONo,Rev,Class,Config,Load,Normal,SPMLTotal," +
+                       "SPML,CompanyName,CompanyId,BeltName,BeltId,UPLift" +
+                       //"(SUBSTR(WrkOrdrD.StartDate, 7, 4) || SUBSTR(WrkOrdrD.StartDate, 4, 2) || SUBSTR(WrkOrdrD.StartDate, 1, 2) || SUBSTR(WrkOrdrD.StartDate, 12, 2) ||  SUBSTR(WrkOrdrD.StartDate, 15, 2) || SUBSTR(WrkOrdrD.StartDate, 18, 2) ) AS StartDate1 " +
+                       " FROM  FlightBeltPlanDetails  " +
+                       " WHERE BeltId = " + DcPlaceId +
+                       " ORDER By ServerId";
+
+
+            //alert('ItemDAO.GetProducts Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            OneViewConsole.Debug("GetProducts end", "ItemDAO.GetProducts");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetProducts", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+  
+    this.UpdateItemStatusForFlightBeltPlanDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("UpdateItemStatusForFlightBeltPlanDetails start", "ItemDAO.UpdateItemStatusForFlightBeltPlanDetails");
+         
+
+            var Query = "UPDATE FlightBeltPlanDetails set Status='" + Req.ItemStatus + "' " +
+                        " WHERE ServerId='" + Req.ServerId + "'";
+
+            _OneViewSqlitePlugin.ExcecuteSql(Query);
+
+            OneViewConsole.Debug("UpdateItemStatusForFlightBeltPlanDetails end", "ItemDAO.UpdateItemStatusForFlightBeltPlanDetails");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.UpdateItemStatusForFlightBeltPlanDetails", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    /*FlightBeltPlanDetails Data Code end*/
+
+
+    /*FlightCellPlanDetails Data Code Start*/
+
+    this.GetFlightCellPlanDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("GetFlightCellPlanDetails start", "ItemDAO.GetFlightCellPlanDetails");
+
+            var DcPlaceId = Req.DcPlaceId;
+            var Type = Req.Type;
+            var LabelId = Req.LabelId;
+            var Date = Req.Date;
+            var StartDateTime = Date + " 00:00:00";
+            var EndDateTime = Date + " 23:59:59";
+            var TemplateId = Req.TemplateId;
+            var AirlineName = Req.AirlineName;
+
+            var oDateTime = new DateTime();
+            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+            var StartDateValidity = '-24 Hours';
+            var EndDateValidity = '4 Hours';
+            var ReqObj = { "TemplateId": OneViewSessionStorage.Get("TemplateId") };
+            // var StartDateEndDateConfiguration = MyInstance.GetStartDateAnEndDateConfiguration(ReqObj);
+            // var StartDateEndDateConfiguration = {StartDate:'-24',EndDate:'+4'};
+            // StartDateValidity = StartDateEndDateConfiguration.StartDate + ' Hours';
+            // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
+
+
+            var Query = "SELECT DISTINCT Id,ServerId," +
+                       "Airline,(FlightNo || ' - ' || UPLift || ' - ' || Class)  As Name,FlightNo,AircraftType,Regn,SDD,ETD,FlightPlanFrom," +
+                       "FlightPlanTo,FCONo,Rev,Class,Config,Load,Normal,SPMLTotal," +
+                       "SPML,CompanyName,CompanyId,CellName,CellId,UPLift" +
+                       //"(SUBSTR(WrkOrdrD.StartDate, 7, 4) || SUBSTR(WrkOrdrD.StartDate, 4, 2) || SUBSTR(WrkOrdrD.StartDate, 1, 2) || SUBSTR(WrkOrdrD.StartDate, 12, 2) ||  SUBSTR(WrkOrdrD.StartDate, 15, 2) || SUBSTR(WrkOrdrD.StartDate, 18, 2) ) AS StartDate1 " +
+                       " FROM  FlightCellPlanDetails  " +
+                       " WHERE CellId = " + DcPlaceId +
+                       " ORDER By ServerId";
+
+
+            //alert('ItemDAO.GetProducts Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            OneViewConsole.Debug("GetFlightCellPlanDetails end", "ItemDAO.GetFlightCellPlanDetails");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetFlightCellPlanDetails", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+
+    this.UpdateItemStatusForFlightCellPlanDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("UpdateItemStatusForFlightCellPlanDetails start", "ItemDAO.UpdateItemStatusForFlightCellPlanDetails");
+
+
+            var Query = "UPDATE FlightCellPlanDetails set Status='" + Req.ItemStatus + "' " +
+                        " WHERE ServerId='" + Req.ServerId + "'";
+
+            _OneViewSqlitePlugin.ExcecuteSql(Query);
+
+            OneViewConsole.Debug("UpdateItemStatusForFlightCellPlanDetails end", "ItemDAO.UpdateItemStatusForFlightCellPlanDetails");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.UpdateItemStatusForFlightCellPlanDetails", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    /*FlightBeltPlanDetails Data Code end*/
+
+
+    /*FlightOLAPlanDetails Data Code Start*/
+
+    this.GetFlightOLAPlanDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("GetFlightOLAPlanDetails start", "ItemDAO.GetFlightOLAPlanDetails");
+
+            var DcPlaceId = Req.DcPlaceId;
+            var Type = Req.Type;
+            var LabelId = Req.LabelId;
+            var Date = Req.Date;
+            var StartDateTime = Date + " 00:00:00";
+            var EndDateTime = Date + " 23:59:59";
+            var TemplateId = Req.TemplateId;
+            var AirlineName = Req.AirlineName;
+
+            var oDateTime = new DateTime();
+            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+            var StartDateValidity = '-24 Hours';
+            var EndDateValidity = '4 Hours';
+            var ReqObj = { "TemplateId": OneViewSessionStorage.Get("TemplateId") };
+            // var StartDateEndDateConfiguration = MyInstance.GetStartDateAnEndDateConfiguration(ReqObj);
+            // var StartDateEndDateConfiguration = {StartDate:'-24',EndDate:'+4'};
+            // StartDateValidity = StartDateEndDateConfiguration.StartDate + ' Hours';
+            // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
+
+
+            var Query = "SELECT DISTINCT PickList.Id,PickList.ServerId as ServerId,PickList.ItemName as ItemName,(PickList.ITEMCode || ' - ' || PickList.ItemName)  As Name," +
+                       "OAL.Airline,OAL.FlightNo,OAL.AircraftType,OAL.Regn,OAL.SDD,OAL.ETD,OAL.FlightPlanFrom," +
+                       "OAL.FlightPlanTo,OAL.FCONo,OAL.Rev,OAL.Class,OAL.Config,OAL.Load,OAL.Normal,OAL.SPMLTotal," +
+                       "OAL.SPML,OAL.CompanyName,OAL.CompanyId,OAL.CellName,OAL.CellId,OAL.UPLift" +
+                       //"(SUBSTR(WrkOrdrD.StartDate, 7, 4) || SUBSTR(WrkOrdrD.StartDate, 4, 2) || SUBSTR(WrkOrdrD.StartDate, 1, 2) || SUBSTR(WrkOrdrD.StartDate, 12, 2) ||  SUBSTR(WrkOrdrD.StartDate, 15, 2) || SUBSTR(WrkOrdrD.StartDate, 18, 2) ) AS StartDate1 " +
+                       " FROM  FlightOALPlanDetails OAL " +
+                       " INNER JOIN  PickListMasterDetails PickList " +
+                       " ON  PickList.FlightPlanId=OAL.ServerId" +
+                       " AND  PickList.FlightPlanType=OAL.Type" +
+                       " WHERE OAL.FlightId = " + DcPlaceId +
+                       " ORDER By ServerId";
+
+
+            //alert('ItemDAO.GetProducts Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            OneViewConsole.Debug("GetFlightOLAPlanDetails end", "ItemDAO.GetFlightOLAPlanDetails");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetFlightOLAPlanDetails", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+
+    this.UpdateItemStatusForFlightOLAPlanDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("UpdateItemStatusForFlightOLAPlanDetails start", "ItemDAO.UpdateItemStatusForFlightOLAPlanDetails");
+
+
+            var Query = "UPDATE PickListMasterDetails set Status='" + Req.ItemStatus + "' " +
+                        " WHERE ServerId='" + Req.ServerId + "'";
+
+            _OneViewSqlitePlugin.ExcecuteSql(Query);
+
+            OneViewConsole.Debug("UpdateItemStatusForFlightOLAPlanDetails end", "ItemDAO.UpdateItemStatusForFlightOLAPlanDetails");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.UpdateItemStatusForFlightOLAPlanDetails", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    /*FlightBeltPlanDetails Data Code end*/
+
+    /*ASOWorkOrderDetails Data Code Start*/
+
+    this.GetASOWorkOrderDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("GetProducts start", "ItemDAO.GetProducts");
+
+            var DcPlaceId = Req.DcPlaceId;
+            var Type = Req.Type;
+            var LabelId = Req.LabelId;
+            var Date = Req.Date;
+            var StartDateTime = Date + " 00:00:00";
+            var EndDateTime = Date + " 23:59:59";
+            var TemplateId = Req.TemplateId;
+            var AirlineName = Req.AirlineName;
+
+            var oDateTime = new DateTime();
+            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+            var StartDateValidity = '-24 Hours';
+            var EndDateValidity = '4 Hours';
+            var ReqObj = { "TemplateId": OneViewSessionStorage.Get("TemplateId") };
+            // var StartDateEndDateConfiguration = MyInstance.GetStartDateAnEndDateConfiguration(ReqObj);
+            // var StartDateEndDateConfiguration = {StartDate:'-24',EndDate:'+4'};
+            // StartDateValidity = StartDateEndDateConfiguration.StartDate + ' Hours';
+            // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
+
+
+            var Query = "SELECT DISTINCT Id,ServerId ,OSGuid ,OVGuid,MobileVersionId ,Type ,AirlineId ,(ItemCode || ' - ' || ItemName)  As Name," +
+                        "Airline,FlightId ,FlightNo,Sector,Class,ItemCode,ItemName,MealType ,DespatchGroup," +
+                        "ETA , ETD ,WorkOrderFrom ,WorkOrderTo,IsChecked ,IsNC,CompanyId ,CompanyName "+                      
+                       " FROM  ASOWorkOrderDetails  " +
+                       " WHERE FlightId = " + DcPlaceId +
+                       " ORDER By ServerId";
+
+
+            //alert('ItemDAO.GetProducts Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            OneViewConsole.Debug("GetProducts end", "ItemDAO.GetProducts");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetProducts", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    this.UpdateItemStatusForASOWorkOrderDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("UpdateItemStatusForASOWorkOrderDetails start", "ItemDAO.UpdateItemStatusForASOWorkOrderDetails");
+
+
+            var Query = "UPDATE ASOWorkOrderDetails set Status='" + Req.ItemStatus + "' " +
+                        " WHERE ServerId='" + Req.ServerId + "'";
+            //alert(Query)
+
+            _OneViewSqlitePlugin.ExcecuteSql(Query);
+
+            OneViewConsole.Debug("UpdateItemStatusForASOWorkOrderDetails end", "ItemDAO.UpdateItemStatusForASOWorkOrderDetails");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.UpdateItemStatusForASOWorkOrderDetails", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    /*ASOWorkOrderDetails Data Code end*/
+
+
+    /*RFLWorkOrder Data Code Start*/
+
+    this.GetRFLWorkOrderDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("GetProducts start", "ItemDAO.GetProducts");
+
+            var DcPlaceId = Req.DcPlaceId;
+            var Type = Req.Type;
+            var LabelId = Req.LabelId;
+            var Date = Req.Date;
+            var StartDateTime = Date + " 00:00:00";
+            var EndDateTime = Date + " 23:59:59";
+            var TemplateId = Req.TemplateId;
+            var AirlineName = Req.AirlineName;
+            var ServiceDate = Req.ServiceDate;
+            var CurrentStatus = Req.CurrentStatus;
+
+            var oDateTime = new DateTime();
+            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+            var StartDateValidity = '-24 Hours';
+            var EndDateValidity = '4 Hours';
+            var ReqObj = { "TemplateId": OneViewSessionStorage.Get("TemplateId") };
+             // var StartDateEndDateConfiguration = MyInstance.GetStartDateAnEndDateConfiguration(ReqObj);
+            // var StartDateEndDateConfiguration = {StartDate:'-24',EndDate:'+4'};
+            // StartDateValidity = StartDateEndDateConfiguration.StartDate + ' Hours';
+            // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
+            var oServiceDate = oDateTime.ConvertDateToIntegerFormat(ServiceDate);
+           // alert(oServiceDate);
+
+
+            var Query = "SELECT DISTINCT Id,ServerId ,OSGuid,OVGuid,MobileVersionId,(ItemName ||' (' ||Quantity|| ')' )  As Name,(ItemName ||' (' ||Quantity|| ')' )  As WorkOrderNo," +
+                        "WardId,ItemName,ItemId,OrderTypeId,OrderTypeName,DietCode,Allergens,ServiceDate,Quantity,OrderDetails,PackedQuantity,PackedDetails,PackedRemarks," +
+                        "CookedQuantity , CookedDate ,CookedRemarks,CookedDetails ,CreatedDate,OrderStatus ,CurrentStatus,TimeStamp, " +
+                       "(SUBSTR(ServiceDate, 7, 4) || SUBSTR(ServiceDate, 4, 2) || SUBSTR(ServiceDate, 1, 2) || SUBSTR(ServiceDate, 12, 2) ||  SUBSTR(ServiceDate, 15, 2) || SUBSTR(ServiceDate, 18, 2) ) AS ServiceDateInt " +
+                       " FROM  RFLWorkOrder  " +
+                       " WHERE WardId = " + DcPlaceId +                    
+                       " And CAST(ServiceDateInt as INTEGER) =" + oServiceDate +
+                       " And UPPER(CurrentStatus)='" + CurrentStatus + "'" +
+                       " ORDER By ServerId";
+
+
+           // alert('ItemDAO.GetRFLWorkOrderDetails Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            OneViewConsole.Debug("GetProducts end", "ItemDAO.GetProducts");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetProducts", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    this.UpdateItemStatusForRFLWorkOrderDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("UpdateItemStatusForRFLWorkOrderDetails start", "ItemDAO.UpdateItemStatusForRFLWorkOrderDetails");
+
+
+            var Query = "UPDATE RFLWorkOrder set Status='" + Req.ItemStatus + "' " +
+                        " WHERE ServerId='" + Req.ServerId + "'";
+            //alert(Query)
+
+            _OneViewSqlitePlugin.ExcecuteSql(Query);
+
+            OneViewConsole.Debug("UpdateItemStatusForRFLWorkOrderDetails end", "ItemDAO.UpdateItemStatusForRFLWorkOrderDetails");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.UpdateItemStatusForASOWorkOrderDetails", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    /*RFLWorkOrder Data Code end*/
 }

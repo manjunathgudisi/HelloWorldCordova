@@ -65,8 +65,13 @@ function OneViewCordovaProgressbarPlugin() {
             var Title_Msg = (Title == undefined || Title == "" ) ? OneViewGlobalization[OneViewGlobalcurrentLanguage].LoaderHeaderKey : Title;
             var Body_Msg = (Message == undefined || Message == "") ? OneViewGlobalization[OneViewGlobalcurrentLanguage].LoaderBodyKey : Message;
             //TODO:IOS Migr (ios not supporting ,need to find progress bar)
-            if(OSType != OSTypeEnum.IOS)
-            {
+			if(OSType == OSTypeEnum.IOS) {
+				//ProgressIndicator.showBarWithLabel(true, 50000, Body_Msg);
+				//ProgressIndicator.showSimple(true);
+				ActivityIndicator.show(Title_Msg);
+				//window.MyProgressHUD.ShowProgress();
+				//ProgressIndicatorshowBarWithLabel(dim, timeout, message);
+			} else {
             navigator.notification.progressStart(Title_Msg, Body_Msg);
             }
         }
@@ -83,8 +88,11 @@ function OneViewCordovaProgressbarPlugin() {
 
         try{
             //TODO:IOS Migr (ios not supporting ,need to find progress bar)
-            if(OSType != OSTypeEnum.IOS)
-            {
+			if(OSType == OSTypeEnum.IOS) {
+				ActivityIndicator.hide();
+				//ProgressIndicator.hide();
+				//window.MyProgressHUD.HideProgress();
+			} else {
             navigator.notification.progressStop();
             }
         }
@@ -97,8 +105,9 @@ function OneViewCordovaProgressbarPlugin() {
 
         try{
             //TODO:IOS Migr (ios not supporting ,need to find progress bar)
-            if(OSType != OSTypeEnum.IOS)
-            {
+			if(OSType == OSTypeEnum.IOS) {
+				//nothing
+			} else {
             navigator.notification.progressValue(Value);
             }
         }
@@ -259,7 +268,7 @@ function OneViewCordovaCameraPlugin() {
         IsAnyExceptionOnSave = true;
         // alert('Error while saving image, please try again');
         //  alert('Image capture failed, please try again');
-        alert(oxlatService.xlat('Image capture failed, please try again'));
+        navigator.notification.alert(xlatService.xlat('Image capture failed, please try again'), ['OK'], "");
     }
 
     var UploadSuccessCallBack = function (response) {

@@ -147,7 +147,7 @@ function PlatformPeriodicsLandingPageFacade($scope, xlatService, $location, snap
                 _oPlatformPeriodicsLandingPageBO.DownloadDCProfile();               
             }
             else {
-                alert(xlatService.xlat('NoInternetConnection'));
+                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                 OneViewConsole.Info("No Internet Connection", "PlatformPeriodicsLandingPageFacade.DownLoadProfile");
             }
 
@@ -178,11 +178,11 @@ function PlatformPeriodicsLandingPageFacade($scope, xlatService, $location, snap
                         _oPlatformPeriodicsLandingPageBO.UploadDC();
                     }
                     else {
-                        alert(xlatService.xlat('Periodic_Upload_Validation_Message'));
+                        navigator.notification.alert(xlatService.xlat('Periodic_Upload_Validation_Message'), ['OK'], "");
                     }
                 }
                 else {
-                    alert(xlatService.xlat('NoInternetConnection'));
+                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
                     OneViewConsole.Info("No internet connection", "PlatformPeriodicsLandingPageFacade.Upload");
                 }           
            
@@ -266,11 +266,11 @@ function PlatformPeriodicsLandingPageFacade($scope, xlatService, $location, snap
                     MyInstance.LoadNewDCPage(DcPlaceId, DcPlaceName);
                 }
                 else {
-                    alert(xlatService.xlat('Please complete approval and continue.'));
+                    navigator.notification.alert(xlatService.xlat('Please complete approval and continue.'), ['OK'], "");
                 }
             }
             else {
-                alert(xlatService.xlat('No Valid Profile Available'));
+                navigator.notification.alert(xlatService.xlat('No Valid Profile Available'), ['OK'], "");
             }
 
             OneViewConsole.Debug("LoadNewDC end", "PlatformPeriodicsLandingPageFacade.LoadNewDC");
@@ -325,7 +325,7 @@ function PlatformPeriodicsLandingPageFacade($scope, xlatService, $location, snap
 
                     if (ApprovalInfoResponse.length == 0) {
 
-                        alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"));
+                        navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"), ['OK'], "");
                     }
                     else if (ApprovalInfoResponse.length == 1) {
                         DcOnDeviceApprovalInfoLst = ApprovalInfoResponse;
@@ -343,7 +343,7 @@ function PlatformPeriodicsLandingPageFacade($scope, xlatService, $location, snap
 
                 }
                 else {
-                    alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"));
+                    navigator.notification.alert(xlatService.xlat("IN-NF-LDP-001 :: No data available for approve"), ['OK'], "");
                 }
 
                 tempscope.$apply();
@@ -405,7 +405,7 @@ function PlatformPeriodicsLandingPageFacade($scope, xlatService, $location, snap
             return ApprovalProfileLst;
         }
         catch (Excep) {
-            alert("GetApprovalProfile Excep : " + Excep + "..." + JSON.stringify(Excep));
+            navigator.notification.alert(("GetApprovalProfile Excep : " + Excep + "..." + JSON.stringify(Excep)), ['OK'], "");
             oOneViewExceptionHandler.Catch(Excep, "PlatformPeriodicsLandingPageFacade.GetApprovalProfile", xlatService);
         }
         finally {
@@ -466,12 +466,12 @@ function PlatformPeriodicsLandingPageFacade($scope, xlatService, $location, snap
             if (PartialApprovedDcList != null && PartialApprovedDcList.length > 0) {
                 IsPartialApprovedDcAvailable = true;
             }
-            alert('IsPartialApprovedDcAvailable : ' + IsPartialApprovedDcAvailable);
+            navigator.notification.alert(('IsPartialApprovedDcAvailable : ' + IsPartialApprovedDcAvailable), ['OK'], "");
             return IsPartialApprovedDcAvailable;
         }
         catch (Excep) {
-            alert('GetAnyPartialApprovedDcAvailable Excep 11 : ' + Excep);
-            alert('GetAnyPartialApprovedDcAvailable Excep : ' + JSON.stringify(Excep));
+            //alert('GetAnyPartialApprovedDcAvailable Excep 11 : ' + Excep);
+            navigator.notification.alert(('GetAnyPartialApprovedDcAvailable Excep : ' + JSON.stringify(Excep), ['OK'], "");
             oOneViewExceptionHandler.Catch(Excep, "PlatformPeriodicsLandingPageFacade.GetAnyPartialApprovedDcAvailable", xlatService);
         }
     }
@@ -604,7 +604,7 @@ function PlatformPeriodicsLandingPageBO($scope, xlatService, $location, snapRemo
                 OneViewLocalStorage.Save("PeriodicLandingPageLastSyncDate", new DateTime().GetDateAndTime());
 
                 if (IsShowDownloadSuccessMessage == true) {
-                    alert(xlatService.xlat('Periodic_Download_Success_Message'));
+                    navigator.notification.alert(xlatService.xlat('Periodic_Download_Success_Message'), ['OK'], "");
                 }
 
                 oSetDefaultSpinner.Start();
@@ -664,7 +664,7 @@ function PlatformPeriodicsLandingPageBO($scope, xlatService, $location, snapRemo
                 }
             }
             else {
-                alert(xlatService.xlat('NoDataForUpload'));
+                navigator.notification.alert(xlatService.xlat('NoDataForUpload'), ['OK'], "");
                 OneViewConsole.Info("No dc available", "DasboardBO.UploadDcAndAction");
             }            
 
@@ -705,12 +705,12 @@ function PlatformPeriodicsLandingPageBO($scope, xlatService, $location, snapRemo
                         IsSuccess = _oUploadBO.BatchUploadAdv(_oDcFilterParamRequest);
                     }
                     else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
-                        alert(xlatService.xlat('UploadFailed'));
+                        navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                         IsSuccess = false;
                     }
                 }
                 else if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == false) {
-                    alert(xlatService.xlat('UploadFailed'));
+                    navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
                     IsSuccess = false;
                 }
 

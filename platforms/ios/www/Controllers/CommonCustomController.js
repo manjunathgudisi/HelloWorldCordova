@@ -83,7 +83,9 @@ MyApp.controller('CommonCustomController',
     };
 
     $scope.AddRecords = function () {
+        window.MyProgressHUD.ShowProgress();
         oPreAcceptanceQuestionnaireFacade.SaveDCRecords();
+		window.MyProgressHUD.HideProgress();
     };
     
     $scope.SetSelectedTextBoxColor = function (ControlId) {
@@ -142,7 +144,9 @@ MyApp.controller('CommonCustomController',
     }
 
     $scope.SubmitRecords = function () {
-        oPreAcceptanceQuestionnaireFacade.SaveDCRecords(true);
+				 window.MyProgressHUD.ShowProgress();
+				 oPreAcceptanceQuestionnaireFacade.SaveDCRecords(true);
+				 window.MyProgressHUD.HideProgress();
     }
 
     $scope.CustomNCClick = function () {
@@ -220,7 +224,11 @@ MyApp.controller('CommonCustomController',
     }
 
     $scope.SaveRecords = function () {
-        oPreAcceptanceQuestionnaireFacade.SaveDCRecords(false,false);
+				 window.MyProgressHUD.ShowProgress();
+				 oPreAcceptanceQuestionnaireFacade.SaveDCRecords(false,false);
+				 window.MyProgressHUD.HideProgress();
+				 
+        
     };
 
     //$scope.WasteTypeChangeEvent = function (Id, Name) {
