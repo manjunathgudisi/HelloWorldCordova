@@ -25,9 +25,20 @@ function PortalPageDisplayFacade($scope, xlatService, $location, snapRemote, $co
             var reqPage2 = $location.search().reqPage2;
             var PageTitleName = $location.search().PageTitle;
 
-            document.getElementById('PageTitle').innerHTML = xlatService.xlat(PageTitleName);          
-         
-            var url = OneViewGlobalPortalURlName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=" + reqPage1 + "/" + reqPage2 + "";
+            document.getElementById('PageTitle').innerHTML = xlatService.xlat(PageTitleName);
+
+            var PortalURLName = OneViewGlobalPortalURlName;
+
+            if (ServiceId == 61) {                
+                PortalURLName = "https://winaim.biz/RFLService/Portal/";
+            }
+            else if (ServiceId == 62) {
+                PortalURLName = "https://winaim.biz/PAHTservice/Portal/";
+            }
+        
+
+            //var url = OneViewGlobalPortalURlName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=" + reqPage1 + "/" + reqPage2 + "";
+            var url = PortalURLName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=" + reqPage1 + "/" + reqPage2 + "";                     
             $scope.PortalUrl = $sce.trustAsResourceUrl(url);
             
             OneViewConsole.Debug("Init end", "MyPortalFacade.Init");

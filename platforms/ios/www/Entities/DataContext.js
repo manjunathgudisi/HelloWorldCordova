@@ -46,6 +46,7 @@ var SqliteDataContext = [
     "PickListMasterDetails",
     "ASOWorkOrderDetails",
     "RFLWorkOrder",
+    "RFLServiceWorkOrder",
 
     // Dc Profile tables
     "DcProfileEntity",
@@ -168,7 +169,8 @@ var NodeTables = [
      "FlightOALPlanDetails",
      "PickListMasterDetails",
      "ASOWorkOrderDetails",
-     "RFLWorkOrder"
+     "RFLWorkOrder",
+     "RFLServiceWorkOrder"
 ]
 
 var ProfileTables = [

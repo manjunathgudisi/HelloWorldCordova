@@ -933,9 +933,85 @@ function RFLWorkOrder() {
     this.CookedDate = "TEXT";
     this.CookedRemarks = "TEXT";
     this.CookedDetails = "TEXT";
+    this.DeliveredQuantity = "INT";
+    this.DeliveredDetails = "TEXT";
+
     this.CreatedDate = "TEXT";
     this.OrderStatus = "TEXT";
     this.CurrentStatus = "TEXT";
+
+
+    this.Column1 = "TEXT";
+    this.Column2 = "TEXT";
+    this.Column3 = "TEXT";
+    this.Column4 = "TEXT";
+    this.Column5 = "TEXT";
+    this.Column6 = "TEXT";
+    this.Column7 = "TEXT";
+    this.Column8 = "TEXT";
+    this.Column9 = "TEXT";
+    this.Column10 = "TEXT";
+
+
+    this.Status = "TEXT";
+
+    this.TimeStamp = "TEXT";
+
+}
+
+function RFLServiceWorkOrder() {
+
+    // Primary key
+    this.Id = "INT PRIMARYKEY";
+
+    // Client Guid
+    this.ClientGuid = "TEXT";
+
+    // Hand shaking id
+    this.ServerId = "INT";
+
+    // Service id
+    this.OSGuid = "TEXT";
+
+    // OneView global Version id (for mdm)
+    this.OVGuid = "INT";
+
+    // Mobile version id (for audit trial)
+    this.MobileVersionId = "INT";
+
+    // Type of WorkOrderItem
+    this.Type = "TEXT";
+
+    this.WardId = "INT";
+    this.WardName = "TEXT";
+
+    this.BedId = "INT";
+    this.BedName = "TEXT";
+
+    this.ItemId = "INT";
+    this.ItemName = "TEXT";
+    
+    this.OrderTypeId = "TEXT";
+    this.OrderTypeName = "TEXT";    
+
+    this.ServiceDate = "TEXT";
+    this.Quantity = "INT";
+
+    this.OrderStatus = "TEXT";
+ 
+    this.Code = "TEXT";
+
+    this.Column1 = "TEXT";
+    this.Column2 = "TEXT";
+    this.Column3 = "TEXT";
+    this.Column4 = "TEXT";
+    this.Column5 = "TEXT";
+    this.Column6 = "TEXT";
+    this.Column7 = "TEXT";
+    this.Column8 = "TEXT";
+    this.Column9 = "TEXT";
+    this.Column10 = "TEXT";
+
 
     this.Status = "TEXT";
 

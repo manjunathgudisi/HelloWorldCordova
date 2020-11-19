@@ -37,88 +37,104 @@
 				//_oOneViewAppConfig.CheckForNewUpdates('');
 				////$location.url('/nav/downloads');
 				//IsNavigate = true;
+				
+				if(OSType == OSTypeEnum.IOS) {
+					IsCheckForUpdateRequired = false;
+					$scope.$routeSegment = $routeSegment;
 
-				var oAPKUpgradeProcessStatus = OneViewLocalStorage.Get("APKUpgradeProcessStatus");
-				var oAPKUpgradeProcessBO = new APKUpgradeProcessBO();
-				if (oAPKUpgradeProcessStatus != null) {
-					oAPKUpgradeProcessStatus = JSON.parse(oAPKUpgradeProcessStatus);
-					oAPKUpgradeProcessBO.SetUpgradeStepCompleted(oOneViewAppInfoPlugin.GetLocalAppInfo().VersionName, oAPKUpgradeProcessStatus.LatestVersion);
+					//oSetDefaultSpinner.Start();
 
-					if (oAPKUpgradeProcessStatus.IsAPKUpgradeCompleted != true) {
-						IsCheckForUpdateRequired = false;
-						IsNavigate = false;
-						Url = '/APKUpgrade';
-						$location.url('/APKUpgrade');
+					var oProfileDownloadFacade = new ProfileDownloadFacade();
+
+					// Initialize page
+					oProfileDownloadFacade.Init($scope, xlatService);
+
+					// Page load
+					oProfileDownloadFacade.PageLoad($scope, $timeout, xlatService, '', '');
+					$scope.$apply();
+				} else {
+					var oAPKUpgradeProcessStatus = OneViewLocalStorage.Get("APKUpgradeProcessStatus");
+					var oAPKUpgradeProcessBO = new APKUpgradeProcessBO();
+					if (oAPKUpgradeProcessStatus != null) {
+						oAPKUpgradeProcessStatus = JSON.parse(oAPKUpgradeProcessStatus);
+						oAPKUpgradeProcessBO.SetUpgradeStepCompleted(oOneViewAppInfoPlugin.GetLocalAppInfo().VersionName, oAPKUpgradeProcessStatus.LatestVersion);
+
+						if (oAPKUpgradeProcessStatus.IsAPKUpgradeCompleted != true) {
+							IsCheckForUpdateRequired = false;
+							IsNavigate = false;
+							Url = '/APKUpgrade';
+							$location.url('/APKUpgrade');
+						}
+						else {
+							OneViewLocalStorage.Remove("APKUpgradeProcessStatus");
+							//check for update
+						}
 					}
-					else {
-						OneViewLocalStorage.Remove("APKUpgradeProcessStatus");
-						//check for update
-					}
-				}
 
-				if (IsCheckForUpdateRequired == true) {
-					var response = oAPKUpgradeProcessBO.CheckIsUpgradeAvailable();
-					if (response.IsUpgradeAvailable == true) {
-					   // alert(xlatService.xlat('NewUpdateAvailablePart1') + response.LatestVersion + xlatService.xlat('NewUpdateAvailablePart2') + response.CurrentVersion);
-						//download metadata
-						var _oAPKUpgradeProcessMetadataDownloadBO = new APKUpgradeProcessMetadataDownloadBO(xlatService);
-						var Result = _oAPKUpgradeProcessMetadataDownloadBO.DownloadMetadataFromServer();
+					if (IsCheckForUpdateRequired == true) {
+						var response = oAPKUpgradeProcessBO.CheckIsUpgradeAvailable();
+						if (response.IsUpgradeAvailable == true) {
+						   // alert(xlatService.xlat('NewUpdateAvailablePart1') + response.LatestVersion + xlatService.xlat('NewUpdateAvailablePart2') + response.CurrentVersion);
+							//download metadata
+							var _oAPKUpgradeProcessMetadataDownloadBO = new APKUpgradeProcessMetadataDownloadBO(xlatService);
+							var Result = _oAPKUpgradeProcessMetadataDownloadBO.DownloadMetadataFromServer();
 
-						//Metadata downloaded , then go to APKUpgradePage
-						if (Result.IsSuccess == true) {
-							var IsUpgradeSkipAllowed = oAPKUpgradeProcessBO.CheckUpgradeSkipAllowed(response.CurrentVersion, Result.APKUpgradeProcessMetadata);
-							//alert('IsUpgradeSkipAllowed : ' + IsUpgradeSkipAllowed);
-							var NewUpdateMsg = oAPKUpgradeProcessBO.FormUpgradeStartMessage(xlatService);
+							//Metadata downloaded , then go to APKUpgradePage
+							if (Result.IsSuccess == true) {
+								var IsUpgradeSkipAllowed = oAPKUpgradeProcessBO.CheckUpgradeSkipAllowed(response.CurrentVersion, Result.APKUpgradeProcessMetadata);
+								//alert('IsUpgradeSkipAllowed : ' + IsUpgradeSkipAllowed);
+								var NewUpdateMsg = oAPKUpgradeProcessBO.FormUpgradeStartMessage(xlatService);
 
-							if (IsUpgradeSkipAllowed == true) {
+								if (IsUpgradeSkipAllowed == true) {
 
-								var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
-								oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('Confirmation'), xlatService.xlat(NewUpdateMsg + '\n\nDo you want to continue ?'), function (ConfirmationId) {
+									var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+									oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('Confirmation'), xlatService.xlat(NewUpdateMsg + '\n\nDo you want to continue ?'), function (ConfirmationId) {
 
-									if (ConfirmationId == "2") {
-										IsNavigate = false;
-										Url = '/APKUpgrade';
-										$location.url(Url);
-										$scope.$apply();
-									}
-									else {
-										$scope.$routeSegment = $routeSegment;
+										if (ConfirmationId == "2") {
+											IsNavigate = false;
+											Url = '/APKUpgrade';
+											$location.url(Url);
+											$scope.$apply();
+										}
+										else {
+											$scope.$routeSegment = $routeSegment;
 
-										//oSetDefaultSpinner.Start();
+											//oSetDefaultSpinner.Start();
 
-										var oProfileDownloadFacade = new ProfileDownloadFacade();
+											var oProfileDownloadFacade = new ProfileDownloadFacade();
 
-										// Initialize page
-										oProfileDownloadFacade.Init($scope, xlatService);
+											// Initialize page
+											oProfileDownloadFacade.Init($scope, xlatService);
 
-										// Page load
-										oProfileDownloadFacade.PageLoad($scope, $timeout, xlatService, '', '');
-										$scope.$apply();
-									}
-								});
-							}
-							else {
-								alert(NewUpdateMsg);
-								var IsOperationAccessAllowed = oAPKUpgradeProcessBO.ValidationForAPKUpgradeProcess("IsAllowDcProfileDownload");
-								if (IsOperationAccessAllowed == true) {
-								  navigator.notification.alert(('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.'), ['OK'], "");
-
+											// Page load
+											oProfileDownloadFacade.PageLoad($scope, $timeout, xlatService, '', '');
+											$scope.$apply();
+										}
+									});
 								}
 								else {
-									//navigate to upgrade
-									IsNavigate = false;
-									Url = '/APKUpgrade';
+									alert(NewUpdateMsg);
+									var IsOperationAccessAllowed = oAPKUpgradeProcessBO.ValidationForAPKUpgradeProcess("IsAllowDcProfileDownload");
+									if (IsOperationAccessAllowed == true) {
+									  navigator.notification.alert(('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.'), ['OK'], "");
+
+									}
+									else {
+										//navigate to upgrade
+										IsNavigate = false;
+										Url = '/APKUpgrade';
+									}
 								}
+							}
+							else {
+								//go to error page
+								IsNavigate = false;
+								Url = '/notifycall?MessageKey=' + Result.Message;
 							}
 						}
 						else {
-							//go to error page
-							IsNavigate = false;
-							Url = '/notifycall?MessageKey=' + Result.Message;
+							IsNavigate = true;
 						}
-					}
-					else {
-						IsNavigate = true;
 					}
 				}
 			}
@@ -2106,6 +2122,15 @@
 				else {
 					MasterList[37] = [];
 				}
+				
+				if (MasterData["RFLServiceWorkOrderDTO"] != undefined) {
+					var RFLServiceWorkOrderList = new RFLServiceWorkOrderNormalizer().NormalizeList("RFLServiceWorkOrder", MasterData["RFLServiceWorkOrderDTO"]);
+					MasterList[38] = RFLServiceWorkOrderList;
+				}
+				else {
+					MasterList[38] = [];
+				}
+				
 				//  alert('PurchaseOrderList : ' + JSON.stringify(WorkOrderItemDetailsList));
 
 				OneViewConsole.Debug("NormalizeMasterAndNodeData end", "ProfileDownloadFacade.NormalizeMasterAndNodeData");
@@ -2254,7 +2279,7 @@
 				else {
 
 					// toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
-					navigator.notification.alert(xlatService.xlat('NoProfiles'), ['OK'], "");
+					navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
 					//alert(xlatService.xlat('NoInternetConnection'));
 					OneViewConsole.Info("No Internet Connection", "ProfileDownloadFacade.LoadContentBlock");
 				}
@@ -3185,8 +3210,8 @@
 		this.ShowDownloadFailed = function (xlatService) {
 			try {
 				OneViewConsole.Debug("ShowDownloadFailed start", "ProfileDownloadPresenter.ShowDownloadFailed");
-
-				alert(xlatService.xlat('DownloadFailed'));
+				navigator.notification.alert(xlatService.xlat('DownloadFailed'), ['OK'], "");
+				//alert(xlatService.xlat('DownloadFailed'));
 				OneViewConsole.Info("Download Failed", "ProfileDownloadFacade.ShowDownloadFailed");
 
 				OneViewConsole.Debug("ShowDownloadFailed end", "ProfileDownloadPresenter.ShowDownloadFailed");
@@ -4126,6 +4151,10 @@
 					else if (NodeTables[i] == "RFLWorkOrder") {
 						// alert('OrderDetails Count : ' + Count);
 						DuplicateCheckDic = _oDefaultTreeDAO.GetAllInfoWithServerIdRFLWorkOrderDict();
+					}
+					else if (NodeTables[i] == "RFLServiceWorkOrder") {
+						// alert('OrderDetails Count : ' + Count);
+						DuplicateCheckDic = _oDefaultTreeDAO.GetAllInfoWithServerIdRFLServiceWorkOrderDict();
 					}
 					else if (NodeTables[i] != "OrganizationAssetsNodeRCOSpecialMapping") {
 						DuplicateCheckDic = _oDefaultTreeDAO.GetAllInfoWithServerIdDict(NodeTables[i]);
@@ -7946,9 +7975,22 @@
 				Nodeobj.CookedDate = NodeJsonobj.CookedDate;
 				Nodeobj.CookedRemarks = NodeJsonobj.CookedRemarks;
 				Nodeobj.CookedDetails = NodeJsonobj.CookedDetails;
+				Nodeobj.DeliveredQuantity = NodeJsonobj.DeliveredQuantity;
+				Nodeobj.DeliveredDetails = NodeJsonobj.DeliveredDetails;
 				Nodeobj.CreatedDate = NodeJsonobj.CreatedDate;
 				Nodeobj.OrderStatus = NodeJsonobj.OrderStatus;
 				Nodeobj.CurrentStatus = NodeJsonobj.CurrentStatus;
+
+				Nodeobj.Column1 = NodeJsonobj.Column1;
+				Nodeobj.Column2 = NodeJsonobj.Column2;
+				Nodeobj.Column3 = NodeJsonobj.Column3;
+				Nodeobj.Column4 = NodeJsonobj.Column4;
+				Nodeobj.Column5 = NodeJsonobj.Column5;
+				Nodeobj.Column6 = NodeJsonobj.Column6;
+				Nodeobj.Column7 = NodeJsonobj.Column7;
+				Nodeobj.Column8 = NodeJsonobj.Column8;
+				Nodeobj.Column9 = NodeJsonobj.Column9;
+				Nodeobj.Column10 = NodeJsonobj.Column10;
 
 				OneViewConsole.Debug("Normalize end", "RFLWorkOrderNormalizer.Normalize");
 
@@ -7992,3 +8034,90 @@
 		}
 	}
 
+//RFLServiceWorkOrderNormalizer
+
+	function RFLServiceWorkOrderNormalizer() {
+
+		// NodeNormalizer object
+		var MyInstance = this;
+
+
+		/// <summary>
+		/// DTO to node conversion
+		/// </summary>
+		/// <param name="Nodeobj">Node object (Mobile entity object)</param>
+		/// <param name="NodeJsonobj">Node data object (DTO from server)</param>
+		/// <returns>Node object (Mobile entity format)</returns>
+		this.Normalize = function (Nodeobj, NodeJsonobj) {
+			try {
+				OneViewConsole.Debug("Normalize start", "RFLServiceWorkOrderNormalizer.Normalize");
+
+				Nodeobj.ServerId = NodeJsonobj.ServerId;
+				Nodeobj.OSGuid = NodeJsonobj.OSGuid;
+				Nodeobj.OVGuid = NodeJsonobj.OVGuid;
+				Nodeobj.MobileVersionId = 1;
+				Nodeobj.Type = NodeJsonobj.Type;
+				Nodeobj.WardId = NodeJsonobj.WardId;
+				Nodeobj.WardName = NodeJsonobj.WardName;
+				Nodeobj.BedId = NodeJsonobj.BedId;
+				Nodeobj.BedName = NodeJsonobj.BedName;
+				Nodeobj.ItemId = NodeJsonobj.ItemId;
+				Nodeobj.ItemName = NodeJsonobj.ItemName;
+				Nodeobj.OrderTypeId = NodeJsonobj.OrderTypeId;
+				Nodeobj.OrderTypeName = NodeJsonobj.OrderTypeName;
+				Nodeobj.ServiceDate = NodeJsonobj.ServiceDate;
+				Nodeobj.Quantity = NodeJsonobj.Quantity;
+				Nodeobj.OrderStatus = NodeJsonobj.OrderStatus;
+				Nodeobj.Code = NodeJsonobj.Code;
+				Nodeobj.Column1 = NodeJsonobj.Column1;
+				Nodeobj.Column2 = NodeJsonobj.Column2;
+				Nodeobj.Column3 = NodeJsonobj.Column3;
+				Nodeobj.Column4 = NodeJsonobj.Column4;
+				Nodeobj.Column5 = NodeJsonobj.Column5;
+				Nodeobj.Column6 = NodeJsonobj.Column6;
+				Nodeobj.Column7 = NodeJsonobj.Column7;
+				Nodeobj.Column8 = NodeJsonobj.Column8;
+				Nodeobj.Column9 = NodeJsonobj.Column9;
+				Nodeobj.Column10 = NodeJsonobj.Column10;
+
+				OneViewConsole.Debug("Normalize end", "RFLServiceWorkOrderNormalizer.Normalize");
+
+				return Nodeobj;
+			}
+			catch (Excep) {
+				//alert('PurchaseOrderNormalizer.Normalize Excep : ' + Excep);
+				//alert('PurchaseOrderNormalizer.Normalize Excep 22 : ' + JSON.stringify(Excep));
+				throw oOneViewExceptionHandler.Create("Normalizer", "RFLServiceWorkOrderNormalizer.Normalize", Excep);
+			}
+		}
+
+
+		/// <summary>
+		/// DTO list to node list conversion
+		/// </summary>
+		/// <param name="NodeName">Node name</param>
+		/// <param name="MasterNodelst">Master node list (DTO from server)</param>
+		/// <returns>Node list (Mobile entity format)</returns>
+		this.NormalizeList = function (NodeName, MasterNodelst) {
+			try {
+				OneViewConsole.Debug("NormalizeList start", "RFLServiceWorkOrderNormalizer.NormalizeList");
+				//  alert(MasterNodelst.length + ',PurchaseOrderNormalizer MasterNodelst : ' + MasterNodelst);
+				var NodesList = new Array();
+				for (var i = 0; i < MasterNodelst.length; i++) {
+
+					var Nodeobj = new window[NodeName]();
+					var MasterNodesobj = MyInstance.Normalize(Nodeobj, MasterNodelst[i]);
+					NodesList[i] = MasterNodesobj;
+				}
+
+				OneViewConsole.Debug("NormalizeList end", "RFLServiceWorkOrderNormalizer.NormalizeList");
+
+				return NodesList;
+			}
+			catch (Excep) {
+				//alert('PurchaseOrderNormalizer.NormalizeList Excep : ' + Excep);
+				//alert('PurchaseOrderNormalizer.NormalizeList Excep 22 : ' + JSON.stringify(Excep));
+				throw oOneViewExceptionHandler.Create("Normalizer", "RFLServiceWorkOrderNormalizer.NormalizeList", Excep);
+			}
+		}
+	}

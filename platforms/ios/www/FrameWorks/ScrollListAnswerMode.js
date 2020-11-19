@@ -1480,7 +1480,12 @@ function ScrollListAnswerMode($scope) {
                 Response = _oItemDAO.GetASOWorkOrderDetails(Req);
             }
             else if (OneViewSessionStorage.Get("ServiceId") == 61) {
-                Response = _oItemDAO.GetRFLWorkOrderDetails(Req);
+                if (OneViewSessionStorage.Get("TemplateId") == 391) {// BeltPlan Template
+                    Response = _oItemDAO.GetDistinctRFLServiceWorkOrderDetails(Req);
+                }
+                else {
+                    Response = _oItemDAO.GetRFLWorkOrderDetails(Req);
+                }
             }
 
             //If any processing
@@ -2958,7 +2963,7 @@ function ItemDAO() {
 
             var Query = "SELECT DISTINCT Id,ServerId ,OSGuid,OVGuid,MobileVersionId,(ItemName ||' (' ||Quantity|| ')' )  As Name,(ItemName ||' (' ||Quantity|| ')' )  As WorkOrderNo," +
                         "WardId,ItemName,ItemId,OrderTypeId,OrderTypeName,DietCode,Allergens,ServiceDate,Quantity,OrderDetails,PackedQuantity,PackedDetails,PackedRemarks," +
-                        "CookedQuantity , CookedDate ,CookedRemarks,CookedDetails ,CreatedDate,OrderStatus ,CurrentStatus,TimeStamp, " +
+                        "CookedQuantity , CookedDate ,CookedRemarks,CookedDetails ,DeliveredQuantity ,DeliveredDetails ,CreatedDate,OrderStatus ,CurrentStatus,TimeStamp, " +
                        "(SUBSTR(ServiceDate, 7, 4) || SUBSTR(ServiceDate, 4, 2) || SUBSTR(ServiceDate, 1, 2) || SUBSTR(ServiceDate, 12, 2) ||  SUBSTR(ServiceDate, 15, 2) || SUBSTR(ServiceDate, 18, 2) ) AS ServiceDateInt " +
                        " FROM  RFLWorkOrder  " +
                        " WHERE WardId = " + DcPlaceId +                    
@@ -2977,6 +2982,135 @@ function ItemDAO() {
         }
         catch (Excep) {
             throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetProducts", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    this.UpdateItemStatusForRFLWorkOrderDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("UpdateItemStatusForRFLWorkOrderDetails start", "ItemDAO.UpdateItemStatusForRFLWorkOrderDetails");
+
+
+            var Query = "UPDATE RFLWorkOrder set Status='" + Req.ItemStatus + "' " +
+                        " WHERE ServerId='" + Req.ServerId + "'";
+            //alert(Query)
+
+            _OneViewSqlitePlugin.ExcecuteSql(Query);
+
+            OneViewConsole.Debug("UpdateItemStatusForRFLWorkOrderDetails end", "ItemDAO.UpdateItemStatusForRFLWorkOrderDetails");
+
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.UpdateItemStatusForASOWorkOrderDetails", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    this.GetDistinctRFLServiceWorkOrderDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("GetProducts start", "ItemDAO.GetProducts");
+
+            var DcPlaceId = Req.DcPlaceId;
+            var Type = Req.Type;
+            var LabelId = Req.LabelId;
+            var Date = Req.Date;
+            var StartDateTime = Date + " 00:00:00";
+            var EndDateTime = Date + " 23:59:59";
+            var TemplateId = Req.TemplateId;
+            var AirlineName = Req.AirlineName;
+            var ServiceDate = Req.ServiceDate;
+            var CurrentStatus = Req.CurrentStatus;
+
+            var oDateTime = new DateTime();
+            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+            var StartDateValidity = '-24 Hours';
+            var EndDateValidity = '4 Hours';
+            var ReqObj = { "TemplateId": OneViewSessionStorage.Get("TemplateId") };
+            // var StartDateEndDateConfiguration = MyInstance.GetStartDateAnEndDateConfiguration(ReqObj);
+            // var StartDateEndDateConfiguration = {StartDate:'-24',EndDate:'+4'};
+            // StartDateValidity = StartDateEndDateConfiguration.StartDate + ' Hours';
+            // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
+            var oServiceDate = oDateTime.ConvertDateToIntegerFormat(ServiceDate);
+            // alert(oServiceDate);
+
+
+            var Query = "SELECT DISTINCT BedId as ServerId,BedName  As Name,BedName  As WorkOrderNo," +                    
+                       "(SUBSTR(ServiceDate, 7, 4) || SUBSTR(ServiceDate, 4, 2) || SUBSTR(ServiceDate, 1, 2) || SUBSTR(ServiceDate, 12, 2) ||  SUBSTR(ServiceDate, 15, 2) || SUBSTR(ServiceDate, 18, 2) ) AS ServiceDateInt " +
+                       " FROM  RFLServiceWorkOrder  " +
+                       " WHERE WardId = " + DcPlaceId +
+                       " And CAST(ServiceDateInt as INTEGER) =" + oServiceDate +
+                      // " And UPPER(CurrentStatus)='" + CurrentStatus + "'" +
+                       " ORDER By ServerId";
+
+
+            // alert('ItemDAO.GetRFLWorkOrderDetails Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            OneViewConsole.Debug("GetProducts end", "ItemDAO.GetProducts");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetProducts", Excep);
+        }
+        finally {
+            Query = null;
+        }
+    }
+
+    this.GetRFLServiceWorkOrderDetails = function (Req) {
+        try {
+            OneViewConsole.Debug("GetRFLServiceWorkOrderDetails start", "ItemDAO.GetRFLServiceWorkOrderDetails");
+
+            var DcPlaceId = Req.DcPlaceId;
+            var Type = Req.Type;
+            var LabelId = Req.LabelId;
+            var Date = Req.Date;
+            var StartDateTime = Date + " 00:00:00";
+            var EndDateTime = Date + " 23:59:59";
+            var TemplateId = Req.TemplateId;
+            var AirlineName = Req.AirlineName;
+            var ServiceDate = Req.ServiceDate;
+            var CurrentStatus = Req.CurrentStatus;
+
+            var oDateTime = new DateTime();
+            var CurrentDateAndTime = oDateTime.GetDateAndTime();
+            var StartDateValidity = '-24 Hours';
+            var EndDateValidity = '4 Hours';
+            var ReqObj = { "TemplateId": OneViewSessionStorage.Get("TemplateId") };
+            // var StartDateEndDateConfiguration = MyInstance.GetStartDateAnEndDateConfiguration(ReqObj);
+            // var StartDateEndDateConfiguration = {StartDate:'-24',EndDate:'+4'};
+            // StartDateValidity = StartDateEndDateConfiguration.StartDate + ' Hours';
+            // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
+            var oServiceDate = oDateTime.ConvertDateToIntegerFormat(ServiceDate);
+            // alert(oServiceDate);
+
+
+            var Query = "SELECT DISTINCT Id,ClientGuid,ServerId ,OSGuid,OVGuid,MobileVersionId,Type,WardId,WardName,BedId,BedName,ItemId,ItemName," +
+                        "OrderTypeId,OrderTypeName,ServiceDate,Quantity,OrderStatus,Code,Column1,Column2,Column3,Column4,Column5,Column6,Column7,Column8,Column9,Column10,Status,TimeStamp," +
+                       "(SUBSTR(ServiceDate, 7, 4) || SUBSTR(ServiceDate, 4, 2) || SUBSTR(ServiceDate, 1, 2) || SUBSTR(ServiceDate, 12, 2) ||  SUBSTR(ServiceDate, 15, 2) || SUBSTR(ServiceDate, 18, 2) ) AS ServiceDateInt " +
+                       " FROM  RFLServiceWorkOrder  " +
+                       " WHERE WardId = " + DcPlaceId +
+                       " And CAST(ServiceDateInt as INTEGER) =" + oServiceDate +
+                      // " And UPPER(CurrentStatus)='" + CurrentStatus + "'" +
+                       " ORDER By ServerId";
+
+
+            // alert('ItemDAO.GetRFLWorkOrderDetails Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            OneViewConsole.Debug("GetRFLServiceWorkOrderDetails end", "ItemDAO.GetRFLServiceWorkOrderDetails");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetRFLServiceWorkOrderDetails", Excep);
         }
         finally {
             Query = null;

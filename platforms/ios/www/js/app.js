@@ -64,7 +64,6 @@ var OneViewRouteSegmentProvider = null;
   .when('/nav/RFLWard-Receiving', 'nav.RFLWard-Receiving')
   .when('/nav/RFLNew-Order', 'nav.RFLNew-Order')
   .when('/nav/RFLOrder-Status', 'nav.RFLOrder-Status')
-
   .when('/nav/PortalPageRoute', 'nav.PortalPageRoute')
   .when('/nav/PortalPageDisplay', 'nav.PortalPageDisplay')
 
