@@ -152,6 +152,11 @@
                     }}
                     <span class="item-note" id="lblAutoUpload">Disable</span>
                 </a>
+                <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_Application_AutoProfileDownload',title: 'Auto Profile Download', enabled: true,badge: true,badgetxt: TemperatureAutoMaualBadgetxt, icon: 'ion-edit' })" ng-hide="Setting_Application_AutoProfileDownload">
+                    {{'Auto Profile Download' | xlat
+                    }}
+                    <span class="item-note" id="lblAutoProfileDownload">Disable</span>
+                </a>
                 <a class="item" href="javascript:void(0)" ng-click="SettingsOnChange({ Id:'Setting_Application_AutoActionFollowupDownload',title: 'Auto Action Followup Download', enabled: true,badge: true,badgetxt: TemperatureAutoMaualBadgetxt, icon: 'ion-edit' })" ng-hide="Setting_Application_AutoActionFollowupDownload">
                     {{'Auto Action Followup Download' | xlat}}
                     <span class="item-note" id="lblAutoActionFollowupDownload">Disable</span>

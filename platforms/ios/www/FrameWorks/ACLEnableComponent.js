@@ -56,6 +56,7 @@ var OperationDetails =
        'Setting_MobileAutoSync': -1,
        'Setting_MobileAutoSync_Sync': -1,
        'Setting_MobileAutoSync_Refresh': -1,
+       'Setting_Application_AutoProfileDownload':-1,
 
    
    };

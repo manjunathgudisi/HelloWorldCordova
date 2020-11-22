@@ -1371,8 +1371,9 @@ function OneViewAutoUploadPlugin() {
                 OneViewConsole.Debug("NetworkDetails : " + JSON.stringify(NetworkStatus), "OneViewAutoUploadPlugin.start");
 
                 if (NetworkStatus.IsNetworkAvailable == true) {
-
-                    window.OneViewAutoUpload.Start();
+					if (window.OneViewAutoUpload) {
+						window.OneViewAutoUpload.Start();
+					}
                 }
                 //else {
 
@@ -1395,7 +1396,9 @@ function OneViewAutoUploadPlugin() {
         try {
             OneViewConsole.Debug("Stop start", "OneViewAutoUploadPlugin.Stop");
 
-            window.OneViewAutoUpload.Stop();
+			if (window.OneViewAutoUpload) {
+				window.OneViewAutoUpload.Stop();
+			}
 
             OneViewConsole.Debug("Stop end", "OneViewAutoUploadPlugin.Stop");
         }
@@ -1412,7 +1415,7 @@ function OneviewAndroidLocalStoragePlugin() {
 
             OneViewConsole.Debug("Save Start", "OneviewAndroidLocalStoragePlugin.Save");
 
-            window.OneviewAndroidLocalStorage.Save(Key, Value);
+            wiSave(Key, Value);
 
             OneViewConsole.Debug("Save End", "OneviewAndroidLocalStoragePlugin.Save");
         }

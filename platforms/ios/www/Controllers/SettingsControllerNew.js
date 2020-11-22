@@ -10,7 +10,7 @@ var IsNewProbe = false;
 MyApp.controller('SettingsControllerNew', function ($scope, $location, xlatService, $timeout, $compile) {
     var _oSettingsFacade = new SettingsFacade();
 
-    // Initialize page
+    // Initialize page   
     _oSettingsFacade.Init($scope, xlatService);
 
     // Page load
@@ -19,7 +19,7 @@ MyApp.controller('SettingsControllerNew', function ($scope, $location, xlatServi
     /// <summary>
     /// Load all settings event registration
     /// while end user press the settings menu, this event will invoke
-    /// </summary>
+    /// </summary>  
     $scope.ShowSettings = function () {
         var _oSettingsFacade = new SettingsFacade();
         _oSettingsFacade.ShowSettings($scope, '', xlatService);
@@ -112,16 +112,16 @@ function SettingsFacade() {
         this.LoadAllPairedDevices_ClientValidatorConfigList = [{ 'IsDefaultClientValidator': true, 'IsCustomClientValidator': false, 'ClassName': 'BluetoothOnValidation' }];
 
 
-        // Vallidation list for ChangeProbe
+        // Vallidation list for ChangeProbe 
         this.ChangeProbe_ClientValidatorConfigList = [];
 
         
 
         /// <summary>
-        /// Initialize page
+        /// Initialize page   
         /// </summary>
-        /// <param name="$scope">Current scope</param>
-        /// <param name="xlatService">xlatService for globalization</param>
+        /// <param name="$scope">Current scope</param>  
+        /// <param name="xlatService">xlatService for globalization</param>   
         this.Init = function ($scope, xlatService) {
             try {
                 OneViewConsole.Debug("Init Start", "SettingsFacade.Init");
@@ -139,9 +139,9 @@ function SettingsFacade() {
         }
 
         /// <summary>
-        /// PageLoad
+        /// PageLoad 
         /// </summary>
-        /// <param name="$scope">Current scope</param>
+        /// <param name="$scope">Current scope</param>   
         /// <param name="xlatService">xlatService for globalization</param>
         /// <param name="SpinService">SpinService for loader</param>
         this.PageLoad = function ($scope, xlatService, SpinService) {
@@ -154,7 +154,7 @@ function SettingsFacade() {
                 OneViewConsole.Debug("PageLoad End", "SettingsFacade.PageLoad");
 
             }
-            catch (Excep) {
+            catch (Excep) {           
                 oOneViewExceptionHandler.Catch(Excep, "SettingsFacade.PageLoad", xlatService);
             }
             finally {
@@ -165,7 +165,7 @@ function SettingsFacade() {
         /// <summary>
         /// Show all settings
         /// </summary>
-        /// <param name="$scope">Current scope</param>
+        /// <param name="$scope">Current scope</param>   
         /// <param name="SpinService">SpinService for loader</param>
         this.ShowSettings = function ($scope, SpinService, xlatService) {
             try {
@@ -228,8 +228,8 @@ function SettingsFacade() {
                                 SettingsObj.badgetxt = "Manual";
                                 $scope.$apply();
                             }
-                        });
-                    }
+                        });                      
+                    } 
                 }
                 else if (SettingsObj.title == "My Downloads : Cleaning View") {
                       
@@ -256,9 +256,9 @@ function SettingsFacade() {
                                 SettingsObj.badgetxt = "Enabled";
                                 $scope.$apply();
                             }
-                        });
-                    }
-                }
+                        });                      
+                    } 
+                }   
                 else if (SettingsObj.title == "Conflict Resolve Mode") {
 
                     if (OneViewGlobalConflictResolveMode == 1) {
@@ -419,9 +419,9 @@ function SettingsFacade() {
                             oOneViewProgressbar.SetProgressValue(100);
 
                             alert('IN-SU-MSE-011 :: Refreshed successfully');
-                        }
+                        }                      
 
-                        oOneViewProgressbar.Stop();
+                        oOneViewProgressbar.Stop();                      
                     }
                 }
 
@@ -473,7 +473,7 @@ function SettingsFacade() {
                         _oOneViewAppConfig.CheckForNewUpdates(toaster, true);
                     }
                     else {
-                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                        alert(xlatService.xlat('NoInternetConnection'));
                        // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
@@ -503,7 +503,7 @@ function SettingsFacade() {
                             $scope.ShiftsVisible = false;
                         }
                         else {
-                            navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                            alert(xlatService.xlat('NoInternetConnection'));
                             // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                             OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                         }
@@ -601,7 +601,7 @@ function SettingsFacade() {
                         }
                     }
                     else {
-                        navigator.notification.alert(xlatService.xlat(oDefaultValidationResponse.MessageKey), ['OK'], "");
+                        alert(xlatService.xlat(oDefaultValidationResponse.MessageKey));
                     }
 
                 }
@@ -654,7 +654,7 @@ function SettingsFacade() {
                                 SettingsObj.badgetxt = "Use Server";
                                 if (document.getElementById('lblResolveMode') != null) {
                                     document.getElementById('lblResolveMode').innerHTML = xlatService.xlat('Use Server');
-                                }
+                                }                                
                                 $scope.$apply();
                             }
                         });
@@ -669,12 +669,12 @@ function SettingsFacade() {
                                 SettingsObj.badgetxt = "Use Mine";
                                 if (document.getElementById('lblResolveMode') != null) {
                                     document.getElementById('lblResolveMode').innerHTML = xlatService.xlat('Use Mine');
-                                }
+                                }                                
                                 $scope.$apply();
                             }
                         });
                     }
-                }
+                }                    
                 else if (SettingsObj.Id == "Setting_Application_GlobalOVGuidChecking") {
 
                     if (IsGlobalOVGuidCheckingEnabled == true) {
@@ -723,8 +723,7 @@ function SettingsFacade() {
                         var _DcPendingTaskBO = new DcPendingTaskBO();
                         _DcPendingTaskBO.UpdateTopRightBell(OneViewSessionStorage.Get("LoginUserId"));
 
-                        //alert(xlatService.xlat('IN-SU-MSE-002 :: DB Restored successfully'));
-						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-002 :: DB Restored successfully'), ['OK'], "");
+                        alert(xlatService.xlat('IN-SU-MSE-002 :: DB Restored successfully'));
                     }
                 }
                 //else if (SettingsObj.title == "Copy DB") {
@@ -737,8 +736,7 @@ function SettingsFacade() {
 
                         var oDbStructureController = new DbStructureController();
                         oDbStructureController.CopyDb();
-                        //alert(xlatService.xlat('IN-SU-MSE-003 :: DB Copied successfully'));
-						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-003 :: DB Copied successfully'), ['OK'], "");
+                        alert(xlatService.xlat('IN-SU-MSE-003 :: DB Copied successfully'));
                     }
                 }
 
@@ -784,8 +782,7 @@ function SettingsFacade() {
                         var _DcPendingTaskBO = new DcPendingTaskBO();
                         _DcPendingTaskBO.UpdateTopRightBell(OneViewSessionStorage.Get("LoginUserId"));
 
-                        //alert(xlatService.xlat('IN-SU-MSE-006 :: Cleared successfully'));
-						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-006 :: Cleared successfully'), ['OK'], "");
+                        alert(xlatService.xlat('IN-SU-MSE-006 :: Cleared successfully'));
                     }
                 }
 
@@ -802,7 +799,7 @@ function SettingsFacade() {
 
                         for (var i = 0; i < MultiMediaSubElementsLst.length; i++) {
                             var oFile = MultiMediaSubElementsLst[i].LocalURL.substring(7).split('/');
-                            var FileName = oFile[oFile.length - 1];
+                            var FileName = oFile[oFile.length - 1];                            
                             oOneViewAppInfoPlugin.ClearCacheFilesByName(FileName);
                         }
 
@@ -814,8 +811,7 @@ function SettingsFacade() {
 
                         //oOneViewAppInfoPlugin.ClearCacheFiles();
 
-                        //alert(xlatService.xlat('IN-SU-MSE-007 :: DB Cleaned successfully'));
-						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-007 :: DB Cleaned successfully'), ['OK'], "");
+                        alert(xlatService.xlat('IN-SU-MSE-007 :: DB Cleaned successfully'));
                     }
                 }
 
@@ -839,7 +835,7 @@ function SettingsFacade() {
 
                         for (var i = 0; i < MultiMediaSubElementsLst.length; i++) {
                             var oFile = MultiMediaSubElementsLst[i].LocalURL.substring(7).split('/');
-                            var FileName = oFile[oFile.length - 1];
+                            var FileName = oFile[oFile.length - 1];                            
                             oOneViewAppInfoPlugin.ClearCacheFilesByName(FileName);
                         }
 
@@ -918,8 +914,7 @@ function SettingsFacade() {
 
                             oOneViewProgressbar.SetProgressValue(100);
 
-                            //alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully'));
-							navigator.notification.alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully'), ['OK'], "");
+                            alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully'));
                         }
 
                         oOneViewProgressbar.Stop();
@@ -1011,10 +1006,11 @@ function SettingsFacade() {
                                 }
                             }
 
+                            OneViewLocalStorage.Remove("AccessTokenId");
+
                             oOneViewProgressbar.SetProgressValue(100);
 
-                            //alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully. Please login to Continue.'));
-							navigator.notification.alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully. Please login to Continue.'), ['OK'], "");
+                            alert(xlatService.xlat('IN-SU-MSE-011 :: Refreshed successfully. Please login to Continue.'));
                             $location.url('/login');
 
                             OneViewSessionStorage.Clear();
@@ -1024,7 +1020,7 @@ function SettingsFacade() {
                         }
                     }
                     else {
-                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                        alert(xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1056,8 +1052,7 @@ function SettingsFacade() {
                             oGlobalizationComponent.FormGlobalizationMeta(MetaDataList, OneViewGlobalcurrentLanguage);
 
                             oOneViewProgressbar.SetProgressValue(100);
-                            //alert(xlatService.xlat('IN-SU-MSE-013 :: Refreshed successfully'));
-							navigator.notification.alert(xlatService.xlat('IN-SU-MSE-013 :: Refreshed successfully'), ['OK'], "");
+                            alert(xlatService.xlat('IN-SU-MSE-013 :: Refreshed successfully'));
                         }
 
                         oOneViewProgressbar.Stop();
@@ -1084,8 +1079,7 @@ function SettingsFacade() {
                             var RefreshCloudManagerIsSuccess = _SettingsBO.RefreshCloudManagerBO(xlatService);
 
                             if (RefreshCloudManagerIsSuccess == true) {
-                                //alert(xlatService.xlat('IN-SU-MSE-015 :: Refreshed successfully.Please login to Continue.'));
-								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-015 :: Refreshed successfully.Please login to Continue.'), ['OK'], "");
+                                alert(xlatService.xlat('IN-SU-MSE-015 :: Refreshed successfully.Please login to Continue.'));
                                 $location.url('/login');
 
                                 OneViewSessionStorage.Clear();
@@ -1095,7 +1089,7 @@ function SettingsFacade() {
                         }
                     }
                     else {
-                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                        alert(xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1106,7 +1100,7 @@ function SettingsFacade() {
                     var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
                     var NetworkDetails = oOneViewCordovaPlugin.CheckNetworkStatus();
 
-                    OneViewConsole.Debug("NetworkDetails : " + JSON.stringify(NetworkDetails), "SettingsFacade.SettingsOnChange");
+                    OneViewConsole.Debug("NetworkDetails : " + JSON.stringify(NetworkDetails), "SettingsFacade.SettingsOnChange");                
 
                     // If network is available
                     if (NetworkDetails.IsNetworkAvailable == true) {
@@ -1114,20 +1108,19 @@ function SettingsFacade() {
                         var Message = xlatService.xlat("IN-MG-MSE-016 :: Are you sure want to refresh Configuration ?");
                         var IsSuccess = oOneViewDefaultConfirmBox.Show(Message);
 
-                        if (IsSuccess == true) {
+                        if (IsSuccess == true) {                           
 
                             var _SettingsBO = new SettingsBO();
                             var RefreshMetadataIsSuccess = _SettingsBO.RefreshMetadataConfigurationBO(xlatService,$scope, $compile);
 
                             if (RefreshMetadataIsSuccess == true) {
-                                //alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'));
-								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'), ['OK'], "");
-                            }
+                                alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'));
+                            }                         
                            
                         }
                     }
                     else {
-                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                        alert(xlatService.xlat('NoInternetConnection'));                      
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1151,14 +1144,13 @@ function SettingsFacade() {
                             var RefreshMetadataIsSuccess = _SettingsBO.RefreshDATEntityTypesBO(xlatService, $scope, $compile);
 
                             if (RefreshMetadataIsSuccess == true) {
-                                //alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'));
-								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'), ['OK'], "");
+                                alert(xlatService.xlat('IN-SU-MSE-017 :: Refreshed successfully'));
                             }
 
                         }
                     }
                     else {
-                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                        alert(xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1210,15 +1202,14 @@ function SettingsFacade() {
                             oOneViewProgressbar.SetProgressValue(100);
 
                             if (RefreshDcCustomHtmlSuccess == true) {
-                                //alert(xlatService.xlat('IN-SU-MSE-019 :: Refreshed successfully'));
-								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-019 :: Refreshed successfully'), ['OK'], "");
+                                alert(xlatService.xlat('IN-SU-MSE-019 :: Refreshed successfully'));
                             }
 
                             oOneViewProgressbar.Stop();
                         }
                     }
                     else {
-                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                        alert(xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
                 }
@@ -1239,7 +1230,7 @@ function SettingsFacade() {
                     //    _oOneViewAppConfig.CheckForNewUpdates(toaster, true);
                     //}
                     //else {
-                    //    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                    //    alert(xlatService.xlat('NoInternetConnection'));
                     //    // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                     //    OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     //}
@@ -1273,7 +1264,7 @@ function SettingsFacade() {
                         $scope.ShiftsVisible = false;
                     }
                     else {
-                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                        alert(xlatService.xlat('NoInternetConnection'));
                         // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "SettingsFacade.SettingsOnChange");
                     }
@@ -1292,6 +1283,9 @@ function SettingsFacade() {
                 }
                 else if (SettingsObj.Id == "Setting_Application_AutoUpload") {
                     MyInstance.EnableOrDisableAutoUpload(xlatService, SettingsObj);
+                }
+                else if (SettingsObj.Id == "Setting_Application_AutoProfileDownload") {
+                    MyInstance.EnableOrDisableAutoProfileDownload(xlatService, SettingsObj);
                 }
                 else if (SettingsObj.Id == "Setting_Application_AutoActionFollowupDownload") {
                     MyInstance.EnableOrDisableAutoActionFollowupDownload(xlatService, SettingsObj);
@@ -1341,14 +1335,13 @@ function SettingsFacade() {
                             var RefreshMetadataIsSuccess = _SettingsBO.RefreshMobileAutoSyncMetadata(xlatService);
 
                             if (RefreshMetadataIsSuccess == true) {
-                                //alert(xlatService.xlat('IN-SU-MSE-021 ::Mobile Auto Sync Metadata Refreshed successfully'));
-								navigator.notification.alert(xlatService.xlat('IN-SU-MSE-021 ::Mobile Auto Sync Metadata Refreshed successfully'), ['OK'], "");
+                                alert(xlatService.xlat('IN-SU-MSE-021 ::Mobile Auto Sync Metadata Refreshed successfully'));
                             }
 
                         }
                     }
                     else {
-                        navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                        alert(xlatService.xlat('NoInternetConnection'));
                         OneViewConsole.Info("No Internet Connection", "DasboardFacade.DownLoadProfile");
                     }
                 }
@@ -1370,7 +1363,7 @@ function SettingsFacade() {
                 oDbStructureController = null;
                 NetworkDetails = null;
             }
-        }
+        }     
 
 
         var HideSubHtmlDivs = function ($scope) {
@@ -1484,8 +1477,7 @@ function SettingsFacade() {
                         $scope.NewPassword = "";
                         $scope.ConfirmPassword = "";
 
-                        //alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'));
-						navigator.notification.alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'), ['OK'], "");
+                        alert(xlatService.xlat('IN-SU-MSE-014 :: Password changed successfully'));
 
                         $location.url('/login');
 
@@ -1493,19 +1485,16 @@ function SettingsFacade() {
                         ClearGlobalVariable();
                     }
                 }
-				else if ($scope.OldPassword == undefined || $scope.OldPassword == "") {
-                    //alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'));
-					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'), ['OK'], "");
+                else if ($scope.OldPassword == undefined || $scope.OldPassword == "") {
+                    alert(xlatService.xlat('VL-CU-MSE-001 :: Please enter Old Password'));
                 }
                 else if ($scope.NewPassword == undefined || $scope.NewPassword == "") {
-                    //alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'));
-					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'), ['OK'], "");
+                    alert(xlatService.xlat('VL-CU-MSE-002 :: Please enter New Password'));
                 }
                 else if ($scope.ConfirmPassword == undefined || $scope.ConfirmPassword == "") {
-                    //alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'));
-					navigator.notification.alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'), ['OK'], "");
+                    alert(xlatService.xlat('VL-CU-MSE-003 :: Please enter Confirm Password'));
                 }
-				
+               
                 OneViewConsole.Debug("ResetPassword End", "SettingsFacade.ResetPassword");
             }
             catch (Excep) {
@@ -1514,7 +1503,7 @@ function SettingsFacade() {
         }
 
         /// <summary>
-        /// Change one probe to another probe
+        /// Change one probe to another probe 
         /// </summary>
         /// <param name="$scope">Current scope</param>
         /// <param name="probeObj">Selected probe info</param>
@@ -1533,7 +1522,7 @@ function SettingsFacade() {
                 // If vallidation success
                 if (oDefaultValidationResponse.IsSuccess == true) {
 
-                    // if no probe is connected
+                    // if no probe is connected 
                     if (ConnectedProbe[0] == undefined) {
 
                         ConnectProbe($scope, probeObj, xlatService, toaster, $timeout);
@@ -1545,7 +1534,7 @@ function SettingsFacade() {
                         _oSettingsPresenter.UpdateProbeDisconnectStatus($scope, probeObj);
                     
                         //  toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('DisconnectExistingProbe'));
-                        navigator.notification.alert(xlatService.xlat('DisconnectExistingProbe'), ['OK'], "");
+                        alert(xlatService.xlat('DisconnectExistingProbe'));
                     }
                         //Disconnect the connected probe
                     else if (ConnectedProbe[0] != undefined && ConnectedProbe[0].Name == probeObj.Name) {
@@ -1580,7 +1569,7 @@ function SettingsFacade() {
 
 
     /// <summary>
-    /// Change one probe to another probe
+    /// Change one probe to another probe 
     /// </summary>
     /// <param name="$scope">Current scope</param>
     /// <param name="probeObj">Selected probe info</param>
@@ -1605,7 +1594,7 @@ function SettingsFacade() {
                 // If vallidation success
                 if (oDefaultValidationResponse.IsSuccess == true) {
 
-                    // if no probe is connected
+                    // if no probe is connected 
                     if (ConnectedProbe[0] == undefined) {
 
                         ConnectNewProbe($scope, probeObj, xlatService, toaster, $timeout);
@@ -1618,7 +1607,7 @@ function SettingsFacade() {
                         _oSettingsPresenter.UpdateNewProbeDisconnectStatus($scope, probeObj);
 
                         //  toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('DisconnectExistingProbe'));
-                        navigator.notification.alert(xlatService.xlat('DisconnectExistingProbe'), ['OK'], "");
+                        alert(xlatService.xlat('DisconnectExistingProbe'));
                     }
                         //Disconnect the connected probe
                     else if (ConnectedProbe[0] != undefined && ConnectedProbe[0].Name == probeObj.Name) {
@@ -1653,7 +1642,7 @@ function SettingsFacade() {
 
 
     /// <summary>
-    /// Change one probe to another probe
+    /// Change one probe to another probe 
     /// </summary>
     /// <param name="$scope">Current scope</param>
     /// <param name="probeObj">Selected probe info</param>
@@ -1699,10 +1688,10 @@ function SettingsFacade() {
                 }
                 else {
                     alert(ProbeDetails.ConnectionState);
-                    //LabelName.toUpperCase().trim()
+                    //LabelName.toUpperCase().trim() 
                     if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {
 
-                        navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
+                        alert(xlatService.xlat('ProbeConnectedSuccesfully'));                       
                         $scope.probes[probeObj.Index].selected = true;
                         NewConnectProbe[0] = { "Index": probeObj.Index, "Id": probeObj.Name, "Name": probeObj.Name };
                         alert("NewConnectProbe : " + JSON.stringify(NewConnectProbe));
@@ -1726,7 +1715,7 @@ function SettingsFacade() {
                 //// If vallidation success
                 //if (oDefaultValidationResponse.IsSuccess == true) {
 
-                    // if no probe is connected
+                    // if no probe is connected 
                 //if (NewConnectProbe[0] == undefined) {
 
                 //        ConnectProbe($scope, probeObj, xlatService, toaster, $timeout);
@@ -1738,7 +1727,7 @@ function SettingsFacade() {
                 //        _oSettingsPresenter.UpdateProbeDisconnectStatus($scope, probeObj);
 
                 //        //  toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('DisconnectExistingProbe'));
-                //        navigator.notification.alert(xlatService.xlat('DisconnectExistingProbe'), ['OK'], "");
+                //        alert(xlatService.xlat('DisconnectExistingProbe'));
                 //    }
                 //        //Disconnect the connected probe
                 //else if (NewConnectProbe[0] != undefined && NewConnectProbe[0].Name == probeObj.Name) {
@@ -1787,7 +1776,7 @@ function SettingsFacade() {
                 var _oVallidationHandler = new VallidationHandler();
 
                 var parm = { scope: $scope, toaster: toaster, xlatService: xlatService, ClientValidatorConfigList: MyInstance.LoadAllPairedDevices_ClientValidatorConfigList }
-                //1. BluetoothOnValidation(DefaultClientValidator)//if bluetoooth is on vallidaion success
+                //1. BluetoothOnValidation(DefaultClientValidator)//if bluetoooth is on vallidaion success     
                 //  var oDefaultValidationResponse = _oVallidationHandler.Validate($scope, toaster, xlatService, MyInstance.LoadAllPairedDevices_ClientValidatorConfigList);
                 var oDefaultValidationResponse = _oVallidationHandler.Validate(parm);
                
@@ -1807,7 +1796,7 @@ function SettingsFacade() {
                     }
                         // If no devices available
                     else {
-                        navigator.notification.alert(xlatService.xlat('Nodevicesfound'), ['OK'], "");
+                        alert(xlatService.xlat('Nodevicesfound'));
                        // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('Nodevicesfound'));
                     }
                 }
@@ -1829,7 +1818,7 @@ function SettingsFacade() {
 
 
         /// <summary>
-        /// Change one probe to another probe
+        /// Change one probe to another probe 
         /// </summary>
         /// <param name="$scope">Current scope</param>
         /// <param name="probeObj">Selected probe info</param>
@@ -1855,16 +1844,16 @@ function SettingsFacade() {
                         var IsConnectionAlive = oBluetoothTemperatureLoggerBO.IsConnectionAlive(probeObj.Name);
                         
                         if (IsConnectionAlive) {
-                            navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
+                            alert(xlatService.xlat('ProbeConnectedSuccesfully'));
                           //  toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectedSuccesfully'));
-                            $scope.probes[probeObj.Index].selected = true;
+                            $scope.probes[probeObj.Index].selected = true;                            
                             //Save selected probe information
                             ////alert('Connected successfully');
                             _oSettingsPresenter.SaveSelectedDevice(probeObj);
                         }
-                        else {
+                        else {                        
                             // toaster.pop('error', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectionFailed'));
-                            navigator.notification.alert(xlatService.xlat('ProbeConnectionFailed'), ['OK'], "");
+                            alert(xlatService.xlat('ProbeConnectionFailed'));
                             $scope.probes[probeObj.Index].selected = '';
                            //// alert('Connection failed try again');
                             oOneViewBluetoothTemperatureLoggerPlugin.DisConnect("BlueThermProbe");
@@ -1874,6 +1863,7 @@ function SettingsFacade() {
                     }
                     catch (Excep)
                     {
+                        oSetDefaultSpinner.Stop();
                         throw Excep;
                     }
                     //finally {
@@ -1906,11 +1896,11 @@ function SettingsFacade() {
                 OneViewConsole.Debug("ConnectProbe End", "SettingsFacade.ConnectProbe");
             
             }
-            catch (Excep) {
+            catch (Excep) {              
                 oOneViewExceptionHandler.Catch(Excep, "SettingsFacade.OnProbeChange", xlatService);
             }
             //finally {
-            //    //////////oOneViewBluetoothTemperatureLoggerPlugin = null; ////Dont un-comment
+            //    //////////oOneViewBluetoothTemperatureLoggerPlugin = null; ////Dont un-comment 
             //    _oSettingsPresenter = null;
             //    result = null;
             //}
@@ -1919,7 +1909,7 @@ function SettingsFacade() {
 
 
     /// <summary>
-    /// Change one probe to another probe
+    /// Change one probe to another probe 
     /// </summary>
     /// <param name="$scope">Current scope</param>
     /// <param name="probeObj">Selected probe info</param>
@@ -1956,7 +1946,7 @@ function SettingsFacade() {
                             $scope.probes[probeObj.Index].selected = '';
                             ProbeDetails = _oOneViewAppInfoPlugin.ConnectNewProbe(ProbeName);
                             if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {
-                                navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
+                                alert(xlatService.xlat('ProbeConnectedSuccesfully'));
                                 $scope.probes[probeObj.Index].selected = true;
                                 _oSettingsPresenter.SaveSelectedDevice(probeObj);
 
@@ -1967,7 +1957,7 @@ function SettingsFacade() {
                         }
 
                         else if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {
-                            navigator.notification.alert(xlatService.xlat('ProbeConnectedSuccesfully'), ['OK'], "");
+                            alert(xlatService.xlat('ProbeConnectedSuccesfully'));
                             //  toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectedSuccesfully'));
                             $scope.probes[probeObj.Index].selected = true;
                             //Save selected probe information
@@ -1979,7 +1969,7 @@ function SettingsFacade() {
                         }
                         else {
                             // toaster.pop('error', xlatService.xlat('Title_Notification'), probeObj.Name + " " + xlatService.xlat('ProbeConnectionFailed'));
-                            navigator.notification.alert(xlatService.xlat('ProbeConnectionFailed'), ['OK'], "");
+                            alert(xlatService.xlat('ProbeConnectionFailed'));
                             $scope.probes[probeObj.Index].selected = '';
                            //_oOneViewAppInfoPlugin.DisConnectNewProbe(ProbeName);
 
@@ -2012,7 +2002,7 @@ function SettingsFacade() {
                 oOneViewExceptionHandler.Catch(Excep, "SettingsFacade.OnProbeChange", xlatService);
             }
             //finally {
-            //    //////////oOneViewBluetoothTemperatureLoggerPlugin = null; ////Dont un-comment
+            //    //////////oOneViewBluetoothTemperatureLoggerPlugin = null; ////Dont un-comment 
             //    _oSettingsPresenter = null;
             //    result = null;
             //}
@@ -2032,7 +2022,7 @@ function SettingsFacade() {
 
 
         /// <summary>
-        /// Change one probe to another probe
+        /// Change one probe to another probe 
         /// </summary>
         /// <param name="$scope">Current scope</param>
         /// <param name="probeObj">Selected probe info</param>
@@ -2058,7 +2048,7 @@ function SettingsFacade() {
                     $scope.probes[probeObj.Index].selected = '';
 
                     // toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " disconnected successfully");
-                    navigator.notification.alert((probeObj.Name + " disconnected successfully"), ['OK'], "");
+                    alert(probeObj.Name + " disconnected successfully");
                 }
                 else {
                     // Update model with connection status
@@ -2079,7 +2069,7 @@ function SettingsFacade() {
 
 
     /// <summary>
-    /// Change one probe to another probe
+    /// Change one probe to another probe 
     /// </summary>
     /// <param name="$scope">Current scope</param>
     /// <param name="probeObj">Selected probe info</param>
@@ -2112,7 +2102,7 @@ function SettingsFacade() {
                     $scope.probes[probeObj.Index].selected = false;
 
                     // toaster.pop('success', xlatService.xlat('Title_Notification'), probeObj.Name + " disconnected successfully");
-                    //navigator.notification.alert((probeObj.Name + " disconnected successfully"), ['OK'], "");
+                    //alert(probeObj.Name + " disconnected successfully");
                 }
                 else {
                     // Update model with connection status
@@ -2164,7 +2154,7 @@ function SettingsFacade() {
                 }
                     // If no devices available
                 else {
-                    navigator.notification.alert(xlatService.xlat('Nodevicesfound'), ['OK'], "");
+                    alert(xlatService.xlat('Nodevicesfound'));
                     // toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('Nodevicesfound'));
                 }
                 
@@ -2192,7 +2182,7 @@ function SettingsFacade() {
 
                         if (ConfirmationId == "2") {
                             IsNewDcPageDcStartDateSelectionEnabled = false;
-                            SettingsObj.badgetxt = "Disable";
+                            SettingsObj.badgetxt = "Disable";                           
                             _DOM.AddInnerHtml('lblNewDcStartDateSelection', "Disable");
                             $scope.$apply();
                         }
@@ -2228,7 +2218,7 @@ function SettingsFacade() {
                     
                     if (document.getElementById('lblAutoUpload').innerHTML = "Enable") {
                         AutoUploadEnabledStatus = true;
-                    }
+                    }                  
                 }
                 else {
                     AutoUploadEnabledStatus = OneViewLocalStorage.Get("IsAutoUploadEnabled");
@@ -2255,7 +2245,7 @@ function SettingsFacade() {
                     oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('Confirmation'), xlatService.xlat('AutoUpload_Confirm_Enable_Message'), function (ConfirmationId) {
 
                         if (ConfirmationId == "2") {
-                            // IsAutoUploadEnabled = true;
+                            // IsAutoUploadEnabled = true; 
                             OneViewLocalStorage.Save("IsAutoUploadEnabled", true)
                             //SettingsObj.badgetxt = "Enable";
                             _DOM.AddInnerHtml('lblAutoUpload', "Enable");
@@ -2264,6 +2254,60 @@ function SettingsFacade() {
                     });
                 }
               
+
+            }
+            catch (Excep) {
+                oOneViewExceptionHandler.Catch(Excep, "SettingsFacade.EnableOrDisableAutoUpload", xlatService);
+            }
+        }
+
+
+        this.EnableOrDisableAutoProfileDownload = function (xlatService, SettingsObj) {
+            try {
+
+                //alert('IsAutoProfileDownloadEnabled :' + IsAutoProfileDownloadEnabled);
+                var _DOM = new DOM();
+                var AutoProfileDownloadEnabledStatus = false;
+                if (OneViewLocalStorage.Get("IsAutoProfileDownloadEnabled") == null) {
+
+                    if (document.getElementById('lblAutoProfileDownload').innerHTML = "Enable") {
+                        AutoProfileDownloadEnabledStatus = true;
+                    }
+                }
+                else {
+                    AutoProfileDownloadEnabledStatus = OneViewLocalStorage.Get("IsAutoProfileDownloadEnabled");
+                }
+
+                if (AutoProfileDownloadEnabledStatus == "true") {
+
+                    var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+                    oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('Confirmation'), xlatService.xlat('AutoProfileDownload_Confirm_Disable_Message'), function (ConfirmationId) {
+
+                        if (ConfirmationId == "2") {
+                            //IsAutoProfileDownloadEnabled = false;
+                            OneViewLocalStorage.Save("IsAutoProfileDownloadEnabled", false)
+                            //SettingsObj.badgetxt = "Disable";
+                            _DOM.AddInnerHtml('lblAutoProfileDownload', "Disable");
+                            $scope.$apply();
+                        }
+                    });
+                }
+
+                else {
+
+                    var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+                    oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('Confirmation'), xlatService.xlat('AutoProfileDownload_Confirm_Enable_Message'), function (ConfirmationId) {
+
+                        if (ConfirmationId == "2") {
+                            // IsAutoProfileDownloadEnabled = true; 
+                            OneViewLocalStorage.Save("IsAutoProfileDownloadEnabled", true)
+                            //SettingsObj.badgetxt = "Enable";
+                            _DOM.AddInnerHtml('lblAutoProfileDownload', "Enable");
+                            $scope.$apply();
+                        }
+                    });
+                }
+
 
             }
             catch (Excep) {
@@ -2343,7 +2387,7 @@ function SettingsFacade() {
                 }
                     // If no Shifts available
                 else {
-                    navigator.notification.alert(xlatService.xlat('NoShiftsfound'), ['OK'], "");
+                    alert(xlatService.xlat('NoShiftsfound'));                    
                 }
 
                 OneViewConsole.Debug("LoadAllValidShifts Start", "SettingsFacade.LoadAllValidShifts");
@@ -2359,10 +2403,10 @@ function SettingsFacade() {
                 OneViewConsole.Debug("OnShiftChange Start", "SettingsFacade.OnShiftChange");
                 var _oSettingsPresenter = new SettingsPresenter();
 
-                //alert(GlobalShiftId + ' , OnShiftChange ' + JSON.stringify(ShiftObj));
+                //alert(GlobalShiftId + ' , OnShiftChange ' + JSON.stringify(ShiftObj));                
                 var ShiftId = "";
-               if (ShiftObj != undefined) {
-                   for (var temp in $scope.ShiftsData) {
+               if (ShiftObj != undefined) { 
+                   for (var temp in $scope.ShiftsData) {                       
                        var CurrentShift = $scope.ShiftsData[temp];
                        if (ShiftObj.Id == CurrentShift.Id && ShiftObj.selected == true) {
                            $scope.ShiftsData[CurrentShift.Index].selected = true;
@@ -2371,7 +2415,7 @@ function SettingsFacade() {
                        else {
                            $scope.ShiftsData[CurrentShift.Index].selected = '';
                        }
-                    }
+                    }                 
                    _oSettingsPresenter.SaveSelectedShift(ShiftObj);
                  
                }
@@ -2427,7 +2471,7 @@ function SettingsFacade() {
                                 alert(NewUpdateMsg);
                                 var IsOperationAccessAllowed = oAPKUpgradeProcessBO.ValidationForAPKUpgradeProcess("IsAllowDcProfileDownload");
                                 if (IsOperationAccessAllowed == true) {
-                                    navigator.notification.alert(('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.'), ['OK'], "");
+                                    alert('OperationAccessPermissionKey = IsAllowDcProfileDownload  , IsOperationAccessAllowed = ' + IsOperationAccessAllowed + ' , Not implemented exception.');
                                 }
                                 else {
                                     //navigate to upgrade
@@ -2441,13 +2485,13 @@ function SettingsFacade() {
                         }
                         else {
                             //No update available
-                            navigator.notification.alert(xlatService.xlat('NoUpdatesAvailable'), ['OK'], "");
+                            alert(xlatService.xlat('NoUpdatesAvailable'));
                         }
-                    }
+                    }                                      
 
                 }
                 else {
-                    navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                    alert(xlatService.xlat('NoInternetConnection'));
                     OneViewConsole.Info("No Internet Connection", "DasboardFacade.DownLoadProfile");
                 }
 
@@ -2531,7 +2575,7 @@ function SettingsFacade() {
                     var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
                     oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('Confirmation'), xlatService.xlat("IN-MG-MSE-006 :: Are you sure you want to enable Auto Metadata Download ?"), function (ConfirmationId) {
 
-                        if (ConfirmationId == "2") {
+                        if (ConfirmationId == "2") {                         
 
                             IsAutoMetadataDownload = "true";
                             OneViewLocalStorage.Save("IsAutoMetadataDownload", "true");
@@ -2588,7 +2632,7 @@ function SettingsFacade() {
                 }
                 
                 
-                if (IsGeoLocationValidatoionEnabled == "false") {
+                if (IsGeoLocationValidatoionEnabled == "false") {                    
                     var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
                     oOneViewCordovaPlugin.DefaultConfirmBox(xlatService.xlat('GeoLocationValidation_Confirm_Title'), xlatService.xlat('GeoLocationValidation_Confirm_Enable_Message'), function (ConfirmationId) {
 
@@ -2596,7 +2640,7 @@ function SettingsFacade() {
                             OneViewLocalStorage.Save("IsGlobalGeoLocationValidationEnabled", true)
                             if (OneViewLocalStorage.Get("LocalStorageDistanceSpan") == null) {
                                 OneViewLocalStorage.Save("LocalStorageDistanceSpan", "500");
-                            }
+                            }                            
                             SettingsObj.badgetxt = "Enable";
                             _DOM.AddInnerHtml('lblEnableGeoLocationValidation', "Enable");
                             var _value = "";
@@ -2614,7 +2658,7 @@ function SettingsFacade() {
                             _DOM.AddInnerHtml('lblDistanceSpan', OneViewLocalStorage.Get("LocalStorageDistanceSpan") + "(m)&nbsp;&nbsp;&nbsp;");
                             $scope.$apply();
                         }
-                    });
+                    });                  
                 }
                 else {
                     
@@ -2748,7 +2792,7 @@ function SettingsFacade() {
             try {
                 OneViewConsole.Debug("AutoManualstatusCallEvent Start", "SettingsFacade.AutoManualstatusCallEvent");
 
-                var _SettingsBO = new SettingsBO();
+                var _SettingsBO = new SettingsBO();        
                 var _IsAutoManualPinValidationRequired = _SettingsBO.IsAutoManualPinValidationRequired();
             
                 if (_IsAutoManualPinValidationRequired ==true) {
@@ -2880,7 +2924,7 @@ function BluetoothTemperatureLoggerBO() {
                 var _oOneViewAppInfoPlugin = new OneViewAppInfoPlugin();
                 var ProbeDetails = _oOneViewAppInfoPlugin.GetConnectionStatus(DeviceName);
 
-                if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {
+                if (ProbeDetails.ConnectionState.toUpperCase().trim() == "CONNECTED") {                
                     return true;
                 }
                 else {
@@ -2955,7 +2999,7 @@ function SettingsPresenter() {
             // Make the probe list to null (empty)
             $scope.probes = {};
             $scope.LogVariableList = {};
-            $scope.ShiftsData = {};
+            $scope.ShiftsData = {};            
             // Show the settings page to visible
             // Bydefault this page will visible
             $scope.settingvisible = true;
@@ -2976,7 +3020,7 @@ function SettingsPresenter() {
                     document.getElementById('lblBlueThermStatus').className = "assertive";
                     document.getElementById('lblBlueThermStatus').innerHTML = xlatService.xlat('Manual');
                 }
-            }
+            }               
             else {
                 TemperatureAutoMaualBadgetxt = 'Auto';
                 if (document.getElementById('lblTempReading') != null)
@@ -2984,7 +3028,7 @@ function SettingsPresenter() {
 
                 if (document.getElementById('lblBlueThermStatus') != null) {
                     document.getElementById('lblBlueThermStatus').className = "balanced";
-                    document.getElementById('lblBlueThermStatus').innerHTML = xlatService.xlat('Auto');
+                    document.getElementById('lblBlueThermStatus').innerHTML = xlatService.xlat('Auto'); 
                 }
             }
                 
@@ -3016,7 +3060,7 @@ function SettingsPresenter() {
                 ConflictResolveModeConfiguration = "Use Server";
                 if (document.getElementById('lblResolveMode') != null)
                     document.getElementById('lblResolveMode').innerHTML = "Use Server";
-            }
+            }           
             else {
                 ConflictResolveModeConfiguration = "Use Mine";
                 if (document.getElementById('lblResolveMode') != null)
@@ -3050,7 +3094,7 @@ function SettingsPresenter() {
             }
 
 
-            //Probe Indicator : Hide and Show
+            //Probe Indicator : Hide and Show            
             //alert('IsGlobalBlueThermLiveTemperatureIndicatorEnabled : ' + IsGlobalBlueThermLiveTemperatureIndicatorEnabled);
             if (IsGlobalBlueThermLiveTemperatureIndicatorEnabled == true) {
                 if (document.getElementById('lblTempIndicator') != null) {
@@ -3067,7 +3111,7 @@ function SettingsPresenter() {
 
 
             if (IsNewDcPageDcStartDateSelectionEnabled == true) {
-                _DOM.AddInnerHtml('lblNewDcStartDateSelection', "Enable");
+                _DOM.AddInnerHtml('lblNewDcStartDateSelection', "Enable");               
             }
 
             else {
@@ -3080,6 +3124,14 @@ function SettingsPresenter() {
             }
             else {
                 _DOM.AddInnerHtml('lblAutoUpload', "Enable");
+            }
+
+            if (OneViewLocalStorage.Get("IsAutoProfileDownloadEnabled") == null || OneViewLocalStorage.Get("IsAutoProfileDownloadEnabled") == "false") {
+                _DOM.AddInnerHtml('lblAutolblAutoProfileDownloadUpload', "Disable");
+
+            }
+            else {
+                _DOM.AddInnerHtml('lblAutoProfileDownload', "Enable");
             }
 
             if (OneViewLocalStorage.Get("IsAutoActionFollowupDownloadEnabled") == null || OneViewLocalStorage.Get("IsAutoActionFollowupDownloadEnabled") == "false") {
@@ -3116,7 +3168,7 @@ function SettingsPresenter() {
                 }
                 else {
                     _DOM.AddInnerHtml('lblEnableGeoLocationValidation', "Disable");
-                }
+                }               
             }
 
             if (OneViewLocalStorage.Get("IsGlobalLandingpagedailysyncEnabled") == null) {
@@ -3186,7 +3238,7 @@ function SettingsPresenter() {
             ];
 
             //var SettingMetadata = {
-            //    "ServiceId": 1,
+            //    "ServiceId": 1,                
             //    "UserId": -1,
             //    "OperationTagList": [
             //        {
@@ -3221,7 +3273,7 @@ function SettingsPresenter() {
             OneViewConsole.Debug("PageLoad End", "SettingsPresenter.PageLoad");
         }
 
-        catch (Excep) {
+        catch (Excep) {           
             throw oOneViewExceptionHandler.Create("Presenter", "SettingsPresenter.PageLoad", Excep);
         }
         finally {
@@ -3235,7 +3287,7 @@ function SettingsPresenter() {
     {
         if(OSType == OSTypeEnum.IOS)
         {
-            $scope.Setting_ProbeConfiguration=true;
+            //$scope.Setting_ProbeConfiguration=true;
             $scope.Setting_Log=true;
             $scope.Setting_DB_CopyDB=true;
             $scope.Setting_DB_RestoreDB=true;
@@ -3248,7 +3300,7 @@ function SettingsPresenter() {
     /// </summary>
     /// <param name="$scope">Current scope</param>
     /// <param name="DeviceLst">List of paired devices</param>
-    /// <param name=SettingsObj>selected settings object</param>
+    /// <param name=SettingsObj>selected settings object</param>   
     this.ShowPairedDevices = function ($scope, DeviceLst, SettingsObj) {
         try {
             OneViewConsole.Debug("ShowPairedDevices Start", "SettingsPresenter.ShowPairedDevices");
@@ -3270,10 +3322,10 @@ function SettingsPresenter() {
                     }
                     else {
                         $scope.probes[i + 1] = { "Index": i + 1, "Id": DeviceLst[i].DeviceName, "Name": DeviceLst[i].DeviceName };
-                    }
+                    }               
                 }
                 else {
-                    $scope.probes[i + 1] = { "Index": i + 1, "Id": DeviceLst[i].DeviceName, "Name": DeviceLst[i].DeviceName };
+                    $scope.probes[i + 1] = { "Index": i + 1, "Id": DeviceLst[i].DeviceName, "Name": DeviceLst[i].DeviceName };              
                 }
             }
 
@@ -3356,7 +3408,7 @@ function SettingsPresenter() {
     /// <summary>
     /// SaveSelectedDevice
     /// </summary>
-    /// <param name="probeObj">Probe info</param>
+    /// <param name="probeObj">Probe info</param>   
     this.SaveSelectedDevice = function (probeObj) {
         try {
             OneViewConsole.Debug("SaveSelectedDevice Start", "SettingsPresenter.SaveSelectedDevice");
@@ -3373,8 +3425,8 @@ function SettingsPresenter() {
     /// <summary>
     /// UpdateProbeDisconnectStatus
     /// </summary>
-    /// <param name="$scope">Current scope</param>
-    /// <param name="probeObj">Probe info</param>
+    /// <param name="$scope">Current scope</param>   
+    /// <param name="probeObj">Probe info</param>   
     this.UpdateProbeDisconnectStatus = function ($scope, probeObj) {
         try {
             OneViewConsole.Debug("UpdateProbeDisconnectStatus Start", "SettingsPresenter.UpdateProbeDisconnectStatus");
@@ -3391,8 +3443,8 @@ function SettingsPresenter() {
     /// <summary>
     /// UpdateProbeDisconnectStatus
     /// </summary>
-    /// <param name="$scope">Current scope</param>
-    /// <param name="probeObj">Probe info</param>
+    /// <param name="$scope">Current scope</param>   
+    /// <param name="probeObj">Probe info</param>   
     this.UpdateNewProbeDisconnectStatus = function ($scope, probeObj) {
         try {
             OneViewConsole.Debug("UpdateNewProbeDisconnectStatus Start", "SettingsPresenter.UpdateNewProbeDisconnectStatus");
@@ -3409,8 +3461,8 @@ function SettingsPresenter() {
     /// <summary>
     /// UpdateProbeSelectedStatus
     /// </summary>
-    /// <param name="$scope">Current scope</param>
-    /// <param name="probeObj">Probe info</param>
+    /// <param name="$scope">Current scope</param>   
+    /// <param name="probeObj">Probe info</param>   
     this.UpdateProbeSelectedStatus = function ($scope, probeObj) {
         try {
             OneViewConsole.Debug("UpdateProbeSelectedStatus Start", "SettingsPresenter.UpdateProbeSelectedStatus");
@@ -3483,7 +3535,7 @@ function SettingsPresenter() {
     /// <summary>
     /// SaveSelectedShift
     /// </summary>
-    /// <param name="shiftObj">Shift info</param>
+    /// <param name="shiftObj">Shift info</param>   
     this.SaveSelectedShift = function (shiftObj) {
         try {
             OneViewConsole.Debug("SaveSelectedShift Start", "SettingsPresenter.SaveSelectedShift");
@@ -3551,13 +3603,13 @@ function SettingsBO() {
                         //// alert("Probe" + ConnectedProbe[0].Name + " is disconnected ,please go to  settings page and reconnect the probe");
                         var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnectionLost');
                         // toaster.pop('info', xlatService.xlat('Title_Notification'), msg);
-                        navigator.notification.alert(msg, ['OK'], "");
+                        alert(msg);
                     }
                     else {
                         //// alert("Probe" + ConnectedProbe[0].Name + " is connected , go ahead");
                         var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnected');
                         // toaster.pop('success', xlatService.xlat('Title_Success'), msg);
-                        navigator.notification.alert(msg, ['OK'], "");
+                        alert(msg);
                     }
                 }
                 else {
@@ -3567,13 +3619,13 @@ function SettingsBO() {
                         //// alert("Probe" + ConnectedProbe[0].Name + " is disconnected ,please go to  settings page and reconnect the probe");
                         var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnectionLost');
                         // toaster.pop('info', xlatService.xlat('Title_Notification'), msg);
-                        navigator.notification.alert(msg, ['OK'], "");
+                        alert(msg);
                     }
                     else {
                         //// alert("Probe" + ConnectedProbe[0].Name + " is connected , go ahead");
                         var msg = xlatService.xlat('Probe') + " " + ConnectedProbe[0].Name + " " + xlatService.xlat('ProbeConnected');
                         // toaster.pop('success', xlatService.xlat('Title_Success'), msg);
-                        navigator.notification.alert(msg, ['OK'], "");
+                        alert(msg);
                     }
                 }
               
@@ -3582,7 +3634,7 @@ function SettingsBO() {
                 ////alert("No Probe is connected ,please go to  settings page and connect the probe");
                 var msg = xlatService.xlat('ProbeConnectionLostOrNoProbe');
                 // toaster.pop('warning', xlatService.xlat('Title_Notification'), msg);
-                navigator.notification.alert(msg, ['OK'], "");
+                alert(msg);
 
                 var obj = document.getElementById('txtTemperatureLoggerControlId');
                 if (obj != null) {
@@ -3731,7 +3783,7 @@ function SettingsBO() {
 
             oOneViewProgressbar.SetProgressValue(50);
 
-            var _oDATEntityTypesBO = new DATEntityTypesBO(xlatService);
+            var _oDATEntityTypesBO = new DATEntityTypesBO(xlatService); 
             var _oDATEntityTypessuccess = _oDATEntityTypesBO.Download();
 
             IsSuccess = true;
@@ -3831,7 +3883,7 @@ function SettingsBO() {
 
                 }
             }
-            else {
+            else {             
                 this.DeleteManualPinValidationDetailsFromLocalbyUser();
             }
 
@@ -3862,7 +3914,7 @@ function SettingsBO() {
                 if (Pin === ManualPinValidityDetailsResponse.PIN) {
 
                     var oDateTime = new DateTime();
-                    CurrentDateAndTime = oDateTime.GetDateAndTime();
+                    CurrentDateAndTime = oDateTime.GetDateAndTime();               
               
                     var ManualPinValidationDetails = {};
 
@@ -3888,9 +3940,9 @@ function SettingsBO() {
                     
                 }
                 else {
-                    IsPinValidationSuccess = false;
+                    IsPinValidationSuccess = false;                    
                 }
-            }
+            }                
             else if (ManualPinValidityDetailsResponse != null && ManualPinValidityDetailsResponse.isAnyException == true) {
                 alert(xlatService.xlat('ER-CU-MSE-001 ::Server error, Please contact Administrator'));
             }
@@ -3924,12 +3976,12 @@ function SettingsBO() {
 
                 var _oSettingsIL = new SettingsIL();
                 var RequestParam = { "OSGuid": Req.ServiceId, "UserId": Req.LoginUserId };
-                ManualPinDetailsresponse = _oSettingsIL.GetManualPinDetails(RequestParam);
+                ManualPinDetailsresponse = _oSettingsIL.GetManualPinDetails(RequestParam);             
 
                 oSetDefaultSpinner.Stop();
             }
             else {
-                navigator.notification.alert(xlatService.xlat('NoInternetConnection'), ['OK'], "");
+                alert(xlatService.xlat('NoInternetConnection'));
                 OneViewConsole.Info("No Internet Connection", "SettingsBO.GetManualPinValidityStatus");
             }
 
@@ -3978,7 +4030,7 @@ function SettingsBO() {
                     if (_IsManualValidationPinIsActive==true) {
                         Response.IsValid = true;
                     }
-                    else {
+                    else {             
                         IsGlobalAutoTemperatureManualAllowed = false;
                         this.DeleteManualPinValidationDetailsFromLocalbyUser();
                     }
@@ -4004,7 +4056,7 @@ function SettingsBO() {
             var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
             //   ManualPinValidationDetails[ServiceId + "_" + LoginUserId] = { PinValidityPeriod: ManualPinValidityDetailsResponse.ValidityPeriod, ValidityType: ManualPinValidityDetailsResponse.ValidityType };
             if (OneViewLocalStorage.Get("ManualPinValidationDetails") != null) {
-               // alert("ManualPinValidationDetails : " + OneViewLocalStorage.Get("ManualPinValidationDetails"));
+               // alert("ManualPinValidationDetails : " + OneViewLocalStorage.Get("ManualPinValidationDetails"));        
           
                 var ManualPinValidationDetails = JSON.parse(OneViewLocalStorage.Get("ManualPinValidationDetails"));
 
@@ -4015,12 +4067,12 @@ function SettingsBO() {
                     if (ValidityType == 1)//Hour
                     //if (ValidityType == "Hour")
                     {
-                        var ValidityPeriod = ManualPinValidationDetails[ServiceId + "_" + LoginUserId].ValidityPeriod;
-                        var ValidityStartDateAndTime = ManualPinValidationDetails[ServiceId + "_" + LoginUserId].ValidityStartTime;
+                        var ValidityPeriod = ManualPinValidationDetails[ServiceId + "_" + LoginUserId].ValidityPeriod;                        
+                        var ValidityStartDateAndTime = ManualPinValidationDetails[ServiceId + "_" + LoginUserId].ValidityStartTime;                      
 
                         var ValidityPeriodAndTime = GetValidityPeriodAndTime(ValidityPeriod, ValidityStartDateAndTime);
 
-                        var oDateTime = new DateTime();
+                        var oDateTime = new DateTime();                      
                         var CurrentDate = oDateTime.GetDateAndTime();
                     
                         var intValidityPeriodAndTime = oDateTime.ConvertDateTimeToInteger(ValidityPeriodAndTime);
@@ -4259,7 +4311,6 @@ function SettingsIL() {
     }
 
 }
-
 
 
 
