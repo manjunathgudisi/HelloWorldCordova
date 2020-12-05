@@ -19,6 +19,8 @@
 		27317AE823B1DFEE003CA351 /* HttpClinetPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27317ADC23B1DFEE003CA351 /* HttpClinetPlugin.h */; };
 		27317AE923B1DFEE003CA351 /* DBManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27317ADD23B1DFEE003CA351 /* DBManager.h */; };
 		27317AEA23B1DFEE003CA351 /* OneViewDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 27317ADE23B1DFEE003CA351 /* OneViewDeviceInfo.h */; };
+		2766C2DA256AAA6A00A3B4ED /* BluetoothFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = 2766C2D9256AAA6A00A3B4ED /* BluetoothFacade.m */; };
+		2766C2DB256AAA6A00A3B4ED /* BluetoothFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = 2766C2D9256AAA6A00A3B4ED /* BluetoothFacade.m */; };
 		27967D0623B9F7A500DECBB6 /* MyProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 27967D0423B9F7A500DECBB6 /* MyProgressHUD.h */; };
 		27967D0723B9F7A500DECBB6 /* MyProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 27967D0523B9F7A500DECBB6 /* MyProgressHUD.m */; };
 		28BFF9141F355A4E00DDF01A /* CDVLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 28BFF9121F355A4E00DDF01A /* CDVLogger.h */; };
@@ -149,6 +151,8 @@
 		27317ADC23B1DFEE003CA351 /* HttpClinetPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClinetPlugin.h; sourceTree = "<group>"; };
 		27317ADD23B1DFEE003CA351 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		27317ADE23B1DFEE003CA351 /* OneViewDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneViewDeviceInfo.h; sourceTree = "<group>"; };
+		2766C2D9256AAA6A00A3B4ED /* BluetoothFacade.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BluetoothFacade.m; sourceTree = "<group>"; };
+		2766C2DE256AAA7E00A3B4ED /* BluetoothFacade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BluetoothFacade.h; sourceTree = "<group>"; };
 		27967D0423B9F7A500DECBB6 /* MyProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProgressHUD.h; sourceTree = "<group>"; };
 		27967D0523B9F7A500DECBB6 /* MyProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProgressHUD.m; sourceTree = "<group>"; };
 		28BFF9121F355A4E00DDF01A /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVLogger.h; sourceTree = "<group>"; };
@@ -380,6 +384,8 @@
 				7ED95D321AB9029B008C4574 /* NSDictionary+CordovaPreferences.m */,
 				7ED95D331AB9029B008C4574 /* NSMutableArray+QueueAdditions.h */,
 				7ED95D341AB9029B008C4574 /* NSMutableArray+QueueAdditions.m */,
+				2766C2DE256AAA7E00A3B4ED /* BluetoothFacade.h */,
+				2766C2D9256AAA6A00A3B4ED /* BluetoothFacade.m */,
 			);
 			name = Public;
 			path = Classes/Public;
@@ -579,6 +585,7 @@
 				9052DE772150D040008E83D4 /* CDVPlugin.m in Sources */,
 				9052DE782150D040008E83D4 /* CDVPluginResult.m in Sources */,
 				9052DE792150D040008E83D4 /* CDVTimer.m in Sources */,
+				2766C2DB256AAA6A00A3B4ED /* BluetoothFacade.m in Sources */,
 				9052DE7A2150D040008E83D4 /* CDVURLProtocol.m in Sources */,
 				9052DE7B2150D040008E83D4 /* CDVUserAgentUtil.m in Sources */,
 				9052DE7C2150D040008E83D4 /* CDVViewController.m in Sources */,
@@ -623,6 +630,7 @@
 				27317AE523B1DFEE003CA351 /* OneViewDeviceInfo.m in Sources */,
 				7ED95D5A1AB9029B008C4574 /* NSMutableArray+QueueAdditions.m in Sources */,
 				7ED95D041AB9028C008C4574 /* CDVJSON_private.m in Sources */,
+				2766C2DA256AAA6A00A3B4ED /* BluetoothFacade.m in Sources */,
 				27967D0723B9F7A500DECBB6 /* MyProgressHUD.m in Sources */,
 				28BFF9151F355A4E00DDF01A /* CDVLogger.m in Sources */,
 				A3B082D51BB15CEA00D8DC35 /* CDVGestureHandler.m in Sources */,

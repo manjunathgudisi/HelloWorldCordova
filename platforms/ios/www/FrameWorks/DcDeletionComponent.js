@@ -1200,19 +1200,38 @@ oItemDAO.DeleteWorkOrderItems(result);
                 OneViewConsole.Debug("DeleteCompletedItemFromRFLWorkOrder Start", "DcDeletion.DeleteCompletedItemFromRFLWorkOrder");
 
 
-                var Query = "SELECT Id FROM RFLWorkOrder WHERE Status='2'";
+                if (ServiceId == 61 && TemplateNodeId == 391) {
+                    var Query = "SELECT Id FROM RFLServiceWorkOrder WHERE Status='2'";
 
-                if (Query != "") {
-                    var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+                    if (Query != "") {
+                        var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
 
-                    if (result.length > 0) {
-                        var _DcDeletionBO = new DcDeletionBO();
+                        if (result.length > 0) {
+                            var _DcDeletionBO = new DcDeletionBO();
 
-                        var DeleteQuery = "DELETE FROM RFLWorkOrder WHERE Status='2'";
+                            var DeleteQuery = "DELETE FROM RFLServiceWorkOrder WHERE Status='2'";
 
-                        oOneViewSqlitePlugin.ExcecuteSql(DeleteQuery);
+                            oOneViewSqlitePlugin.ExcecuteSql(DeleteQuery);
+                        }
                     }
                 }
+                else {
+
+                    var Query = "SELECT Id FROM RFLWorkOrder WHERE Status='2'";
+
+                    if (Query != "") {
+                        var result = oOneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+                        if (result.length > 0) {
+                            var _DcDeletionBO = new DcDeletionBO();
+
+                            var DeleteQuery = "DELETE FROM RFLWorkOrder WHERE Status='2'";
+
+                            oOneViewSqlitePlugin.ExcecuteSql(DeleteQuery);
+                        }
+                    }
+                }
+                
 
 
                 OneViewConsole.Debug("DeleteCompletedItemFromRFLWorkOrder End", "DcDeletion.DeleteCompletedItemFromRFLWorkOrder");

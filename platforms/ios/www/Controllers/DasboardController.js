@@ -2964,47 +2964,48 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 
 	var ExcecuteGarbageCollector = function (TemplateId, DcPlaceId) {
 
-		try {
-			OneViewConsole.Debug("ExcecuteGarbageCollector start", "LandingPageFacade.ExcecuteGarbageCollector");
+			try {
+				OneViewConsole.Debug("ExcecuteGarbageCollector start", "LandingPageFacade.ExcecuteGarbageCollector");
 
-			var _oDcDeletion = new DcDeletion();
-			_oDcDeletion.DeleteCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-			_oDcDeletion.DeleteInCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-			_oDcDeletion.DeleteInCompleteAndSyncedDataInDays(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-			_oDcDeletion.DeleteCompletedSyncAndApprovedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-			_oDcDeletion.DeleteCompletedSyncAndOnDeviceApprovalFinishedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-			if (OneViewSessionStorage.Get("ServiceId") == 39) {
-				_oDcDeletion.DeleteInActivePurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteItemCompletedorInActiveInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteCompletedItemInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				var _oDcDeletion = new DcDeletion();
+				_oDcDeletion.DeleteCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteInCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteInCompleteAndSyncedDataInDays(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteCompletedSyncAndApprovedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteCompletedSyncAndOnDeviceApprovalFinishedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				if (OneViewSessionStorage.Get("ServiceId") == 39) {
+					_oDcDeletion.DeleteInActivePurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteItemCompletedorInActiveInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteCompletedItemInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				}
+
+				_oDcDeletion.DeleteExpiredOrderItems(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteCompletedItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteExpiredItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+
+				if (OneViewSessionStorage.Get("ServiceId") == 51) {
+					_oDcDeletion.DeleteCompletedItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteExpiredItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				}
+				else if (OneViewSessionStorage.Get("ServiceId") == 52) {
+					_oDcDeletion.DeleteCompletedItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteExpiredItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				}
+				else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+					_oDcDeletion.DeleteCompletedItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				   
+				}
+
+				OneViewConsole.Debug("ExcecuteGarbageCollector end", "LandingPageFacade.ExcecuteGarbageCollector");
 			}
-
-			_oDcDeletion.DeleteExpiredOrderItems(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-			_oDcDeletion.DeleteCompletedItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-			_oDcDeletion.DeleteExpiredItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-
-			if (OneViewSessionStorage.Get("ServiceId") == 51) {
-				_oDcDeletion.DeleteCompletedItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteExpiredItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+			catch (Excep) {
+				throw oOneViewExceptionHandler.Create("BO", "LandingPageFacade.UploadDC", Excep);
 			}
-			else if (OneViewSessionStorage.Get("ServiceId") == 52) {
-				_oDcDeletion.DeleteCompletedItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteExpiredItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+			finally {
 			}
-			else if (OneViewSessionStorage.Get("ServiceId") == 61) {
-				_oDcDeletion.DeleteCompletedItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-
-			}
-
-			OneViewConsole.Debug("ExcecuteGarbageCollector end", "LandingPageFacade.ExcecuteGarbageCollector");
 		}
-		catch (Excep) {
-			throw oOneViewExceptionHandler.Create("BO", "LandingPageFacade.UploadDC", Excep);
-		}
-		finally {
-		}
-	}
+
 
 	var CheckForNewUpdates = function () {
 
@@ -4141,38 +4142,38 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 	}
 
 	this.InitializeTaskHandler = function () {
-		try {
-			OneViewConsole.Debug("InitializeTaskHandler start", "DasboardFacade.InitializeTaskHandler");
+			try {
+				OneViewConsole.Debug("InitializeTaskHandler start", "DasboardFacade.InitializeTaskHandler");
 
-			$scope.BtnDownloadHide = false;
-			$scope.BtnNewDCHide = false;
-			$scope.BtnViewDCHide = false;
-			$scope.BtnApproveDCHide = false;
-			$scope.BtnUploadDCHide = false;
+				$scope.BtnDownloadHide = false;
+				$scope.BtnNewDCHide = false;
+				$scope.BtnViewDCHide = false;
+				$scope.BtnApproveDCHide = false;
+				$scope.BtnUploadDCHide = false;
 
-			if (LandingPageViewDisplayConfig != null) {
+				if (LandingPageViewDisplayConfig != null) {
 
-				var OperationBarDisplayConfig = LandingPageViewDisplayConfig.OperationBarDisplayConfig;
+					var OperationBarDisplayConfig = LandingPageViewDisplayConfig.OperationBarDisplayConfig;
 
-				if (OperationBarDisplayConfig != null) {
+					if (OperationBarDisplayConfig != null) {
 
-					$scope.BtnDownloadHide = !(OperationBarDisplayConfig.IsDownloadButtonEnable);
-					$scope.BtnNewDCHide = !(OperationBarDisplayConfig.IsNewDcButtonEnable);
-					$scope.BtnViewDCHide = !(OperationBarDisplayConfig.IsViewDcButtonEnable);
-					$scope.BtnApproveDCHide = !(OperationBarDisplayConfig.IsApproveButtonEnable);
-					$scope.BtnUploadDCHide = !(OperationBarDisplayConfig.IsUploadButtonEnable);
+						$scope.BtnDownloadHide = !(OperationBarDisplayConfig.IsDownloadButtonEnable);
+						$scope.BtnNewDCHide = !(OperationBarDisplayConfig.IsNewDcButtonEnable);
+						$scope.BtnViewDCHide = !(OperationBarDisplayConfig.IsViewDcButtonEnable);
+						$scope.BtnApproveDCHide = !(OperationBarDisplayConfig.IsApproveButtonEnable);
+						$scope.BtnUploadDCHide = !(OperationBarDisplayConfig.IsUploadButtonEnable);
+					}
 				}
-			}
+						   
+				if (ServiceId == 36 || ServiceId == 39 || ServiceId == 50 || ServiceId == 51 || ServiceId == 52 || ServiceId == 61) {
+					$scope.BtnApproveDCHide = true;
+				}
 
-			if (ServiceId == 36 || ServiceId == 39 || ServiceId == 50 || ServiceId == 51 || ServiceId == 52) {
-				$scope.BtnApproveDCHide = true;
+				OneViewConsole.Debug("InitializeTaskHandler end", "DasboardFacade.InitializeTaskHandler");
 			}
-
-			OneViewConsole.Debug("InitializeTaskHandler end", "DasboardFacade.InitializeTaskHandler");
-		}
-		catch (Excep) {
-			oOneViewExceptionHandler.Catch(Excep, "DasboardBO.InitializeTaskHandler", xlatService);
-		}
+			catch (Excep) {
+				oOneViewExceptionHandler.Catch(Excep, "DasboardBO.InitializeTaskHandler", xlatService);
+			}
 	}
 
 	this.TemplateAccessValidationHandler = function (LandingPageViewInfo) {

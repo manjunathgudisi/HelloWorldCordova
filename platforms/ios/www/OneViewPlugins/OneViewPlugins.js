@@ -1395,7 +1395,9 @@ function OneViewAutoUploadPlugin() {
         try {
             OneViewConsole.Debug("Stop start", "OneViewAutoUploadPlugin.Stop");
 
-            window.OneViewAutoUpload.Stop();
+			if (window.OneViewAutoUpload) {
+				window.OneViewAutoUpload.Stop();
+			}
 
             OneViewConsole.Debug("Stop end", "OneViewAutoUploadPlugin.Stop");
         }

@@ -86,6 +86,7 @@ function UploadBO(xlatService, toaster) {
 						_oOneViewSqlitePlugin.EndTransaction();
 
 						MyInstance.BatchUploadAdv(_oDcFilterParamRequest);
+						//ExecuteGarbageCollector();
 					}
 					catch (Excep) {
 
@@ -654,11 +655,13 @@ function UploadBO(xlatService, toaster) {
 												navigator.notification.alert(xlatService.xlat('IN-SU-LDP-001 :: Data uploaded successfully'), ['OK'], "");
 											}
 											_oOneViewAutoUploadPlugin.Stop();
+											oOneViewProgressbar.Stop();
 
 											OneViewConsole.Info("Upload success", "UploadBO.AutoUpload");
 										}
 										catch (Excep) {
 											_oOneViewAutoUploadPlugin.Stop();
+											oOneViewProgressbar.Stop();
 											if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
 
 												//alert(xlatService.xlat("IN-ER-LDP-003 :: Upload failed. Please try again"));
@@ -672,6 +675,7 @@ function UploadBO(xlatService, toaster) {
 									}
 									else {
 										_oOneViewAutoUploadPlugin.Stop();
+										oOneViewProgressbar.Stop();
 										if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
 
 											//alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"));
@@ -684,6 +688,7 @@ function UploadBO(xlatService, toaster) {
 								}
 								else {
 									_oOneViewAutoUploadPlugin.Stop();
+									oOneViewProgressbar.Stop();
 									if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
 
 										//navigator.notification.alert(xlatService.xlat("IN-IN-LDP-001 :: No data available for Upload"), ['OK'], "");
@@ -694,6 +699,7 @@ function UploadBO(xlatService, toaster) {
 							}
 							else {
 								_oOneViewAutoUploadPlugin.Stop();
+								oOneViewProgressbar.Stop();
 								if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
 
 									//alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"));
@@ -851,58 +857,59 @@ function UploadBO(xlatService, toaster) {
 	}
 
 	var ExecuteGarbageCollector = function () {
-		try {
-			OneViewConsole.Debug("ExecuteGarbageCollector start", "UploadBO.ExecuteGarbageCollector");
+			try {
+				OneViewConsole.Debug("ExecuteGarbageCollector start", "UploadBO.ExecuteGarbageCollector");
+
+		   
+				var _oDcDAO = new DcDAO();
+				DcPlaceIdTemplateIdList = _oDcDAO.GetDcPlaceIdTemplateId(OneViewSessionStorage.Get("LoginUserId"), OneViewSessionStorage.Get("ServiceId"));
+				var _oDcDeletion = new DcDeletion();
+			 
+			   
+				for (var i = 0; i < DcPlaceIdTemplateIdList.length; i++) {
+					var TemplateId = DcPlaceIdTemplateIdList[i].TemplateId;
+					var DcPlaceId =DcPlaceIdTemplateIdList[i].DcPlaceId;
+					//alert("TemplateId1 : " + TemplateId + " DcPlaceId1 : " + DcPlaceId);
+					_oDcDeletion.DeleteCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteInCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteInCompleteAndSyncedDataInDays(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteInCompleteAndSyncedDataFromNow(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteCompletedSyncAndApprovedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteCompletedSyncAndOnDeviceApprovalFinishedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					if (OneViewSessionStorage.Get("ServiceId") == 39) {
+						_oDcDeletion.DeleteInActivePurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+						_oDcDeletion.DeleteItemCompletedorInActiveInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+						_oDcDeletion.DeleteCompletedItemInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					}
+					_oDcDeletion.DeleteExpiredOrderItems(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteCompletedItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteExpiredItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 
 
-			var _oDcDAO = new DcDAO();
-			DcPlaceIdTemplateIdList = _oDcDAO.GetDcPlaceIdTemplateId(OneViewSessionStorage.Get("LoginUserId"), OneViewSessionStorage.Get("ServiceId"));
-			var _oDcDeletion = new DcDeletion();
 
-
-			for (var i = 0; i < DcPlaceIdTemplateIdList.length; i++) {
-				var TemplateId = DcPlaceIdTemplateIdList[i].TemplateId;
-				var DcPlaceId =DcPlaceIdTemplateIdList[i].DcPlaceId;
-				//alert("TemplateId1 : " + TemplateId + " DcPlaceId1 : " + DcPlaceId);
-				_oDcDeletion.DeleteCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteInCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteInCompleteAndSyncedDataInDays(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteInCompleteAndSyncedDataFromNow(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteCompletedSyncAndApprovedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteCompletedSyncAndOnDeviceApprovalFinishedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				if (OneViewSessionStorage.Get("ServiceId") == 39) {
-					_oDcDeletion.DeleteInActivePurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-					_oDcDeletion.DeleteItemCompletedorInActiveInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-					_oDcDeletion.DeleteCompletedItemInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					if (OneViewSessionStorage.Get("ServiceId") == 51) {
+						_oDcDeletion.DeleteCompletedItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+						_oDcDeletion.DeleteExpiredItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					}
+					else if (OneViewSessionStorage.Get("ServiceId") == 52) {
+						_oDcDeletion.DeleteCompletedItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+						_oDcDeletion.DeleteExpiredItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					}
+					else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+						_oDcDeletion.DeleteCompletedItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+						_oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					   
+					}
 				}
-				_oDcDeletion.DeleteExpiredOrderItems(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteCompletedItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				_oDcDeletion.DeleteExpiredItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 
-
-
-				if (OneViewSessionStorage.Get("ServiceId") == 51) {
-					_oDcDeletion.DeleteCompletedItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-					_oDcDeletion.DeleteExpiredItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				}
-				else if (OneViewSessionStorage.Get("ServiceId") == 52) {
-					_oDcDeletion.DeleteCompletedItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-					_oDcDeletion.DeleteExpiredItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-				}
-				else if (OneViewSessionStorage.Get("ServiceId") == 61) {
-					_oDcDeletion.DeleteCompletedItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-					_oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
-
-				}
+				OneViewConsole.Debug("ExecuteGarbageCollector end", "UploadBO.ExecuteGarbageCollector");
 			}
+			catch (Excep) {
+				//alert("Excep : " + JSON.stringify(Excep) + Excep)
+				throw oOneViewExceptionHandler.Create("BO", "UploadBO.ExecuteGarbageCollector", Excep);
+			}
+		}
 
-			OneViewConsole.Debug("ExecuteGarbageCollector end", "UploadBO.ExecuteGarbageCollector");
-		}
-		catch (Excep) {
-			//alert("Excep : " + JSON.stringify(Excep) + Excep)
-			throw oOneViewExceptionHandler.Create("BO", "UploadBO.ExecuteGarbageCollector", Excep);
-		}
-	}
 
 	var DownloadActionFollowUp = function (xlatService) {
 
