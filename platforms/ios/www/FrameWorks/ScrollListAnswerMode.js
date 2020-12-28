@@ -1076,7 +1076,15 @@ function ScrollListAnswerMode($scope) {
 
            
             var _oItemDAO = new ItemDAO();
-            var DcAndItemIdList = _oItemDAO.GetDcDataByAttibuteAndAnswer(Req);
+            var DcAndItemIdList = [];
+            if (OneViewSessionStorage.Get("ServiceId") == 61) {
+                DcAndItemIdList = _oItemDAO.GetDcDataByAttibuteAndAnswerByUserId(Req);
+            }
+            else {
+                DcAndItemIdList = _oItemDAO.GetDcDataByAttibuteAndAnswer(Req);
+            }
+            //GetDcDataByAttibuteAndAnswerByUserId
+            
          
             var DcDataDict = {};
             if (DcAndItemIdList.length > 0) {
@@ -1311,7 +1319,14 @@ function ScrollListAnswerMode($scope) {
                 AttributeLst.push(AttributeNodeId);
 
 
-                var DcAndItemIdList = _oItemDAO.GetDcDataByItemsForMultipleAttribute(ItemList, AttributeLst);
+                var DcAndItemIdList = [];
+                //GetDcDataByItemsForMultipleAttributeByUserId
+                if (OneViewSessionStorage.Get("ServiceId") == 61) {
+                    DcAndItemIdList = _oItemDAO.GetDcDataByItemsForMultipleAttributeByUserId(ItemList, AttributeLst);
+                }
+                else {
+                    DcAndItemIdList = _oItemDAO.GetDcDataByItemsForMultipleAttribute(ItemList, AttributeLst);
+                }
 
                 if (DcAndItemIdList != null && DcAndItemIdList.length > 0) {
 
@@ -1970,6 +1985,89 @@ function ItemDAO() {
         }
     }
 
+    this.GetDcDataByAttibuteAndAnswerByUserId = function (Req) {
+        try {
+            OneViewConsole.Debug("GetDcDataByAttibuteAndAnswerByUserId start", "ItemDAO.GetDcDataByAttibuteAndAnswerByUserId");
+            //Req={AnswerContainerNameList:[],AttributeContainerList:[],}
+            // Req.AnswerContainerNameList=[ServerId,STNo,OTNo]
+
+            var AttributeContainerList = Req.AttributContainerList;
+            var AttributeNodeIncondition = "(";
+            for (var j = 0; j < AttributeContainerList.length; j++) {
+
+                var AttributeId = "'" + AttributeContainerList[j] + "'";
+                AttributeNodeIncondition += AttributeId;
+
+                if ((AttributeContainerList.length - 1) != j) {
+                    AttributeNodeIncondition += ",";
+                }
+            }
+            AttributeNodeIncondition += ")";
+
+
+            var AnswerList = Req.AnswerList;
+            var AnswerIncondition = "(";
+            for (var i = 0; i < AnswerList.length; i++) {
+
+                var Answer = "'" + AnswerList[i] + "'";
+                AnswerIncondition += Answer;
+
+                if ((AnswerList.length - 1) != i) {
+                    AnswerIncondition += ",";
+                }
+
+            }
+            AnswerIncondition += ")";
+
+            /*
+            var AnswerContainerNameList = Req.AnswerContainerNameList;
+            var AnswerIncondition = "(";
+            for (var i = 0; i < ItemList.length; i++) {
+
+                for (var j = 0; j < AnswerContainerNameList.length; j++) {
+                    var AnswerContainerName = AnswerContainerNameList[j];
+                    AnswerIncondition += AnswerList[i][AnswerContainerName];
+                    if ((ItemList.length - 1) != i) {
+                        AnswerIncondition += ",";
+                    }
+                }            
+            }
+            AnswerIncondition = ")";
+            */
+
+            var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
+
+
+
+            var Query = "SELECT DataCaptureEntity.Id AS DataCaptureId , DataCaptureEntity.ClientGuid,DataCaptureEntity.IsCompleted AS IsDcCompleted, Drds1.AttributeNodeId , Drds1.Answer  FROM DataCaptureEntity " +
+
+                                     "INNER JOIN DcResultsEntity ON DataCaptureEntity.Id=DcResultsEntity.DataCaptureId " +
+
+                                     "INNER JOIN DcResultDetailsEntity AS Drds1 ON Drds1.DataResultsId=DcResultsEntity.Id " +
+
+                                     "WHERE DcResultsEntity.SystemUserId='" + LoginUserId + "' AND Drds1.IsDisable !='true' AND Drds1.AttributeNodeId IN " + AttributeNodeIncondition + " AND Drds1.Answer IN " + AnswerIncondition + " ORDER BY DataCaptureId ";
+
+
+            // alert('GetDcDataByItems Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            // alert('Result : ' + JSON.stringify(Result));
+
+            OneViewConsole.Debug("GetDcDataByAttibuteAndAnswerByUserId end", "ItemDAO.GetDcDataByAttibuteAndAnswerByUserId");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetDcDataByAttibuteAndAnswerByUserId", Excep);
+        }
+        finally {
+            ParentNode = null;
+            Query = null;
+            Nodes = null;
+        }
+    }
+
     this.GetItemsbyProcess = function (TemplateId, ItemList) {
         try {
             OneViewConsole.Debug("GetItembyDcPlaceLabelDate start", "ItemDAO.GetItembyDcPlaceLabelDate");
@@ -2395,6 +2493,59 @@ function ItemDAO() {
         }
     }
 
+    this.GetDcDataByItemsForMultipleAttributeByUserId = function (ItemList, AttributeNodeIdLst) {
+        try {
+            OneViewConsole.Debug("GetDcDataByItemsForMultipleAttributeByUserId start", "ItemDAO.GetDcDataByItemsForMultipleAttributeByUserId");
+
+            var Incondition = "(";
+            for (var i = 0; i < ItemList.length; i++) {
+                if (ItemList[i].PurchaseOrderNo === undefined) {
+                    Incondition += "'" + ItemList[i].WorkOrderNo + "',";
+                }
+                else {
+                    Incondition += "'" + ItemList[i].PurchaseOrderNo + "',";
+                }
+                Incondition += ItemList[i].ServerId;
+                Incondition += (i <= ItemList.length - 2) ? "," : ")";
+            }
+
+            var AttributeIdLst = [];
+            if (AttributeNodeIdLst != "") {
+
+                AttributeIdLst = FormatInCondition(AttributeNodeIdLst);
+
+            }
+
+            var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
+
+            var Query = "SELECT DataCaptureEntity.Id AS DataCaptureId , DataCaptureEntity.ClientGuid,DataCaptureEntity.IsCompleted AS IsDcCompleted, Drds1.AttributeNodeId , Drds1.Answer  FROM DataCaptureEntity " +
+
+                                     "INNER JOIN DcResultsEntity ON DataCaptureEntity.Id=DcResultsEntity.DataCaptureId " +
+
+                                     "INNER JOIN DcResultDetailsEntity AS Drds1 ON Drds1.DataResultsId=DcResultsEntity.Id " +
+
+                                     "WHERE DcResultsEntity.SystemUserId='" + LoginUserId + "' AND Drds1.IsDisable !='true' AND Drds1.AttributeNodeId IN " + AttributeIdLst + " AND Drds1.Answer IN " + Incondition;
+
+
+            // alert('GetDcDataByItemsForSingleAttribute Query : ' + Query);
+
+            var Result = _OneViewSqlitePlugin.ExcecuteSqlReader(Query);
+
+            // alert('Result : ' + JSON.stringify(Result));
+
+            OneViewConsole.Debug("GetDcDataByItemsForMultipleAttributeByUserId end", "ItemDAO.GetDcDataByItemsForMultipleAttributeByUserId");
+
+            return Result;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("DAO", "ItemDAO.GetDcDataByItemsForMultipleAttributeByUserId", Excep);
+        }
+        finally {
+            ParentNode = null;
+            Query = null;
+            Nodes = null;
+        }
+    }
 
     /*WorkOrderNo Data Code Start*/
 
@@ -2958,7 +3109,8 @@ function ItemDAO() {
             // StartDateValidity = StartDateEndDateConfiguration.StartDate + ' Hours';
             // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
             var oServiceDate = oDateTime.ConvertDateToIntegerFormat(ServiceDate);
-           // alert(oServiceDate);
+            // alert(oServiceDate);
+            var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
 
 
             var Query = "SELECT DISTINCT Id,ServerId ,OSGuid,OVGuid,MobileVersionId,(ItemName ||' (' ||Quantity|| ')' )  As Name,(ItemName ||' (' ||Quantity|| ')' )  As WorkOrderNo," +
@@ -2969,6 +3121,7 @@ function ItemDAO() {
                        " WHERE WardId = " + DcPlaceId +                    
                        " And CAST(ServiceDateInt as INTEGER) =" + oServiceDate +
                        " And UPPER(CurrentStatus)='" + CurrentStatus + "'" +
+                       " And Column1='" + LoginUserId + "'" + //Column1 userid will insert
                        " ORDER By ServerId";
 
 
@@ -2992,9 +3145,10 @@ function ItemDAO() {
         try {
             OneViewConsole.Debug("UpdateItemStatusForRFLWorkOrderDetails start", "ItemDAO.UpdateItemStatusForRFLWorkOrderDetails");
 
+            var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
 
             var Query = "UPDATE RFLWorkOrder set Status='" + Req.ItemStatus + "' " +
-                        " WHERE ServerId='" + Req.ServerId + "'";
+                        " WHERE ServerId='" + Req.ServerId + "' And Column1='" + LoginUserId + "' ";
             //alert(Query)
 
             _OneViewSqlitePlugin.ExcecuteSql(Query);
@@ -3036,13 +3190,14 @@ function ItemDAO() {
             // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
             var oServiceDate = oDateTime.ConvertDateToIntegerFormat(ServiceDate);
             // alert(oServiceDate);
-
+            var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
 
             var Query = "SELECT DISTINCT BedId as ServerId,BedName  As Name,BedName  As WorkOrderNo," +                    
                        "(SUBSTR(ServiceDate, 7, 4) || SUBSTR(ServiceDate, 4, 2) || SUBSTR(ServiceDate, 1, 2) || SUBSTR(ServiceDate, 12, 2) ||  SUBSTR(ServiceDate, 15, 2) || SUBSTR(ServiceDate, 18, 2) ) AS ServiceDateInt " +
                        " FROM  RFLServiceWorkOrder  " +
                        " WHERE WardId = " + DcPlaceId +
                        " And CAST(ServiceDateInt as INTEGER) =" + oServiceDate +
+                       " And Column1='" + LoginUserId + "'" +
                       // " And UPPER(CurrentStatus)='" + CurrentStatus + "'" +
                        " ORDER By ServerId";
 
@@ -3089,6 +3244,7 @@ function ItemDAO() {
             // EndDateValidity = StartDateEndDateConfiguration.EndDate + ' Hours';
             var oServiceDate = oDateTime.ConvertDateToIntegerFormat(ServiceDate);
             // alert(oServiceDate);
+            var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
 
 
             var Query = "SELECT DISTINCT Id,ClientGuid,ServerId ,OSGuid,OVGuid,MobileVersionId,Type,WardId,WardName,BedId,BedName,ItemId,ItemName," +
@@ -3097,6 +3253,7 @@ function ItemDAO() {
                        " FROM  RFLServiceWorkOrder  " +
                        " WHERE WardId = " + DcPlaceId +
                        " And CAST(ServiceDateInt as INTEGER) =" + oServiceDate +
+                       " And Column1='" + LoginUserId + "'" +
                       // " And UPPER(CurrentStatus)='" + CurrentStatus + "'" +
                        " ORDER By ServerId";
 
@@ -3121,9 +3278,10 @@ function ItemDAO() {
         try {
             OneViewConsole.Debug("UpdateItemStatusForRFLWorkOrderDetails start", "ItemDAO.UpdateItemStatusForRFLWorkOrderDetails");
 
+            var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
 
             var Query = "UPDATE RFLWorkOrder set Status='" + Req.ItemStatus + "' " +
-                        " WHERE ServerId='" + Req.ServerId + "'";
+                        " WHERE ServerId='" + Req.ServerId + "' And Column1='" + LoginUserId + "' ";
             //alert(Query)
 
             _OneViewSqlitePlugin.ExcecuteSql(Query);

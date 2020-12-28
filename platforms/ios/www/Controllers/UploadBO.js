@@ -10,7 +10,7 @@ function UploadBO(xlatService, toaster) {
 	/// For particulat user (Login user)
 	/// </summary>
 	/// <param name="_oDcFilterParamRequest">_oDcFilterParamRequest</param>
-	this.BatchUploadAdv = function (_oDcFilterParamRequest) {
+	this.BatchUploadAdv = function (_oDcFilterParamRequest, oChild, DashBoardReq) {
 
 		var _oOneViewSqlitePlugin = new OneViewSqlitePlugin();
 
@@ -85,7 +85,7 @@ function UploadBO(xlatService, toaster) {
 
 						_oOneViewSqlitePlugin.EndTransaction();
 
-						MyInstance.BatchUploadAdv(_oDcFilterParamRequest);
+						MyInstance.BatchUploadAdv(_oDcFilterParamRequest, oChild, DashBoardReq);
 						//ExecuteGarbageCollector();
 					}
 					catch (Excep) {
@@ -149,11 +149,14 @@ function UploadBO(xlatService, toaster) {
 				MyInstance.DownlaodExcludedAttributeDetails(_oDcFilterParamRequest);
 
 				oOneViewCordovaDialogs.alert(Msg, Title);
-				IsSuccess = false;
+				IsSuccess = true;
 
 				// toaster.pop('success', xlatService.xlat('Success'), xlatService.xlat('UploadSuccess'));
 				navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
 				UploadedDcResponseLst = [];
+				
+				PostUploadSuccessExecuteAPI(oChild, DashBoardReq);
+				
 				OneViewConsole.Info("Upload success", "UploadBO.Upload");
 			}
 
@@ -180,6 +183,203 @@ function UploadBO(xlatService, toaster) {
 			Title = null;
 		}
 	}
+	
+	/// <summary>
+		/// PostUploadSuccessExecuteAPI
+		/// </summary>
+		/// <param name="DCSyncStatusDTOlst">oChild</param>
+		var PostUploadSuccessExecuteAPI = function (oChild, DashBoardReq) {
+
+			try {
+				OneViewConsole.Debug("PostUploadSuccessFunction start", "UploadBO.PostUploadSuccessFunction");
+			   
+				//var DashBoardReq = {
+				//    '$scope': $scope, '$document': $document, 'xlatService': xlatService,
+				//    '$timeout': $timeout, '$location': $location, '$templateCache': $templateCache, '$compile': $compile, 'snapRemote': snapRemote,
+				//    'LandingPageViewName': LandingPageViewInfo.LandingPageViewName,
+				//    'DCTaskViewInfoDTO': DCTaskViewInfoDTO,
+				//    'LandingPageSelectedStatusTypeId': LandingPageSelectedStatusTypeId
+
+				//};
+
+				var ServiceId = OneViewSessionStorage.Get("ServiceId");
+				if (ServiceId != 1 || ServiceId != 2) {
+					oSetDefaultSpinner.Start();
+					var _oDasboardBO = new DasboardBO(DashBoardReq.$scope, DashBoardReq.$document, DashBoardReq.xlatService, DashBoardReq.$timeout, DashBoardReq.$location, DashBoardReq.$templateCache, DashBoardReq.$compile, DashBoardReq.snapRemote);
+
+					ExecuteGrabageCollectorForBatchUploadAdv(oChild);
+
+					_oDasboardBO.UpdateSyncStatus(oChild);
+					_oDasboardBO.SetByView(DashBoardReq.LandingPageViewName);
+					_oDasboardBO.UpdateTaskStatus(DashBoardReq.DCTaskViewInfoDTO);
+					_oDasboardBO.LoadHtml(DashBoardReq.DCTaskViewInfoDTO, DashBoardReq.LandingPageSelectedStatusTypeId);
+
+
+					if (ServiceId == 61 && (oChild.TemplateKeyId == 326 || oChild.TemplateKeyId == 339 || oChild.TemplateKeyId == 350 || oChild.TemplateKeyId == 378 || oChild.TemplateKeyId == 391)) {
+						//alert('AutoSync');
+						LandingPageAutoSync(DashBoardReq);
+					}
+
+					oSetDefaultSpinner.Stop();
+				}
+				OneViewConsole.Debug("PostUploadSuccessFunction end", "UploadBO.PostUploadSuccessFunction");
+			}
+			catch (Excep) {
+				oSetDefaultSpinner.Stop();
+				throw oOneViewExceptionHandler.Create("BO", "UploadBO.PostUploadSuccessFunction", Excep);
+			}
+			finally {
+				_oDcDAO = null;
+			}
+		}
+
+
+		var ExecuteGrabageCollectorForBatchUploadAdv = function (oChild) {
+
+			try {
+				OneViewConsole.Debug("ExecuteGrabageCollectorForBatchUploadAdv start", "UploadBO.ExecuteGrabageCollectorForBatchUploadAdv");
+
+				if (oChild.DCPlaceKeyElementIsGroup == false && oChild.TemplateKeyElementIsGroup == false) {
+
+					BatchUploadExcecuteGarbageCollector(oChild.TemplateKeyId, oChild.DCPlaceKeyId);
+				}
+				else if (oChild.DCPlaceKeyElementIsGroup == true && oChild.TemplateKeyElementIsGroup == false) {
+
+					var DcPlaceChildResult = _oDcDAO.GetDcPlaceIdsByPlaceGroupAndDCPlaceRCOType(oChild.DCPlaceKeyId, oChild.DCPlaceRCOType);
+
+					for (var i = 0; i < DcPlaceChildResult.length; i++) {
+
+						BatchUploadExcecuteGarbageCollector(oChild.TemplateKeyId, DcPlaceChildResult[i].Id);
+					}
+				}
+				else if (oChild.DCPlaceKeyElementIsGroup == false && oChild.TemplateKeyElementIsGroup == true) {
+
+					var DcTemplateChildResult = _oDcDAO.GetDcTemplateIdsByTemplateGroupAndAttributeGroupType(oChild.TemplateKeyId, oChild.AttributeGroupType);
+
+					for (var i = 0; i < DcTemplateChildResult.length; i++) {
+
+						BatchUploadExcecuteGarbageCollector(DcTemplateChildResult[i].Id, oChild.DCPlaceKeyId);
+					}
+				}
+				else if (oChild.DCPlaceKeyElementIsGroup == true && oChild.TemplateKeyElementIsGroup == true) {
+
+					var DcTemplateChildResult = _oDcDAO.GetDcTemplateIdsByTemplateGroupAndAttributeGroupType(oChild.TemplateKeyId, oChild.AttributeGroupType);
+					var DcPlaceChildResult = _oDcDAO.GetDcPlaceIdsByPlaceGroupAndDCPlaceRCOType(oChild.DCPlaceKeyId, oChild.DCPlaceRCOType);
+
+					for (var i = 0; i < DcTemplateChildResult.length; i++) {
+
+						for (var j = 0; j < DcPlaceChildResult.length; j++) {
+
+							BatchUploadExcecuteGarbageCollector(DcTemplateChildResult[i].Id, DcPlaceChildResult[j].Id);
+						}
+					}
+				}
+
+
+				OneViewConsole.Debug("ExecuteGrabageCollectorForBatchUploadAdv end", "UploadBO.ExecuteGrabageCollectorForBatchUploadAdv");
+			}
+			catch (Excep) {
+				throw oOneViewExceptionHandler.Create("BO", "UploadBO.ExecuteGrabageCollectorForBatchUploadAdv", Excep);
+			}
+			finally {
+				_oDcDAO = null;
+			}
+		}
+	   
+
+		var BatchUploadExcecuteGarbageCollector = function (TemplateId, DcPlaceId) {
+
+			try {
+				OneViewConsole.Debug("BatchUploadExcecuteGarbageCollector start", "LandingPageFacade.BatchUploadExcecuteGarbageCollector");
+
+				var _oDcDeletion = new DcDeletion();
+				_oDcDeletion.DeleteCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteInCompleteAndSyncedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteInCompleteAndSyncedDataInDays(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteCompletedSyncAndApprovedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteCompletedSyncAndOnDeviceApprovalFinishedData(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				if (OneViewSessionStorage.Get("ServiceId") == 39) {
+					_oDcDeletion.DeleteInActivePurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteItemCompletedorInActiveInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteCompletedItemInPurchaseOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				}
+
+				_oDcDeletion.DeleteExpiredOrderItems(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteCompletedItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				_oDcDeletion.DeleteExpiredItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+
+				if (OneViewSessionStorage.Get("ServiceId") == 51) {
+					_oDcDeletion.DeleteCompletedItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteExpiredItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				}
+				else if (OneViewSessionStorage.Get("ServiceId") == 52) {
+					_oDcDeletion.DeleteCompletedItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteExpiredItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+				}
+				else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+					_oDcDeletion.DeleteCompletedItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+					_oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+
+				}
+
+				OneViewConsole.Debug("BatchUploadExcecuteGarbageCollector end", "LandingPageFacade.BatchUploadExcecuteGarbageCollector");
+			}
+			catch (Excep) {
+				throw oOneViewExceptionHandler.Create("BO", "LandingPageFacade.UploadDC", Excep);
+			}
+			finally {
+			}
+		}
+
+
+		var LandingPageAutoSync = function (DashBoardReq) {
+			try {
+				OneViewConsole.Debug("LandingPageAutoSync start", "DasboardFacade.LandingPageAutoSync");
+
+				// Network status checking
+				var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+				var NetworkStatus = oOneViewCordovaPlugin.CheckNetworkStatus();
+
+				if (NetworkStatus.IsNetworkAvailable == true) {
+
+					var ServiceId = OneViewSessionStorage.Get("ServiceId");
+					var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
+
+					//var _oUploadBO = new UploadBO(xlatService, '');
+					var UploadResponse = MyInstance.AutoUpload();
+
+					if (UploadResponse != undefined && (UploadResponse.IsSuccess == true)) {
+
+						var _oLandingPageViewReponseBO = new LandingPageViewReponseBO(xlatService);
+						_oLandingPageViewReponseBO.DeleteLandingPageViewReponse();
+
+					  
+						var _oLandingPageViewReponseBO = new LandingPageViewReponseBO(xlatService);
+						var LandingPageViewReponseIsSuccess = _oLandingPageViewReponseBO.Download();
+						
+						if (LandingPageViewReponseIsSuccess == true) {
+						
+							var _oDcProfileSyncStatusBO = new DcProfileSyncStatusBO();
+							var IsDcProfileSyncStatus = _oDcProfileSyncStatusBO.Download(xlatService);
+						
+							//MyInstance.Init();
+							//MyInstance.PageLoad();
+							//var _oDasboardBO = new DasboardBO(DashBoardReq.$scope, DashBoardReq.$document, DashBoardReq.xlatService, DashBoardReq.$timeout, DashBoardReq.$location, DashBoardReq.$templateCache, DashBoardReq.$compile, DashBoardReq.snapRemote);
+							var _oDasboardFacade = new DasboardFacade(DashBoardReq.$scope, DashBoardReq.$document, DashBoardReq.xlatService, DashBoardReq.$timeout, DashBoardReq.$location, DashBoardReq.$templateCache, DashBoardReq.$compile, DashBoardReq.snapRemote);
+							_oDasboardFacade.Init();
+							_oDasboardFacade.PageLoad();
+						
+						}
+					}
+					
+				}
+
+				OneViewConsole.Debug("LandingPageAutoSync end", "DasboardFacade.LandingPageAutoSync");
+			}
+			catch (Excep) {
+				oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.LandingPageAutoSync", xlatService);
+			}
+		}
 
 
 	/// <summary>

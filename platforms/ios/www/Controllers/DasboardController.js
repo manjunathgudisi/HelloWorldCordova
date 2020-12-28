@@ -198,127 +198,161 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 
 	this.Init = function () {
 
-		try {
-			OneViewConsole.Debug("Init start", "DasboardFacade.Init");
+			try {
+				OneViewConsole.Debug("Init start", "DasboardFacade.Init");
 
-			GlobalxlatService = xlatService;
-			GlobalScope = $scope;
-			GlobalLocation = $location;
+				GlobalxlatService = xlatService;
+				GlobalScope = $scope;
+				GlobalLocation = $location;
 
-			xlatService.setCurrentPage('3');
-			document.getElementById('PageTitle').innerHTML = xlatService.xlat('PageTitle');
+				xlatService.setCurrentPage('3');
+				document.getElementById('PageTitle').innerHTML = xlatService.xlat('PageTitle');
 
-			if (ServiceId != 32) {
-				var _oDefaultMasterDAO = new DefaultMasterDAO("BusinessEventEntity");
-				var IsExist = _oDefaultMasterDAO.IsTableExist();
-				if (IsExist == true) {
-					var _oBusinessEventFramework = new BusinessEventFramework();
-					_oBusinessEventFramework.TriggerEvent("Dashboard", "PageLoad");
+				if (ServiceId != 32) {
+					var _oDefaultMasterDAO = new DefaultMasterDAO("BusinessEventEntity");
+					var IsExist = _oDefaultMasterDAO.IsTableExist();
+					if (IsExist == true) {
+						var _oBusinessEventFramework = new BusinessEventFramework();
+						_oBusinessEventFramework.TriggerEvent("Dashboard", "PageLoad");
+					}
 				}
-			}
-			if (ServiceId == 36) {
-				$scope.DivBulkDownload = true;
-			}
+				if (ServiceId == 36) {
+					$scope.DivBulkDownload = true;
+				}
 
-			if (OneViewLocalStorage.Get("IsGlobalGeoLocationValidationEnabled") == "true") {
-				_oOneViewGeolocationPlugin.RequestLocationUpdates();
-			}
-			else {
-				_oOneViewGeolocationPlugin.RemoveLocationUpdates();
-			}
-
-			if (OneViewLocalStorage.Get("IsAutoProfileDownloadEnabled") == "true") {
-			   // if (ISDownLoadRequired == undefined && ISDownLoadRequired != false) {
-					MyInstance.BulkDownloadConform(false);
-			   // }
-			}
-
-			BulkUpload();
-			LandingPageAutoSync();
-			// Registering page name for globalization
-
-
-			if (IsGlobalBlueThermLiveTemperatureIndicatorEnabled == true) {
-				_oDOM.SetStyle('divBlueThermLiveTemperatureIndicator', 'display', 'none');
-			}
-
-			$scope.ActionSheet = false;
-
-			$scope.MyAuditTab = ["Past", "Today", "Future"];
-			$scope.MyAudit = "Today";
-
-			$scope.TaskContentPast = false;
-			$scope.TaskContentToday = true;
-			$scope.TaskContentFuture = false;
-
-			_oDasboardBO.Download();
-			_oDasboardBO.LoadViews();
-
-			var Value = _oDOM.GetValue('ViewDropdown');
-
-			if (Value != "") {
-				_oDasboardBO.SetByView(Value);
-			}
-
-			var _oDcPendingTaskBO = new DcPendingTaskBO();
-			_oDcPendingTaskBO.UpdateTopRightBell(OneViewSessionStorage.Get("LoginUserId"));
-
-			var CloudManagerResponse = _oCloudManagerBO.GetAllServicesByUserIdFromLocal();
-
-			var OptionsHtml = '';
-
-			for (var i = 0; i < CloudManagerResponse.ServicesLst.length; i++) {
-
-				if (CloudManagerResponse.ServicesLst[i].Id == OneViewSessionStorage.Get("ServiceId")) {
-					OptionsHtml += '<option selected>' + CloudManagerResponse.ServicesLst[i].Name + '</option>';
+				if (OneViewLocalStorage.Get("IsGlobalGeoLocationValidationEnabled") == "true") {
+					_oOneViewGeolocationPlugin.RequestLocationUpdates();
 				}
 				else {
-					OptionsHtml += '<option>' + CloudManagerResponse.ServicesLst[i].Name + '</option>';
+					_oOneViewGeolocationPlugin.RemoveLocationUpdates();
 				}
-			}
 
-			_oDOM.AddInnerHtml('ServiceDropdown', OptionsHtml);
+				if (OneViewLocalStorage.Get("IsAutoProfileDownloadEnabled") == "true") {
+				   // if (ISDownLoadRequired == undefined && ISDownLoadRequired != false) {
+						MyInstance.BulkDownloadConform(false);
+				   // }
+				}
 
-			if (CloudManagerResponse.ServicesLst.length > 1) {
-				_oDOM.Show('DivServiceDropdown');
-			}
-			else {
-				_oDOM.Hide('DivServiceDropdown');
-			}
+				BulkUpload();
+				LandingPageAutoSync();
+				// Registering page name for globalization
+			  
 
-			if (OneViewGlobalDeviceDisplyMode == "Large") {
-				$scope.StatusBarOtherDevice = true;
-				$scope.StatusBarSmallDevice = false;
-				_oDOM.AddClass("ContentId", "has-footer");
-				_oDOM.SetStyle("ContentId", "bottom", "75px");
-				_oDOM.SetStyle("ContentId", "top", "80px");
-			}
-			else {
-				$scope.StatusBarOtherDevice = false;
-				$scope.StatusBarSmallDevice = true;
-				_oDOM.RemoveClass("ContentId", "has-footer");
-				_oDOM.SetStyle("ContentId", "bottom", "0px");
-				_oDOM.SetStyle("ContentId", "top", "80px");
-			}
+				if (IsGlobalBlueThermLiveTemperatureIndicatorEnabled == true) {
+					_oDOM.SetStyle('divBlueThermLiveTemperatureIndicator', 'display', 'none');
+				}
 
-			$scope.GraphSearchElement = "";
-			$scope.FilterData = [];
+				$scope.ActionSheet = false;
 
-			if ($scope.GraphSearchElement == "") {
-				$scope.BtnClearGraphSearchElementShow = false;
+				$scope.MyAuditTab = ["Past", "Today", "Future"];
+				if (ServiceId == 61) {
+					$scope.MyAuditTab = ["Today"];
+					
+					if (document.getElementById("DivMyAuditTab") != null) {
+						document.getElementById("DivMyAuditTab").style.visibility = 'hidden';
+					}
+					
+				}
+				$scope.MyAudit = "Today";
+
+				$scope.TaskContentPast = false;
+				$scope.TaskContentToday = true;
+				$scope.TaskContentFuture = false;
+
+				_oDasboardBO.Download();
+				_oDasboardBO.LoadViews();
+
+				var Value = _oDOM.GetValue('ViewDropdown');
+
+				if (Value != "") {
+					_oDasboardBO.SetByView(Value);
+				}
+
+				var _oDcPendingTaskBO = new DcPendingTaskBO();
+				_oDcPendingTaskBO.UpdateTopRightBell(OneViewSessionStorage.Get("LoginUserId"));
+
+				var CloudManagerResponse = _oCloudManagerBO.GetAllServicesByUserIdFromLocal();
+
+				var OptionsHtml = '';
+
+				for (var i = 0; i < CloudManagerResponse.ServicesLst.length; i++) {
+
+					if (CloudManagerResponse.ServicesLst[i].Id == OneViewSessionStorage.Get("ServiceId")) {
+						OptionsHtml += '<option selected>' + CloudManagerResponse.ServicesLst[i].Name + '</option>';
+					}
+					else {
+						OptionsHtml += '<option>' + CloudManagerResponse.ServicesLst[i].Name + '</option>';
+					}
+				}
+
+				_oDOM.AddInnerHtml('ServiceDropdown', OptionsHtml);
+
+				if (CloudManagerResponse.ServicesLst.length > 1) {
+					_oDOM.Show('DivServiceDropdown');
+				}
+				else {
+					_oDOM.Hide('DivServiceDropdown');
+				}
+
+				if (IsStatusBarNeedToShow() == true) {
+					if (OneViewGlobalDeviceDisplyMode == "Large") {
+						$scope.StatusBarOtherDevice = true;
+						$scope.StatusBarSmallDevice = false;
+						_oDOM.AddClass("ContentId", "has-footer");
+						_oDOM.SetStyle("ContentId", "bottom", "75px");
+						_oDOM.SetStyle("ContentId", "top", "80px");
+					}
+					else {
+						$scope.StatusBarOtherDevice = false;
+						$scope.StatusBarSmallDevice = true;
+						_oDOM.RemoveClass("ContentId", "has-footer");
+						_oDOM.SetStyle("ContentId", "bottom", "0px");
+						_oDOM.SetStyle("ContentId", "top", "80px");
+					}
+				}
+				else {
+					_oDOM.RemoveClass("ContentId", "has-footer");
+					_oDOM.SetStyle("ContentId", "bottom", "0px");
+					_oDOM.SetStyle("ContentId", "top", "80px");
+				}
+
+				$scope.GraphSearchElement = "";
+				$scope.FilterData = [];
+
+				if ($scope.GraphSearchElement == "") {
+					$scope.BtnClearGraphSearchElementShow = false;
+				}
+				else {
+					$scope.BtnClearGraphSearchElementShow = true;
+				}
+
+				_oDasboardBO.InitializeTaskHandler();
+
+				OneViewConsole.Debug("Init end", "DasboardFacade.Init");
 			}
-			else {
-				$scope.BtnClearGraphSearchElementShow = true;
+			catch (Excep) {
+				oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.Init", xlatService);
 			}
-
-			_oDasboardBO.InitializeTaskHandler();
-
-			OneViewConsole.Debug("Init end", "DasboardFacade.Init");
 		}
-		catch (Excep) {
-			oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.Init", xlatService);
+	
+	var IsStatusBarNeedToShow = function (ServiceInfo) {
+			try {
+				OneViewConsole.Debug("IsStatusBarNeedToShow start", "DasboardFacade.IsStatusBarNeedToShow");
+
+				var ShowStatusBar = true;
+				if (ServiceId == 61) {
+					ShowStatusBar = false;
+				}
+
+				OneViewConsole.Debug("IsStatusBarNeedToShow end", "DasboardFacade.IsStatusBarNeedToShow");
+				return ShowStatusBar;
+			}
+			catch (Excep) {
+				return true;
+				oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.IsStatusBarNeedToShow", xlatService);
+			}
 		}
-	}
+
 
 	this.PageLoad = function () {
 
@@ -2671,58 +2705,16 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 				MyAuditUploadProgressValue = 100 / TotalBatches;
 
 				if (MyAuditTotalDCCountForUpload > 0) {
+					//$scope, $document, xlatService, $timeout, $location, $templateCache, $compile, snapRemote
+					var DashBoardReq = {
+						'$scope': $scope, '$document': $document, 'xlatService': xlatService,
+						'$timeout': $timeout, '$location': $location, '$templateCache': $templateCache, '$compile': $compile, 'snapRemote': snapRemote,
+							'LandingPageViewName': LandingPageViewInfo.LandingPageViewName,
+							'DCTaskViewInfoDTO': DCTaskViewInfoDTO,
+							'LandingPageSelectedStatusTypeId': LandingPageSelectedStatusTypeId
+						};
 
-					var IsSuccess = UploadDC(_oDcFilterParamRequest);
-
-					if (IsSuccess == true) {
-
-						oSetDefaultSpinner.Start();
-
-						if (oChild.DCPlaceKeyElementIsGroup == false && oChild.TemplateKeyElementIsGroup == false) {
-
-							ExcecuteGarbageCollector(oChild.TemplateKeyId, oChild.DCPlaceKeyId);
-						}
-						else if (oChild.DCPlaceKeyElementIsGroup == true && oChild.TemplateKeyElementIsGroup == false) {
-
-							var DcPlaceChildResult = _oDcDAO.GetDcPlaceIdsByPlaceGroupAndDCPlaceRCOType(oChild.DCPlaceKeyId, oChild.DCPlaceRCOType);
-
-							for (var i = 0; i < DcPlaceChildResult.length; i++) {
-
-								ExcecuteGarbageCollector(oChild.TemplateKeyId, DcPlaceChildResult[i].Id);
-							}
-						}
-						else if (oChild.DCPlaceKeyElementIsGroup == false && oChild.TemplateKeyElementIsGroup == true) {
-
-							var DcTemplateChildResult = _oDcDAO.GetDcTemplateIdsByTemplateGroupAndAttributeGroupType(oChild.TemplateKeyId, oChild.AttributeGroupType);
-
-							for (var i = 0; i < DcTemplateChildResult.length; i++) {
-
-								ExcecuteGarbageCollector(DcTemplateChildResult[i].Id, oChild.DCPlaceKeyId);
-							}
-						}
-						else if (oChild.DCPlaceKeyElementIsGroup == true && oChild.TemplateKeyElementIsGroup == true) {
-
-							var DcTemplateChildResult = _oDcDAO.GetDcTemplateIdsByTemplateGroupAndAttributeGroupType(oChild.TemplateKeyId, oChild.AttributeGroupType);
-							var DcPlaceChildResult = _oDcDAO.GetDcPlaceIdsByPlaceGroupAndDCPlaceRCOType(oChild.DCPlaceKeyId, oChild.DCPlaceRCOType);
-
-							for (var i = 0; i < DcTemplateChildResult.length; i++) {
-
-								for (var j = 0; j < DcPlaceChildResult.length; j++) {
-
-									ExcecuteGarbageCollector(DcTemplateChildResult[i].Id, DcPlaceChildResult[j].Id);
-								}
-							}
-						}
-
-						MyInstance.UpdateSyncStatus(oChild);
-						MyInstance.SetByView(LandingPageViewInfo.LandingPageViewName);
-						MyInstance.UpdateTaskStatus(DCTaskViewInfoDTO);
-						MyInstance.LoadHtml(DCTaskViewInfoDTO, LandingPageSelectedStatusTypeId);
-
-						oSetDefaultSpinner.Stop();
-
-					   // CheckForNewUpdates();
-					}
+					var IsSuccess = UploadDC(_oDcFilterParamRequest, oChild, DashBoardReq);
 				}
 				else {
 					//toaster.pop('warning', xlatService.xlat('Title_Notification'), xlatService.xlat('NoDataForUpload'));
@@ -2841,7 +2833,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 		}
 	}
 
-	var UploadDC = function (_oDcFilterParamRequest) {
+	var UploadDC = function (_oDcFilterParamRequest, oChild, DashBoardReq) {
 
 		try {
 			OneViewConsole.Debug("UploadDC start", "LandingPageFacade.UploadDC");
@@ -2877,7 +2869,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 
 						if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == true) {
 
-							IsSuccess = _oUploadBO.BatchUploadAdv(_oDcFilterParamRequest);
+							IsSuccess = _oUploadBO.BatchUploadAdv(_oDcFilterParamRequest, oChild, DashBoardReq);
 						}
 						else if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == false) {
 							navigator.notification.alert(xlatService.xlat('UploadFailed'), ['OK'], "");
@@ -3418,77 +3410,107 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 
 	var GetChildHtml = function (LandingPageViewName, ParentIndex, ChildIndex, oChild, StatusType) {
 
-		try {
-			OneViewConsole.Debug("GetChildHtml start", "DasboardBO.GetChildHtml");
+			try {
+				OneViewConsole.Debug("GetChildHtml start", "DasboardBO.GetChildHtml");
 
-			var ProfileDetails = MyInstance.GetProfileDetails(oChild);
+				var ProfileDetails = MyInstance.GetProfileDetails(oChild);
 
-			var DownloadStatusHtml = ProfileDetails.IsProfileValid == true
-				? '<i class="icon icon-social13 synced-color"></i>'
-				: '<i class="icon icon-social13 icon-disabled"></i>';
+				var DownloadStatusHtml = ProfileDetails.IsProfileValid == true
+					? '<i class="icon icon-social13 synced-color"></i>'
+					: '<i class="icon icon-social13 icon-disabled"></i>';
 
-			var CompletedStatusHtml = ((oChild.Occurence != -1 && oChild.DCStatusInfo.OverallCount > 0 && oChild.DCStatusInfo.NotStartedCount == 0 && oChild.DCStatusInfo.OverallCount == oChild.DCStatusInfo.CompletedCount) ||
-				(oChild.Occurence == -1 && oChild.DCStatusInfo.OverallCount > 0 && oChild.DCStatusInfo.NotStartedCount == 0 && oChild.DCStatusInfo.OverallCount == oChild.DCStatusInfo.CompletedCount))
-				? '<i class="icon icon-checkmark completed-color"></i>'
-				: '<i class="icon icon-checkmark icon-disabled"></i>';
+				var CompletedStatusHtml = ((oChild.Occurence != -1 && oChild.DCStatusInfo.OverallCount > 0 && oChild.DCStatusInfo.NotStartedCount == 0 && oChild.DCStatusInfo.OverallCount == oChild.DCStatusInfo.CompletedCount) ||
+					(oChild.Occurence == -1 && oChild.DCStatusInfo.OverallCount > 0 && oChild.DCStatusInfo.NotStartedCount == 0 && oChild.DCStatusInfo.OverallCount == oChild.DCStatusInfo.CompletedCount))
+					? '<i class="icon icon-checkmark completed-color"></i>'
+					: '<i class="icon icon-checkmark icon-disabled"></i>';
 
-			var ApprovedStatusHtml = ((oChild.DCStatusInfo.OverallCount > 0) && oChild.DCStatusInfo.OverallCount == oChild.DCStatusInfo.ApprovedCount)
-			? '<i class="icon icon-thumb-up-outline-symbol approved-color"></i>'
-			: '<i class="icon icon-thumb-up-outline-symbol icon-disabled"></i>';
-			//var ApprovedStatusHtml = '<i class="icon icon-thumb-up-outline-symbol icon-disabled"></i>';
+				var ApprovedStatusHtml = ((oChild.DCStatusInfo.OverallCount > 0) && oChild.DCStatusInfo.OverallCount == oChild.DCStatusInfo.ApprovedCount)
+				? '<i class="icon icon-thumb-up-outline-symbol approved-color"></i>'
+				: '<i class="icon icon-thumb-up-outline-symbol icon-disabled"></i>';
+				//var ApprovedStatusHtml = '<i class="icon icon-thumb-up-outline-symbol icon-disabled"></i>';
 
-			var UploadedStatusHtml = ((oChild.DCStatusInfo.OverallCount > 0) && oChild.DCStatusInfo.OverallCount == oChild.DCStatusInfo.SyncedCount)
-				? '<i class="icon icon-arrow68"></i>'
-				: '<i class="icon icon-arrow68 icon-disabled"></i>';
+				var UploadedStatusHtml = ((oChild.DCStatusInfo.OverallCount > 0) && oChild.DCStatusInfo.OverallCount == oChild.DCStatusInfo.SyncedCount)
+					? '<i class="icon icon-arrow68"></i>'
+					: '<i class="icon icon-arrow68 icon-disabled"></i>';
 
-			var TaskStatus = oChild.Occurence == -1
-				? oChild.DCStatusInfo.OverallCount
-				: GetTaskStatusHtml(oChild, StatusType);
-			var TaskStatusHtml = '<span class="badge badge-positive" style="margin-right:5px;">' + TaskStatus + '</span>'
+				var TaskStatus = oChild.Occurence == -1
+					? oChild.DCStatusInfo.OverallCount
+					: GetTaskStatusHtml(oChild, StatusType);
+				var TaskStatusHtml = '<span class="badge badge-positive" style="margin-right:5px;">' + TaskStatus + '</span>'
 
-			var TaskDetails = oChild.TaskDetails;
+				var TaskDetails = oChild.TaskDetails;
 
-			if (TaskDetails == "") {
-				TaskDetails = "&nbsp";
+				if (TaskDetails == "") {
+					TaskDetails = "&nbsp";
+				}
+
+				// If Icon not Exist for Task
+				var TaskClassName = "item item-icon-right not-started-con";
+				var IconHtml = '';
+
+				var IconStatusHtml = DownloadStatusHtml + CompletedStatusHtml + ApprovedStatusHtml + UploadedStatusHtml + TaskStatusHtml;
+
+				if (IsIconRequired() == false) {
+					IconStatusHtml = DownloadStatusHtml + UploadedStatusHtml;
+				}
+
+				// To Do : Need to replace with dynamic icon from task downloaded from server
+				// If Icon Exist for Task
+				//var TaskClassName = "item item-icon-left item-icon-right not-started-con";
+				//var IconHtml = '<i class="icon icon-bluetooth-audio"></i>'; // Icon will come come task details (Dynamically)
+
+				var Html = '<a class="' + TaskClassName + '" ng-click="TaskClick(\'' + LandingPageViewName + '\',' + ParentIndex + ',' + ChildIndex + ')">' +
+									IconHtml +
+									'<div class="row responsive-sm">' +
+										'<div class="col col-80 no-padding no-margin">' +
+											'<div class="heading">' + oChild.TaskHeader + '</div>' +
+											'<div class="second-txt">' + TaskDetails + '</div>' +
+										'</div>' +
+										'<div class="col col-20 no-margin col-center no-padding text-right">' +
+											//DownloadStatusHtml +
+											//CompletedStatusHtml +
+											//ApprovedStatusHtml +
+											//UploadedStatusHtml +
+											//TaskStatusHtml +
+
+											IconStatusHtml +
+										'</div>' +
+									'</div>' +
+									'<i class="icon icon-ellipsis-v"></i>' +
+							'</a>';
+
+				OneViewConsole.Debug("GetChildHtml end", "DasboardBO.GetChildHtml");
+
+				return Html;
 			}
-
-			// If Icon not Exist for Task
-			var TaskClassName = "item item-icon-right not-started-con";
-			var IconHtml = '';
-
-			// To Do : Need to replace with dynamic icon from task downloaded from server
-			// If Icon Exist for Task
-			//var TaskClassName = "item item-icon-left item-icon-right not-started-con";
-			//var IconHtml = '<i class="icon icon-bluetooth-audio"></i>'; // Icon will come come task details (Dynamically)
-
-			var Html = '<a class="' + TaskClassName + '" ng-click="TaskClick(\'' + LandingPageViewName + '\',' + ParentIndex + ',' + ChildIndex + ')">' +
-								IconHtml +
-								'<div class="row responsive-sm">' +
-									'<div class="col col-80 no-padding no-margin">' +
-										'<div class="heading">' + oChild.TaskHeader + '</div>' +
-										'<div class="second-txt">' + TaskDetails + '</div>' +
-									'</div>' +
-									'<div class="col col-20 no-margin col-center no-padding text-right">' +
-										DownloadStatusHtml +
-										CompletedStatusHtml +
-										ApprovedStatusHtml +
-										UploadedStatusHtml +
-										TaskStatusHtml +
-									'</div>' +
-								'</div>' +
-								'<i class="icon icon-ellipsis-v"></i>' +
-						'</a>';
-
-			OneViewConsole.Debug("GetChildHtml end", "DasboardBO.GetChildHtml");
-
-			return Html;
+			catch (Excep) {
+				throw oOneViewExceptionHandler.Create("BO", "DasboardBO.GetChildHtml", Excep);
+			}
+			finally {
+			}
 		}
-		catch (Excep) {
-			throw oOneViewExceptionHandler.Create("BO", "DasboardBO.GetChildHtml", Excep);
+	
+	var IsIconRequired = function () {
+
+			try {
+				OneViewConsole.Debug("GetTaskStatusHtml start", "DasboardBO.GetTaskStatusHtml");
+
+				var IsRequired = true;
+
+				if (ServiceId == 61) {
+					IsRequired = false;
+				}
+
+				return IsRequired;
+
+				OneViewConsole.Debug("GetTaskStatusHtml end", "DasboardBO.GetTaskStatusHtml");
+			}
+			catch (Excep) {
+				throw oOneViewExceptionHandler.Create("BO", "DasboardBO.GetTaskStatusHtml", Excep);
+			}
+			finally {
+			}
 		}
-		finally {
-		}
-	}
 
 	var GetTaskStatusHtml = function (oChild, StatusType) {
 

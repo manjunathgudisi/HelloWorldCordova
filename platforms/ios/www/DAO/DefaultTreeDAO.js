@@ -1492,8 +1492,9 @@ function DefaultTreeDAO() {
             OneViewConsole.Debug("GetAllInfoWithServerIdRFLWorkOrderDict start", "DefaultMasterDAO.GetAllInfoWithServerIdRFLWorkOrderDict");
 
             var ResultDic = {};
+            var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
 
-            var Query = "SELECT Distinct ServerId,Id,OVGuid FROM RFLWorkOrder ";
+            var Query = "SELECT Distinct ServerId,Id,OVGuid FROM RFLWorkOrder where Column1='" + LoginUserId + "'";
 
             OneViewConsole.DataLog("Requested Query : " + Query, "DefaultMasterDAO.GetAllInfoWithServerIdRFLWorkOrderDict");
 
@@ -1531,8 +1532,9 @@ function DefaultTreeDAO() {
             OneViewConsole.Debug("GetAllInfoWithServerIdRFLServiceWorkOrderDict start", "DefaultMasterDAO.GetAllInfoWithServerIdRFLServiceWorkOrderDict");
 
             var ResultDic = {};
+            var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
 
-            var Query = "SELECT Distinct ServerId,Id,OVGuid FROM RFLServiceWorkOrder ";
+            var Query = "SELECT Distinct ServerId,Id,OVGuid FROM RFLServiceWorkOrder where Column1='" + LoginUserId + "'";
 
             OneViewConsole.DataLog("Requested Query : " + Query, "DefaultMasterDAO.GetAllInfoWithServerIdRFLServiceWorkOrderDict");
 
