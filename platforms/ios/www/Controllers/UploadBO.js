@@ -150,12 +150,14 @@ function UploadBO(xlatService, toaster) {
 
 				oOneViewCordovaDialogs.alert(Msg, Title);
 				IsSuccess = true;
+                
+                PostUploadSuccessExecuteAPI(oChild, DashBoardReq);
 
 				// toaster.pop('success', xlatService.xlat('Success'), xlatService.xlat('UploadSuccess'));
 				navigator.notification.alert(xlatService.xlat('UploadSuccess'), ['OK'], "");
 				UploadedDcResponseLst = [];
 				
-				PostUploadSuccessExecuteAPI(oChild, DashBoardReq);
+				
 				
 				OneViewConsole.Info("Upload success", "UploadBO.Upload");
 			}
@@ -238,6 +240,7 @@ function UploadBO(xlatService, toaster) {
 
 			try {
 				OneViewConsole.Debug("ExecuteGrabageCollectorForBatchUploadAdv start", "UploadBO.ExecuteGrabageCollectorForBatchUploadAdv");
+                var _oDcDAO = new DcDAO();
 
 				if (oChild.DCPlaceKeyElementIsGroup == false && oChild.TemplateKeyElementIsGroup == false) {
 
@@ -346,7 +349,7 @@ function UploadBO(xlatService, toaster) {
 					var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
 
 					//var _oUploadBO = new UploadBO(xlatService, '');
-					var UploadResponse = MyInstance.AutoUpload();
+					var UploadResponse = MyInstance.AutoUpload(undefined,DashBoardReq);
 
 					if (UploadResponse != undefined && (UploadResponse.IsSuccess == true)) {
 
@@ -716,7 +719,7 @@ function UploadBO(xlatService, toaster) {
 	/// AutoUpload
 	/// For all users
 	/// </summary>
-	this.AutoUpload = function (IsBulkUploadEnabled) {
+	this.AutoUpload = function (IsBulkUploadEnabled,DashBoardReq) {
 
 		//alert("Auto Upload Started ...");
 
@@ -849,6 +852,13 @@ function UploadBO(xlatService, toaster) {
 											}
 
 											ProgressBarStatus(IsBulkUploadEnabled, 100);
+                                            
+                                            if (DashBoardReq != undefined) {
+                                                var _oDasboardFacade = new DasboardFacade(DashBoardReq.$scope, DashBoardReq.$document, DashBoardReq.xlatService, DashBoardReq.$timeout, DashBoardReq.$location, DashBoardReq.$templateCache, DashBoardReq.$compile, DashBoardReq.snapRemote);
+                                                
+                                                _oDasboardFacade.Init();                                                 
+                                                _oDasboardFacade.PageLoad();
+                                            }
 
 											if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
 												//alert(xlatService.xlat('IN-SU-LDP-001 :: Data uploaded successfully'));

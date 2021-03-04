@@ -1,4 +1,4 @@
-
+var NotificationResultObj = [];
 // DcPendingTaskBO
 function DcPendingTaskBO() {
 
@@ -150,12 +150,22 @@ function DcPendingTaskBO() {
             
             //var _oLVShiftHandler = new LVShiftHandler();
             //var CurrentShift = _oLVShiftHandler.GetCurrentShift();
+            if (OneViewSessionStorage.Get("ServiceId") == 62) {             
+           
+                PAHTNotificationServer();
+            }
+            else if (OneViewSessionStorage.Get("ServiceId") == 61) {
 
-            var _oDcPendingTaskDAO = new DcPendingTaskDAO();
-            var DcPendingTaskCount = _oDcPendingTaskDAO.GetAllNotificationCount(DcUserId);
+                RFLNotificationServer();
+            }
+            else {
+                var _oDcPendingTaskDAO = new DcPendingTaskDAO();
+                var DcPendingTaskCount = _oDcPendingTaskDAO.GetAllNotificationCount(DcUserId);
+                UpdateUI("TopRightBell", DcPendingTaskCount);
+            }
             //alert(DcPendingTaskCount);
 
-            UpdateUI("TopRightBell", DcPendingTaskCount);
+           
            
             OneViewConsole.Debug("UpdateTopRightBell end", "DcPendingTaskBO.UpdateTopRightBell");
         }
@@ -164,6 +174,192 @@ function DcPendingTaskBO() {
         }
         finally {
         }
+    }
+
+
+    var pollServer = function () {
+        //alert("pollServer")
+        // var RequestParam = { "OSGuid": OneViewSessionStorage.Get("ServiceId"), "UserId": OneViewSessionStorage.Get("LoginUserId") };
+        var ServiceId = OneViewSessionStorage.Get("ServiceId");
+        var LoginUserName = OneViewSessionStorage.Get("LoginUserName");
+        var LoginUserPassword = OneViewSessionStorage.Get("LoginUserPassword");
+        var LoginUserOrgName = OneViewSessionStorage.Get("LoginUserOrgName");
+        var urlObj = OneViewGlobalPortalURlName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=PAHT/GetNotificationCount";
+        window.setTimeout(function () {
+            $.ajax({
+                //url: OneViewGlobalPortalURlName + "PAHT/GetNotificationCountMobileTest",
+
+               // url:"http://10.20.25.6:8090//OneViewQA/Portal/Login/MobileLoginRFL?UserName=Porter1&Password=Porter1&OrganizationName=PAHT&ServiceId=62&reqPage=PAHT/GetNotificationCount",
+                url: urlObj,
+                //data: JSON.stringify({ userId: OneViewSessionStorage.Get("LoginUserId")}),
+                type: "POST",
+                success: function (result) {
+                  //  alert("result => "+result)
+                    //SUCCESS LOGIC
+                   // $(".notification-badge").text(result);
+                    UpdateUI("TopRightBell", result);
+                    pollServer();
+                },
+                error: function () {
+                    alert("error")
+                    //ERROR HANDLING
+                    pollServer();
+                }
+            });
+
+        }, 30000);  //Every 30 Seconds 
+        /*
+        window.setTimeout(function () {
+        var RequestParam = { "OSGuid": OneViewSessionStorage.Get("ServiceId"), "UserId": OneViewSessionStorage.Get("LoginUserId") };
+        var _oOneViewChannel = new OneViewChannel();     
+        _oOneViewChannel.url = OneViewGlobalPortalURlName + "PAHT/GetNotificationCount";
+        _oOneViewChannel.parameter = JSON.stringify(RequestParam);
+            var oUserProfileLst = _oOneViewChannel.Send();
+            UpdateUI("TopRightBell", oUserProfileLst);        
+        }, 30000); 
+        */
+
+    }
+
+    var RFLNotificationServer = function () {
+        try {
+            OneViewConsole.Debug("RFLNotificationServer start", "DcPendingTaskBO.RFLNotificationServer");
+
+            //var RequestParam = { "OSGuid": OneViewSessionStorage.Get("ServiceId"), "UserId": OneViewSessionStorage.Get("LoginUserId") };
+            if (OneViewSessionStorage.Get("ServiceId") != null && OneViewSessionStorage.Get("LoginUserId") != null) {
+                window.setTimeout(function () {
+
+                    var RFLMobileNotificationResult = RFLNotificationIL();
+                    if (RFLMobileNotificationResult != null && RFLMobileNotificationResult.IsAnyException == false) {
+                        var RFLNotificationDTOLst = RFLMobileNotificationResult.RFLNotificationDTOLst;
+                        if (RFLNotificationDTOLst.length > 0) {
+                            NotificationResultObj = clone(RFLNotificationDTOLst);
+                            UpdateUI("TopRightBell", RFLMobileNotificationResult.Count);
+                        }
+                        else {
+                            NotificationResultObj = [];
+                            UpdateUI("TopRightBell", 0);
+                        }
+                    }
+                    else {
+                        NotificationResultObj = [];
+                        UpdateUI("TopRightBell", 0);
+                    }
+                    //alert("11");
+                    RFLNotificationServer();
+
+                }, 30000);
+            }
+            OneViewConsole.Debug("RFLNotificationServer end", "DcPendingTaskBO.RFLNotificationServer");
+            //return RFLMobileNotificationResult;
+        }
+        catch (Excep) {
+           // throw oOneViewExceptionHandler.Create("BO", "DcPendingTaskBO.RFLNotificationServer", Excep);
+        }
+        finally {
+        }
+
+    }
+
+
+    var RFLNotificationIL = function () {
+        try {
+            OneViewConsole.Debug("RFLNotification start", "DcPendingTaskBO.RFLNotification");
+            var RFLMobileNotificationResult = null;
+            if (OneViewSessionStorage.Get("ServiceId") != null && OneViewSessionStorage.Get("LoginUserId") != null) {
+                // window.setTimeout(function () {
+                var RequestParam = { "OSGuid": OneViewSessionStorage.Get("ServiceId"), "UserId": OneViewSessionStorage.Get("LoginUserId") };
+                var _oOneViewChannel = new OneViewChannel();
+                _oOneViewChannel.url = oneViewGlobalVariables.FoodSafetyServiceURL + "UserProfileFacedService.svc/GetRFLMobileNotification_json";
+                _oOneViewChannel.parameter = JSON.stringify(RequestParam);
+                RFLMobileNotificationResult = _oOneViewChannel.Send();
+                if (RFLMobileNotificationResult != null) {
+                    var RFLMobileNotificationResult = JSON.parse(RFLMobileNotificationResult.GetRFLMobileNotification_jsonResult);
+                }
+                //alert(JSON.stringify(RFLMobileNotificationResult));
+                //UpdateUI("TopRightBell", oUserProfileLst);        
+                //  }, 30000); 
+            }
+
+            OneViewConsole.Debug("RFLNotification end", "DcPendingTaskBO.RFLNotification");
+            return RFLMobileNotificationResult;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("BO", "DcPendingTaskBO.RFLNotification", Excep);
+        }
+        finally {
+        } 
+
+    }
+
+    var PAHTNotificationServer = function () {
+        try {
+            OneViewConsole.Debug("PAHTNotificationServer start", "DcPendingTaskBO.PAHTNotificationServer");
+
+            //var RequestParam = { "OSGuid": OneViewSessionStorage.Get("ServiceId"), "UserId": OneViewSessionStorage.Get("LoginUserId") };
+            if (OneViewSessionStorage.Get("ServiceId") != null && OneViewSessionStorage.Get("LoginUserId") != null) {
+                window.setTimeout(function () {
+
+                    var PAHTMobileNotificationResult = PAHTNotificationIL();
+                    if (PAHTMobileNotificationResult != null && PAHTMobileNotificationResult.IsAnyException == false) {
+                        var PAHTNotificationDTOLst = PAHTMobileNotificationResult.PAHTNotificationDTOLst;
+                        if (PAHTNotificationDTOLst.length > 0) {
+                            NotificationResultObj = clone(PAHTNotificationDTOLst);
+                            UpdateUI("TopRightBell", PAHTMobileNotificationResult.Count);
+                        }
+                        else {
+                            NotificationResultObj = [];
+                            UpdateUI("TopRightBell", 0);
+                        }
+                    }
+                    else {
+                        NotificationResultObj = [];
+                        UpdateUI("TopRightBell", 0);
+                    }
+                    //alert("11");
+                    PAHTNotificationServer();
+
+                }, 30000);
+            }
+            OneViewConsole.Debug("PAHTNotificationServer end", "DcPendingTaskBO.PAHTNotificationServer");
+            //return RFLMobileNotificationResult;
+        }
+        catch (Excep) {
+            // throw oOneViewExceptionHandler.Create("BO", "DcPendingTaskBO.RFLNotificationServer", Excep);
+        }
+        finally {
+        }
+
+    }
+
+    var PAHTNotificationIL = function () {
+        try {
+            OneViewConsole.Debug("PAHTNotificationIL start", "DcPendingTaskBO.PAHTNotificationIL");
+            var PAHTMobileNotificationResult = null;
+            if (OneViewSessionStorage.Get("ServiceId") != null && OneViewSessionStorage.Get("LoginUserId") != null) {
+                // window.setTimeout(function () {
+                var RequestParam = { "OSGuid": OneViewSessionStorage.Get("ServiceId"), "UserId": OneViewSessionStorage.Get("LoginUserId") };
+                var _oOneViewChannel = new OneViewChannel();
+                _oOneViewChannel.url = oneViewGlobalVariables.FoodSafetyServiceURL + "UserProfileFacedService.svc/GetPAHTMobileNotification_json";
+                _oOneViewChannel.parameter = JSON.stringify(RequestParam);
+                PAHTMobileNotificationResult = _oOneViewChannel.Send();
+                if (PAHTMobileNotificationResult != null) {
+                    var PAHTMobileNotificationResult = JSON.parse(PAHTMobileNotificationResult.GetPAHTMobileNotification_jsonResult);
+                }
+                //alert(JSON.stringify(RFLMobileNotificationResult));
+                //UpdateUI("TopRightBell", oUserProfileLst);        
+                //  }, 30000); 
+            }
+
+            OneViewConsole.Debug("PAHTNotificationIL end", "DcPendingTaskBO.PAHTNotificationIL");
+            return PAHTMobileNotificationResult;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("BO", "DcPendingTaskBO.RFLNotification", Excep);
+        }
+        finally {
+        }
+
     }
 
     /// <summary>
@@ -269,37 +465,48 @@ function DcPendingTaskBO() {
 
         try {
             OneViewConsole.Debug("OpenBellPopUp start", "DcPendingTaskBO.OpenBellPopUp");
+            //alert("OpenBellPopUp");
+            //var RequestParam = { "OSGuid": OneViewSessionStorage.Get("ServiceId"), "UserId": OneViewSessionStorage.Get("LoginUserId") };
+            if (OneViewSessionStorage.Get("ServiceId") == 62) {
 
-            var DcPendingTaskLst = MyInstance.GetAll(DcUserId);
-           
-            var Html = "";
+                PAHTNotificationBellPopUp($scope);
+            }
+            else if (OneViewSessionStorage.Get("ServiceId") == 61) {
 
-            var Header = 'Today';
-            //var Header = new DateTime().GetDate();
+                RFLNotificationBellPopUp($scope);
+            }
+            else {
+                var DcPendingTaskLst = MyInstance.GetAll(DcUserId);
 
-            Html += '<div class="item item-divider">' +
-                            Header +
+                var Html = "";
+
+                var Header = 'Today';
+                //var Header = new DateTime().GetDate();
+
+                Html += '<div class="item item-divider">' +
+                    Header +
                     '</div>';
 
-            for (var i = 0; i < DcPendingTaskLst.length; i++) {
-             
-                var Place = (DcPendingTaskLst[i].DcPlaceId > 0) ? DcPendingTaskLst[i].DcPlaceName : DcPendingTaskLst[i].CustomPlaceName;
-                //Place = Place + '<span class="badge badge-positive">' + DcPendingTaskLst[i].Occurence + '</span>';
-                var Occurence = (DcPendingTaskLst[i].Occurence > 0) ? '<span class="badge badge-energized">' + DcPendingTaskLst[i].Occurence + '</span>' : "";
-             
-                Html += '<div class="item">' +
-                              '<h2>' + DcPendingTaskLst[i].TemplateNodeName + '</h2>' +
-                              '<p>' + Place + '</p>' +                            
-                              Occurence +
+                for (var i = 0; i < DcPendingTaskLst.length; i++) {
+
+                    var Place = (DcPendingTaskLst[i].DcPlaceId > 0) ? DcPendingTaskLst[i].DcPlaceName : DcPendingTaskLst[i].CustomPlaceName;
+                    //Place = Place + '<span class="badge badge-positive">' + DcPendingTaskLst[i].Occurence + '</span>';
+                    var Occurence = (DcPendingTaskLst[i].Occurence > 0) ? '<span class="badge badge-energized">' + DcPendingTaskLst[i].Occurence + '</span>' : "";
+
+                    Html += '<div class="item">' +
+                        '<h2>' + DcPendingTaskLst[i].TemplateNodeName + '</h2>' +
+                        '<p>' + Place + '</p>' +
+                        Occurence +
                         '</div>';
-            }
+                }
 
-            if (DcPendingTaskLst.length > 0) {
+                if (DcPendingTaskLst.length > 0) {
 
-                var _oDOM = new DOM();
-                _oDOM.AddInnerHtml("NotoficationPanel", Html);
+                    var _oDOM = new DOM();
+                    _oDOM.AddInnerHtml("NotoficationPanel", Html);
 
-                $scope.Notification = true;
+                    $scope.Notification = true;
+                }
             }
 
             OneViewConsole.Debug("OpenBellPopUp end", "DcPendingTaskBO.OpenBellPopUp");
@@ -309,6 +516,178 @@ function DcPendingTaskBO() {
         }
         finally {
         }
+    }
+
+    var pollServerNotificationDetails = function ($scope) {
+        try {
+            OneViewConsole.Debug("pollServerNotificationDetails start", "DcPendingTaskBO.pollServerNotificationDetails");
+            var ServiceId = OneViewSessionStorage.Get("ServiceId");
+            var LoginUserName = OneViewSessionStorage.Get("LoginUserName");
+            var LoginUserPassword = OneViewSessionStorage.Get("LoginUserPassword");
+            var LoginUserOrgName = OneViewSessionStorage.Get("LoginUserOrgName");
+            var urlObj = OneViewGlobalPortalURlName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=PAHT/GetNotificationsByUser";
+
+            $.ajax({
+                //url: OneViewGlobalPortalURlName + "PAHT/GetNotificationCountMobileTest",
+               // url: "http://10.20.25.6:8090//OneViewQA/Portal/Login/MobileLoginRFL?UserName=Porter1&Password=Porter1&OrganizationName=PAHT&ServiceId=62&reqPage=PAHT/GetNotificationsByUser",
+                url: urlObj,
+                //data: JSON.stringify({ userId: OneViewSessionStorage.Get("LoginUserId")}),
+                type: "POST",
+                success: function (result) {
+                    // alert("result => " + JSON.stringify(result));
+                    pollServerNotificationOpenBellPopUp(result, $scope);
+                },
+                error: function () {
+                    //alert("error")
+                    //ERROR HANDLING
+                    //pollServer();
+                }
+            });
+            OneViewConsole.Debug("pollServerNotificationDetails end", "DcPendingTaskBO.pollServerNotificationDetails");
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("BO", "DcPendingTaskBO.pollServerNotificationDetails", Excep);
+        }
+
+    }
+
+    var pollServerNotificationOpenBellPopUp = function (DcPendingTaskLst, $scope) {
+        try {
+            OneViewConsole.Debug("pollServerNotificationOpenBellPopUp start", "DcPendingTaskBO.pollServerNotificationOpenBellPopUp");
+            var Html = "";
+            //alert(JSON.stringify(DcPendingTaskLst));
+            var Header = 'Today';
+            //var Header = new DateTime().GetDate();
+
+            Html += '<div class="item item-divider">' +
+                Header +
+                '</div>';
+
+            for (var i = 0; i < DcPendingTaskLst.length; i++) {
+
+                // var Place = (DcPendingTaskLst[i].DcPlaceId > 0) ? DcPendingTaskLst[i].DcPlaceName : DcPendingTaskLst[i].CustomPlaceName;
+                //Place = Place + '<span class="badge badge-positive">' + DcPendingTaskLst[i].Occurence + '</span>';
+                var Occurence = '<span class="badge badge-energized">3</span>';
+
+                //Html += '<div class="item">' +
+                //    '<h2>' + Header + '</h2>' +
+                //    '<p>hello</p>' +
+                //    Occurence +
+                //    '</div>';
+
+                Html += '<div class="item">' +
+                    '<h2>' + DcPendingTaskLst[i].title + '</h2>' +
+                    '<p>' + DcPendingTaskLst[i].Details + '</p>' +
+                    //    Occurence +
+                    '</div>';
+            }
+
+
+            if (DcPendingTaskLst.length > 0) {
+
+                var _oDOM = new DOM();
+
+                _oDOM.AddInnerHtml("NotoficationPanel", Html);
+
+                $scope.Notification = true;
+                $scope.$apply();
+                // alert(Html);
+            }
+            OneViewConsole.Debug("pollServerNotificationOpenBellPopUp end", "DcPendingTaskBO.pollServerNotificationOpenBellPopUp");
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("BO", "DcPendingTaskBO.pollServerNotificationOpenBellPopUp", Excep);
+        }
+    }
+
+    var RFLNotificationBellPopUp = function ($scope) {
+        try {
+            OneViewConsole.Debug("RFLNotificationBellPopUp start", "DcPendingTaskBO.RFLNotificationBellPopUp");
+
+            if (NotificationResultObj.length > 0) {
+
+                var Html = "";
+                var Header = 'Today';
+
+                Html += '<div class="item item-divider">' +
+                    Header +
+                    '</div>';
+
+                for (var i = 0; i < NotificationResultObj.length; i++) {
+
+                   // var Occurence = '<span class="badge badge-energized">3</span>';
+
+                    Html += '<div class="item">' +
+                      //  '<h2>' + NotificationResultObj[i].title + '</h2>' +
+                        '<p>' + NotificationResultObj[i].Message + '</p>' +
+                        //    Occurence +
+                        '</div>';
+                }
+
+
+                if (NotificationResultObj.length > 0) {
+
+                    var _oDOM = new DOM();
+
+                    _oDOM.AddInnerHtml("NotoficationPanel", Html);
+
+                    $scope.Notification = true;
+                    $scope.$apply();
+                    // alert(Html);
+                }
+            }
+          
+            OneViewConsole.Debug("RFLNotificationBellPopUp end", "DcPendingTaskBO.RFLNotificationBellPopUp");
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("BO", "DcPendingTaskBO.RFLNotificationBellPopUp", Excep);
+        }
+
+    }
+
+    var PAHTNotificationBellPopUp = function ($scope) {
+        try {
+            OneViewConsole.Debug("PAHTNotificationBellPopUp start", "DcPendingTaskBO.PAHTNotificationBellPopUp");
+
+            if (NotificationResultObj.length > 0) {
+
+                var Html = "";
+                var Header = 'Today';
+
+                Html += '<div class="item item-divider">' +
+                    Header +
+                    '</div>';
+
+                for (var i = 0; i < NotificationResultObj.length; i++) {
+
+                    // var Occurence = '<span class="badge badge-energized">3</span>';
+
+                    Html += '<div class="item">' +
+                        //  '<h2>' + NotificationResultObj[i].title + '</h2>' +
+                        '<p>' + NotificationResultObj[i].Message + '</p>' +
+                        //    Occurence +
+                        '</div>';
+                }
+
+
+                if (NotificationResultObj.length > 0) {
+
+                    var _oDOM = new DOM();
+
+                    _oDOM.AddInnerHtml("NotoficationPanel", Html);
+
+                    $scope.Notification = true;
+                    $scope.$apply();
+                    // alert(Html);
+                }
+            }
+
+            OneViewConsole.Debug("PAHTNotificationBellPopUp end", "DcPendingTaskBO.PAHTNotificationBellPopUp");
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("BO", "DcPendingTaskBO.PAHTNotificationBellPopUp", Excep);
+        }
+
     }
 
     /// <summary>

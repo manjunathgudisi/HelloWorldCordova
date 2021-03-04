@@ -1603,8 +1603,15 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 					//IsBulkUploadEnabled = true;
 					//var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
 					//_oOneViewAutoUploadPlugin.Start();
+                    
+                    var DashBoardReq = {
+                        '$scope': $scope, '$document': $document, 'xlatService': xlatService,
+                        '$timeout': $timeout, '$location': $location, '$templateCache': $templateCache, '$compile': $compile, 'snapRemote': snapRemote
+                      
+                        };
+                    
 					var _oUploadBO = new UploadBO(xlatService, '');
-					var UploadResponse = _oUploadBO.AutoUpload(true);
+					var UploadResponse = _oUploadBO.AutoUpload(true,DashBoardReq);
 					if (UploadResponse != undefined && (UploadResponse.IsSuccess == true && UploadResponse.DCCount > 0)) {
 
 						MyInstance.Init();
@@ -1839,8 +1846,16 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 				var EnableAutoUpload = (OneViewLocalStorage.Get("IsAutoUploadEnabled") != null) ? OneViewLocalStorage.Get("IsAutoUploadEnabled") : false;
 
 				if (EnableAutoUpload == "true") {
+                    
+                    var DashBoardReq = {
+                        '$scope': $scope, '$document': $document, 'xlatService': xlatService,
+                        '$timeout': $timeout, '$location': $location, '$templateCache': $templateCache, '$compile': $compile, 'snapRemote': snapRemote
+                      
+                        };
+                    
+                    
 					var _oUploadBO = new UploadBO(xlatService, '');
-					var UploadResponse = _oUploadBO.AutoUpload();
+					var UploadResponse = _oUploadBO.AutoUpload(undefined,DashBoardReq);
 
 
 					if (UploadResponse != undefined && (UploadResponse.IsSuccess == true && UploadResponse.DCCount > 0)) {
@@ -1893,9 +1908,15 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 					}
 
 					if (IsValidationSuccess == true) {
+                        
+                        var DashBoardReq = {
+                            '$scope': $scope, '$document': $document, 'xlatService': xlatService,
+                            '$timeout': $timeout, '$location': $location, '$templateCache': $templateCache, '$compile': $compile, 'snapRemote': snapRemote
+                          
+                            };
 
 						var _oUploadBO = new UploadBO(xlatService, '');
-						var UploadResponse = _oUploadBO.AutoUpload();
+						var UploadResponse = _oUploadBO.AutoUpload(undefined,DashBoardReq);
 
 						if (UploadResponse != undefined && (UploadResponse.IsSuccess == true)) {
 

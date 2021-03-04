@@ -12,7 +12,7 @@
         });
         
         $scope.Logout = function () {
-
+            /*
 			var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
 			oOneViewCordovaPlugin.DefaultConfirmBox("Confirm", OneViewGlobalization[CurrentLanguage].SignOut_Confirm_Message, function (ConfirmationId) {
 					if (ConfirmationId == "2") {
@@ -26,7 +26,9 @@
 						//alert('Success : ' + OneViewGlobalization[CurrentLanguage].SignOut_Success_Message);
 					}
 			});
-
+            */
+            
+            $location.url('/login');
             
         }
 
