@@ -151,8 +151,8 @@ function DcPendingTaskBO() {
             //var _oLVShiftHandler = new LVShiftHandler();
             //var CurrentShift = _oLVShiftHandler.GetCurrentShift();
             if (OneViewSessionStorage.Get("ServiceId") == 62) {             
-           
-                pollServer();
+          
+                //pollServer();
             }
             else if (OneViewSessionStorage.Get("ServiceId") == 61) {
 
@@ -178,6 +178,7 @@ function DcPendingTaskBO() {
 
 
     var pollServer = function () {
+        try{
         //alert("pollServer")
         // var RequestParam = { "OSGuid": OneViewSessionStorage.Get("ServiceId"), "UserId": OneViewSessionStorage.Get("LoginUserId") };
         var ServiceId = OneViewSessionStorage.Get("ServiceId");
@@ -185,6 +186,7 @@ function DcPendingTaskBO() {
         var LoginUserPassword = OneViewSessionStorage.Get("LoginUserPassword");
         var LoginUserOrgName = OneViewSessionStorage.Get("LoginUserOrgName");
         var urlObj = OneViewGlobalPortalURlName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=PAHT/GetNotificationCount";
+       // alert("errorFromBellIcon")
         window.setTimeout(function () {
             $.ajax({
                 //url: OneViewGlobalPortalURlName + "PAHT/GetNotificationCountMobileTest",
@@ -201,7 +203,7 @@ function DcPendingTaskBO() {
                     pollServer();
                 },
                 error: function () {
-                    alert("error")
+                    alert("error from pollserver")
                     //ERROR HANDLING
                     pollServer();
                 }
@@ -218,6 +220,12 @@ function DcPendingTaskBO() {
             UpdateUI("TopRightBell", oUserProfileLst);        
         }, 30000); 
         */
+        }
+        catch (Excep) {
+            alert(Excep)
+         //   throw oOneViewExceptionHandler.Create("BO", "DcPendingTaskBO.UpdateTopRightBell", Excep);
+        }
+            
 
     }
 

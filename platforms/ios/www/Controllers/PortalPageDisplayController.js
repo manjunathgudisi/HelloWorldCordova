@@ -47,7 +47,8 @@ function PortalPageDisplayFacade($scope, xlatService, $location, snapRemote, $co
         
 
             //var url = OneViewGlobalPortalURlName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=" + reqPage1 + "/" + reqPage2 + "";
-            var url = PortalURLName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=" + reqPage1 + "/" + reqPage2 + "";                     
+            var url = PortalURLName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=" + reqPage1 + "/" + reqPage2 + "";
+           // url="https://blog.minhazav.dev/research/html5-qrcode#:~:text=You%20can%20use%20Html5QrcodeScanner%23clear,with%20the%20decoded%20message%20html5QrcodeScanner";
             $scope.PortalUrl = $sce.trustAsResourceUrl(url);
             
             OneViewConsole.Debug("Init end", "MyPortalFacade.Init");

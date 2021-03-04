@@ -253,6 +253,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
             if (Value != "") {
                 _oDasboardBO.SetByView(Value);
             }
+            
 
             var _oDcPendingTaskBO = new DcPendingTaskBO();
             _oDcPendingTaskBO.UpdateTopRightBell(OneViewSessionStorage.Get("LoginUserId"));
