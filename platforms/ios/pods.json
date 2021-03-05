@@ -1,5 +1,16 @@
 {
-    "declarations": {},
+    "declarations": {
+        "use_frameworks!": {
+            "declaration": "use_frameworks!",
+            "count": 1
+        }
+    },
     "sources": {},
-    "libraries": {}
+    "libraries": {
+        "Firebase/Messaging": {
+            "name": "Firebase/Messaging",
+            "spec": "~> 6.32.2",
+            "count": 1
+        }
+    }
 }

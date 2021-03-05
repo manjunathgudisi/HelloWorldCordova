@@ -393,6 +393,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "ActivityIndicator"
       ]
+    },
+    {
+      "id": "havesource-cordova-plugin-push.PushNotification",
+      "file": "plugins/havesource-cordova-plugin-push/www/push.js",
+      "pluginId": "havesource-cordova-plugin-push",
+      "clobbers": [
+        "PushNotification"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -411,6 +419,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-network-information": "2.0.2",
     "cordova-plugin-nativestorage": "2.3.2",
-    "cordova-plugin-activityindicator": "1.0.0"
+    "cordova-plugin-activityindicator": "1.0.0",
+    "havesource-cordova-plugin-push": "1.0.0"
   };
 });

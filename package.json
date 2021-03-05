@@ -49,11 +49,18 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-network-information": {},
       "cordova-plugin-nativestorage": {},
-      "cordova-plugin-activityindicator": {}
+      "cordova-plugin-activityindicator": {},
+      "havesource-cordova-plugin-push": {
+        "ANDROID_SUPPORT_V13_VERSION": "28.0.0",
+        "FCM_VERSION": "18.+"
+      }
     },
     "platforms": [
       "android",
       "ios"
     ]
+  },
+  "devDependencies": {
+    "@havesource/cordova-plugin-push": "^1.0.0"
   }
 }

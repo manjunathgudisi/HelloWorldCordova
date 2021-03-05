@@ -67,6 +67,40 @@
             {
               "xml": "<feature name=\"ActivityIndicator\"><param name=\"ios-package\" value=\"ActivityIndicator\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "*-Info.plist": {
+        "parents": {
+          "UIBackgroundModes": [
+            {
+              "xml": "<array><string>remote-notification</string></array>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "*-Debug.plist": {
+        "parents": {
+          "aps-environment": [
+            {
+              "xml": "<string>development</string>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "*-Release.plist": {
+        "parents": {
+          "aps-environment": [
+            {
+              "xml": "<string>production</string>",
+              "count": 1
             }
           ]
         }
@@ -123,6 +157,9 @@
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-activityindicator": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+    },
+    "havesource-cordova-plugin-push": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
@@ -533,6 +570,14 @@
       "clobbers": [
         "ActivityIndicator"
       ]
+    },
+    {
+      "id": "havesource-cordova-plugin-push.PushNotification",
+      "file": "plugins/havesource-cordova-plugin-push/www/push.js",
+      "pluginId": "havesource-cordova-plugin-push",
+      "clobbers": [
+        "PushNotification"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -552,6 +597,7 @@
     "cordova-plugin-splashscreen": "5.0.3",
     "cordova-plugin-vibration": "3.1.1",
     "cordova-plugin-whitelist": "1.3.3",
-    "cordova-plugin-activityindicator": "1.0.0"
+    "cordova-plugin-activityindicator": "1.0.0",
+    "havesource-cordova-plugin-push": "1.0.0"
   }
 }

@@ -69,7 +69,7 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-	<allow-navigation href="*" />
+    <allow-navigation href="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -94,5 +94,8 @@
     <preference name="CameraUsesGeolocation" value="false" />
     <feature name="ActivityIndicator">
         <param name="ios-package" value="ActivityIndicator" />
+    </feature>
+    <feature name="PushNotification">
+        <param name="ios-package" value="PushPlugin" />
     </feature>
 </widget>

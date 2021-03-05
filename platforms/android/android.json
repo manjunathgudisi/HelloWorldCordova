@@ -67,6 +67,10 @@
             {
               "xml": "<feature name=\"ActivityIndicator\"><param name=\"android-package\" value=\"org.apache.cordova.plugin.ActivityIndicator\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"PushNotification\"><param name=\"android-package\" value=\"com.adobe.phonegap.push.PushPlugin\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -84,6 +88,30 @@
             },
             {
               "xml": "<activity android:label=\"@string/share_name\" android:name=\"com.google.zxing.client.android.HelpActivity\"><intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
+              "count": 1
+            },
+            {
+              "xml": "<activity android:exported=\"true\" android:name=\"com.adobe.phonegap.push.PushHandlerActivity\" android:permission=\"${applicationId}.permission.PushHandlerActivity\" />",
+              "count": 1
+            },
+            {
+              "xml": "<activity android:exported=\"true\" android:name=\"com.adobe.phonegap.push.BackgroundHandlerActivity\" android:permission=\"${applicationId}.permission.BackgroundHandlerActivity\"><intent-filter><action android:name=\"com.adobe.phonegap.push.background.MESSAGING_EVENT\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
+              "count": 1
+            },
+            {
+              "xml": "<receiver android:name=\"com.adobe.phonegap.push.BackgroundActionButtonHandler\" />",
+              "count": 1
+            },
+            {
+              "xml": "<receiver android:name=\"com.adobe.phonegap.push.PushDismissedHandler\" />",
+              "count": 1
+            },
+            {
+              "xml": "<service android:name=\"com.adobe.phonegap.push.FCMService\"><intent-filter><action android:name=\"com.google.firebase.MESSAGING_EVENT\" /></intent-filter></service>",
+              "count": 1
+            },
+            {
+              "xml": "<service android:name=\"com.adobe.phonegap.push.PushInstanceIDListenerService\"><intent-filter><action android:name=\"com.google.firebase.INSTANCE_ID_EVENT\" /></intent-filter></service>",
               "count": 1
             }
           ],
@@ -106,6 +134,18 @@
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
+              "count": 2
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
               "count": 1
             }
           ],
@@ -632,6 +672,20 @@
             }
           ]
         }
+      },
+      "config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<preference name=\"GradlePluginGoogleServicesEnabled\" value=\"true\" />",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"GradlePluginGoogleServicesVersion\" value=\"4.2.0\" />",
+              "count": 1
+            }
+          ]
+        }
       }
     }
   },
@@ -683,6 +737,11 @@
       "PACKAGE_NAME": "org.winaim.oneview"
     },
     "cordova-plugin-activityindicator": {
+      "PACKAGE_NAME": "org.winaim.oneview"
+    },
+    "havesource-cordova-plugin-push": {
+      "ANDROID_SUPPORT_V13_VERSION": "28.0.0",
+      "FCM_VERSION": "18.+",
       "PACKAGE_NAME": "org.winaim.oneview"
     }
   },
@@ -1081,6 +1140,14 @@
       "clobbers": [
         "ActivityIndicator"
       ]
+    },
+    {
+      "id": "havesource-cordova-plugin-push.PushNotification",
+      "file": "plugins/havesource-cordova-plugin-push/www/push.js",
+      "pluginId": "havesource-cordova-plugin-push",
+      "clobbers": [
+        "PushNotification"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -1099,6 +1166,7 @@
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-network-information": "2.0.2",
     "cordova-plugin-nativestorage": "2.3.2",
-    "cordova-plugin-activityindicator": "1.0.0"
+    "cordova-plugin-activityindicator": "1.0.0",
+    "havesource-cordova-plugin-push": "1.0.0"
   }
 }

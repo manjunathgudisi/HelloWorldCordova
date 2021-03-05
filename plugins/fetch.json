@@ -134,5 +134,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "havesource-cordova-plugin-push": {
+    "source": {
+      "type": "registry",
+      "id": "@havesource/cordova-plugin-push@1.0.0"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }
