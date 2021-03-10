@@ -391,6 +391,8 @@
         var OneViewGlobalDeviceDisplyMode = "Large"; // Large, Small 
         var oGlobalizationComponent = new GlobalizationComponent();
         var IsGlobalAutoSyncEnabled = false;
+		var PushNotificationRegistrationId = "";
+		
         document.addEventListener("backbutton", OnDeviveBackButtonPressed, false);
         
         
@@ -447,7 +449,8 @@
 			
 			push.on('registration', (data) => {
 				console.log(data.registrationId)
-				//user id, device reg id, platform
+				OneViewLocalStorage.Save("PushNotificationRegistrationId", data.registrationId);
+				PushNotificationRegistrationId = data.registrationId;
 			});
 			
 			push.on('notification', (data) => {
