@@ -575,7 +575,7 @@ function LoginFacade(xlatService, $timeout) {
 					var RequestParam = {
 						
 						"Platform": _oOneViewDeviceInfoPlugin.GetPlatform(),
-						"Registrationid": OneViewLocalStorage.Get("PushNotificationRegistrationId"),
+						"Registrationid": PushNotificationRegistrationId,
 						"TokenId": _oOneViewDeviceInfoPlugin.GetUUID(),
 						"UserId": _LoginUserId
 					};
