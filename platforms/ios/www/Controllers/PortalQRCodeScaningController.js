@@ -74,13 +74,15 @@ function PortalQRCodeScaningFacade($scope, xlatService, $location, snapRemote, $
   
             cordova.plugins.barcodeScanner.scan(
                 function (result) {
-                    alert("We got a barcode\n" +
-                          "Result: " + result.text + "\n" +
-                          "Format: " + result.format + "\n" +
-                          "Cancelled: " + result.cancelled);
+				
+				console.log("We got a barcode\n" +
+							"Result: " + result.text + "\n" +
+							"Format: " + result.format + "\n" +
+							"Cancelled: " + result.cancelled);
+				
                 },
                 function (error) {
-                    alert("Scanning failed: " + error);
+				console.log("Scanning failed: " + error)
                 },
                 {
                     preferFrontCamera : true, // iOS and Android
