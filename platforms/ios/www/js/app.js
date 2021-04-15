@@ -66,6 +66,7 @@ var OneViewRouteSegmentProvider = null;
   .when('/nav/RFLOrder-Status', 'nav.RFLOrder-Status')
   .when('/nav/PortalPageRoute', 'nav.PortalPageRoute')
   .when('/nav/PortalPageDisplay', 'nav.PortalPageDisplay')
+  .when('/nav/PortalQRCodeScaning', 'nav.PortalQRCodeScaning')
 
   .segment('auth', {
 	  templateUrl: 'Templates/authendication.html',
@@ -556,6 +557,17 @@ var OneViewRouteSegmentProvider = null;
 				templateUrl: 'Templates/loading.html'
 			}
 		})
+      .segment('PortalQRCodeScaning', {
+             templateUrl: 'Templates/PortalQRCodeScaning.html',
+             resolve: {
+                 data: function ($timeout) {
+                     return $timeout(function () { return 'SLOW DATA CONTENT'; }, 300);
+                 }
+             },
+             untilResolved: {
+                 templateUrl: 'Templates/loading.html'
+             }
+         })
 
   var _oOneViewRouterComponet = new OneViewRouterComponet();
   _oOneViewRouterComponet.ResetRouter();

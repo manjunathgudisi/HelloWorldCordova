@@ -25,7 +25,7 @@ function PortalPageDisplayFacade($scope, xlatService, $location, snapRemote, $co
 
         try {
             OneViewConsole.Debug("Init start", "MyPortalFacade.Init");
-           
+            oSetDefaultSpinner.Start();
             var reqPage1 = $location.search().reqPage1;
             var reqPage2 = $location.search().reqPage2;
             var PageTitleName = $location.search().PageTitle;
@@ -49,14 +49,30 @@ function PortalPageDisplayFacade($scope, xlatService, $location, snapRemote, $co
             //var url = OneViewGlobalPortalURlName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=" + reqPage1 + "/" + reqPage2 + "";
             var url = PortalURLName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=" + reqPage1 + "/" + reqPage2 + "";
            // url="https://blog.minhazav.dev/research/html5-qrcode#:~:text=You%20can%20use%20Html5QrcodeScanner%23clear,with%20the%20decoded%20message%20html5QrcodeScanner";
-            $scope.PortalUrl = $sce.trustAsResourceUrl(url);
+           //var url = "https://jbialobr.github.io/JsQRScanner/";
+            //$scope.PortalUrl = $sce.trustAsResourceUrl(url);
+            
+            addIframe(url);
             
             OneViewConsole.Debug("Init end", "MyPortalFacade.Init");
         }
-        catch (Excep) {            
+        catch (Excep) {
+            oSetDefaultSpinner.Start();
             oOneViewExceptionHandler.Catch(Excep, "MyPortalFacade.Init", xlatService);
         }
     }
+    
+    var addIframe = function (url) {
+            //alert("addIframe =>" + url);
+            var target = document.getElementById("ContentId");
+            var newFrame = document.createElement("iframe");
+            newFrame.setAttribute("style", "height:100%;width:100%; margin:0px; padding:10px;");
+            newFrame.setAttribute("allow", "camera *;");
+            newFrame.setAttribute("onLoad", "UploadDone()");
+            newFrame.setAttribute("src",url);
+            target.appendChild(newFrame);
+        }
+        
     
     this.Destroy = function () {
 
@@ -66,6 +82,7 @@ function PortalPageDisplayFacade($scope, xlatService, $location, snapRemote, $co
             if (IsGlobalBlueThermLiveTemperatureIndicatorEnabled == true) {
                 _oDOM.SetStyle('divBlueThermLiveTemperatureIndicator', 'display', '');
             }
+            oSetDefaultSpinner.Stop();
          
             OneViewConsole.Debug("Destroy end", "PortalPageDisplay.Destroy");
         }
@@ -73,4 +90,9 @@ function PortalPageDisplayFacade($scope, xlatService, $location, snapRemote, $co
             oOneViewExceptionHandler.Catch(Excep, "PortalPageDisplays.Destroy", xlatService);
         }
     }
+}
+
+function UploadDone() {
+    //alert("UploadDone => UploadDone");
+    oSetDefaultSpinner.Stop();
 }

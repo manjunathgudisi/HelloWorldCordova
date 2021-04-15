@@ -82,7 +82,8 @@
               "xml": "<array><string>remote-notification</string></array>",
               "count": 1
             }
-          ]
+          ],
+          "NSCameraUsageDescription": []
         }
       },
       "*-Debug.plist": {
@@ -108,9 +109,6 @@
     }
   },
   "installed_plugins": {
-    "cordova-plugin-add-swift-support": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
-    },
     "cordova-plugin-compat": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
@@ -581,7 +579,6 @@
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-add-swift-support": "2.0.2",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-barcodescanner": "0.7.4",
     "cordova-plugin-battery-status": "2.0.3",

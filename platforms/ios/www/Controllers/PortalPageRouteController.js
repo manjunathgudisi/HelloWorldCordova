@@ -23,6 +23,15 @@ function PortalPageRouteFacade($scope, xlatService, $location, snapRemote, $comp
 
            // document.getElementById('PageTitle').innerHTML = PageTitle;        
             var Url = 'nav/PortalPageDisplay?reqPage1=' + reqPage1 + '&reqPage2=' + reqPage2 + '&PageTitle=' + PageTitle + '';
+    
+            if (reqPage2 == "BedPatientMapping") {
+                           Url = 'nav/PortalQRCodeScaning?reqPage1=' + reqPage1 + '&reqPage2=' + reqPage2 + '&PageTitle=' + PageTitle + '';
+                       }
+       
+         
+           
+            
+
             $location.url(Url);
 
             

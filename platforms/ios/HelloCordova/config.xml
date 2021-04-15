@@ -70,6 +70,7 @@
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="*" />
+    <allow-navigation href="https://jbialobr.github.io/JsQRScanner/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -98,4 +99,7 @@
     <feature name="PushNotification">
         <param name="ios-package" value="PushPlugin" />
     </feature>
+    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+        <string>To scan barcodes</string>
+    </edit-config>
 </widget>

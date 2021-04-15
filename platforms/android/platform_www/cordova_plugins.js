@@ -401,6 +401,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "PushNotification"
       ]
+    },
+    {
+      "id": "cordova-plugin-qrscanner.QRScanner",
+      "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
+      "pluginId": "cordova-plugin-qrscanner",
+      "clobbers": [
+        "QRScanner"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -420,6 +428,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-network-information": "2.0.2",
     "cordova-plugin-nativestorage": "2.3.2",
     "cordova-plugin-activityindicator": "1.0.0",
-    "havesource-cordova-plugin-push": "1.0.0"
+    "havesource-cordova-plugin-push": "1.0.0",
+    "cordova-plugin-qrscanner": "3.0.1"
   };
 });

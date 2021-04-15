@@ -416,7 +416,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     }
   ];
   module.exports.metadata = {
-    "cordova-plugin-add-swift-support": "2.0.2",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-barcodescanner": "0.7.4",
     "cordova-plugin-battery-status": "2.0.3",
