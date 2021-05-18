@@ -567,6 +567,8 @@ function LoginFacade(xlatService, $timeout) {
 			if (PushNotificationRegistrationId != "" && PushNotificationRegistrationId != null && PushNotificationRegistrationId != undefined) {
 				
 				var _LoginUserId = OneViewSessionStorage.Get("LoginUserId");
+                
+                
 				
 				if (OneViewLocalStorage.Get(PushNotificationRegistrationId) == null) {
 					

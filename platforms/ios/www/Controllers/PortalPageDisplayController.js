@@ -44,6 +44,8 @@ function PortalPageDisplayFacade($scope, xlatService, $location, snapRemote, $co
             else if (ServiceId == 62) {
                 PortalURLName = "https://winaim.biz/PAHTservice/Portal/";
             }
+       
+          
         
 
             //var url = OneViewGlobalPortalURlName + "Login/MobileLoginRFL?UserName=" + LoginUserName + "&Password=" + LoginUserPassword + "&OrganizationName=" + LoginUserOrgName + "&ServiceId=" + ServiceId + "&reqPage=" + reqPage1 + "/" + reqPage2 + "";
@@ -95,4 +97,84 @@ function PortalPageDisplayFacade($scope, xlatService, $location, snapRemote, $co
 function UploadDone() {
     //alert("UploadDone => UploadDone");
     oSetDefaultSpinner.Stop();
+    
+    setTimeout(function(){ LoadQRcodescanPortalPage();}, 1000);
+}
+
+
+function LoadPatientDetails() {
+ alert("LoadPatientDetails =>" +document.getElementsByTagName('iframe')[0].contentWindow.document.getElementById("idPatientDetails"))
+
+var _idPatientDetails=document.getElementsByTagName('iframe')[0].contentWindow.document.getElementById("idPatientDetails");
+if(_idPatientDetails!=null){
+_idPatientDetails.addEventListener("click", function() {
+     cordova.plugins.barcodeScanner.scan(
+                     function (result) {
+                         if (!result.cancelled) {
+
+                             if (result.format == "QR_CODE") {
+                                alert(result.text);
+                                //idPatientRef
+                                document.getElementsByTagName('iframe')[0].contentWindow.document.getElementById("idPatientRef").value=result.text;
+                             }
+                         }
+                     },
+              function (error) {
+
+                  alert("Scanning failed: " + error);
+              },
+              {
+                          "resultDisplayDuration":0
+              }
+              );
+
+
+});
+    
+    setTimeout(function(){ LoadQRcodescanPortalPage(); }, 1000);
+
+}
+}
+
+function LoadQRcodescanPortalPage() {
+   // alert("QRcodescan =>" + document.getElementsByTagName('iframe')[0].contentWindow.document.getElementById("id_Qr_scane"))
+    if (document.getElementsByTagName('iframe')[0] != undefined) {
+        var _QRcodescan = document.getElementsByTagName('iframe')[0].contentWindow.document.getElementById("id_Qr_scane");
+        if (_QRcodescan != null) {
+            _QRcodescan.addEventListener("click", function () {
+
+                //  alert("_idPatientDetails Click");
+
+                cordova.plugins.barcodeScanner.scan(
+                    function (result) {
+                        if (!result.cancelled) {
+
+                            if (result.format == "QR_CODE") {
+                                //alert(result.text);
+                               document.getElementsByTagName('iframe')[0].contentWindow.document.getElementById("idPatientRef").value = result.text;
+                              //  var message = "We got a QR_CODE\n" +
+                                //"Result: " + result.text + "\n" ;
+                               
+                                
+                                //console.log(message);
+                                
+                                //navigator.notification.alert(message,  ['OK'], "");
+                            }
+                        }
+                    },
+                    function (error) {
+                        // ReturnMessage.Text = "Scanning failed: " + error;
+                        alert("Scanning failed: " + error);
+                    },
+                    {
+                        "resultDisplayDuration": 0
+                    }
+                );
+
+
+            });
+
+
+        }
+    }
 }
