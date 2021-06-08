@@ -6,6 +6,8 @@ function DcPendingTaskEntity() {
 
     this.Id = "INT PRIMARYKEY";  
     this.MobileVersionId = "INT";
+    // OneView global Version id (for mdm)
+    this.OVGuid = "INT";
   
     this.ServiceId = "INT";
     this.DcProfileId = "TEXT";
@@ -20,6 +22,10 @@ function DcPendingTaskEntity() {
 
     this.TemplateNodeId = "INT";
     this.TemplateNodeName = "TEXT";
+
+    this.ServerId = "INT";
+    this.Message = "TEXT";
+    this.MessageReadStatus = "INT";
 
     this.ShiftId = "INT"
     this.ShiftName = "TEXT"
