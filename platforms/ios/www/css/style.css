@@ -4118,6 +4118,10 @@ box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.21);
   border-color: #ff025b;
 }
 
+.not-downloadedItem {
+    border-color: #ff0000;
+}
+
 .completed{
   border-color: #0702e4;
 }

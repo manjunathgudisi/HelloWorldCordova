@@ -44,7 +44,19 @@ function PortalPageDisplayFacade($scope, xlatService, $location, snapRemote, $co
             else if (ServiceId == 62) {
                 PortalURLName = "https://winaim.biz/PAHTservice/Portal/";
             }
-       
+            else {
+                PortalURLName = GetURlForIFrame();
+                if (PortalURLName == "") {
+                    PortalURLName = OneViewGlobalPortalURlName;
+                }
+            }
+            
+            /*
+            PortalURLName = GetURlForIFrame();
+            if (PortalURLName == "") {
+                PortalURLName = OneViewGlobalPortalURlName;
+            }
+            */
           
         
 
@@ -149,17 +161,17 @@ function LoadQRcodescanPortalPage() {
                     function (result) {
                         if (!result.cancelled) {
 
-                            if (result.format == "QR_CODE") {
+                            //if (result.format == "QR_CODE") {
                                 //alert(result.text);
                                document.getElementsByTagName('iframe')[0].contentWindow.document.getElementById("idPatientRef").value = result.text;
-                              //  var message = "We got a QR_CODE\n" +
-                                //"Result: " + result.text + "\n" ;
+                             //  var message = "We got a QR_CODE\n" +
+                                "Result: " + result.text + "\n" ;
                                
                                 
                                 //console.log(message);
                                 
-                                //navigator.notification.alert(message,  ['OK'], "");
-                            }
+                               // navigator.notification.alert(message,  ['OK'], "");
+                            //}
                         }
                     },
                     function (error) {
@@ -178,3 +190,41 @@ function LoadQRcodescanPortalPage() {
         }
     }
 }
+
+function GetURlForIFrame() {
+    try {
+        OneViewConsole.Debug("GetURlForIFrame start", "LandingPageFacade.GetURlForIFrame");
+        
+        var Url = "";
+      
+        var ServiceId = OneViewSessionStorage.Get("ServiceId");
+        var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
+
+        var _MobileAutoSyncMetadataDAO = new MobileAutoSyncMetadataDAO();
+        var BusinessEventDetails = _MobileAutoSyncMetadataDAO.GetBusinessEventEntityByServiceAndUserId(ServiceId, LoginUserId);
+        //alert(JSON.stringify(BusinessEventDetails))
+        if (BusinessEventDetails.length > 0) {
+
+            for (var i = 0; i < BusinessEventDetails.length; i++) {
+                if (BusinessEventDetails[i].ClassName == "IFrameUrl") {
+                  
+                    var BusinessEventDefinition = BusinessEventDetails[i].BusinessEventDefinition;
+                    if (BusinessEventDefinition.BusinessEventEvaluatorObjectKey != "") {
+                        Url = BusinessEventDefinition.BusinessEventEvaluatorObjectKey;
+                    }
+                }
+
+            }
+
+        }
+        OneViewConsole.Debug("GetURlForIFrame start", "LandingPageFacade.GetURlForIFrame");
+        return Url;
+    }
+    catch (Excep) {
+        return "";
+       // throw oOneViewExceptionHandler.Create("GetURlForIFrame", "LandingPageFacade.GetURlForIFrame", Excep);
+    }
+    finally {
+    }
+}
+

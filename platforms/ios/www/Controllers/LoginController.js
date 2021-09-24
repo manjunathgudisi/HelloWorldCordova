@@ -570,7 +570,7 @@ function LoginFacade(xlatService, $timeout) {
                 
                 
 				
-				if (OneViewLocalStorage.Get(PushNotificationRegistrationId) == null) {
+				//if (OneViewLocalStorage.Get(PushNotificationRegistrationId) == null) {
 					
 					var _oOneViewDeviceInfoPlugin = new OneViewDeviceInfoPlugin();
 					
@@ -589,7 +589,7 @@ function LoginFacade(xlatService, $timeout) {
 							OneViewLocalStorage.Save(PushNotificationRegistrationId, "SUCCESS");
 						}
 					}
-				}
+				//}
 			}
 		}
 		catch (Excep) {

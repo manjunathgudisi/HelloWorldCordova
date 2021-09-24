@@ -152,11 +152,13 @@ function DcPendingTaskBO() {
             
             //var _oLVShiftHandler = new LVShiftHandler();
             //var CurrentShift = _oLVShiftHandler.GetCurrentShift();
+            var _ServiceId = OneViewSessionStorage.Get("ServiceId");
             if (OneViewSessionStorage.Get("ServiceId") == 62) {             
            
                 PAHTNotificationServer();
             }
-            else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+            //else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+            else if (_ServiceId == 61 || _ServiceId == 70) {
 
                 var _oDcPendingTaskDAO = new DcPendingTaskDAO();
                 var DcPendingTaskCount = _oDcPendingTaskDAO.DeleteNotificationByDate(DcUserId, OneViewSessionStorage.Get("ServiceId"));
@@ -539,11 +541,13 @@ function DcPendingTaskBO() {
             OneViewConsole.Debug("OpenBellPopUp start", "DcPendingTaskBO.OpenBellPopUp");
             //alert("OpenBellPopUp");
             //var RequestParam = { "OSGuid": OneViewSessionStorage.Get("ServiceId"), "UserId": OneViewSessionStorage.Get("LoginUserId") };
+            var _ServiceId = OneViewSessionStorage.Get("ServiceId");
             if (OneViewSessionStorage.Get("ServiceId") == 62) {
 
                 PAHTNotificationBellPopUp($scope);
             }
-            else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+            //else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+            else if (_ServiceId == 61 || _ServiceId == 70) {
 
                 RFLNotificationBellPopUp($scope);
             }

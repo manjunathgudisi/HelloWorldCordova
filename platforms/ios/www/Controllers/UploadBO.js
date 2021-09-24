@@ -217,7 +217,7 @@ function UploadBO(xlatService, toaster) {
 					_oDasboardBO.LoadHtml(DashBoardReq.DCTaskViewInfoDTO, DashBoardReq.LandingPageSelectedStatusTypeId);
 
 
-					if (ServiceId == 61 && (oChild.TemplateKeyId == 326 || oChild.TemplateKeyId == 339 || oChild.TemplateKeyId == 350 || oChild.TemplateKeyId == 378 || oChild.TemplateKeyId == 391)) {
+					if ((ServiceId == 61 || ServiceId == 70) && (oChild.TemplateKeyId == 326 || oChild.TemplateKeyId == 339 || oChild.TemplateKeyId == 350 || oChild.TemplateKeyId == 378 || oChild.TemplateKeyId == 391)) {
 						//alert('AutoSync');
 						LandingPageAutoSync(DashBoardReq);
 					}
@@ -310,6 +310,8 @@ function UploadBO(xlatService, toaster) {
 				_oDcDeletion.DeleteExpiredOrderItems(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 				_oDcDeletion.DeleteCompletedItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 				_oDcDeletion.DeleteExpiredItemFromWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+                
+                var _ServiceId = OneViewSessionStorage.Get("ServiceId");
 
 				if (OneViewSessionStorage.Get("ServiceId") == 51) {
 					_oDcDeletion.DeleteCompletedItemForFlightPreparation(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
@@ -319,7 +321,8 @@ function UploadBO(xlatService, toaster) {
 					_oDcDeletion.DeleteCompletedItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 					_oDcDeletion.DeleteExpiredItemForASOWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 				}
-				else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+				//else if (OneViewSessionStorage.Get("ServiceId") == 61) {
+                else if (_ServiceId == 61 || _ServiceId==70) {
 					_oDcDeletion.DeleteCompletedItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 					_oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 
@@ -719,7 +722,7 @@ function UploadBO(xlatService, toaster) {
 	/// AutoUpload
 	/// For all users
 	/// </summary>
-	this.AutoUpload = function (IsBulkUploadEnabled,DashBoardReq) {
+	this.AutoUpload_OLD = function (IsBulkUploadEnabled,DashBoardReq) {
 
 		//alert("Auto Upload Started ...");
 
@@ -751,11 +754,11 @@ function UploadBO(xlatService, toaster) {
 //                    ConfirmationSuccess = oOneViewDefaultConfirmBox.Show(Message);
 //                }
 //
-				oOneViewProgressbar.Start("Uploading");
+				
 				var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
 				oOneViewCordovaPlugin.DefaultConfirmBox("Confirm", 'IN-MG-LDP-001 :: Are you sure you want to Upload?', function (ConfirmationId) {
 					if (ConfirmationId == "2") {
-
+                        oOneViewProgressbar.Start("Uploading");
 						var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
 
 						var IsMultiMediaSubElementsSuccess = MyInstance.UploadMultiMediaSubElements(false);
@@ -963,6 +966,284 @@ function UploadBO(xlatService, toaster) {
 			IsBulkUploadEnabled = false;
 		}
 	}
+    
+    /// <summary>
+     /// AutoUpload
+     /// For all users
+     /// </summary>
+     this.AutoUpload = function (IsBulkUploadEnabled, DashBoardReq) {
+
+         //alert("Auto Upload Started ...");
+
+         var _oOneViewSqlitePlugin = new OneViewSqlitePlugin();
+         var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
+         var EnableAutoUpload = (OneViewLocalStorage.Get("IsAutoUploadEnabled") != null) ? OneViewLocalStorage.Get("IsAutoUploadEnabled") : false;
+
+         try {
+             OneViewConsole.Debug("AutoUpload start", "UploadBO.AutoUpload");
+
+             var Response = { "IsSuccess": true, "DCCount": 0 }
+             var IsSuccess = true;
+
+             //var _oDcDAO = new DcDAO();
+             //var DcCount = _oDcDAO.GetAllUnSyncDcCount();
+
+             var _oDcFilterParamRequest = new DcFilterParamRequest();
+             _oDcFilterParamRequest.SystemUserId = OneViewSessionStorage.Get("LoginUserId");;
+             _oDcFilterParamRequest.IsSynchronized = false;
+
+             var _oDcDAO = new DcDAO();
+             var DcCount = _oDcDAO.GetDCCountWithFilters(_oDcFilterParamRequest);
+
+             if (DcCount > 0) {
+
+                 var ConfirmationSuccess = true;
+                 //                if (IsBulkUploadEnabled!=undefined && IsBulkUploadEnabled == true) {
+                 //                    var Message = 'IN-MG-LDP-001 :: Are you sure you want to Upload?';
+                 //                    ConfirmationSuccess = oOneViewDefaultConfirmBox.Show(Message);
+                 //                }
+                 //
+
+                 if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+                     var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+                     oOneViewCordovaPlugin.DefaultConfirmBox("Confirm", 'IN-MG-LDP-001 :: Are you sure you want to Upload?', function (ConfirmationId) {
+                         if (ConfirmationId == "2") {
+                             oOneViewProgressbar.Start("Uploading");
+                             UploadData_New(IsBulkUploadEnabled, DashBoardReq, _oDcFilterParamRequest);
+                         }
+                         oOneViewProgressbar.Stop();
+                     });
+                 } else {
+                     //alert("Uploading !!!!")
+                     UploadData_New(IsBulkUploadEnabled, DashBoardReq, _oDcFilterParamRequest);
+                 }
+             }
+             else {
+                 if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+                     navigator.notification.alert(xlatService.xlat("IN-IN-LDP-001 :: No data available for Upload"), ['OK'], "");
+                 }
+                 var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
+                 _oOneViewAutoUploadPlugin.Stop();
+                 OneViewConsole.Info("No dc available", "UploadBO.AutoUpload");
+             }
+
+             Response.IsSuccess = IsSuccess;
+             Response.DCCount = DcCount;
+             return Response;
+         }
+
+         catch (Excep) {
+             //alert("Excep : " + Excep + JSON.stringify(Excep));
+             _oOneViewAutoUploadPlugin.Stop();
+             IsBulkUploadEnabled = false;
+             oOneViewExceptionHandler.Create("BO", "UploadBO.AutoUpload", Excep);
+             return false;
+         }
+
+         finally {
+             IsSuccess = null;
+             IsSyncDynamicRcoAndAssetNodesSuccess = null;
+             _oDcDAO = null;
+             DataCaptureDTOLst = null;
+             DynamicRCOData = null;
+             DynamicOrgAssetNodeData = null;
+             MultiMediaBlobSubElementLst = null;
+             _oActionDAO = null;
+             ActionResponse = null;
+             oUploadrequest = null;
+             _UploadDcIL = null;
+             oUploadResponse = null;
+             IsBulkUploadEnabled = false;
+         }
+     }
+
+     /// <summary>
+     /// Save_Uploaded_DcResponse
+     /// </summary>
+     /// <param name="DCSyncStatusDTOlst">DCSyncStatusDTOlst</param>
+     var UploadData_New = function (IsBulkUploadEnabled, DashBoardReq, _oDcFilterParamRequest) {
+         var _oOneViewSqlitePlugin = new OneViewSqlitePlugin();
+         var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
+         var EnableAutoUpload = (OneViewLocalStorage.Get("IsAutoUploadEnabled") != null) ? OneViewLocalStorage.Get("IsAutoUploadEnabled") : false;
+         try {
+             OneViewConsole.Debug("UploadData_New start", "UploadBO.UploadData_New");
+
+                         var _oOneViewAutoUploadPlugin = new OneViewAutoUploadPlugin();
+
+                         var IsMultiMediaSubElementsSuccess = MyInstance.UploadMultiMediaSubElements(false);
+                         ProgressBarStatus(IsBulkUploadEnabled, 10);
+                         //alert("IsMultiMediaSubElementsSuccess : " + IsMultiMediaSubElementsSuccess);
+
+                         if (IsMultiMediaSubElementsSuccess != null && IsMultiMediaSubElementsSuccess == true) {
+
+                             var IsSyncDynamicRcoAndAssetNodesSuccess = MyInstance.SyncDynamicRcoAndAssetNodes(true, false);
+
+                             //alert("IsSyncDynamicRcoAndAssetNodesSuccess : " + IsSyncDynamicRcoAndAssetNodesSuccess);
+                             ProgressBarStatus(IsBulkUploadEnabled, 20);
+                             if (IsSyncDynamicRcoAndAssetNodesSuccess != null && IsSyncDynamicRcoAndAssetNodesSuccess == true) {
+
+                                 var _oDcDAO = new DcDAO();
+
+                                 //Update_UnSync_DC_ProcessCount();
+                                 //var DataCaptureDTOLst = _oDcDAO.GetAllUnSyncDc();
+                                 var _oMyAuditDAO = new MyAuditDAO();
+                                 var DcInfo = _oMyAuditDAO.GetAllDCAdv(_oDcFilterParamRequest);
+
+                                 if (DcInfo.length > 0) {
+
+                                     _oDcDAO.UpdateDcProcessCountByDcInfo(DcInfo);
+                                     var DataCaptureDTOLst = _oDcDAO.GetDcList(DcInfo);
+
+                                     Update_UnSync_RcoProcessCount();
+                                     var DynamicRCOData = GetAll_UnSync_DynamicRco();
+
+                                     Update_UnSync_AssetNodeProcessCount();
+                                     var DynamicOrgAssetNodeData = GetAll_UnSync_DynamicAssetNode();
+
+                                     Update_UnSync_MultiMediaBlobSubElementsProcessCount();
+                                     var MultiMediaBlobSubElementLst = GetAll_UnSync_MultiMediaBlobSubElements();
+
+                                     Update_UnSync_MultiMediaSubElementsProcessCount();
+                                     var MultiMediaSubElementLst = GetAll_UnSync_MultiMediaSubElements();
+
+                                     Update_UnSync_AuditTrailDC();
+                                     var AuditTrailDCLst = GetAll_UnSync_AuditTrailDC();
+
+                                     var _oActionDAO = new ActionDAO();
+                                     var ActionResponse = _oActionDAO.GetAllUnSyncActionsForUpload(DataCaptureDTOLst);
+
+                                     var _oDCBlockerInfoDAO = new DCBlockerInfoDAO();
+                                     var DCBlockerInfoRequest = _oDCBlockerInfoDAO.GetAllDCBlockerInfoForUpload(DataCaptureDTOLst);
+
+                                     var _oDcApprovalDAO = new DcApprovalDAO();
+                                     var DcApprovalDTOLst = _oDcApprovalDAO.GetAllDcApprovalInfoForUpload(DcInfo);
+
+                                     var oUploadrequest = MakeUploadRequest(DataCaptureDTOLst, DynamicRCOData, DynamicOrgAssetNodeData, ActionResponse, MultiMediaBlobSubElementLst, AuditTrailDCLst, MultiMediaSubElementLst, DCBlockerInfoRequest, DcApprovalDTOLst);
+                                     ProgressBarStatus(IsBulkUploadEnabled, 25);
+
+
+
+                                     var _UploadDcIL = new UploadDcIL(toaster);
+                                     var oUploadResponse = _UploadDcIL.Upload(oUploadrequest, false);
+                                     ProgressBarStatus(IsBulkUploadEnabled, 50);
+                                     //alert(JSON.stringify(oUploadResponse));
+                                     //if (oUploadResponse != null) {
+                                     //    alert(oUploadResponse.IsAnyException);
+                                     //}
+
+                                     if (oUploadResponse != null && oUploadResponse.IsAnyException == false) {
+
+                                         try {
+                                             _oOneViewSqlitePlugin.StartTransaction();
+
+                                             Update_Upload_Response(oUploadResponse);
+                                             ProgressBarStatus(IsBulkUploadEnabled, 60);
+
+                                             ExecuteGarbageCollector();
+                                             ProgressBarStatus(IsBulkUploadEnabled, 70);
+
+                                             var _oLandingPageViewReponseBO = new LandingPageViewReponseBO(xlatService);
+                                             var LandingPageViewReponseBOIsSuccess = _oLandingPageViewReponseBO.Download();
+                                             ProgressBarStatus(IsBulkUploadEnabled, 80);
+
+                                             var _oDcProfileSyncStatusBO = new DcProfileSyncStatusBO();
+                                             var IsDcProfileSyncStatus = _oDcProfileSyncStatusBO.Download(xlatService);
+                                             ProgressBarStatus(IsBulkUploadEnabled, 90);
+
+                                             _oOneViewSqlitePlugin.EndTransaction();
+                                             DownloadActionFollowUp(xlatService);
+
+                                             MyInstance.DownlaodActionFollowUpDetails();
+
+                                             if (OneViewSessionStorage.Get("ServiceId") == 32) {
+                                                 ProgressBarStatus(IsBulkUploadEnabled, 95);
+                                                 var DownloadedTGIdList = MyInstance.GetTemplateGroupIds();
+                                                 if (DownloadedTGIdList != null && DownloadedTGIdList.length > 0) {
+                                                     var IsMitmarkLandingPageViewReponseSuccess = new MitmarkLandingPageViewReponseBO(xlatService).Download(DownloadedTGIdList);
+                                                 }
+                                             }
+
+                                             ProgressBarStatus(IsBulkUploadEnabled, 100);
+
+                                             if (DashBoardReq != undefined) {
+                                                 var _oDasboardFacade = new DasboardFacade(DashBoardReq.$scope, DashBoardReq.$document, DashBoardReq.xlatService, DashBoardReq.$timeout, DashBoardReq.$location, DashBoardReq.$templateCache, DashBoardReq.$compile, DashBoardReq.snapRemote);
+
+                                                 _oDasboardFacade.Init();
+                                                 _oDasboardFacade.PageLoad();
+                                             }
+
+                                             if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+                                                 //alert(xlatService.xlat('IN-SU-LDP-001 :: Data uploaded successfully'));
+                                                 navigator.notification.alert(xlatService.xlat('IN-SU-LDP-001 :: Data uploaded successfully'), ['OK'], "");
+                                             }
+                                             _oOneViewAutoUploadPlugin.Stop();
+                                             oOneViewProgressbar.Stop();
+
+                                             OneViewConsole.Info("Upload success", "UploadBO.AutoUpload");
+                                         }
+                                         catch (Excep) {
+                                             _oOneViewAutoUploadPlugin.Stop();
+                                             oOneViewProgressbar.Stop();
+                                             if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+
+                                                 //alert(xlatService.xlat("IN-ER-LDP-003 :: Upload failed. Please try again"));
+                                                 navigator.notification.alert(xlatService.xlat("IN-ER-LDP-003 :: Upload failed. Please try again"), ['OK'], "");
+                                             }
+                                             OneViewConsole.Info("Upload failed local", "UploadBO.AutoUpload");
+                                             _oOneViewSqlitePlugin.Rollback();
+                                             IsSuccess = false;
+
+                                         }
+                                     }
+                                     else {
+                                         _oOneViewAutoUploadPlugin.Stop();
+                                         oOneViewProgressbar.Stop();
+                                         if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+
+                                             //alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"));
+                                             navigator.notification.alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"), ['OK'], "");
+                                         }
+                                         OneViewConsole.Info("Upload failed", "UploadBO.AutoUpload");
+                                         IsSuccess = false;
+
+                                     }
+                                 }
+                                 else {
+                                     _oOneViewAutoUploadPlugin.Stop();
+                                     oOneViewProgressbar.Stop();
+                                     if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+
+                                         //navigator.notification.alert(xlatService.xlat("IN-IN-LDP-001 :: No data available for Upload"), ['OK'], "");
+                                         navigator.notification.alert(xlatService.xlat("IN-IN-LDP-001 :: No data available for Upload"), ['OK'], "");
+                                     }
+                                     OneViewConsole.Info("No dc available", "UploadBO.AutoUpload");
+                                 }
+                             }
+                             else {
+                                 _oOneViewAutoUploadPlugin.Stop();
+                                 oOneViewProgressbar.Stop();
+                                 if (IsBulkUploadEnabled != undefined && IsBulkUploadEnabled == true) {
+
+                                     //alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"));
+                                     navigator.notification.alert(xlatService.xlat("IN-ER-MAU-001 :: Server error please contact Administrator"), ['OK'], "");
+                                 }
+                                 OneViewConsole.Info("Upload failed", "UploadBO.AutoUpload");
+                                 IsSuccess = false;
+                             }
+                         }
+
+                         OneViewConsole.Debug("AutoUpload end", "UploadBO.AutoUpload");
+
+             OneViewConsole.Debug("UploadData_New end", "UploadBO.UploadData_New");
+         }
+         catch (Excep) {
+             //alert("Excep => "+Excep)
+             throw oOneViewExceptionHandler.Create("BO", "UploadBO.UploadData_New", Excep);
+         }
+         finally {
+             _oDcDAO = null;
+         }
+     }
 
 	/// <summary>
 	/// Save_Uploaded_DcResponse
@@ -1110,6 +1391,11 @@ function UploadBO(xlatService, toaster) {
 						_oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 					   
 					}
+                    else if (OneViewSessionStorage.Get("ServiceId") == 70) {
+                        _oDcDeletion.DeleteCompletedItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+                        _oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+                       
+                    }
 				}
 
 				OneViewConsole.Debug("ExecuteGarbageCollector end", "UploadBO.ExecuteGarbageCollector");

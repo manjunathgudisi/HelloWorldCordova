@@ -243,9 +243,11 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 				}
 
 				$scope.ActionSheet = false;
-
+                
+                var IsHideHeaderAuditTab = MyInstance.IsManualConfigurationBusinessEventExist({ RequiredBusinessEventHandlerObjectKeys:"HideHeaderAuditTab" });
+                
 				$scope.MyAuditTab = ["Past", "Today", "Future"];
-				if (ServiceId == 61) {
+				if (ServiceId == 61 || ServiceId == 70 || IsHideHeaderAuditTab==true) {
 					$scope.MyAuditTab = ["Today"];
 					
 					if (document.getElementById("DivMyAuditTab") != null) {
@@ -343,6 +345,12 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 				if (ServiceId == 61) {
 					ShowStatusBar = false;
 				}
+                else {
+                    var IsSucess = MyInstance.IsManualConfigurationBusinessEventExist({ RequiredBusinessEventHandlerObjectKeys: "IsBottomStatusBarNeedToShow" });
+                    if (IsSucess == true) {
+                        ShowStatusBar = false;
+                    }
+                }
 
 				OneViewConsole.Debug("IsStatusBarNeedToShow end", "DasboardFacade.IsStatusBarNeedToShow");
 				return ShowStatusBar;
@@ -1902,10 +1910,18 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 							IsValidationSuccess = true;
 						}
 					}
-
-					if (ServiceId == 52) {
+                    var _IsManualConfigurationBusinessEventExist = false;
+					if (ServiceId == 52 || ServiceId == 61) {
 						IsValidationSuccess = true;
 					}
+                    else {
+                        if (IsValidationSuccess != true) {
+                            _IsManualConfigurationBusinessEventExist = MyInstance.IsManualConfigurationBusinessEventExist({ RequiredBusinessEventHandlerObjectKeys: "LandingPageAutoSync" });
+                            if (_IsManualConfigurationBusinessEventExist == true) {
+                                IsValidationSuccess = true;
+                            }
+                        }
+                    }
 
 					if (IsValidationSuccess == true) {
                         
@@ -1923,7 +1939,7 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 							var _oLandingPageViewReponseBO = new LandingPageViewReponseBO(xlatService);
 							_oLandingPageViewReponseBO.DeleteLandingPageViewReponse();
 
-							if (ServiceId == 52) {
+                            if (ServiceId == 52 || ServiceId == 61 || ServiceId == 70 || _IsManualConfigurationBusinessEventExist == true) {
 								var _oLandingPageViewReponseBO = new LandingPageViewReponseBO(xlatService);
 								var LandingPageViewReponseIsSuccess = _oLandingPageViewReponseBO.Download();
 
@@ -2414,6 +2430,26 @@ function DasboardFacade($scope, $document, xlatService, $timeout, $location, $te
 			oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.NavigateToViewDCHandoverCase", xlatService);
 		}
 	}
+    
+    this.IsManualConfigurationBusinessEventExist = function (Req) {
+        try {
+            OneViewConsole.Debug("IsStatusBarNeedToShow start", "DasboardFacade.IsStatusBarNeedToShow");
+
+            var IsSuccess = false;
+            
+            var _oBusinessEventEntityBO = new BusinessEventEntityBO();
+            var Req = { RequiredBusinessEventHandlerObjectKeys: Req.RequiredBusinessEventHandlerObjectKeys, TemplateId: [], ClassName: "BusinessEventEntityBO", MethodName: "IsBusinessEventMetadataExist" };
+            IsSuccess = _oBusinessEventEntityBO.IsBusinessEventMetadataExist(Req);
+      
+
+            OneViewConsole.Debug("IsStatusBarNeedToShow end", "DasboardFacade.IsStatusBarNeedToShow");
+            return IsSuccess;
+        }
+        catch (Excep) {
+            return false;
+            oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.IsStatusBarNeedToShow", xlatService);
+        }
+    }
 
 }
 
@@ -2671,6 +2707,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 
 							navigator.notification.alert(xlatService.xlat("IN-SU-LNP-001 :: Profile(s) downloaded successfully"), ['Ok'], "");
 
+                            LandingPageSyncAfterDownload();
 							MyInstance.SetByView(LandingPageViewInfo.LandingPageViewName);
 							MyInstance.UpdateTaskStatus(DCTaskViewInfoDTO);
 							MyInstance.LoadHtml(DCTaskViewInfoDTO, LandingPageSelectedStatusTypeId);
@@ -2693,6 +2730,87 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 		finally {
 		}
 	}
+    
+    var LandingPageSyncAfterDownload = function (DashBoardReq) {
+        try {
+            OneViewConsole.Debug("LandingPageSyncAfterDownload start", "DasboardFacade.LandingPageSyncAfterDownload");
+            if (IsLandingPageSyncAfterDownloadRequired() == true) {
+                // Network status checking
+               // alert("LandingPageSyncAfterDownload");
+                var oOneViewCordovaPlugin = new OneViewCordovaPlugin();
+                var NetworkStatus = oOneViewCordovaPlugin.CheckNetworkStatus();
+
+                if (NetworkStatus.IsNetworkAvailable == true) {
+
+                    var ServiceId = OneViewSessionStorage.Get("ServiceId");
+                    var LoginUserId = OneViewSessionStorage.Get("LoginUserId");
+
+                    var DashBoardReq = {
+                        '$scope': $scope, '$document': $document, 'xlatService': xlatService,
+                        '$timeout': $timeout, '$location': $location, '$templateCache': $templateCache, '$compile': $compile, 'snapRemote': snapRemote
+
+                    };
+
+                    //var _oUploadBO = new UploadBO(xlatService, '');
+                    //var UploadResponse = MyInstance.AutoUpload(undefined, DashBoardReq);
+                    var _oUploadBO = new UploadBO(xlatService, '');
+                    var UploadResponse = _oUploadBO.AutoUpload(undefined, DashBoardReq);
+
+                    if (UploadResponse != undefined && (UploadResponse.IsSuccess == true)) {
+
+                        var _oLandingPageViewReponseBO = new LandingPageViewReponseBO(xlatService);
+                        _oLandingPageViewReponseBO.DeleteLandingPageViewReponse();
+
+
+                        var _oLandingPageViewReponseBO = new LandingPageViewReponseBO(xlatService);
+                        var LandingPageViewReponseIsSuccess = _oLandingPageViewReponseBO.Download();
+
+                        if (LandingPageViewReponseIsSuccess == true) {
+
+                            var _oDcProfileSyncStatusBO = new DcProfileSyncStatusBO();
+                            var IsDcProfileSyncStatus = _oDcProfileSyncStatusBO.Download(xlatService);
+
+                            //MyInstance.Init();
+                            //MyInstance.PageLoad();
+                            //var _oDasboardBO = new DasboardBO(DashBoardReq.$scope, DashBoardReq.$document, DashBoardReq.xlatService, DashBoardReq.$timeout, DashBoardReq.$location, DashBoardReq.$templateCache, DashBoardReq.$compile, DashBoardReq.snapRemote);
+                            //var _oDasboardFacade = new DasboardFacade(DashBoardReq.$scope, DashBoardReq.$document, DashBoardReq.xlatService, DashBoardReq.$timeout, DashBoardReq.$location, DashBoardReq.$templateCache, DashBoardReq.$compile, DashBoardReq.snapRemote);
+                            // _oDasboardFacade.Init();
+                            // _oDasboardFacade.PageLoad();
+
+                        }
+                    }
+
+                }
+
+            }
+            OneViewConsole.Debug("LandingPageSyncAfterDownload end", "DasboardFacade.LandingPageSyncAfterDownload");
+        }
+        catch (Excep) {
+            oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.LandingPageSyncAfterDownload", xlatService);
+        }
+    }
+
+    var IsLandingPageSyncAfterDownloadRequired = function () {
+        try {
+            OneViewConsole.Debug("IsLandingPageSyncAfterDownloadRequired start", "DasboardFacade.IsLandingPageSyncAfterDownloadRequired");
+
+            // Network status checking
+            var IRequired = false;
+            var ServiceId = OneViewSessionStorage.Get("ServiceId");
+            if (ServiceId == 61) {
+                IRequired = true;
+            }
+            else {
+                IRequired = MyInstance.IsManualConfigurationBusinessEventExist({ RequiredBusinessEventHandlerObjectKeys: "IsLandingPageSyncAfterDownloadRequired" });
+            }
+
+            OneViewConsole.Debug("IsLandingPageSyncAfterDownloadRequired end", "DasboardFacade.IsLandingPageSyncAfterDownloadRequired");
+            return IRequired;
+        }
+        catch (Excep) {
+            oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.IsLandingPageSyncAfterDownloadRequired", xlatService);
+        }
+    }
 
 	this.UploadDC = function () {
 
@@ -3009,6 +3127,13 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 					_oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
 				   
 				}
+                else {
+                    var IsSucess = MyInstance.IsManualConfigurationBusinessEventExist({ RequiredBusinessEventHandlerObjectKeys: "DeleteRFLWorkOrder" });
+                    if (IsSucess == true) {
+                        _oDcDeletion.DeleteCompletedItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+                        _oDcDeletion.DeleteExpiredItemFromRFLWorkOrder(OneViewSessionStorage.Get("ServiceId"), TemplateId, OneViewSessionStorage.Get("LoginUserId"), DcPlaceId);
+                    }
+                }
 
 				OneViewConsole.Debug("ExcecuteGarbageCollector end", "LandingPageFacade.ExcecuteGarbageCollector");
 			}
@@ -3474,6 +3599,9 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 				if (IsIconRequired() == false) {
 					IconStatusHtml = DownloadStatusHtml + UploadedStatusHtml;
 				}
+                var DCStatusInfoHtml = GetItemStatusInfoHtml(oChild);
+                //alert(DCStatusInfoHtml);
+                IconStatusHtml += DCStatusInfoHtml;
 
 				// To Do : Need to replace with dynamic icon from task downloaded from server
 				// If Icon Exist for Task
@@ -3521,6 +3649,12 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 				if (ServiceId == 61) {
 					IsRequired = false;
 				}
+                else {
+                    var IsSucess = MyInstance.IsManualConfigurationBusinessEventExist({ RequiredBusinessEventHandlerObjectKeys: "IsIconRequired" });
+                    if (IsSucess == true) {
+                        IsRequired = false;
+                    }
+                }
 
 				return IsRequired;
 
@@ -3532,6 +3666,37 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 			finally {
 			}
 		}
+    
+    var GetItemStatusInfoHtml = function (oChild) {
+
+        try {
+            OneViewConsole.Debug("GetItemInfoHtml start", "DasboardBO.GetItemInfoHtml");
+         
+            var Html = "";
+
+            if (oChild.ItemStatusInfo != undefined && oChild.ItemStatusInfo != "" && oChild.ItemStatusInfo != null) {
+                /*OverallItemCount,
+                    PendingItemToDownloadCount,
+                    DownloadedItemCount
+                */
+                var OverallStatusHtml1 = '<i class="mfb-component__button--child over-all" style="display:none;"> <span id="OverallStatus_Small">' + oChild.ItemStatusInfo.OverallItemCount + '</span></i>';
+                var OverallStatusHtml = '<i class="mfb-component__button--child over-all"> <span id="OverallStatus_Small">' + oChild.ItemStatusInfo.OverallItemCount+'</span></i>';
+                var NotdownloadedItemHtml = '<i class="mfb-component__button--child not-downloadedItem"> <span id="OverallStatus_Small">' + oChild.ItemStatusInfo.PendingItemToDownloadCount +'</span></i>';
+                var DownloadedItemCountHtml = '<i class="mfb-component__button--child synced"> <span id="OverallStatus_Small">' + oChild.ItemStatusInfo.DownloadedItemCount +'</span></i>';
+               
+                Html = OverallStatusHtml1+OverallStatusHtml + NotdownloadedItemHtml + DownloadedItemCountHtml;
+                
+            }
+
+            OneViewConsole.Debug("GetItemInfoHtml end", "DasboardBO.GetItemInfoHtml");
+            return Html;
+        }
+        catch (Excep) {
+            throw oOneViewExceptionHandler.Create("BO", "DasboardBO.GetItemInfoHtml", Excep);
+        }
+        finally {
+        }
+    }
 
 	var GetTaskStatusHtml = function (oChild, StatusType) {
 
@@ -3867,7 +4032,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 
 			var oParent = DCTaskViewInfoDTO.DCTaskDTOList[LandingPageViewInfo.ParentIndex];
 			var oChild = oParent.DCTaskDetaillst[LandingPageViewInfo.ChildIndex];
-
+            if (oChild != undefined) {
 			var ActionSheetHeaderHtml = oParent.GroupName;
 			if (oChild.TaskHeader != "") {
 				ActionSheetHeaderHtml += " - " + oChild.TaskHeader;
@@ -4098,7 +4263,7 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 			if (IsViewButtonNeedToHide == true) {
 				$scope.BtnViewDCHide = true;
 			}
-
+            }
 			OneViewConsole.Debug("UpdateActionSheet end", "LandingPageFacade.UpdateActionSheet");
 		}
 		catch (Excep) {
@@ -4211,6 +4376,13 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 				if (ServiceId == 36 || ServiceId == 39 || ServiceId == 50 || ServiceId == 51 || ServiceId == 52 || ServiceId == 61) {
 					$scope.BtnApproveDCHide = true;
 				}
+                else {
+                    
+                    var IsSucess = MyInstance.IsManualConfigurationBusinessEventExist({ RequiredBusinessEventHandlerObjectKeys: "HideApproveButton" });
+                    if (IsSucess == true) {
+                        $scope.BtnApproveDCHide = true;
+                    }
+                }
 
 				OneViewConsole.Debug("InitializeTaskHandler end", "DasboardFacade.InitializeTaskHandler");
 			}
@@ -4451,6 +4623,26 @@ function DasboardBO($scope, $document, xlatService, $timeout, $location, $templa
 			oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.IsUploadButtonHandlerMetadataExist", xlatService);
 		}
 	}
+    
+    this.IsManualConfigurationBusinessEventExist = function (Req) {
+        try {
+            OneViewConsole.Debug("IsStatusBarNeedToShow start", "DasboardFacade.IsStatusBarNeedToShow");
+
+            var IsSuccess = false;
+
+            var _oBusinessEventEntityBO = new BusinessEventEntityBO();
+            var Req = { RequiredBusinessEventHandlerObjectKeys: Req.RequiredBusinessEventHandlerObjectKeys, TemplateId: [], ClassName: "BusinessEventEntityBO", MethodName: "IsBusinessEventMetadataExist" };
+            IsSuccess = _oBusinessEventEntityBO.IsBusinessEventMetadataExist(Req);
+
+
+            OneViewConsole.Debug("IsStatusBarNeedToShow end", "DasboardFacade.IsStatusBarNeedToShow");
+            return IsSuccess;
+        }
+        catch (Excep) {
+            return false;
+            oOneViewExceptionHandler.Catch(Excep, "DasboardFacade.IsStatusBarNeedToShow", xlatService);
+        }
+    }
 }
 
 // MultipleDcApprovalBO

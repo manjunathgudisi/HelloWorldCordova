@@ -3115,7 +3115,7 @@ function ItemDAO() {
 
             var Query = "SELECT DISTINCT Id,ServerId ,OSGuid,OVGuid,MobileVersionId,(ItemName ||' (' ||Quantity|| ')' )  As Name,(ItemName ||' (' ||Quantity|| ')' )  As WorkOrderNo," +
                         "WardId,ItemName,ItemId,OrderTypeId,OrderTypeName,DietCode,Allergens,ServiceDate,Quantity,OrderDetails,PackedQuantity,PackedDetails,PackedRemarks," +
-                        "CookedQuantity , CookedDate ,CookedRemarks,CookedDetails ,DeliveredQuantity ,DeliveredDetails ,CreatedDate,OrderStatus ,CurrentStatus,TimeStamp, " +
+                        "CookedQuantity , CookedDate ,CookedRemarks,CookedDetails ,DeliveredQuantity ,DeliveredDetails ,CreatedDate,OrderStatus ,CurrentStatus,TimeStamp,Column1,Column2,Column3,Column4,Column5,Column6,Column7,Column8,Column9,Column10, " +
                        "(SUBSTR(ServiceDate, 7, 4) || SUBSTR(ServiceDate, 4, 2) || SUBSTR(ServiceDate, 1, 2) || SUBSTR(ServiceDate, 12, 2) ||  SUBSTR(ServiceDate, 15, 2) || SUBSTR(ServiceDate, 18, 2) ) AS ServiceDateInt " +
                        " FROM  RFLWorkOrder  " +
                        " WHERE WardId = " + DcPlaceId +                    
