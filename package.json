@@ -10,8 +10,8 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
-    "cordova-android": "^8.1.0",
-    "cordova-ios": "^5.1.1",
+    "cordova-android": "^11.0.0",
+    "cordova-ios": "^6.3.0",
     "cordova-plugin-activityindicator": "git+https://github.com/kartagis/cordova-activityindicator.git",
     "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-barcodescanner": "^0.7.4",
